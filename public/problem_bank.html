@@ -11,30 +11,43 @@
 </head>
 <body class="bg-gray">
     <!-- B2B Header -->
-    <header class="b2b-header-top" style="background:#111;">
-        <div class="logo">
-            <a href="/" style="text-decoration:none;"><h1 style="color:white; font-weight:900;">KATCH<span class="dot" style="color:#E91E63;">.</span> <span class="badge-b2b" style="background:rgba(255,255,255,0.2); color:white; border:none;">강사채널</span></h1></a>
+        <!-- 1. Top Header -->
+    <div class="header-top-bar">
+        <div class="container flex-between align-center">
+            <div class="target-switch">
+                <a href="dashboard_online.html" class="active">학생·학부모</a>
+                <a href="problem_bank.html">가맹 원장·강사</a>
+            </div>
+            <div>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
         </div>
-        <div class="user-info" style="color:white;">
-            <strong>김선희 원장님</strong> (대치 KATCH 본원)
-            <button class="btn-sm btn-outline-white ml-10">로그아웃</button>
+    </div>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
+        <div class="container main-gnb">
+            <div class="logo">
+                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="student_diagnostics.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_vod.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
         </div>
     </header>
 
-    <div class="pb-layout">
-        <!-- Sidebar Navigation -->
-        <aside class="pb-sidebar">
-            <ul class="pb-nav">
-                <li><a href="dashboard_gvr.html"><i class="fas fa-chart-line"></i> 대시보드</a></li>
-                <li class="active"><a href="problem_bank.html"><i class="fas fa-layer-group"></i> 문제은행 검색</a></li>
-                <li><a href="problem_bank.html"><i class="fas fa-file-invoice"></i> 나의 시험지 보관소</a></li>
-                <li><a href="dashboard_gvr.html"><i class="fas fa-users"></i> 우리반 학생 관리</a></li>
-                <li><a href="problem_bank.html"><i class="fas fa-print"></i> 일일 학습지 출력</a></li>
-            </ul>
-        </aside>
+    <div class="container pb-layout" style="display:block;">
 
         <!-- Main Content -->
-        <main class="pb-main">
+        <main class="pb-main" style="padding:40px 0;">
             <div class="pb-header flex-between mb-20">
                 <h2><i class="fas fa-search"></i> 문제 검색 및 세트 구성</h2>
                 <div class="search-large">

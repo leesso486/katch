@@ -26,14 +26,36 @@
     </style>
 </head>
 <body>
-    <header class="bg-white" style="border-bottom: 1px solid #eee; padding: 15px 0;">
-        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center;">
-            <div class="logo">
-                <a href="/" style="text-decoration:none;">
-                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:24px; color:#1A237E; margin:0;">KATCH<span style="color:#E91E63;">.</span></h1>
-                </a>
+        <!-- 1. Top Header -->
+    <div class="header-top-bar">
+        <div class="container flex-between align-center">
+            <div class="target-switch">
+                <a href="dashboard_online.html" class="active">학생·학부모</a>
+                <a href="problem_bank.html">가맹 원장·강사</a>
             </div>
-            <a href="signup_select.html" style="color:#666; font-weight:bold; text-decoration:none;"><i class="fas fa-arrow-left"></i> 돌아가기</a>
+            <div>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
+        <div class="container main-gnb">
+            <div class="logo">
+                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="student_diagnostics.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_vod.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
         </div>
     </header>
 

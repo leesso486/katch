@@ -51,29 +51,35 @@
     </style>
 </head>
 <body class="bg-white">
-    <!-- Header -->
-    <header class="main-header" style="box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-        <div class="container header-inner">
-            <div class="logo">
-                <a href="/"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+        <!-- 1. Top Header -->
+    <div class="header-top-bar">
+        <div class="container flex-between align-center">
+            <div class="target-switch">
+                <a href="dashboard_online.html" class="active">학생·학부모</a>
+                <a href="problem_bank.html">가맹 원장·강사</a>
             </div>
-            <nav class="gnb hide-mobile">
-                <ul>
-                    <li><a href="student_diagnostics.html">진단테스트</a></li>
-                    <li><a href="student_diagnostics.html">레벨테스트</a></li>
-                    <li><a href="problem_bank.html">문제은행</a></li>
-                    <li><a href="store_vod.html">VOD 인강</a></li>
-                    <li><a href="store_vod.html">교재 스토어</a></li>
-                    <li><a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a></li>
-                </ul>
+            <div>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
+        <div class="container main-gnb">
+            <div class="logo">
+                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="student_diagnostics.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_vod.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
-            <!-- Action Icons -->
-            <div class="header-actions">
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:#1976d2; font-weight:bold;"><i class="fas fa-headset"></i> 카톡문의</a>
-                <a href="signup_select.html" class="mr-15" style="color:#555;"><i class="fas fa-sign-in-alt"></i> 로그인</a>
-                <span class="hide-mobile" style="margin-right:20px; font-weight:bold; color: #f57c00;"><i class="fas fa-coins text-gold"></i> 내 포인트 <span id="my-points">1,500</span> P</span>
-                <a href="dashboard.html" class="icon-link"><i class="fas fa-chart-line"></i> 나의 대시보드</a>
-                <a href="#" class="icon-link user-icon" style="margin-left: 15px;"><i class="fas fa-user-circle"></i></a>
+            <div class="header-utils">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
             </div>
         </div>
     </header>
