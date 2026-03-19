@@ -78,7 +78,7 @@
         .exam-card.closed { opacity: 0.7; filter: grayscale(0.5); border-color: #eee; }
         .exam-card.closed:hover { transform: none; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
 
-        .ec-head { padding: 40px 28px 25px; position: relative; text-align: center; }
+        .ec-head { padding: 25px 24px 20px; position: relative; text-align: center; }
         .ec-status-pill {
             position: absolute; top: 15px; right: 15px;
             border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 800;
@@ -88,7 +88,7 @@
         .pill-avail { background: #f3e5f5; color: #7b1fa2; }
         .pill-closed { background: #f5f5f5; color: #757575; }
 
-        .ec-icon { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); background: white; }
+        .ec-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); background: white; }
         .exam-card.open .ec-icon { color: #2196F3; border: 2px solid #bbdefb; }
         .exam-card.available .ec-icon { color: #9C27B0; border: 2px solid #e1bee7; }
         .exam-card.closed .ec-icon { color: #999; border: 2px solid #eee; }
@@ -97,7 +97,7 @@
         .ec-slogan { font-size: 14px; color: #777; margin-bottom: 20px; font-weight: 600; }
         .ec-deadline { font-size: 13.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; background: #fff8e1; color: #ff8f00; padding: 6px 16px; border-radius: 20px; }
 
-        .ec-body { padding: 0 28px 30px; flex: 1; display: flex; flex-direction: column; }
+        .ec-body { padding: 0 24px 24px; flex: 1; display: flex; flex-direction: column; }
         .ec-desc { font-size: 14.5px; color: #555; line-height: 1.6; padding: 18px 0; border-top: 2px dashed #f0f0f0; border-bottom: 2px dashed #f0f0f0; margin-bottom: 20px; font-weight: 600; text-align: center; }
         .ec-features { list-style: none; padding: 0; margin: 0 0 25px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .ec-features li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; font-weight: 700; background: #f9f9f9; padding: 10px 15px; border-radius: 12px; }
@@ -109,7 +109,7 @@
         .sample-content { display: none; background: #fafafa; border-radius: 8px; padding: 15px; margin-top: 10px; font-size: 13px; color: #555; line-height: 1.6; border: 1px solid #eee; }
         .sample-content.show { display: block; }
 
-        .ec-cta { display: block; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 900; text-decoration: none; transition: 0.3s; margin-top: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .ec-cta { display: block; text-align: center; padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 900; text-decoration: none; transition: 0.3s; margin-top: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .cta-open { background: #2196F3; color: white; }
         .cta-open:hover { background: #1976D2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(33,150,243,0.3); }
         .cta-avail { background: #9C27B0; color: white; }
@@ -268,12 +268,12 @@
             <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
             <div class="proc-step">
                 <div class="proc-icon"><i class="fas fa-laptop-code"></i></div>
-                <div class="proc-text"><strong>STEP 3. CBT 응시</strong><span>온라인 실전 시험</span></div>
+                <div class="proc-text"><strong>STEP 3. 시험 응시</strong><span>온라인 실전 시험</span></div>
             </div>
             <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
             <div class="proc-step">
                 <div class="proc-icon"><i class="fas fa-search-plus"></i></div>
-                <div class="proc-text"><strong>STEP 4. 약점 진단</strong><span>AI 데이터 분석</span></div>
+                <div class="proc-text"><strong>STEP 4. 약점 진단</strong><span>영역별 정밀 성적표</span></div>
             </div>
             <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
             <div class="proc-step">
@@ -310,13 +310,7 @@
                         <li><i class="far fa-clock" style="color:#2196F3;"></i> 소요시간: 80분 · 온라인 CBT</li>
                         <li><i class="fas fa-coins" style="color:#f57c00;"></i> 응시 시 <strong>+50 포인트</strong> 자동 적립</li>
                     </ul>
-                    <button class="sample-toggle" onclick="toggleSample(1)"><i class="fas fa-eye"></i> 샘플 문항 미리보기 <i class="fas fa-chevron-down" id="chev-1"></i></button>
-                    <div class="sample-content" id="sample-1">
-                        <strong>샘플 문항 (어법 — 도치 구문)</strong><br><br>
-                        "Not until the mid-nineteenth century ___ the concept of public health systematically..."<br>
-                        ① did emerged &nbsp;② emerged &nbsp;③ did emerge &nbsp;④ was emerging &nbsp;⑤ did it emerge<br>
-                        <small style="color:#aaa; margin-top:8px; display:block;">실제 시험은 총 40문항으로 구성됩니다.</small>
-                    </div>
+                    <button class="sample-toggle" onclick="window.location.href='level_test_exam.html'"><i class="fas fa-pen-nib"></i> 사전테스트 해보기 <i class="fas fa-chevron-right" style="font-size:11px; margin-left:4px;"></i></button>
                     <a href="#" class="ec-cta cta-open" onclick="openRegModal('예비고1 특목고 배치고사', 'open'); return false;">시험 신청하기 →</a>
                 </div>
             </div>
@@ -338,12 +332,7 @@
                         <li><i class="far fa-clock" style="color:#9C27B0;"></i> 소요시간: 80분 · 온라인 CBT</li>
                         <li><i class="fas fa-coins" style="color:#f57c00;"></i> 응시 시 <strong>+50 포인트</strong> 자동 적립</li>
                     </ul>
-                    <button class="sample-toggle" onclick="toggleSample(2)"><i class="fas fa-eye"></i> 샘플 문항 미리보기 <i class="fas fa-chevron-down" id="chev-2"></i></button>
-                    <div class="sample-content" id="sample-2">
-                        <strong>샘플 문항 (빈칸추론 — 고난도)</strong><br><br>
-                        "Evolutionary biologists have long debated the exact mechanisms driving __ behavior in social animals, where natural selection typically favors individual fitness..."<br>
-                        <small style="color:#aaa; margin-top:8px; display:block;">① altruistic &nbsp;② competitive &nbsp;③ cooperative &nbsp;④ strategic</small>
-                    </div>
+                    <button class="sample-toggle" onclick="window.location.href='level_test_exam.html'"><i class="fas fa-pen-nib"></i> 사전테스트 해보기 <i class="fas fa-chevron-right" style="font-size:11px; margin-left:4px;"></i></button>
                     <a href="#" class="ec-cta cta-avail" onclick="openRegModal('예비중3 Real 특목 모의고사', 'avail'); return false;">바로 응시하기 →</a>
                 </div>
             </div>
