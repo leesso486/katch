@@ -114,21 +114,21 @@ button{cursor:pointer;font-family:inherit}
 <div class="hdr">
 <div class="fc"><i class="fas fa-flag"></i>&nbsp;<span id="FLT">0</span></div>
 <div class="tmr" id="TMER"><i class="fas fa-clock"></i>&nbsp;<span id="TDS">50:00</span></div>
-<button class="bhs" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;&#51228;&#52636;</button>
+<button class="bhs" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;제출</button>
 </div>
 </header>
 <div class="tabs">
-<button class="tt on" id="tab-GVR" onclick="SW('GVR')">GVR <span class="tbg tgvr">a~d &middot; 4&#51648;</span></button>
-<button class="tt"    id="tab-MT"  onclick="SW('MT')">미니테스트 <span class="tbg tmt">&#9312;~&#9316; &middot; 5&#51648;</span></button>
-<button class="tt"    id="tab-SC"  onclick="SW('SC')">Sentence Completion <span class="tbg tsc">A~F &middot; 6&#51648;</span></button>
+<button class="tt on" id="tab-GVR" onclick="SW('GVR')">GVR <span class="tbg tgvr">a~d &middot; 4지</span></button>
+<button class="tt"    id="tab-MT"  onclick="SW('MT')">미니테스트 <span class="tbg tmt">&#9312;~&#9316; &middot; 5지</span></button>
+<button class="tt"    id="tab-SC"  onclick="SW('SC')">Sentence Completion <span class="tbg tsc">A~F &middot; 6지</span></button>
 </div>
 <div class="ib">
 <div class="ii">
-<div><div class="itl" id="TTLB">GVR AT 6&#54924;&#52264; &mdash; OMR &#47560;&#53412; &#49884;&#53944;</div><div class="imt">&#50025;&#49884;&#51068;: 2026.03.12 | &#51228;&#52636;&#44592;&#54620;: 2026.03.13 23:59</div></div>
+<div><div class="itl" id="TTLB">GVR AT 6회차 &mdash; OMR 마킹 시트</div><div class="imt">응시일: 2026.03.12 | 제출&#44592;&#54620;: 2026.03.13 23:59</div></div>
 <div class="isr">
-<div class="ibs"><div class="n" id="SA">0</div><div class="l">&#51000;&#45813;</div></div>
-<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">&#48120;&#51000;&#45813;</div></div>
-<div class="ibs"><div class="n" id="STOT" style="color:var(--gd)">40</div><div class="l">&#52395; &#47928;&#54637;</div></div>
+<div class="ibs"><div class="n" id="SA">0</div><div class="l">응답</div></div>
+<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">&#48120;응답</div></div>
+<div class="ibs"><div class="n" id="STOT" style="color:var(--gd)">40</div><div class="l">총 문항</div></div>
 </div>
 </div>
 </div>
@@ -137,38 +137,38 @@ button{cursor:pointer;font-family:inherit}
 <div id="SECCOL"></div>
 <aside class="si">
 <div class="sic">
-<div class="sit"><i class="fas fa-chart-pie" style="color:var(--nv)"></i>&nbsp;&#51652;&#54665; &#54604;&#54889;</div>
+<div class="sit"><i class="fas fa-chart-pie" style="color:var(--nv)"></i>&nbsp;진행 현황</div>
 <div class="cps">
-<div class="cp cpa"><div class="cn" id="SBA">0</div><div class="cl">&#51000;&#45813;</div></div>
-<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">&#48120;&#51000;&#45813;</div></div>
-<div class="cp cpf"><div class="cn" id="SBF">0</div><div class="cl">&#54217;&#47000;&#44536;</div></div>
+<div class="cp cpa"><div class="cn" id="SBA">0</div><div class="cl">응답</div></div>
+<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">&#48120;응답</div></div>
+<div class="cp cpf"><div class="cn" id="SBF">0</div><div class="cl">플래그</div></div>
 </div>
 </div>
 <div class="sic">
-<div class="sit"><i class="fas fa-map" style="color:var(--nv)"></i>&nbsp;&#48257;&#45768;&#47588;</div>
+<div class="sit"><i class="fas fa-map" style="color:var(--nv)"></i>&nbsp;내비게이터</div>
 <div class="mmap" id="MMAP"></div>
 </div>
-<button class="bsub" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;&#52572;&#51333; &#51228;&#52636;</button>
+<button class="bsub" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;최종 제출</button>
 </aside>
 </div>
 <div class="modov" id="CMOD">
 <div class="modb">
 <div style="font-size:50px;margin-bottom:13px">&#128221;</div>
-<h3>&#46813;&#50504;&#51012; &#51228;&#52636;&#54616;&#49884;&#44192;&#49845;&#45768;&#44992;?</h3>
-<p>&#51228;&#52636; &#54980;&#50640;&#45716; &#49688;&#51221;&#51060; &#48520;&#44032;&#54633;&#45768;&#45796;.<br>&#48120;&#51000;&#45813; <strong id="UACNT" style="color:var(--pk)">0</strong>&#44060; &middot; &#54217;&#47000;&#44536; <strong id="FACNT" style="color:var(--or)">0</strong>&#44060;</p>
+<h3>&#46813;&#50504;&#51012; 제출&#54616;&#49884;&#44192;&#49845;&#45768;&#44992;?</h3>
+<p>제출 &#54980;&#50640;&#45716; &#49688;&#51221;&#51060; &#48520;&#44032;&#54633;&#45768;&#45796;.<br>&#48120;응답 <strong id="UACNT" style="color:var(--pk)">0</strong>&#44060; &middot; 플래그 <strong id="FACNT" style="color:var(--or)">0</strong>&#44060;</p>
 <div class="mbtns">
-<button class="bno" onclick="closeC()">&#46027;&#49884; &#54869;&#51064;</button>
-<button class="byes" onclick="doSub()">&#51228;&#52636;</button>
+<button class="bno" onclick="closeC()">다시 확인</button>
+<button class="byes" onclick="doSub()">제출</button>
 </div>
 </div>
 </div>
 <div class="modov" id="SMOD">
 <div class="modb">
 <div style="font-size:50px;margin-bottom:13px">&#127881;</div>
-<h3>&#51228;&#52636; &#50756;&#47308;!</h3>
-<p>&#46813;&#50504;&#51060; &#51228;&#52636;&#46104;&#50632;&#49845;&#45768;&#45796;.<br>&#52404;&#51216;&#51060; &#50756;&#47308;&#46418; &#50508;&#47548;&#51012; &#48372;&#45236;&#46053;&#47676;&#45768;&#45796;.</p>
-<a href="review_wrong.html" class="bgo" style="background:var(--nv);color:#fff">&#50724;&#45813;&#45432;&#53944; &#48148;&#47196; &#48372;&#44592;</a>
-<a href="my_learning.html"  class="bgo" style="background:#f0f0f0;color:#555">&#45824;&#49884;&#48372;&#46300;&#47196;</a>
+<h3>제출 &#50756;&#47308;!</h3>
+<p>&#46813;&#50504;&#51060; 제출&#46104;&#50632;&#49845;&#45768;&#45796;.<br>채점이 완료되면 알림을 보내드립니다.</p>
+<a href="review_wrong.html" class="bgo" style="background:var(--nv);color:#fff">오답노트 바로 보기</a>
+<a href="my_learning.html"  class="bgo" style="background:#f0f0f0;color:#555">대시보드로</a>
 </div>
 </div>
 <script>
