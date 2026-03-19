@@ -3,6 +3,8 @@ import Script from 'next/script';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   // 1. Fetch data from Neon Database to prove connection
   let dbStatus = "Neon DB Loading...";
