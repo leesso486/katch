@@ -62,6 +62,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>테스트 종류 (문항 형태)</label>
+                            <select class="form-control" id="test-type-select" onchange="changeGlobalTestType(this.value)">
+                                <option value="gvr" selected>GVR (a~d 4지선다)</option>
+                                <option value="mt">MT (①~⑤ 5지선다)</option>
+                                <option value="sc">SC (A~F 6지선다)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>영역 (파트)</label>
                             <select class="form-control">
                                 <option selected>독해 (Reading)</option>
@@ -146,31 +154,7 @@
                             
                             <!-- Multiple Choice Options (Visible by Default) -->
                             <div class="choices-container mt-15" id="mc-options-div-0">
-                                <div class="choice-row">
-                                    <span class="choice-num">①</span>
-                                    <input type="text" class="form-control" placeholder="선택지 1번 내용">
-                                    <input type="radio" name="correct_ans_0" value="1" title="정답 지정"> 정답
-                                </div>
-                                <div class="choice-row">
-                                    <span class="choice-num">②</span>
-                                    <input type="text" class="form-control" placeholder="선택지 2번 내용">
-                                    <input type="radio" name="correct_ans_0" value="2">
-                                </div>
-                                <div class="choice-row">
-                                    <span class="choice-num">③</span>
-                                    <input type="text" class="form-control" placeholder="선택지 3번 내용">
-                                    <input type="radio" name="correct_ans_0" value="3" checked>
-                                </div>
-                                <div class="choice-row">
-                                    <span class="choice-num">④</span>
-                                    <input type="text" class="form-control" placeholder="선택지 4번 내용">
-                                    <input type="radio" name="correct_ans_0" value="4">
-                                </div>
-                                <div class="choice-row">
-                                    <span class="choice-num">⑤</span>
-                                    <input type="text" class="form-control" placeholder="선택지 5번 내용">
-                                    <input type="radio" name="correct_ans_0" value="5">
-                                </div>
+                                <!-- Choices dynamically rendered by JS -->
                             </div>
 
                             <!-- Essay Options (Hidden by Default) -->
@@ -286,6 +270,44 @@
             }
         }
 
+        const CHOICE_LABELS = {
+            'gvr': ['a', 'b', 'c', 'd'],
+            'mt': ['①', '②', '③', '④', '⑤'],
+            'sc': ['A', 'B', 'C', 'D', 'E', 'F']
+        };
+        let currentTestType = 'gvr';
+
+        function changeGlobalTestType(val) {
+            currentTestType = val;
+            for(let i=0; i<=subQCount; i++) {
+                renderChoices(i);
+            }
+        }
+
+        function renderChoices(idPrefix) {
+            const mcDiv = document.getElementById('mc-options-div-' + idPrefix);
+            if(!mcDiv) return;
+            
+            const labels = CHOICE_LABELS[currentTestType];
+            let html = '';
+            labels.forEach((t, index) => {
+                const val = index + 1;
+                html += `
+                <div class="choice-row">
+                    <span class="choice-num" style="min-width:30px; text-align:center; font-weight:bold;">${t}</span>
+                    <input type="text" class="form-control" placeholder="선택지 ${val}번 내용">
+                    <input type="radio" name="correct_ans_${idPrefix}" value="${val}" ${index===0 ? 'title="정답 지정"' : ''} ${index===2 ? 'checked' : ''}> ${index===0 ? '정답' : ''}
+                </div>
+                `;
+            });
+            mcDiv.innerHTML = html;
+        }
+
+        // Initialize first block choices on load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChoices(0);
+        });
+
         function addSubQuestion() {
             subQCount++;
             const container = document.getElementById('questions-container');
@@ -309,31 +331,7 @@
                 </div>
 
                 <div class="choices-container mt-15" id="mc-options-div-${subQCount}">
-                    <div class="choice-row">
-                        <span class="choice-num">①</span>
-                        <input type="text" class="form-control" placeholder="선택지 1번 내용">
-                        <input type="radio" name="correct_ans_${subQCount}" value="1"> 정답
-                    </div>
-                     <div class="choice-row">
-                        <span class="choice-num">②</span>
-                        <input type="text" class="form-control" placeholder="선택지 2번 내용">
-                        <input type="radio" name="correct_ans_${subQCount}" value="2">
-                    </div>
-                     <div class="choice-row">
-                        <span class="choice-num">③</span>
-                        <input type="text" class="form-control" placeholder="선택지 3번 내용">
-                        <input type="radio" name="correct_ans_${subQCount}" value="3">
-                    </div>
-                     <div class="choice-row">
-                        <span class="choice-num">④</span>
-                        <input type="text" class="form-control" placeholder="선택지 4번 내용">
-                        <input type="radio" name="correct_ans_${subQCount}" value="4">
-                    </div>
-                     <div class="choice-row">
-                        <span class="choice-num">⑤</span>
-                        <input type="text" class="form-control" placeholder="선택지 5번 내용">
-                        <input type="radio" name="correct_ans_${subQCount}" value="5">
-                    </div>
+                    <!-- Choices dynamically rendered by JS -->
                 </div>
 
                 <div class="essay-container mt-15" id="essay-options-div-${subQCount}" style="display: none;">
@@ -348,6 +346,7 @@
                 </div>
             `;
             container.appendChild(newBlock);
+            renderChoices(subQCount);
         }
     </script>
 </body>
