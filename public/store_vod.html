@@ -10,9 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="cart.js"></script>
     <style>
-        .store-hero { background: var(--navy); color: white; padding: 60px 0; text-align: center; }
-        .store-hero h2 { font-size: 32px; font-weight: 800; margin-bottom: 15px; }
-        .store-hero p { font-size: 16px; opacity: 0.8; }
+        .store-hero { background: var(--navy); color: white; padding: 60px 0 40px; text-align: center; }
+        .store-hero h2 { font-size: 32px; font-weight: 900; margin-bottom: 12px; }
+        .store-hero p { font-size: 16px; opacity: 0.8; margin-bottom: 25px; }
+        
+        .store-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .store-tab {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); 
+            color: rgba(255,255,255,0.7); font-weight: 700; font-size: 15px;
+            padding: 12px 24px; border-radius: 30px; cursor: pointer; transition: 0.2s;
+        }
+        .store-tab:hover { background: rgba(255,255,255,0.2); color: white; }
+        .store-tab.active { background: #E91E63; border-color: #E91E63; color: white; box-shadow: 0 4px 15px rgba(233,30,99,0.3); }
+
         .store-section { padding: 40px 0; border-bottom: 1px solid #eee; }
         .store-section:nth-child(even) { background: #f9f9f9; }
         .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
@@ -90,7 +100,13 @@
             <h2>정규 VOD & 자료 스토어</h2>
             <p>대치동 최상위권의 비밀, 정규반에서 무제한으로 학습하세요</p>
             
-            <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,215,0,0.3); border-radius:12px; padding:20px; max-width:600px; margin:25px auto 0; display:flex; align-items:center; gap:20px; text-align:left;">
+            <!-- Store Tabs -->
+            <div class="store-tabs">
+                <button class="store-tab active" id="tab-b2c" onclick="switchStore('b2c')"><i class="fas fa-user-graduate"></i> B2C 학생·학부모 전용</button>
+                <button class="store-tab" id="tab-b2b" onclick="switchStore('b2b')"><i class="fas fa-store-alt"></i> B2B 가맹 (대량구매)</button>
+            </div>
+            
+            <div id="point-info-box" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,215,0,0.3); border-radius:12px; padding:20px; max-width:600px; margin:25px auto 0; display:flex; align-items:center; gap:20px; text-align:left;">
                 <div style="font-size:36px; color:#FFD700;"><i class="fas fa-gem"></i></div>
                 <div>
                     <h4 style="font-size:16px; font-weight:bold; color:#FFD700; margin-bottom:5px;">라운지에서 획득한 KATCH 포인트 사용 안내</h4>
@@ -99,6 +115,9 @@
             </div>
         </div>
     </div>
+
+    <!-- B2C STORE (Default) -->
+    <div id="store-b2c">
 
     <!-- Section 1: General Free VODs -->
     <div class="store-section">
@@ -457,6 +476,98 @@
             </div>
         </div>
     </div>
+    </div> <!-- END B2C STORE -->
+
+    <!-- B2B STORE (Hidden by default) -->
+    <div id="store-b2b" style="display:none; padding:40px 0; background:#f4f6f8; min-height:600px;">
+        <div class="container">
+            <div style="text-align:center; margin-bottom:40px;">
+                <h3 style="font-size:26px; font-weight:900; color:#111; margin-bottom:10px;">가맹 학원 전용 대량 구매 혜택</h3>
+                <p style="font-size:15px; color:#555;">KATCH 플랫폼 도입으로 원장님의 학원 경쟁력을 극대화하세요.<br>대량 구매 시 파격적인 할인과 가맹 전용 온라인 LMS 권한이 제공됩니다.</p>
+            </div>
+            
+            <!-- B2B Plans -->
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; max-width:1000px; margin:0 auto;">
+                
+                <!-- Plan 1 -->
+                <div style="background:white; border-radius:16px; border:1px solid #ddd; overflow:hidden; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.05); transition:transform 0.3s;">
+                    <div style="background:#5c6bc0; padding:25px; text-align:center; color:white;">
+                        <div style="font-size:14px; font-weight:700; opacity:0.9; margin-bottom:5px;">수단비 정규 도입</div>
+                        <div style="font-size:24px; font-weight:900;">B2B STARTER 패키지</div>
+                        <div style="font-size:13px; margin-top:8px; background:rgba(255,255,255,0.2); display:inline-block; padding:4px 12px; border-radius:20px;">20% 특별 할인</div>
+                    </div>
+                    <div style="padding:25px;">
+                        <ul style="list-style:none; padding:0; margin:0 0 25px; display:flex; flex-direction:column; gap:12px;">
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div><strong>수단비 교재 50권</strong> (난이도 선택 가능)</div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>원장/강사용 <strong>지도서 2부 무료</strong></div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>KATCH 온라인 <strong>LMS 1개월 사용권</strong></div></li>
+                        </ul>
+                        <button style="width:100%; padding:14px; border:none; border-radius:8px; background:#111; color:white; font-size:15px; font-weight:800; cursor:pointer;" onclick="openB2bModal('STARTER 패키지')">1:1 구매 및 상담 신청</button>
+                    </div>
+                </div>
+
+                <!-- Plan 2 (Popular) -->
+                <div style="background:white; border-radius:16px; border:2px solid #E91E63; overflow:hidden; position:relative; box-shadow:0 15px 40px rgba(233,30,99,0.15); transform:scale(1.05); z-index:2;">
+                    <div style="position:absolute; top:0; left:50%; transform:translate(-50%, -50%); background:#E91E63; color:white; font-size:12px; font-weight:900; padding:4px 16px; border-radius:20px;">BEST SELLER</div>
+                    <div style="background:linear-gradient(135deg, #111, #1e2d5a); padding:30px 25px; text-align:center; color:white;">
+                        <div style="font-size:14px; font-weight:700; color:#FFD700; margin-bottom:5px;">수단비 + 앤솔로지 종합 도입</div>
+                        <div style="font-size:24px; font-weight:900;">B2B PRO 패키지</div>
+                        <div style="font-size:13px; margin-top:8px; background:rgba(233,30,99,0.4); display:inline-block; padding:4px 12px; border-radius:20px;">30% 파격 할인</div>
+                    </div>
+                    <div style="padding:25px;">
+                        <ul style="list-style:none; padding:0; margin:0 0 25px; display:flex; flex-direction:column; gap:12px;">
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div><strong>수단비+앤솔로지 100권</strong> (자유 구성)</div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>원장/강사용 <strong>지도서 5부 무료</strong></div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>KATCH 온라인 <strong>LMS 6개월 사용권</strong></div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>진단평가 500회 무료 크레딧 제공</div></li>
+                        </ul>
+                        <button style="width:100%; padding:14px; border:none; border-radius:8px; background:#E91E63; color:white; font-size:15px; font-weight:800; cursor:pointer;" onclick="openB2bModal('PRO 패키지')">1:1 구매 및 상담 신청</button>
+                    </div>
+                </div>
+
+                <!-- Plan 3 -->
+                <div style="background:white; border-radius:16px; border:1px solid #ddd; overflow:hidden; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.05); transition:transform 0.3s;">
+                    <div style="background:#202e5b; padding:25px; text-align:center; color:white;">
+                        <div style="font-size:14px; font-weight:700; opacity:0.9; margin-bottom:5px;">전면 가맹 시스템 도입</div>
+                        <div style="font-size:24px; font-weight:900;">B2B ENTERPRISE</div>
+                        <div style="font-size:13px; margin-top:8px; background:rgba(255,255,255,0.2); display:inline-block; padding:4px 12px; border-radius:20px;">별도 견적 상담</div>
+                    </div>
+                    <div style="padding:25px;">
+                        <ul style="list-style:none; padding:0; margin:0 0 25px; display:flex; flex-direction:column; gap:12px;">
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>교재 및 콘텐츠 <strong>연간 무제한 공급</strong> 계약</div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>KATCH 학원명 <strong>화이트라벨 LMS 구축</strong></div></li>
+                            <li style="font-size:14px; color:#333; display:flex; gap:10px;"><i class="fas fa-check text-green" style="margin-top:3px;"></i> <div>연 2회 오프라인 모의고사 우선 공급</div></li>
+                        </ul>
+                        <button style="width:100%; padding:14px; border:1.5px solid #111; border-radius:8px; background:white; color:#111; font-size:15px; font-weight:800; cursor:pointer;" onclick="openB2bModal('ENTERPRISE 패키지')">가맹 제휴 상담 예약</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- END B2B STORE -->
+
+    <!-- B2B Consultation Modal -->
+    <div id="b2b-modal" class="point-modal">
+        <div class="p-modal-content" style="width:500px;">
+            <div class="p-modal-head" style="background:linear-gradient(135deg, #111, #1e2d5a);">
+                <i class="fas fa-handshake"></i> 가맹/대량구매 상담 신청
+            </div>
+            <div class="p-modal-body" style="text-align:left; padding:25px 30px;">
+                <p style="font-size:14px; color:#555; margin-bottom:20px; text-align:center;">선택하신 <strong id="b2b-pkg-name" style="color:#E91E63;"></strong>의 상세 견적서 안내와 결제를 위해 상담을 신청합니다.</p>
+                <div style="display:flex; flex-direction:column; gap:15px;">
+                    <div><label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">학원명 *</label><input type="text" placeholder="예: 미래영수학원" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;"></div>
+                    <div><label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">원장/담당자명 *</label><input type="text" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;"></div>
+                    <div><label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">연락처 *</label><input type="text" placeholder="010-0000-0000" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;"></div>
+                    <div><label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">원생 규모</label><select style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;"><option>50명 이하</option><option>50~100명</option><option>100명~200명</option><option>200명 이상</option></select></div>
+                    <div><label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">추가 문의사항</label><textarea style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; min-height:60px;" placeholder="배송지나 희망 교재 리스트를 적어주세요."></textarea></div>
+                </div>
+            </div>
+            <div class="p-modal-foot">
+                <button class="p-modal-btn cancel" onclick="document.getElementById('b2b-modal').style.display='none';">취소</button>
+                <button class="p-modal-btn confirm" style="background:#111; color:white;" onclick="alert('상담 신청이 접수되었습니다. 담당자가 곧 연락드리겠습니다.'); document.getElementById('b2b-modal').style.display='none';">상담 예약 및 신청</button>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Purchase Modal -->
@@ -537,6 +648,27 @@
 
         function closeSuccessModal() {
             document.getElementById('success-modal').style.display = 'none';
+        }
+
+        function switchStore(type) {
+            if (type === 'b2c') {
+                document.getElementById('tab-b2c').classList.add('active');
+                document.getElementById('tab-b2b').classList.remove('active');
+                document.getElementById('store-b2c').style.display = 'block';
+                document.getElementById('store-b2b').style.display = 'none';
+                document.getElementById('point-info-box').style.display = 'flex';
+            } else {
+                document.getElementById('tab-b2b').classList.add('active');
+                document.getElementById('tab-b2c').classList.remove('active');
+                document.getElementById('store-b2c').style.display = 'none';
+                document.getElementById('store-b2b').style.display = 'block';
+                document.getElementById('point-info-box').style.display = 'none';
+            }
+        }
+
+        function openB2bModal(pkgName) {
+            document.getElementById('b2b-pkg-name').textContent = pkgName;
+            document.getElementById('b2b-modal').style.display = 'flex';
         }
 
         function confirmPurchase() {
