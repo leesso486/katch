@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 통합 대시보드</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        /* Master Toggle Switch */
+        .view-toggle-area {
+            background: white;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .toggle-switch {
+            display: inline-flex;
+            background: #eef2f6;
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .toggle-btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 15px;
+            color: #666;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn.active {
+            background: var(--navy);
+            color: white;
+            box-shadow: 0 4px 10px rgba(17, 17, 17, 0.3);
+        }
+
+        /* Dashboard Container */
+        .dash-container {
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        /* Streak Banner */
+        .streak-banner {
+            background: linear-gradient(135deg, var(--navy), #2c3e50);
+            border-radius: 12px;
+            padding: 25px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .streak-info h2 { font-size: 24px; font-weight: 900; margin-bottom: 5px; }
+        .streak-info p { font-size: 15px; opacity: 0.9; }
+        .streak-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Widget Grid */
+        .widget-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .widget-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e0e4e8;
+            transition: transform 0.2s;
+        }
+        .widget-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .widget-header h3 { font-size: 16px; font-weight: 800; color: #333; display: flex; align-items: center; gap:8px;}
+        .widget-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 16px; }
+
+        .w-time .widget-icon { background: #e3f2fd; color: #1976d2; }
+        .w-vod .widget-icon { background: #fce4ec; color: #e91e63; }
+        .w-ai .widget-icon { background: #e8f5e9; color: #4caf50; }
+
+        .widget-value { font-size: 28px; font-weight: 900; color: #111; margin-bottom: 5px; }
+        .widget-desc { font-size: 13px; color: #888; }
+
+        .vod-title { font-size: 15px; font-weight: bold; color: #333; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .vod-meta { font-size: 12px; color: #666; margin-bottom: 15px; }
+        .progress-bg { background: #eee; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 10px;}
+        .progress-bar { background: #e91e63; height: 100%; border-radius: 3px; }
+
+        /* Common Panel */
+        .dash-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e0e4e8;
+            height: 100%;
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #111;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* --- STUDENT VIEW UI --- */
+        #studentView {
+            display: block;
+        }
+
+        /* Exam List */
+        .exam-history-list { display: flex; flex-direction: column; gap: 15px; }
+        .eh-item { border: 1px solid #eee; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .eh-item:hover { border-color: var(--navy); background: #f8fbff; }
+        .eh-badge { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 900; margin-right: 10px; }
+        .bg-online { background: #e8eaf6; color: #3f51b5; border: 1px solid #c5cae9; }
+        .bg-offline { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
+        .eh-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .eh-meta { font-size: 13px; color: #888; }
+        .eh-score { font-size: 24px; font-weight: 900; color: var(--navy); }
+
+        /* Prescriptive UI */
+        .prescription-box { background: #fff9e6; border: 1px solid #ffe0b2; border-radius: 8px; padding: 20px; margin-top: 20px; display: flex; align-items: flex-start; gap: 15px; }
+        .prescription-box i { font-size: 24px; color: #ff9800; margin-top: 5px; }
+        .p-content h4 { font-size: 16px; color: #e65100; margin-bottom: 5px; font-weight: bold; }
+        .p-content p { font-size: 14px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+
+        /* --- TEACHER VIEW UI --- */
+        #teacherView { display: none; }
+        .filter-bar { display: flex; gap: 15px; margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px; }
+        .filter-bar select { padding: 10px 15px; border-radius: 6px; border: 1px solid #ccc; font-family: inherit; font-size: 14px; min-width: 200px; outline: none; }
+
+        .teacher-table { width: 100%; border-collapse: collapse; }
+        .teacher-table th { background: var(--navy); color: white; padding: 12px 15px; text-align: left; font-size: 14px; }
+        .teacher-table th:first-child { border-radius: 8px 0 0 0; }
+        .teacher-table th:last-child { border-radius: 0 8px 0 0; }
+        .teacher-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 15px; color: #333; vertical-align: middle; }
+        .teacher-table tbody tr:hover { background: #f8fbff; }
+
+        .var-up { color: #2196F3; font-weight: bold; }
+        .var-down { color: #f44336; font-weight: bold; }
+
+        .btn-consult { background: white; border: 1px solid var(--navy); color: var(--navy); padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-consult:hover { background: var(--navy); color: white; }
+
+        /* --- CONSULTATION MODAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: white; width: 900px; max-height: 90vh; border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; transform: translateY(20px); transition: 0.3s; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-header { background: var(--navy); color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 20px; margin: 0; }
+        .btn-close { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .modal-body { padding: 30px; overflow-y: auto; flex: 1; }
+
+        /* Killer Question UI */
+        .killer-box { background: #fff0f2; border: 1px solid #ffccd5; border-radius: 12px; padding: 25px; margin-bottom: 30px; }
+        .killer-box h3 { color: #e91e63; font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .script-box { background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #e91e63; font-size: 15px; color: #333; line-height: 1.6; font-weight: 500; }
+
+        .correction-table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #eee; }
+        .correction-table th { background: #f8f9fa; padding: 12px; border-bottom: 2px solid #ddd; font-size: 13px; color: #555; }
+        .correction-table td { padding: 12px; border-bottom: 1px solid #eee; text-align: center; font-size: 15px; }
+        .ans-wrong { color: #f44336; text-decoration: line-through; font-weight: bold; }
+        .ans-correct { color: #4CAF50; font-weight: bold; }
+        .err-rate { font-size: 13px; color: #888; background: #f5f5f5; padding: 2px 8px; border-radius: 10px; }
+        .err-high { color: #fff; background: #e91e63; font-weight: bold; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="bg-white" style="border-bottom: 1px solid #eee; padding: 15px 0;">
+        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:24px; color:var(--navy); margin:0;" class="logo-text">
+                        KATCH<span style="color:#E91E63;">.</span></h1>
+                </a>
+            </div>
+            <a href="index.html" style="color:#555; text-decoration:none; font-weight:bold;"><i class="fas fa-home"></i> 홈 화면으로</a>
+            <div class="dash-container">
+        
+        <div class="streak-banner">
+            <div class="streak-info">
+                <h2>이준호 학생, 환영합니다!</h2>
+                <p>오늘도 KATCH와 함께 수능 성공에 한 걸음 더 다가가세요.</p>
+            </div>
+            <div class="streak-badge">
+                <span style="font-size:24px;">🔥</span> 이번 주 연속 출석 3일째!
+            </div>
+        </div>
+
+        <!-- Quick Access Widgets -->
+        <div class="widget-grid">
+            <!-- Study Time -->
+            <div class="widget-card w-time">
+                <div class="widget-header">
+                    <h3>주간 학습 리포트</h3>
+                    <div class="widget-icon"><i class="fas fa-clock"></i></div>
+                </div>
+                <div class="widget-value">12시간 30분</div>
+                <div class="widget-desc">이번 주 총 학습 시간 (목표 달성률 85%)</div>
+                <div class="progress-bg"><div class="progress-bar" style="width: 85%; background:#1976d2;"></div></div>
+            </div>
+
+            <!-- Next VOD -->
+            <div class="widget-card w-vod">
+                <div class="widget-header">
+                    <h3>이어보기 (VOD 특강)</h3>
+                    <div class="widget-icon"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="vod-title">[심화관 시크릿] 빈칸추론 킬러문항 10제 해설강의</div>
+                <div class="vod-meta">3강. 고난도 빈칸 추론 접근법 (15:24 / 45:00)</div>
+                <div class="progress-bg"><div class="progress-bar" style="width: 35%;"></div></div>
+                <a href="store_vod.html" class="btn-sm btn-outline-gray" style="display:block; text-align:center; margin-top:15px; border-color:#e0e0e0;">강의실 입장하기</a>
+            </div>
+
+            <!-- AI Weakness -->
+            <div class="widget-card w-ai">
+                <div class="widget-header">
+                    <h3>AI 맞춤 오답 훈련</h3>
+                    <div class="widget-icon"><i class="fas fa-robot"></i></div>
+                </div>
+                <div style="font-size:14px; color:#555; margin-bottom:10px;">최근 시험 기준, 가장 취약한 유형을 모아 풀기</div>
+                <div style="display:flex; gap:5px; margin-bottom:15px;">
+                    <span class="tag bg-navy text-white text-xs px-10 py-5 rounded-4">어법 (도치)</span>
+                    <span class="tag bg-navy text-white text-xs px-10 py-5 rounded-4">빈칸 추론</span>
+                </div>
+                <button class="btn-sm bg-navy text-white" style="width:100%; border:none; padding:10px;" onclick="location.href='directory.html'"><i class="fas fa-dumbbell"></i> 10제 생성 및 훈련 시작</button>
+            </div>
+        </div>
+
+        <!-- NEW ANALYSIS DASHBOARD (Based on User Image 1) -->
+        <h2 style="font-size: 24px; margin: 30px 0 20px; color: var(--navy);"><i class="fas fa-chart-bar" style="color:#5D9CEC;"></i> 학생 성적 및 오답 분석 대시보드 (이준호 학생)</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            
+            <!-- Chart 1: 전체 문항 오답률 현황 (GR 영역) -->
+            <div class="dash-panel" style="padding: 20px;">
+                <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-search"></i> 전체 문항 오답률 현황 (GR 영역)</div>
+                <div style="display:flex; justify-content:space-between; gap:15px;">
+                    <!-- Col 1 -->
+                    <div style="flex:1;">
+                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">오답률 (%)</div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q1</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:29%;"></div><div class="hz-val absolute-left">29%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q2</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:78%;"></div><div class="hz-val absolute-left">78%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q3</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:45%;"></div><div class="hz-val absolute-left">45%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q4</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:45%;"></div><div class="hz-val absolute-left">45%</div></div></div>
+                    </div>
+                    <!-- Col 2 -->
+                    <div style="flex:1;">
+                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">오답률 (%)</div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q5</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:45%;"></div><div class="hz-val absolute-left">45%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q6</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:67%;"></div><div class="hz-val absolute-left">67%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q7</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:82%;"></div><div class="hz-val absolute-left">82%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q8</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:25%;"></div><div class="hz-val absolute-left">25%</div></div></div>
+                    </div>
+                    <!-- Col 3 -->
+                    <div style="flex:1;">
+                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">오답률 (%)</div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q9</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:78%;"></div><div class="hz-val absolute-left">78%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q10</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:91%;"></div><div class="hz-val absolute-left">91%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q11</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:63%;"></div><div class="hz-val absolute-left">63%</div></div></div>
+                        <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q12</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:47%;"></div><div class="hz-val absolute-left">47%</div></div></div>
+                    </div>
+                </div>
+                <div style="text-align:center; margin-top:10px;"><img src="https://via.placeholder.com/200x1?text=+" style="width:100%; height:1px; opacity:0;"> <!-- 0 20 40 60 80 100 axis visual --> 
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:#999; border-top:1px solid #ddd; padding-top:5px; margin:0 10px;">
+                    <span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span>
+                </div></div>
+            </div>
+
+            <!-- Chart 2: 나의 성적 추이 (최근 5회 과제) -->
+            <div class="dash-panel" style="padding: 20px;">
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-line" style="color:#5D9CEC;"></i> 나의 성적 추이 (최근 5회 과제)</div>
+                <div style="height: 200px;">
+                    <canvas id="scoreTrendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 3: 영역별 전체 평균 vs. 나의 평균 비교 -->
+            <div class="dash-panel" style="padding: 20px;">
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> 영역별 전체 평균 vs. 나의 평균 비교</div>
+                <div style="height: 200px;">
+                    <canvas id="avgCompareChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 4: 나의 오답 유형 vs. 전체 오답 유형 TOP 3 -->
+            <div class="dash-panel" style="padding: 20px;">
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#4FC1E9;"></i> 나의 오답 유형 vs. 전체 오답 유형 TOP 3</div>
+                <div style="height: 200px;">
+                    <canvas id="errTypeTop3Chart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="dash-panel" style="margin-top:20px;">
+            <div class="panel-title">최근 응시 이력 <span style="font-size:14px; color:var(--navy); font-weight:normal; cursor:pointer;" onclick="location.href='report_premium.html'">상세 성적표 모아보기 <i class="fas fa-angle-right"></i></span></div>
+            <div class="exam-history-list">
+                <div class="eh-item">
+                    <div>
+                        <div class="eh-title"><span class="eh-badge bg-online">온라인</span> 제 3회 KATCH 모의고사 (영어)</div>
+                        <div class="eh-meta">2026.04.15 | KATCH 플랫폼 응시</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div class="eh-score">84<span style="font-size:14px; color:#888;">점</span></div>
+                        <a href="report_premium.html" style="font-size:12px; color:var(--navy); font-weight:bold; text-decoration:none;">성적표 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Chart 2: 나의 성적 추이
+            new Chart(document.getElementById('scoreTrendChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['3/2', '3/9', '3/16', '3/23', '3/30'],
+                    datasets: [{
+                        label: '나의 점수',
+                        data: [68, 72, 65, 78, 82],
+                        type: 'bar',
+                        backgroundColor: '#4A89DC',
+                        borderRadius: 2,
+                        barPercentage: 0.6,
+                        order: 2
+                    }, {
+                        label: '전체 평균',
+                        data: [65, 70, 62, 75, 80],
+                        type: 'line',
+                        borderColor: '#F6BB42',
+                        backgroundColor: '#F6BB42',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#F6BB42',
+                        pointRadius: 4,
+                        fill: false,
+                        tension: 0,
+                        order: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
+                    scales: { y: { min: 0, max: 100 } }
+                }
+            });
+
+            // Chart 3: 영역별 전체 평균 vs. 나의 평균 비교
+            new Chart(document.getElementById('avgCompareChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['독해력', '어휘', '문법'],
+                    datasets: [{
+                        label: '전체 평균',
+                        data: [75, 80, 65],
+                        backgroundColor: '#4A89DC',
+                        borderRadius: 2
+                    }, {
+                        label: '나의 평균',
+                        data: [68, 75, 72],
+                        backgroundColor: '#F6BB42',
+                        borderRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
+                    scales: { y: { min: 0, max: 100 } }
+                }
+            });
+
+            // Chart 4: 나의 오답 유형 vs. 전체 오답 유형 TOP 3
+            new Chart(document.getElementById('errTypeTop3Chart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['추론/문법', '독해력', '문법/논리'],
+                    datasets: [{
+                        label: '전체 오답률 (%)',
+                        data: [40, 40, 15],
+                        backgroundColor: '#4A89DC',
+                        borderRadius: 2
+                    }, {
+                        label: '나의 오답률 (%)',
+                        data: [45, 60, 25],
+                        backgroundColor: '#F6BB42',
+                        borderRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
+                    scales: { y: { min: 0, max: 100 } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

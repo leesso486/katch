@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - KNS 프리미엄 라운지</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f4f6f9; }
+        
+        /* PB Lounge specific styles */
+        .pb-hero { background: linear-gradient(135deg, #0e1a35 0%, #1A237E 100%); color: white; padding: 60px 0 40px; position:relative; overflow:hidden; }
+        .pb-hero::after { content:''; position:absolute; bottom:-20px; right:-20px; width:300px; height:300px; background:rgba(255,215,0,0.05); border-radius:50%; }
+        .pb-title { font-family: 'Times New Roman', serif; font-size: 36px; font-weight: bold; margin-bottom: 10px; color:#d4af37; letter-spacing: 1px; }
+        
+        .lounge-wrapper { display: flex; gap: 30px; }
+        .pb-sidebar { width: 300px; flex-shrink: 0; }
+        .pb-main { flex: 1; min-width: 0; }
+        
+        /* Membership Card */
+        .member-card { background: linear-gradient(160deg, #0d1b3e 0%, #1A237E 60%, #0d47a1 100%); border-radius: 18px; padding: 26px; color: white; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(26,35,126,0.4); transform: translateY(-30px); margin-bottom: -10px; border: 1px solid rgba(212,175,55,0.25); }
+        .member-card::before { content: ''; position: absolute; top:-30px; right:-30px; width:200px; height:200px; background:radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(0,0,0,0) 70%); }
+        .member-card::after { content: 'KATCH'; position:absolute; bottom:10px; right:15px; font-size:80px; font-weight:900; color:rgba(255,255,255,0.03); font-family:'Montserrat',sans-serif; pointer-events:none; }
+        .mc-tier { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #d4af37; font-weight: bold; margin-bottom: 5px; }
+        .mc-name { font-size: 22px; font-weight: 300; margin-bottom: 25px; letter-spacing: 1px; }
+        .mc-points { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 5px; font-family: 'Arial', sans-serif;}
+        .mc-points span { font-size: 16px; font-weight: normal; color: #aaa; }
+        .mc-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 20px; font-size: 13px; color:#ccc; }
+        .btn-charge { background: #d4af37; color: #000; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size:12px; }
+        .btn-charge:hover { background: #f1c40f; }
+
+        /* Navigation Menu */
+        .pb-nav { background: white; border-radius: 12px; padding: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 30px; }
+        .pb-nav-title { font-size: 12px; color: #888; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 0 20px 10px; margin-top: 10px; }
+        .pb-nav ul { list-style: none; padding: 0; margin: 0; }
+        .pb-nav li a { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: #444; text-decoration: none; font-weight: 600; transition: 0.2s; border-left: 3px solid transparent; }
+        .pb-nav li a:hover, .pb-nav li.active a { background: #f8f9fa; color: #1A237E; border-left-color: #1A237E; }
+        .pb-nav li i { width: 20px; text-align: center; color: #888; }
+        .pb-nav li.active i { color: #1A237E; }
+
+        /* Magazine Layout */
+        .mag-section { margin-bottom: 40px; }
+        .mag-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #1A237E; padding-bottom: 15px; margin-bottom: 20px; }
+        .mag-title { font-size: 24px; font-weight: 900; color: #111; margin: 0; }
+        .mag-subtitle { font-size: 14px; color: #666; margin-left: 10px; font-weight: normal; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+        .mag-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.2s; border: 1px solid #eee; display:flex; flex-direction:column; }
+        .mag-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .mc-img { height: 180px; background: #e0e4e8; position: relative; display:flex; align-items:center; justify-content:center; }
+        .mc-img.video-thumb::after { content: '\f144'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:rgba(255,255,255,0.8); }
+        .mc-badge { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.8); color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        .mc-badge.gold { background: linear-gradient(135deg, #d4af37, #f1c40f); color: #000; box-shadow: 0 2px 10px rgba(212,175,55,0.4); }
+        .mc-body { padding: 20px; flex:1; display:flex; flex-direction:column; justify-content:space-between;}
+        .mc-body h4 { font-size: 18px; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color:#222; }
+        .mc-body p { font-size: 14px; color: #666; line-height: 1.5; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+        .mc-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; font-size: 13px; color: #888; font-weight: 600; }
+        .mc-price { color: #d4af37; font-weight: bold; font-size: 16px; }
+
+        /* Daechi Life List */
+        .dl-list { list-style: none; padding: 0; margin: 0; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #eee; }
+        .dl-item { display: flex; padding: 20px; border-bottom: 1px solid #eee; gap: 20px; align-items: center; }
+        .dl-item:last-child { border-bottom: none; }
+        .dl-thumb { width: 100px; height: 100px; border-radius: 8px; background: #f0f0f0; flex-shrink: 0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size:24px;}
+        .dl-content { flex: 1; }
+        .dl-content h4 { font-size: 16px; font-weight: bold; margin-bottom: 5px; color:#222; }
+        .dl-content p { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .dl-meta span { display: inline-block; background: #f5f5f5; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #555; margin-right: 5px; }
+
+        /* Point Banner */
+        .point-banner { background: #fff9e6; border: 1px solid #ffe0b2; border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .point-banner h3 { font-size: 18px; color: #e65100; margin-bottom: 5px; }
+        .point-banner p { font-size: 14px; color: #666; }
+        .btn-write { background: #e65100; color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 10px rgba(230,81,0,0.2); }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
+        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center; padding:15px 0;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:28px; color:#1A237E; margin:0;">KATCH<span style="color:#2196F3;">.</span></h1>
+                </a>
+            </div>
+            <nav class="gnb-links" style="display:flex; gap:30px; font-weight:700;">
+                <a href="student_diagnostics.html" style="color:#333; text-decoration:none;">진단테스트</a>
+                <a href="directory.html" style="color:#333; text-decoration:none;">문제은행</a>
+                <a href="store_vod.html" style="color:#333; text-decoration:none;">VOD 특강/교재</a>
+                <a href="lounge.html" style="color:#d4af37; text-decoration:none; border-bottom:2px solid #d4af37; padding-bottom:5px;"><i class="fas fa-crown"></i> 프리미엄 라운지</a>
+            </nav>
+            <div class="header-utils">
+                <a href="dashboard_student.html" style="color:#333; font-size:20px;"><i class="fas fa-user-circle"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pb-hero">
+        <div class="container text-center">
+            <h2 class="pb-title">Private Education Lounge</h2>
+            <p style="font-size:16px; opacity:0.9; font-weight:300;">KNS 최상위권 데이터가 모이는 입시 전략의 허브.<br>우리 아이의 완벽한 로드맵을 설계하세요.</p>
+        </div>
+    </section>
+
+    <div class="container" style="padding-bottom: 80px;">
+        <div class="lounge-wrapper">
+            <!-- Sidebar -->
+            <aside class="pb-sidebar">
+                <!-- Member Card -->
+                <div class="member-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px;">
+                        <div>
+                            <div class="mc-tier"><i class="fas fa-gem"></i> PLATINUM VIP</div>
+                            <div class="mc-name"><strong>대원맘VIP</strong> 님</div>
+                        </div>
+                        <div style="background:linear-gradient(135deg,#d4af37,#f1c40f); border-radius:8px; padding:6px 12px; color:#000; font-weight:900; font-size:12px; text-align:center; line-height:1.3;">등급<br>PLAT</div>
+                    </div>
+                    <div style="font-size:11px; color:#aaa; margin-bottom:4px;">사용 가능 KATCH 포인트</div>
+                    <div class="mc-points" style="margin-bottom:4px;">1,500 <span>P</span></div>
+                    <div style="font-size:11px; color:#d4af37; margin-bottom:14px;">총 누적 3,200P · 이번달 +850P</div>
+                    <!-- Level progress -->
+                    <div style="font-size:11px; color:#bbb; margin-bottom:5px; display:flex; justify-content:space-between;"><span>DIAMOND까지</span><span>2,800P 더 필요</span></div>
+                    <div style="background:rgba(255,255,255,0.12); height:6px; border-radius:3px; margin-bottom:14px;"><div style="width:53%; height:100%; background:linear-gradient(90deg,#d4af37,#f1c40f); border-radius:3px;"></div></div>
+                    <div style="display:flex; justify-content:space-between; gap:8px; margin-bottom:14px;">
+                        <div style="text-align:center; flex:1; background:rgba(255,255,255,0.07); border-radius:8px; padding:8px;"><div style="font-size:14px; font-weight:900; color:#FFD54F;">12</div><div style="font-size:10px; color:#bbb;">이용 회차</div></div>
+                        <div style="text-align:center; flex:1; background:rgba(255,255,255,0.07); border-radius:8px; padding:8px;"><div style="font-size:14px; font-weight:900; color:#69f0ae;">4</div><div style="font-size:10px; color:#bbb;">이번달 미션</div></div>
+                        <div style="text-align:center; flex:1; background:rgba(255,255,255,0.07); border-radius:8px; padding:8px;"><div style="font-size:14px; font-weight:900; color:#ff80ab;">3</div><div style="font-size:10px; color:#bbb;">다운로드</div></div>
+                    </div>
+                    <div class="mc-footer">
+                        <span><i class="fas fa-user-graduate"></i> 예비중3</span>
+                        <button class="btn-charge" onclick="alert('포인트 충전 화면으로 이동합니다.')">충전하기</button>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="pb-nav">
+                    <div class="pb-nav-title">Magazine</div>
+                    <ul>
+                        <li class="active"><a href="lounge.html"><i class="fas fa-newspaper"></i> KATCH 인사이트 (칼럼)</a></li>
+                        <li><a href="store_vod.html"><i class="fas fa-video"></i> 시크릿 VOD / 라이브</a></li>
+                        <li><a href="lounge.html"><i class="fas fa-chart-line"></i> 대치동 입시 팩트체크</a></li>
+                    </ul>
+                    <div class="pb-nav-title">Resource Hub</div>
+                    <ul>
+                        <li><a href="directory.html"><i class="fas fa-file-download"></i> 상위 1% 오답노트 자료실</a></li>
+                        <li><a href="directory.html"><i class="fas fa-book-reader"></i> 수능/내신 기출 분석실</a></li>
+                    </ul>
+                    <div class="pb-nav-title">Daechi Life</div>
+                    <ul>
+                        <li><a href="lounge.html"><i class="fas fa-coffee"></i> 픽업 & 카페 가이드</a></li>
+                        <li><a href="lounge.html"><i class="fas fa-store-alt"></i> 로컬 맛집 / 이벤트</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Weekly Mission Board -->
+                <div style="background:white; border-radius:12px; padding:18px; box-shadow:0 4px 15px rgba(0,0,0,0.04); border:1px solid #e0e4e8; margin-top:18px;">
+                    <div style="font-size:14px; font-weight:900; color:#111; margin-bottom:14px;"><i class="fas fa-tasks" style="color:#d4af37;"></i> 이번 주 미션</div>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="display:flex; align-items:center; gap:10px; padding:8px; background:#e8f5e9; border-radius:8px;">
+                            <i class="fas fa-check-circle" style="color:#4CAF50;"></i>
+                            <div style="flex:1; font-size:13px; font-weight:700; color:#2e7d32;">로그인 3일 연속 <span style="color:#666; font-weight:400;">완료!</span></div>
+                            <span style="font-size:12px; color:#4CAF50; font-weight:900;">+100P</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px; padding:8px; background:#f5f5f5; border-radius:8px;">
+                            <i class="fas fa-circle" style="color:#ddd;"></i>
+                            <div style="flex:1; font-size:13px; color:#555;">칼럼 1편 읽기</div>
+                            <span style="font-size:12px; color:#888;">+50P</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px; padding:8px; background:#f5f5f5; border-radius:8px;">
+                            <i class="fas fa-circle" style="color:#ddd;"></i>
+                            <div style="flex:1; font-size:13px; color:#555;">후기 글 작성하기</div>
+                            <span style="font-size:12px; color:#888;">+500P</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px; padding:8px; background:#f5f5f5; border-radius:8px;">
+                            <i class="fas fa-circle" style="color:#ddd;"></i>
+                            <div style="flex:1; font-size:13px; color:#555;">VOD 30분 이상 시청</div>
+                            <span style="font-size:12px; color:#888;">+200P</span>
+                        </div>
+                    </div>
+                    <a href="#" style="display:block; text-align:center; margin-top:12px; padding:9px; background:#1A237E; color:white; border-radius:8px; text-decoration:none; font-weight:700; font-size:13px;"><i class="fas fa-bolt"></i> 미션하고 포인트 받기</a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="pb-main mt-40">
+
+                <!-- Content Category Tabs -->
+                <div style="display:flex; gap:0; background:white; border-radius:12px; padding:4px; margin-bottom:22px; box-shadow:0 4px 15px rgba(0,0,0,0.04); border:1px solid #e0e4e8; overflow-x:auto;">
+                    <button class="lounge-tab active" onclick="setLoungeTab(this, 'all')" style="flex:1; padding:11px 8px; background:#1A237E; color:white; border:none; border-radius:8px; font-weight:900; font-size:13px; cursor:pointer; white-space:nowrap;">전체</button>
+                    <button class="lounge-tab" onclick="setLoungeTab(this, 'strategy')" style="flex:1; padding:11px 8px; background:none; border:none; color:#555; font-weight:700; font-size:13px; cursor:pointer; border-radius:8px; white-space:nowrap; transition:0.2s;">대입전략</button>
+                    <button class="lounge-tab" onclick="setLoungeTab(this, 'school')" style="flex:1; padding:11px 8px; background:none; border:none; color:#555; font-weight:700; font-size:13px; cursor:pointer; border-radius:8px; white-space:nowrap; transition:0.2s;">내신관리</button>
+                    <button class="lounge-tab" onclick="setLoungeTab(this, 'schedule')" style="flex:1; padding:11px 8px; background:none; border:none; color:#555; font-weight:700; font-size:13px; cursor:pointer; border-radius:8px; white-space:nowrap; transition:0.2s;">스케줄러</button>
+                    <button class="lounge-tab" onclick="setLoungeTab(this, 'life')" style="flex:1; padding:11px 8px; background:none; border:none; color:#555; font-weight:700; font-size:13px; cursor:pointer; border-radius:8px; white-space:nowrap; transition:0.2s;">생활TIP</button>
+                </div>
+
+
+                <!-- Point Banner for Community Engagement -->
+                <div class="point-banner">
+                    <div>
+                        <h3><i class="fas fa-coins"></i> 라운지 활동으로 KATCH 포인트를 모으세요!</h3>
+                        <p>입시 후기 작성 시 <strong>+500P</strong>, 합격 & 진학처 공유 시 <strong>+50P</strong> 지급 (자료/VOD 구매시 즉시 사용 가능)</p>
+                    </div>
+                    <a href="lounge.html" class="btn-write">글쓰고 포인트 받기</a>
+                </div>
+
+                <!-- Secret VOD Section -->
+                <section class="mag-section">
+                    <div class="mag-header">
+                        <h2 class="mag-title">Secret Live & VOD <span class="mag-subtitle">오직 라운지 멤버에게만 허락된 시크릿 특강</span></h2>
+                        <a href="lounge.html" style="color:#d4af37; font-weight:bold; font-size:14px; text-decoration:none;">더보기 <i class="fas fa-angle-right"></i></a>
+                    </div>
+                    <div class="grid-2">
+                        <div class="mag-card">
+                            <div class="mc-img video-thumb" style="background:#1A237E;">
+                                <span class="mc-badge">LIVE 다시보기</span>
+                            </div>
+                            <div class="mc-body">
+                                <div>
+                                    <h4>[단독 공개] 2026학년도 수능 영어 예측 및 킬러 문항 대비 전략</h4>
+                                    <p>신동원 원장님이 직접 밝히는 대치동 극상위권의 비밀. 1등급과 2등급을 가르는 단 2문제의 원리를 파헤칩니다.</p>
+                                </div>
+                                <div class="mc-meta">
+                                    <span><i class="fas fa-user-circle"></i> 신동원 원장</span>
+                                    <span class="mc-price"><i class="fas fa-lock text-gray"></i> 라운지 무료</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mag-card" style="cursor:pointer;" onclick="openPointModal()">
+                            <div class="mc-img video-thumb" style="background:#4A148C;">
+                                <span class="mc-badge gold">Premium VOD</span>
+                            </div>
+                            <div class="mc-body">
+                                <div>
+                                    <h4>(구) TEPS 문법은 어떻게 수능 적응력을 높이는가?</h4>
+                                    <p>수능에 직결되는 문법 체계 완성. 왜 대치동 최상위권은 고득점을 위해 TEPS를 고집하는지 설명합니다.</p>
+                                </div>
+                                <div class="mc-meta mt-15">
+                                    <span><i class="fas fa-clock"></i> 45분 (맛보기)</span>
+                                    <span class="mc-price" style="background:#ffe0b2; padding:4px 10px; border-radius:20px; color:#e65100;"><i class="fas fa-lock text-gray"></i> 1,000 P 소진</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Top 1% Resource Hub -->
+                <section class="mag-section">
+                    <div class="mag-header">
+                        <h2 class="mag-title">Top 1% Resource Hub <span class="mag-subtitle">대치동 극상위권들이 가장 많이 틀린 빅데이터 오답노트</span></h2>
+                        <a href="directory.html" style="color:#d4af37; font-weight:bold; font-size:14px; text-decoration:none;">전체 자료실 <i class="fas fa-angle-right"></i></a>
+                    </div>
+                    <div class="grid-3">
+                        <div class="mag-card">
+                            <div class="mc-img" style="height:140px; background:#e8eaf6; color:#5c6bc0; font-size:50px;">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="mc-badge">자료</span>
+                            </div>
+                            <div class="mc-body" style="padding:15px;">
+                                <h4 style="font-size:15px; margin-bottom:5px;">[3월 학평 대비] 고3 영어 오답률 TOP 10 모음집</h4>
+                                <div class="mc-meta mt-10">
+                                    <span style="font-size:12px; color:#aaa;">다운로드 1.2k</span>
+                                    <span class="mc-price" style="font-size:14px;">300 P</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mag-card">
+                            <div class="mc-img" style="height:140px; background:#e8f5e9; color:#4caf50; font-size:50px;">
+                                <i class="fas fa-file-word"></i>
+                                <span class="mc-badge gold">Premium</span>
+                            </div>
+                            <div class="mc-body" style="padding:15px;">
+                                <h4 style="font-size:15px; margin-bottom:5px;">외대부고/대원외고 (예비고) 내신 기출 변형 50제</h4>
+                                <div class="mc-meta mt-10">
+                                    <span style="font-size:12px; color:#aaa;">다운로드 850</span>
+                                    <span class="mc-price" style="font-size:14px;">500 P</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mag-card">
+                            <div class="mc-img" style="height:140px; background:#fff3e0; color:#ff9800; font-size:50px;">
+                                <i class="fas fa-file-archive"></i>
+                                <span class="mc-badge">특강자료</span>
+                            </div>
+                            <div class="mc-body" style="padding:15px;">
+                                <h4 style="font-size:15px; margin-bottom:5px;">KNS 구문독해 에센셜 핵심 포인트 요약집</h4>
+                                <div class="mc-meta mt-10">
+                                    <span style="font-size:12px; color:#aaa;">다운로드 3.5k</span>
+                                    <span class="mc-price" style="font-size:14px;">무료</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Daechi Life -->
+                <section class="mag-section">
+                    <div class="mag-header">
+                        <h2 class="mag-title">Daechi Life <span class="mag-subtitle">아이 학원 기다리는 시간, 우아하고 알차게 보내기</span></h2>
+                    </div>
+                    <ul class="dl-list">
+                        <li class="dl-item">
+                            <div class="dl-thumb"><i class="fas fa-coffee"></i></div>
+                            <div class="dl-content">
+                                <h4>KNS 본원 반경 500m 내 조용히 책 읽기 좋은 카페 BEST 3</h4>
+                                <p>학원 끝날 때까지 2시간, 노트북 작업이나 독서하기 완벽한 공간들을 큐레이션 했습니다.</p>
+                                <div class="dl-meta">
+                                    <span>#대기시간</span><span>#조용한카페</span><span>#주차가능</span>
+                                </div>
+                            </div>
+                            <div style="font-size:13px; color:#888;">
+                                <i class="fas fa-heart text-red"></i> 124
+                            </div>
+                        </li>
+                        <li class="dl-item">
+                            <div class="dl-thumb"><i class="fas fa-utensils"></i></div>
+                            <div class="dl-content">
+                                <h4>아이 픽업 시 가볍게 포장하기 좋은 영양 만점 대체 메뉴</h4>
+                                <p>바쁜 학원 스케쥴 사이사이 차 안에서 직후에 빠르고 건강하게 먹일 수 있는 대치동 로컬 푸드.</p>
+                                <div class="dl-meta">
+                                    <span>#픽업</span><span>#영양식</span><span>#포장할인</span>
+                                </div>
+                            </div>
+                            <div style="font-size:13px; color:#888;">
+                                <i class="fas fa-heart text-red"></i> 89
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Community Write Area -->
+                <section class="mag-section">
+                    <div class="mag-header">
+                        <h2 class="mag-title">커뮤니티 <span class="mag-subtitle">라운지 멤버들과 정보를 나눠요</span></h2>
+                        <button onclick="toggleWriteForm()" style="background:#1A237E; color:white; border:none; padding:9px 18px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:6px;"><i class="fas fa-pen"></i> 글쓰기</button>
+                    </div>
+                    <!-- Write Form (hidden by default) -->
+                    <div id="write-form" style="display:none; background:#f8f9fa; border-radius:12px; padding:20px; margin-bottom:20px; border:1px solid #e0e4e8; animation:slideDown 0.3s ease;">
+                        <select style="width:100%; padding:10px 14px; border:1px solid #ddd; border-radius:8px; font-family:inherit; margin-bottom:10px; font-size:14px;">
+                            <option>카테고리 선택</option>
+                            <option>대입전략</option><option>내신관리</option><option>스케줄러</option><option>생활TIP</option><option>후기/합격공유</option>
+                        </select>
+                        <input type="text" placeholder="제목을 입력하세요" style="width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:8px; font-family:inherit; margin-bottom:10px; font-size:15px;">
+                        <textarea placeholder="내용을 입력하세요... 합격/진학처 공유 시 500P 지급, 칼럼 후기는 50P 지급됩니다." style="width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:8px; font-family:inherit; min-height:100px; resize:vertical; font-size:14px;"></textarea>
+                        <div style="display:flex; gap:10px; margin-top:10px;">
+                            <button onclick="alert('게시글이 등록되었습니다! +50P가 적립되었습니다.'); toggleWriteForm();" style="flex:1; padding:12px; background:#1A237E; color:white; border:none; border-radius:8px; font-weight:900; cursor:pointer; font-size:15px;">등록하기</button>
+                            <button onclick="toggleWriteForm()" style="padding:12px 20px; background:white; border:1px solid #ddd; border-radius:8px; font-weight:700; cursor:pointer; color:#555;">취소</button>
+                        </div>
+                    </div>
+                    <!-- Post list -->
+                    <div style="background:white; border-radius:12px; border:1px solid #e0e4e8; overflow:hidden;">
+                        <div style="padding:16px 20px; border-bottom:1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="this.nextElementSibling.classList.toggle('open')">
+                            <div><span style="background:#e8eaf6; color:#3f51b5; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; margin-right:8px;">대입전략</span><strong style="font-size:15px;">외고 입시 로드맵 정리 (예비중3 기준)</strong></div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:12px; color:#888;"><span>👍 38</span><span>💬 12</span></div>
+                        </div>
+                        <div style="padding:16px 20px; border-bottom:1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <div><span style="background:#e8f5e9; color:#2e7d32; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; margin-right:8px;">합격후기</span><strong style="font-size:15px;">23년도 대원외고 합격 — 영어 준비 방법 공유</strong></div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:12px; color:#888;"><span>👍 94</span><span>💬 31</span></div>
+                        </div>
+                        <div style="padding:16px 20px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <div><span style="background:#fff3e0; color:#e65100; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; margin-right:8px;">생활TIP</span><strong style="font-size:15px;">대치동 스터디카페 vs 독서실 — 중2 아이에게 어디가 나을까요?</strong></div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:12px; color:#888;"><span>👍 22</span><span>💬 8</span></div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background:#1A237E; color:white; padding:40px 0;">
+        <div class="container text-center" style="font-size:13px; opacity:0.7;">
+            ⓒ 2026 KNS Edu. All rights reserved.
+        </div>
+    </footer>
+    <!-- Point Deduction & Monetization Modal -->
+    <div id="point-modal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
+        <div class="modal-content" style="background:white; padding:40px; border-radius:16px; max-width:450px; text-align:center; position:relative;">
+            <button onclick="document.getElementById('point-modal').style.display='none'" style="position:absolute; top:15px; right:15px; font-size:24px; color:#aaa; background:none; border:none; cursor:pointer;"><i class="fas fa-times"></i></button>
+            <div style="font-size:50px; color:#FFD700; margin-bottom:15px;"><i class="fas fa-unlock-alt"></i></div>
+            <h2 style="font-size:22px; font-weight:800; color:#111; margin-bottom:10px;">프리미엄 자료 열람</h2>
+            <p style="font-size:15px; color:#666; margin-bottom:20px; line-height:1.5;">해당 자료는 시크릿 특강 티저(50% 분량)입니다.<br>열람하시기 위해 <strong style="color:#e65100;">1,000 P</strong>가 차감됩니다.</p>
+            
+            <div style="background:#f8f9fa; padding:15px; border-radius:8px; margin-bottom:25px; display:flex; justify-content:space-between; font-weight:bold;">
+                <span style="color:#555;">보유 KATCH 포인트</span>
+                <span style="color:#1A237E; font-size:18px;">1,500 P</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button onclick="alert('포인트가 차감되고 영상이 재생됩니다.'); document.getElementById('point-modal').style.display='none'" style="background:#1A237E; color:white; padding:14px; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; border:none;">1,000 P 차감하고 열람하기</button>
+                <div style="margin:10px 0; border-top:1px dashed #ccc;"></div>
+                <p style="font-size:13px; color:#888; margin-bottom:5px;">전체 강의와 풀세트 교재가 필요하신가요?</p>
+                <button onclick="window.location.href='store_vod.html'" style="background:#e91e63; color:white; padding:14px; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; border:none;"><i class="fas fa-shopping-cart"></i> 전체 VOD/교재 스토어로 이동</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPointModal() {
+            document.getElementById('point-modal').style.display = 'flex';
+        }
+        function setLoungeTab(btn, tab) {
+            document.querySelectorAll('.lounge-tab').forEach(b => {
+                b.style.background = 'none';
+                b.style.color = '#555';
+            });
+            btn.style.background = '#1A237E';
+            btn.style.color = 'white';
+        }
+        function toggleWriteForm() {
+            const form = document.getElementById('write-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+</html>

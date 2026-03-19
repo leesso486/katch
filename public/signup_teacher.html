@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 원장/강사 가맹 회원가입</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; display: flex; flex-direction: column; min-height: 100vh; }
+        .signup-container { max-width: 500px; margin: 60px auto; width: 100%; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .signup-header { text-align: center; margin-bottom: 30px; }
+        .signup-header h2 { font-size: 24px; font-weight: 900; color: #111; margin-bottom: 5px; }
+        .signup-header p { font-size: 14px; color: #666; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: bold; color: #333; margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 15px; transition: 0.2s; }
+        .form-control:focus { outline: none; border-color: #e91e63; box-shadow: 0 0 0 3px rgba(233,30,99,0.1); }
+        .btn-submit { width: 100%; padding: 15px; background: #e91e63; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        .btn-submit:hover { background: #c2185b; }
+        .type-badge { display: inline-block; background: #fce4ec; color: #e91e63; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; padding: 15px 0;">
+        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:24px; color:#1A237E; margin:0;">KATCH<span style="color:#E91E63;">.</span></h1>
+                </a>
+            </div>
+            <a href="signup_select.html" style="color:#666; font-weight:bold; text-decoration:none;"><i class="fas fa-arrow-left"></i> 돌아가기</a>
+        </div>
+    </header>
+
+    <div class="signup-container">
+        <div class="signup-header">
+            <span class="type-badge"><i class="fas fa-chalkboard-teacher"></i> 원장 / 강사 가맹 회원</span>
+            <h2>가맹 정보를 입력해주세요</h2>
+            <p>가입 승인 후 원장님 전용 대시보드가 오픈됩니다.</p>
+        </div>
+
+        <div class="form-group">
+            <label>원장/강사 성함</label>
+            <input type="text" class="form-control" placeholder="김원장">
+        </div>
+        <div class="form-group">
+            <label>학원명</label>
+            <input type="text" class="form-control" placeholder="예: KNS 대치본원">
+        </div>
+        <div class="form-group">
+            <label>휴대폰 번호</label>
+            <input type="text" class="form-control" placeholder="010-0000-0000">
+        </div>
+        <div class="form-group">
+            <label>사업자 등록번호</label>
+            <input type="text" class="form-control" placeholder="000-00-00000">
+        </div>
+        <div class="form-group">
+            <label>비밀번호</label>
+            <input type="password" class="form-control" placeholder="비밀번호 8자리 이상">
+        </div>
+
+        <button class="btn-submit" onclick="window.location.href='dashboard_gvr.html'">가입 신청 및 대시보드 둘러보기</button>
+    </div>
+</body>
+</html>

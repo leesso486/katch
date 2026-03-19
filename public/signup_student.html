@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 학생/학부모 회원가입</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; display: flex; flex-direction: column; min-height: 100vh; }
+        .signup-container { max-width: 500px; margin: 60px auto; width: 100%; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .signup-header { text-align: center; margin-bottom: 30px; }
+        .signup-header h2 { font-size: 24px; font-weight: 900; color: #111; margin-bottom: 5px; }
+        .signup-header p { font-size: 14px; color: #666; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: bold; color: #333; margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 15px; transition: 0.2s; }
+        .form-control:focus { outline: none; border-color: #1976d2; box-shadow: 0 0 0 3px rgba(25,118,210,0.1); }
+        .btn-submit { width: 100%; padding: 15px; background: var(--navy); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        .btn-submit:hover { background: #111; }
+        .type-badge { display: inline-block; background: #e3f2fd; color: #1976d2; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; padding: 15px 0;">
+        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:24px; color:#1A237E; margin:0;">KATCH<span style="color:#E91E63;">.</span></h1>
+                </a>
+            </div>
+            <a href="signup_select.html" style="color:#666; font-weight:bold; text-decoration:none;"><i class="fas fa-arrow-left"></i> 돌아가기</a>
+        </div>
+    </header>
+
+    <div class="signup-container">
+        <div class="signup-header">
+            <span class="type-badge"><i class="fas fa-user-graduate"></i> 학생 / 학부모 회원</span>
+            <h2>계정 정보를 입력해주세요</h2>
+            <p>가입 후 무료 진단테스트 응시가 가능합니다.</p>
+        </div>
+
+        <div class="form-group">
+            <label>이름 (학생명)</label>
+            <input type="text" class="form-control" placeholder="홍길동">
+        </div>
+        <div class="form-group">
+            <label>학년</label>
+            <select class="form-control">
+                <option>학년 선택</option>
+                <option>초등학생 (고학년)</option>
+                <option>중학교 1학년</option>
+                <option>중학교 2학년</option>
+                <option>중학교 3학년</option>
+                <option>고등학생</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>휴대폰 번호 (학부모)</label>
+            <input type="text" class="form-control" placeholder="010-0000-0000">
+        </div>
+        <div class="form-group">
+            <label>비밀번호</label>
+            <input type="password" class="form-control" placeholder="비밀번호 8자리 이상">
+        </div>
+
+        <button class="btn-submit" onclick="window.location.href='student_diagnostics.html'">가입 완료 및 진단테스트 시작</button>
+    </div>
+</body>
+</html>

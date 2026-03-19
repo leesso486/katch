@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 강사 채점 대시보드</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grade-layout { display: flex; height: calc(100vh - 60px); }
+        
+        /* Left: Student List */
+        .grade-sidebar { width: 320px; background: #fff; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; }
+        .g-sidebar-head { padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; }
+        .g-sidebar-head h3 { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+        .g-filter { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; margin-bottom: 10px; }
+        
+        .student-list { flex: 1; overflow-y: auto; }
+        .s-item { padding: 15px 20px; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .s-item:hover { background: #f4f6f9; }
+        .s-item.active { background: #e8eaf6; border-left: 4px solid var(--navy); }
+        .s-info strong { display: block; font-size: 15px; color: #333; margin-bottom: 4px; }
+        .s-info span { font-size: 12px; color: #888; }
+        .s-status { font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 10px; }
+        .status-wait { background: #ffe0b2; color: #e65100; }
+        .status-done { background: #c8e6c9; color: #2e7d32; }
+
+        /* Right: Grading Area */
+        .grade-main { flex: 1; display: flex; flex-direction: column; background: #f9fbfd; overflow-y: auto; padding: 30px; }
+        .g-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e0e0e0; }
+        .g-title { font-size: 24px; font-weight: 900; color: #111; }
+        .g-meta { font-size: 14px; color: #666; margin-top: 5px; }
+
+        .eval-grid { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+        
+        /* Answer Box */
+        .ans-box { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
+        .ans-box h4 { font-size: 15px; color: #555; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .student-ans { font-size: 17px; line-height: 1.6; color: #222; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--navy); min-height: 120px; }
+        .student-ans mark { background: #fff9c4; padding: 0 4px; border-radius: 3px; font-weight: bold; }
+
+        /* Rubric / Key */
+        .rubric-box { background: #fff3e0; border-radius: 12px; padding: 20px; border: 1px solid #ffe0b2; margin-top: 20px; }
+        .rubric-box h5 { font-size: 14px; color: #e65100; margin-bottom: 10px; font-weight: 800; }
+        .model-ans { font-size: 15px; line-height: 1.5; color: #333; margin-bottom: 15px; }
+        .keyword-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .k-tag { background: white; border: 1px solid #ffcc80; color: #f57c00; font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
+
+        /* Scoring Panel */
+        .scoring-panel { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; position: sticky; top: 0; }
+        .scoring-panel h4 { font-size: 16px; margin-bottom: 20px; color: #333; font-weight: 800; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        
+        .score-input-group { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .score-label { font-size: 15px; font-weight: bold; color: #555; }
+        .score-field { display: flex; align-items: baseline; gap: 5px; }
+        .score-field input { width: 70px; height: 45px; text-align: center; font-size: 24px; font-weight: 900; color: var(--navy); border: 2px solid #ddd; border-radius: 8px; }
+        .score-field input:focus { border-color: var(--navy); outline: none; }
+        .score-max { font-size: 16px; color: #888; font-weight: bold; }
+
+        .comment-box { width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 12px; font-size: 14px; line-height: 1.5; resize: vertical; min-height: 100px; margin-bottom: 20px; }
+        
+        .macro-btns { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .macro-btn { background: #f0f0f0; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; color: #555; }
+        .macro-btn:hover { background: #e0e0e0; }
+
+        .btn-submit-grade { width: 100%; padding: 15px; background: var(--navy); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(17,17,17,0.3); }
+        .btn-submit-grade:hover { background: #000; transform: translateY(-2px); }
+
+    </style>
+</head>
+<body>
+    <!-- Teacher Header Bar -->
+    <header class="b2b-header-top" style="background:#111;">
+        <div class="logo">
+            <h1 style="color:white; font-weight:900;">KATCH<span class="dot" style="color:#E91E63;">.</span> <span class="badge-b2b" style="background:rgba(255,255,255,0.2); border:none; color:white;">강사채널</span></h1>
+        </div>
+        <div class="user-info" style="color:white;">
+            <strong>신동진 원장님</strong> (예비고1 의대 준비반)
+            <a href="index.html" class="btn-sm btn-outline-white ml-10">블랙보드 메인으로</a>
+        </div>
+    </header>
+
+    <div class="grade-layout">
+        <!-- Sidebar -->
+        <aside class="grade-sidebar">
+            <div class="g-sidebar-head">
+                <h3><i class="fas fa-tasks"></i> 서술형 채점 대기열</h3>
+                <select class="g-filter">
+                    <option>예비고1 특목고 배치고사 (15번 서술형)</option>
+                    <option>중등 주간 모의고사 (7번 서술형)</option>
+                </select>
+                <div class="text-xs text-gray mt-5">총 42명 중 <strong>12명</strong> 미채점</div>
+            </div>
+            
+            <div class="student-list">
+                <div class="s-item active">
+                    <div class="s-info">
+                        <strong>김민지 학생</strong>
+                        <span>제출: 2026.03.10 14:32</span>
+                    </div>
+                    <span class="s-status status-wait">채점 대기</span>
+                </div>
+                <div class="s-item">
+                    <div class="s-info">
+                        <strong>이서준 학생</strong>
+                        <span>제출: 2026.03.10 14:45</span>
+                    </div>
+                    <span class="s-status status-wait">채점 대기</span>
+                </div>
+                <div class="s-item">
+                    <div class="s-info">
+                        <strong>박지우 학생</strong>
+                        <span>제출: 2026.03.10 13:10</span>
+                    </div>
+                    <span class="s-status status-done">채점 완료 (6/6)</span>
+                </div>
+                 <div class="s-item">
+                    <div class="s-info">
+                        <strong>최유나 학생</strong>
+                        <span>제출: 2026.03.10 12:20</span>
+                    </div>
+                    <span class="s-status status-done">채점 완료 (4/6)</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="grade-main">
+            <div class="g-header">
+                <div>
+                    <h2 class="g-title">김민지 학생의 답안</h2>
+                    <p class="g-meta">[문항 15] reciprocal altruism(상호 이타주의)를 유지하기 위한 필수 인지 능력 2가지 (박쥐 사례)</p>
+                </div>
+                <button class="btn-sm btn-outline-gray"><i class="fas fa-file-pdf"></i> 학생 전체 OMR 답안 보기</button>
+            </div>
+
+            <div class="eval-grid">
+                <!-- Left: Student Answer & Rubric -->
+                <div class="eval-left">
+                    <div class="ans-box">
+                        <h4><i class="fas fa-pen-nib" style="color:var(--navy);"></i> 학생 작성 답안</h4>
+                        <!-- AI auto-highlighting simulation -->
+                        <div class="student-ans">
+                            상호 이타주의가 유지되려면 자신을 도와준 <mark>개체를 기억</mark>하고, 은혜를 갚지 않는 <mark>얌체족을 구별</mark>해내는 능력이 박쥐에게 필요하다.
+                        </div>
+                        <div class="text-right text-xs text-gray mt-10">작성 글자수: 62자(띄어쓰기 포함) / 시스템 1차 판독: <strong class="text-green">유사도 85% 이상</strong></div>
+                    </div>
+
+                    <div class="rubric-box">
+                        <h5><i class="fas fa-key"></i> 채점 기준표 (Rubric)</h5>
+                        <div class="model-ans">
+                            <strong>모범 답안:</strong> 다른 개체를 개별적으로 인식(구별)하는 능력과 과거의 도움(사건)을 기억하는 능력이 필요하다.
+                        </div>
+                        <div class="keyword-tags">
+                            <span class="k-tag"><i class="fas fa-check"></i> 개체 인식 (구별) (3점)</span>
+                            <span class="k-tag"><i class="fas fa-check"></i> 과거 기억 (3점)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Scoring Panel -->
+                <div class="eval-right">
+                    <div class="scoring-panel">
+                        <h4>최종 점수 및 코멘트 입력</h4>
+                        
+                        <div class="score-input-group">
+                            <span class="score-label">서술형 15번 획득 점수</span>
+                            <div class="score-field">
+                                <input type="number" id="final-score" value="6" min="0" max="6" step="0.5">
+                                <span class="score-max">/ 6.0 점</span>
+                            </div>
+                        </div>
+
+                        <label class="font-bold text-gray mb-10 d-block" style="font-size:13px;">강사 코멘트 (학생 성적표에 반영)</label>
+                        <div class="macro-btns">
+                            <button class="macro-btn" onclick="addComment('➕ 핵심 키워드가 모두 잘 포함되었습니다.')">➕ 완벽한 답안</button>
+                            <button class="macro-btn" onclick="addComment('➖ 한 가지 조건이 누락되어 부분 감점합니다.')">➖ 부분 감점</button>
+                            <button class="macro-btn" onclick="addComment('📝 지문의 맥락을 다시 한번 복습해 보세요.')">📝 복습 요망</button>
+                        </div>
+                        <textarea id="comment-box" class="comment-box" placeholder="여기에 강사 피드백을 직접 입력하세요..."></textarea>
+
+                        <button class="btn-submit-grade" onclick="nextStudent()"><i class="fas fa-save"></i> 채점 완료 및 다음 학생(이서준)</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function addComment(text) {
+            const box = document.getElementById('comment-box');
+            if(box.value.length > 0) box.value += '\n';
+            box.value += text;
+        }
+
+        function nextStudent() {
+            alert("김민지 학생의 서술형 채점이 저장되었습니다. 다음 학생(이서준) 답안으로 넘어갑니다.");
+            // UI visual update dummy
+            document.querySelector('.s-item.active .s-status').className = 's-status status-done';
+            document.querySelector('.s-item.active .s-status').innerText = '채점 완료 ('+document.getElementById('final-score').value+'/6)';
+            
+            let items = document.querySelectorAll('.s-item');
+            items[0].classList.remove('active');
+            items[1].classList.add('active');
+            
+            document.querySelector('.g-title').innerText = "이서준 학생의 답안";
+            document.querySelector('.student-ans').innerHTML = "상호 이타주의를 하려면 동료를 잘 도와주는 마음이 필요하고 먹이를 나눠먹어야 합니다.";
+            document.querySelector('.text-right.text-xs').innerHTML = "작성 글자수: 45자 / 시스템 1차 판독: <strong class='text-red'>핵심 키워드 누락</strong>";
+            document.getElementById('final-score').value = "0";
+            document.getElementById('comment-box').value = "";
+        }
+    </script>
+</body>
+</html>

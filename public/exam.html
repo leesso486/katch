@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 진단평가 응시</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="exam-body">
+    <!-- Exam Header: Minimal distraction, fixed top -->
+    <header class="exam-header">
+        <div class="exam-title">
+            <h1>KATCH 수능 영어 진단평가</h1>
+            <span class="exam-badge bg-navy text-white px-10 py-5 rounded-20 text-xs font-bold">총 45문항</span>
+        </div>
+        <div class="exam-timer">
+            <i class="far fa-clock"></i> 남은 시간 <strong id="timer">45:00</strong>
+        </div>
+        <div class="exam-actions">
+            <button class="btn-outline-gray" onclick="window.history.back()">나가기</button>
+            <button class="btn-primary" id="btn-submit" style="background:#E91E63; border-color:#E91E63;">답안 제출 (완료)</button>
+        </div>
+    </header>
+
+    <div class="exam-container">
+        <!-- Question List / Passage Area (Left) -->
+        <main class="exam-main">
+            <div class="test-paper">
+                <div class="question-block">
+                    <div class="q-header">
+                        <span class="q-num">18.</span>
+                        <p class="q-text">다음 글의 목적으로 가장 적절한 것은?</p>
+                    </div>
+                    <div class="q-passage">
+                        <p>Dear Mr. Jones,<br><br>
+                        I am writing this letter to bring to your attention a matter regarding the recent renovation project at the community center. We greatly appreciate the hard work your team has put into updating the facilities. However, several residents have expressed concerns about the lack of accessibility ramps at the main entrance. Given the large number of elderly citizens in our neighborhood, we kindly request that you consider adding a ramp to ensure everyone can easily access the building. We look forward to your prompt response.<br><br>
+                        Sincerely,<br>
+                        Sarah Connor</p>
+                    </div>
+                    <div class="q-choices">
+                        <label class="choice-item"><input type="radio" name="q18" value="1"><span class="c-num">①</span> 공사 일정 지연에 대해 항의하려고</label>
+                        <label class="choice-item"><input type="radio" name="q18" value="2"><span class="c-num">②</span> 복지관 시설 개보수 비용을 청구하려고</label>
+                        <label class="choice-item"><input type="radio" name="q18" value="3"><span class="c-num">③</span> 경사로 추가 설치를 요청하려고</label>
+                        <label class="choice-item"><input type="radio" name="q18" value="4"><span class="c-num">④</span> 노인 복지 프로그램 참여를 권유하려고</label>
+                        <label class="choice-item"><input type="radio" name="q18" value="5"><span class="c-num">⑤</span> 지역 주민 회의 참석을 안내하려고</label>
+                    </div>
+                </div>
+
+                <hr class="exam-divider">
+
+                <div class="question-block">
+                    <div class="q-header">
+                        <span class="q-num">19.</span>
+                        <p class="q-text">다음 글에 드러난 I의 심경 변화로 가장 적절한 것은?</p>
+                    </div>
+                    <div class="q-passage">
+                        <p>As I stepped onto the stage, the bright lights blinded me temporarily. My hands were sweating so much that I could barely hold the microphone. The huge crowd was silent, waiting for me to begin. My heart was pounding like a drum in my chest. I took a deep breath and started to sing the first note. To my surprise, my voice came out steady and clear. As I continued, I saw people smiling and nodding to the rhythm. The fear melted away, replaced by a warm sense of joy. By the end of the song, I didn't want to leave the stage.</p>
+                    </div>
+                    <div class="q-choices">
+                        <label class="choice-item"><input type="radio" name="q19" value="1"><span class="c-num">①</span> nervous → delighted</label>
+                        <label class="choice-item"><input type="radio" name="q19" value="2"><span class="c-num">②</span> excited → disappointed</label>
+                        <label class="choice-item"><input type="radio" name="q19" value="3"><span class="c-num">③</span> bored → surprised</label>
+                        <label class="choice-item"><input type="radio" name="q19" value="4"><span class="c-num">④</span> confident → embarrassed</label>
+                        <label class="choice-item"><input type="radio" name="q19" value="5"><span class="c-num">⑤</span> hopeful → frustrated</label>
+                    </div>
+                </div>
+                
+                <!-- More questions would go here in a real exam -->
+                <div class="exam-footer-actions text-center mt-30">
+                    <button class="btn-primary" style="padding:15px 40px; background:var(--navy); border-color:var(--navy);">다음 페이지 <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+
+        <!-- OMR / Navigation Panel (Right) -->
+        <aside class="exam-sidebar">
+            <div class="omr-panel">
+                <h4><i class="fas fa-list-ol"></i> OMR 답안지</h4>
+                <div class="omr-info">
+                    <span>응시생: <strong>홍길동</strong></span>
+                    <span>진행률: <strong>0 / 45</strong> 문항</span>
+                </div>
+                
+                <div class="omr-grid">
+                    <div class="omr-row active">
+                        <span class="o-num">18</span>
+                        <div class="o-circles">
+                            <span class="o-circle">1</span><span class="o-circle">2</span><span class="o-circle">3</span><span class="o-circle">4</span><span class="o-circle">5</span>
+                        </div>
+                    </div>
+                    <div class="omr-row">
+                        <span class="o-num">19</span>
+                        <div class="o-circles">
+                            <span class="o-circle">1</span><span class="o-circle">2</span><span class="o-circle">3</span><span class="o-circle">4</span><span class="o-circle">5</span>
+                        </div>
+                    </div>
+                    <div class="omr-row">
+                        <span class="o-num">20</span>
+                        <div class="o-circles">
+                            <span class="o-circle">1</span><span class="o-circle">2</span><span class="o-circle">3</span><span class="o-circle">4</span><span class="o-circle">5</span>
+                        </div>
+                    </div>
+                    <div class="omr-row">
+                        <span class="o-num">21</span>
+                        <div class="o-circles">
+                            <span class="o-circle">1</span><span class="o-circle">2</span><span class="o-circle">3</span><span class="o-circle">4</span><span class="o-circle">5</span>
+                        </div>
+                    </div>
+                    <!-- Mocking remainder -->
+                    <div class="omr-row"><span class="o-num">22</span><div class="o-circles"><span class="o-circle">1</span><span class="o-circle">2</span><span class="o-circle">3</span><span class="o-circle">4</span><span class="o-circle">5</span></div></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Exam Interactive Script -->
+    <script>
+        // Sync radio buttons to OMR UI
+        document.querySelectorAll('.choice-item input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const name = this.name; // e.g., 'q18'
+                const val = this.value;
+                const num = name.substring(1); // '18'
+                
+                // Find corresponding OMR row
+                const omrRows = document.querySelectorAll('.omr-row');
+                omrRows.forEach(row => {
+                    if (row.querySelector('.o-num').textContent === num) {
+                        // clear previous selections
+                        row.querySelectorAll('.o-circle').forEach(c => c.classList.remove('marked'));
+                        // mark selected
+                        row.querySelectorAll('.o-circle')[val-1].classList.add('marked');
+                        row.classList.add('answered');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

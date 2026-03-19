@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KATCH OMR</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',sans-serif;background:#f0f2f7;color:#111}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+:root{--nv:#1A237E;--pk:#E91E63;--gd:#FFD54F;--or:#F57C00;--id:#5C6BC0}
+.hd{background:#fff;border-bottom:1px solid #e0e4e8;padding:0 24px;height:58px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.logo{font-weight:900;font-size:20px;color:var(--nv)}.logo span{color:var(--pk)}
+.hdr{display:flex;align-items:center;gap:10px}
+.fc{background:#fff3e0;color:var(--or);border:none;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px}
+.tmr{background:linear-gradient(135deg,var(--nv),#3949AB);color:#fff;border:none;padding:7px 16px;border-radius:25px;font-weight:900;font-size:15px;font-family:monospace;display:flex;align-items:center;gap:7px}
+.tmr.w{background:linear-gradient(135deg,#e53935,#c62828);animation:bl 1s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.7}}
+.bhs{background:var(--nv);color:#fff;border:none;padding:8px 20px;border-radius:20px;font-weight:900;font-size:14px}
+.tabs{background:#fff;border-bottom:2px solid #e0e4e8;display:flex;justify-content:center}
+.tt{padding:13px 42px;font-size:15px;font-weight:800;border:none;background:none;color:#aaa;border-bottom:3px solid transparent;cursor:pointer}
+.tt.on{color:var(--nv);border-bottom-color:var(--nv);background:#f8f9ff}
+.tbg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin-left:7px;font-weight:900}
+.tgvr{background:#e3f2fd;color:#0d47a1}.tmt{background:#fce4ec;color:#880e4f}.tsc{background:#e8eaf6;color:#1a237e}
+.ib{background:linear-gradient(135deg,#0d1b5e,var(--nv) 60%,#3949AB);color:#fff;padding:16px 24px}
+.ii{max-width:1220px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.itl{font-size:19px;font-weight:900;margin-bottom:3px}
+.imt{font-size:12px;opacity:.8}
+.isr{display:flex;gap:12px}
+.ibs{text-align:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:9px 16px;border-radius:10px;min-width:68px}
+.ibs .n{font-size:20px;font-weight:900}.ibs .l{font-size:11px;opacity:.8}
+.pb{background:rgba(255,255,255,.15);height:5px}
+.pf{height:100%;background:linear-gradient(90deg,var(--gd),var(--pk));width:0%;transition:width .4s;border-radius:0 4px 4px 0}
+.mw{max-width:1220px;margin:22px auto;padding:0 20px;display:grid;grid-template-columns:1fr 278px;gap:18px;align-items:start}
+@media(max-width:880px){.mw{grid-template-columns:1fr}}
+.scard{background:#fff;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid #e0e4e8;margin-bottom:18px;overflow:hidden}
+.shed{padding:13px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f0f0f0;background:#fafbff}
+.sbd{font-size:12px;font-weight:900;padding:5px 13px;border-radius:20px;letter-spacing:1px}
+.glc{background:#e3f2fd;color:#0d47a1}.ggr{background:#f3e5f5;color:#6a1b9a}.gvo{background:#e8f5e9;color:#1b5e20}.grc{background:#fff3e0;color:#e65100}.gmt{background:#fce4ec;color:#880e4f}.gsc{background:#e8eaf6;color:#1a237e}
+.stl{font-size:15px;font-weight:800;color:#111}
+.ssu{font-size:11px;color:#888;margin-left:auto}
+.bfd{background:#fff;border:1px solid #ddd;padding:5px 13px;border-radius:20px;font-size:12px;font-weight:700;color:#555}
+.sbdy{padding:6px 20px;overflow:hidden;max-height:9999px;transition:max-height .4s}
+.sbdy.fd{max-height:0!important;padding:0 20px}
+/* ROWS */
+.qrow{display:flex;align-items:center;min-height:60px;border-bottom:1px solid #f5f5f5;padding:5px 0;transition:background .15s}
+.qrow:last-child{border-bottom:none}
+.qrow:hover{background:#fafcff}
+.qrow.fbg{background:#fffde7}
+.qnum{width:33px;height:33px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;margin-right:16px;background:#bdbdbd;transition:background .2s}
+.qnum.qa{background:var(--nv)}.qnum.qf{background:var(--or)}
+/* OVALS */
+.chs{display:flex;gap:9px;align-items:center}
+.ow{display:flex;flex-direction:column;align-items:center;gap:3px}
+.olb{font-size:10px;font-weight:800;color:#aaa}
+.oval{width:28px;height:48px;border-radius:14px;border:2px solid #d0d0d0;background:#fff;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;user-select:none}
+.oval:hover{border-color:#90a4ae;background:#f0f4ff;transform:scaleY(1.06)}
+.oval.mk{background:var(--nv)!important;border-color:var(--nv)!important;color:#fff!important;box-shadow:0 4px 10px rgba(26,35,126,.35);transform:scaleY(1.08)}
+.oval.omt{width:30px;height:52px;border-radius:15px}
+.oval.omt.mk{background:#880e4f!important;border-color:#880e4f!important}
+.oval.osc{width:30px;height:46px;border-radius:15px}
+.oval.osc.mk{background:var(--id)!important;border-color:var(--id)!important}
+/* ESSAY */
+.qrow.es{min-height:80px;align-items:flex-start;padding:10px 0}
+.etag{font-size:11px;font-weight:900;color:#fff;background:var(--id);padding:4px 10px;border-radius:5px;margin-right:10px;flex-shrink:0;align-self:center;white-space:nowrap}
+.ew{flex:1}
+.eta{width:100%;padding:10px 13px;border:2px solid #e0e0e0;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:14px;resize:vertical;min-height:54px;line-height:1.5;color:#111;background:#fff;transition:border-color .2s}
+.eta:focus{outline:none;border-color:var(--id);box-shadow:0 0 0 3px rgba(92,107,192,.12)}
+.eta::placeholder{color:#bbb}
+/* CONTROLS */
+.sp{flex:1}
+.flgb{background:none;border:none;font-size:16px;color:#ddd;padding:4px 8px;border-radius:6px;transition:.2s;line-height:1}
+.flgb:hover{color:var(--or);background:#fff3e0}
+.flgb.on{color:var(--or)}
+.adot{width:8px;height:8px;border-radius:50%;background:#4CAF50;margin-left:8px;opacity:0;transition:opacity .2s}
+.qrow.ok .adot{opacity:1}
+/* SIDEBAR */
+.si{position:sticky;top:70px}
+.sic{background:#fff;border-radius:14px;padding:19px;box-shadow:0 4px 18px rgba(0,0,0,.05);border:1px solid #e0e4e8;margin-bottom:15px}
+.sit{font-size:14px;font-weight:900;color:#111;margin-bottom:13px;display:flex;align-items:center;gap:7px}
+.cps{display:flex;gap:8px;margin-bottom:13px}
+.cp{flex:1;text-align:center;padding:9px 5px;border-radius:10px;border:1px solid #e0e0e0}
+.cp .cn{font-size:21px;font-weight:900}.cp .cl{font-size:10px;color:#888;font-weight:700}
+.cpa{background:#e8eaf6;border-color:#90caf9}.cpa .cn{color:var(--nv)}
+.cpr .cn{color:#bbb}
+.cpf{background:#fff3e0;border-color:#ffe0b2}.cpf .cn{color:var(--or)}
+.mmap{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.mc{height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #e0e0e0;color:#aaa;background:#fff;transition:.15s}
+.mc:hover{background:#e8eaf6;color:var(--nv)}
+.mc.ma{background:var(--nv);color:#fff;border-color:var(--nv)}
+.mc.mf{background:#fff3e0;color:var(--or);border-color:#ffe0b2}
+.mc.me{background:#e8eaf6;color:var(--id);border-color:#c5cae9}
+.bsub{width:100%;padding:15px;border:none;background:linear-gradient(135deg,var(--pk),#C21045);color:#fff;border-radius:12px;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 18px rgba(233,30,99,.3);transition:.2s}
+.bsub:hover{transform:translateY(-2px)}
+/* MODAL */
+.modov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modov.sh{display:flex}
+.modb{background:#fff;border-radius:20px;padding:42px 38px;text-align:center;max-width:430px;width:90%;animation:popin .3s ease}
+@keyframes popin{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.modb h3{font-size:23px;font-weight:900;margin-bottom:11px}
+.modb p{font-size:15px;color:#555;line-height:1.6;margin-bottom:24px}
+.mbtns{display:flex;gap:10px}
+.mbtns button{flex:1;padding:13px;border-radius:10px;font-size:15px;font-weight:700;border:none}
+.bno{background:#f0f0f0;color:#555}.byes{background:var(--pk);color:#fff}
+.bgo{display:block;padding:13px;border-radius:10px;font-weight:900;font-size:15px;text-align:center;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="hd">
+<a href="my_learning.html" class="logo">KATCH<span>.</span></a>
+<div class="hdr">
+<div class="fc"><i class="fas fa-flag"></i>&nbsp;<span id="FLT">0</span></div>
+<div class="tmr" id="TMER"><i class="fas fa-clock"></i>&nbsp;<span id="TDS">50:00</span></div>
+<button class="bhs" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;&#51228;&#52636;</button>
+</div>
+</header>
+<div class="tabs">
+<button class="tt on" id="tab-GVR" onclick="SW('GVR')">GVR <span class="tbg tgvr">a~d &middot; 4&#51648;</span></button>
+<button class="tt"    id="tab-MT"  onclick="SW('MT')">MT <span class="tbg tmt">&#9312;~&#9316; &middot; 5&#51648;</span></button>
+<button class="tt"    id="tab-SC"  onclick="SW('SC')">SC <span class="tbg tsc">A~F &middot; 6&#51648;</span></button>
+</div>
+<div class="ib">
+<div class="ii">
+<div><div class="itl" id="TTLB">GVR AT 6&#54924;&#52264; &mdash; OMR &#47560;&#53412; &#49884;&#53944;</div><div class="imt">&#50025;&#49884;&#51068;: 2026.03.12 | &#51228;&#52636;&#44592;&#54620;: 2026.03.13 23:59</div></div>
+<div class="isr">
+<div class="ibs"><div class="n" id="SA">0</div><div class="l">&#51000;&#45813;</div></div>
+<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">&#48120;&#51000;&#45813;</div></div>
+<div class="ibs"><div class="n" id="STOT" style="color:var(--gd)">40</div><div class="l">&#52395; &#47928;&#54637;</div></div>
+</div>
+</div>
+</div>
+<div class="pb"><div class="pf" id="PF"></div></div>
+<div class="mw">
+<div id="SECCOL"></div>
+<aside class="si">
+<div class="sic">
+<div class="sit"><i class="fas fa-chart-pie" style="color:var(--nv)"></i>&nbsp;&#51652;&#54665; &#54604;&#54889;</div>
+<div class="cps">
+<div class="cp cpa"><div class="cn" id="SBA">0</div><div class="cl">&#51000;&#45813;</div></div>
+<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">&#48120;&#51000;&#45813;</div></div>
+<div class="cp cpf"><div class="cn" id="SBF">0</div><div class="cl">&#54217;&#47000;&#44536;</div></div>
+</div>
+</div>
+<div class="sic">
+<div class="sit"><i class="fas fa-map" style="color:var(--nv)"></i>&nbsp;&#48257;&#45768;&#47588;</div>
+<div class="mmap" id="MMAP"></div>
+</div>
+<button class="bsub" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;&#52572;&#51333; &#51228;&#52636;</button>
+</aside>
+</div>
+<div class="modov" id="CMOD">
+<div class="modb">
+<div style="font-size:50px;margin-bottom:13px">&#128221;</div>
+<h3>&#46813;&#50504;&#51012; &#51228;&#52636;&#54616;&#49884;&#44192;&#49845;&#45768;&#44992;?</h3>
+<p>&#51228;&#52636; &#54980;&#50640;&#45716; &#49688;&#51221;&#51060; &#48520;&#44032;&#54633;&#45768;&#45796;.<br>&#48120;&#51000;&#45813; <strong id="UACNT" style="color:var(--pk)">0</strong>&#44060; &middot; &#54217;&#47000;&#44536; <strong id="FACNT" style="color:var(--or)">0</strong>&#44060;</p>
+<div class="mbtns">
+<button class="bno" onclick="closeC()">&#46027;&#49884; &#54869;&#51064;</button>
+<button class="byes" onclick="doSub()">&#51228;&#52636;</button>
+</div>
+</div>
+</div>
+<div class="modov" id="SMOD">
+<div class="modb">
+<div style="font-size:50px;margin-bottom:13px">&#127881;</div>
+<h3>&#51228;&#52636; &#50756;&#47308;!</h3>
+<p>&#46813;&#50504;&#51060; &#51228;&#52636;&#46104;&#50632;&#49845;&#45768;&#45796;.<br>&#52404;&#51216;&#51060; &#50756;&#47308;&#46418; &#50508;&#47548;&#51012; &#48372;&#45236;&#46053;&#47676;&#45768;&#45796;.</p>
+<a href="review_wrong.html" class="bgo" style="background:var(--nv);color:#fff">&#50724;&#45813;&#45432;&#53944; &#48148;&#47196; &#48372;&#44592;</a>
+<a href="my_learning.html"  class="bgo" style="background:#f0f0f0;color:#555">&#45824;&#49884;&#48372;&#46300;&#47196;</a>
+</div>
+</div>
+<script>
+var CF={GVR:{title:'GVR AT 6\ud68c\ucc28 \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:40,mod:'',secs:[{id:'lc',bg:'glc',lb:'LC',nm:'Listening Comprehension',f:1,t:10,ch:['a','b','c','d']},{id:'gr',bg:'ggr',lb:'GR',nm:'Grammar',f:11,t:20,ch:['a','b','c','d']},{id:'vo',bg:'gvo',lb:'VO',nm:'Vocabulary',f:21,t:30,ch:['a','b','c','d']},{id:'rc',bg:'grc',lb:'RC',nm:'Reading Comprehension',f:31,t:40,ch:['a','b','c','d'],ef:37}]},MT:{title:'MT \ubaa8\uc758\uace0\uc0ac \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:45,mod:'omt',secs:[{id:'mt',bg:'gmt',lb:'MT',nm:'MT \uc804\uccb4 \ubb38\ud56d',f:1,t:45,ch:['\u2460','\u2461','\u2462','\u2463','\u2464'],ef:43}]},SC:{title:'SC \ubaa8\uc758\uace0\uc0ac \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:40,mod:'osc',secs:[{id:'sc',bg:'gsc',lb:'SC',nm:'SC \uc804\uccb4 \ubb38\ud56d',f:1,t:40,ch:['A','B','C','D','E','F'],ef:38}]}};
+var TYP='GVR',ST={};
+function gs(q){if(!ST[q])ST[q]={a:null,e:'',fl:false};return ST[q];}
+function SW(t){TYP=t;ST={};['GVR','MT','SC'].forEach(function(x){document.getElementById('tab-'+x).classList.toggle('on',x===t);});document.getElementById('TTLB').textContent=CF[t].title;BLD();STAT();}
+function BLD(){var col=document.getElementById('SECCOL'),cfg=CF[TYP];col.innerHTML='';cfg.secs.forEach(function(s){var rows='';for(var q=s.f;q<=s.t;q++)rows+=(s.ef&&q>=s.ef)?RE(q):RM(q,s.ch,cfg.mod);var d=document.createElement('div');d.className='scard';var su=s.f+'\u2013'+s.t+'\ubc88 \u00b7 '+s.ch.length+'\uc9c0\uc120\ub2e4'+(s.ef?' ('+s.ef+'\ubc88\ubd80\ud130 \uc11c\uc220\ud615)':'');d.innerHTML='<div class="shed"><span class="sbd '+s.bg+'">'+s.lb+'</span><span class="stl">'+s.nm+'</span><span class="ssu">'+su+'</span><button class="bfd" onclick="FLD(\'bd-'+s.id+'\',this)">\uc811\uae30</button></div><div class="sbdy" id="bd-'+s.id+'">'+rows+'</div>';col.appendChild(d);});MMP();}
+function RM(q,ch,mod){var st=gs(q),a=st.a!==null&&st.a!==undefined,fl=st.fl;var ov=ch.map(function(c,i){return '<div class="ow"><span class="olb">'+c+'</span><button id="OV'+q+'_'+i+'" class="oval '+mod+(a&&st.a===i?' mk':'')+'" onclick="CMC('+q+','+i+')"></button></div>';}).join('');return '<div id="QR'+q+'" class="qrow'+(fl?' fbg':'')+(a?' ok':'')+'"><div id="QN'+q+'" class="qnum'+(fl?' qf':(a?' qa':''))+'">'+q+'</div><div class="chs">'+ov+'</div><div class="sp"></div><button class="flgb'+(fl?' on':'')+'" onclick="CFL('+q+')"><i class="fas fa-flag"></i></button><span class="adot"></span></div>';}
+function RE(q){var st=gs(q),a=!!(st.e&&st.e.trim()),fl=st.fl;return '<div id="QR'+q+'" class="qrow es'+(fl?' fbg':'')+(a?' ok':'')+'"><div id="QN'+q+'" class="qnum'+(fl?' qf':(a?' qa':''))+'">'+q+'</div><span class="etag">\uc11c\uc220\ud615</span><div class="ew"><textarea id="TA'+q+'" class="eta" placeholder="\ub2f5\uc548\uc744 \uc785\ub825\ud558\uc138\uc694..." oninput="CE('+q+',this.value)">'+((st.e)||'')+'</textarea></div><button class="flgb'+(fl?' on':'')+'" onclick="CFL('+q+')" style="align-self:center;margin-left:8px"><i class="fas fa-flag"></i></button><span class="adot"></span></div>';}
+function CMC(q,i){var st=gs(q);st.a=(st.a===i)?null:i;var s=CF[TYP].secs.find(function(x){return q>=x.f&&q<=x.t;});if(s)s.ch.forEach(function(_,j){var o=document.getElementById('OV'+q+'_'+j);if(o)o.className='oval '+CF[TYP].mod+(st.a===j?' mk':'');});RMD(q,false);STAT();}
+function CE(q,v){var st=gs(q);st.e=v;RMD(q,true);STAT();}
+function CFL(q){var st=gs(q);st.fl=!st.fl;var s=CF[TYP].secs.find(function(x){return q>=x.f&&q<=x.t;});RMD(q,s&&s.ef&&q>=s.ef);STAT();}
+function RMD(q,isE){var st=gs(q),a=isE?(!!(st.e&&st.e.trim())):(st.a!==null&&st.a!==undefined),fl=st.fl;var r=document.getElementById('QR'+q),n=document.getElementById('QN'+q);if(!r||!n)return;r.className='qrow'+(isE?' es':'')+(fl?' fbg':'')+(a?' ok':'');n.className='qnum'+(fl?' qf':(a?' qa':''));var fb=r.querySelector('.flgb');if(fb)fb.className='flgb'+(fl?' on':'');MMP();}
+function STAT(){var tot=CF[TYP].tot,cfg=CF[TYP],a=0,f=0;for(var q=1;q<=tot;q++){var st=gs(q),s=cfg.secs.find(function(x){return q>=x.f&&q<=x.t;});var isE=s&&s.ef&&q>=s.ef;if(isE?(!!(st.e&&st.e.trim())):(st.a!==null&&st.a!==undefined))a++;if(st.fl)f++;}var r=tot-a;document.getElementById('SA').textContent=a;document.getElementById('SR').textContent=r;document.getElementById('STOT').textContent=tot;document.getElementById('SBA').textContent=a;document.getElementById('SBR').textContent=r;document.getElementById('SBF').textContent=f;document.getElementById('FLT').textContent=f;document.getElementById('PF').style.width=(tot>0?a/tot*100:0)+'%';}
+function MMP(){var tot=CF[TYP].tot,cfg=CF[TYP],h='';for(var q=1;q<=tot;q++){var st=gs(q),s=cfg.secs.find(function(x){return q>=x.f&&q<=x.t;});var isE=s&&s.ef&&q>=s.ef,isA=isE?(!!(st.e&&st.e.trim())):(st.a!==null&&st.a!==undefined);h+='<div class="mc '+(st.fl?'mf':(isA?(isE?'me':'ma'):''))+'" onclick="GQ('+q+')">'+q+'</div>';}document.getElementById('MMAP').innerHTML=h;}
+function GQ(q){var e=document.getElementById('QR'+q);if(e)e.scrollIntoView({behavior:'smooth',block:'center'});}
+function FLD(id,btn){var e=document.getElementById(id),f=e.classList.toggle('fd');btn.textContent=f?'\ud3bc\uce58\uae30':'\uc811\uae30';}
+var tl=50*60;setInterval(function(){if(tl<=0){doSub();return;}tl--;var m=String(Math.floor(tl/60)).padStart(2,'0'),s=String(tl%60).padStart(2,'0');document.getElementById('TDS').textContent=m+':'+s;if(tl<=300)document.getElementById('TMER').classList.add('w');},1000);
+function openC(){var tot=CF[TYP].tot,cfg=CF[TYP],a=0,f=0;for(var q=1;q<=tot;q++){var st=gs(q),s=cfg.secs.find(function(x){return q>=x.f&&q<=x.t;});var isE=s&&s.ef&&q>=s.ef,isA=isE?(!!(st.e&&st.e.trim())):(st.a!==null&&st.a!==undefined);if(isA)a++;if(st.fl)f++;}document.getElementById('UACNT').textContent=tot-a;document.getElementById('FACNT').textContent=f;document.getElementById('CMOD').classList.add('sh');}
+function closeC(){document.getElementById('CMOD').classList.remove('sh');}
+function doSub(){document.getElementById('CMOD').classList.remove('sh');document.getElementById('SMOD').classList.add('sh');}
+SW('GVR');
+</script>
+</body>
+</html>

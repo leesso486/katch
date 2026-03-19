@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 회원가입 회원 유형 선택</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; display: flex; flex-direction: column; min-height: 100vh; }
+        .signup-container { max-width: 900px; margin: 60px auto; width: 100%; padding: 0 20px; flex: 1; }
+        .signup-header { text-align: center; margin-bottom: 40px; }
+        .signup-header h2 { font-size: 32px; font-weight: 900; color: #111; margin-bottom: 10px; }
+        .signup-header p { font-size: 16px; color: #666; }
+        
+        .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .role-card { background: white; border-radius: 16px; padding: 40px 30px; text-align: center; border: 2px solid #e0e4e8; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: block; color: inherit; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .role-card:hover { transform: translateY(-5px); border-color: var(--navy); box-shadow: 0 15px 40px rgba(26,35,126,0.15); }
+        
+        .role-icon { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 25px; transition: 0.3s; }
+        .rc-student:hover .role-icon { background: #e3f2fd; color: #1976d2; }
+        .rc-teacher:hover .role-icon { background: #fce4ec; color: #e91e63; }
+        
+        .rc-student .role-icon { background: #f0f4f8; color: #546e7a; }
+        .rc-teacher .role-icon { background: #fcf0f4; color: #880e4f; }
+
+        .role-card h3 { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: #111; }
+        .role-card p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 30px; }
+        .btn-select { background: #f5f5f5; color: #333; padding: 12px 30px; border-radius: 30px; font-weight: bold; border: none; font-size: 15px; transition: 0.3s; display: inline-block; }
+        .role-card:hover .btn-select { background: var(--navy); color: white; }
+
+        @media (max-width: 768px) {
+            .role-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; padding: 15px 0;">
+        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:24px; color:#1A237E; margin:0;" class="logo-text">KATCH<span style="color:#E91E63;">.</span></h1>
+                </a>
+            </div>
+            <a href="index.html" style="color:#666; font-weight:bold; text-decoration:none;"><i class="fas fa-times"></i> 취소 및 홈으로</a>
+        </div>
+    </header>
+
+    <div class="signup-container">
+        <div class="signup-header">
+            <h2>KATCH에 오신 것을 환영합니다!</h2>
+            <p>가입하실 회원 유형을 선택해 주세요.</p>
+        </div>
+
+        <div class="role-grid">
+            <!-- Student/Parent Role -->
+            <div onclick="window.location.href='signup_student.html'" class="role-card rc-student">
+                <div class="role-icon"><i class="fas fa-user-graduate"></i></div>
+                <h3>학생 및 학부모</h3>
+                <p>무료 진단테스트 응시, 프리미엄 성적표 열람, VOD 시청 및 학부모 라운지 이용을 원하시는 분께 적합합니다.</p>
+                <span class="btn-select">학생/학부모로 시작하기 &rarr;</span>
+            </div>
+
+            <!-- Teacher/Admin Role -->
+            <div onclick="window.location.href='signup_teacher.html'" class="role-card rc-teacher">
+                <div class="role-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>원장 및 강사 (가맹점)</h3>
+                <p>문제은행 출제, 모의고사 빌더, 재원생 성적 관리 및 학원 맞춤형 대시보드 기능을 원하시는 분께 적합합니다.</p>
+                <span class="btn-select">강사/가맹점으로 시작하기 &rarr;</span>
+            </div>
+        </div>
+        
+        <div class="text-center mt-40">
+            <p style="font-size:14px; color:#888;">도움이 필요하신가요? <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:#1976d2; font-weight:bold; text-decoration:none;"><i class="fas fa-comment"></i> 카카오톡 문의하기</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

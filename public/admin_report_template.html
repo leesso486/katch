@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 성적표 템플릿 빌더 (Studio)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #eef2f6; overflow: hidden; /* Prevent body scroll in builder mode */ height: 100vh;}
+        
+        /* Builder Layout */
+        .builder-layout { display: flex; height: calc(100vh - 60px); /* Minus header */ width: 100%; }
+        
+        /* Nav sidebar (leftmost) */
+        .admin-sidebar { width: 220px; background: white; border-right: 1px solid #e0e4e8; height: 100%; z-index: 10; flex-shrink:0;}
+        
+        /* Widget Library (Left Panel) */
+        .builder-left { width: 260px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; flex-shrink:0;}
+        .panel-header { padding: 15px 20px; background: #fafafa; border-bottom: 1px solid #ddd; font-weight: 800; font-size: 15px; color: #111; display:flex; justify-content:space-between; align-items:center;}
+        .widget-list { padding: 15px; overflow-y: auto; flex-grow: 1; }
+        .widget-item { border: 1px solid #ddd; border-radius: 6px; padding: 12px; margin-bottom: 10px; cursor: grab; background: white; display: flex; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
+        .widget-item:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+        .widget-icon { width: 32px; height: 32px; background: #f0f4f8; color: var(--navy); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px;}
+        .widget-text h5 { font-size: 13px; font-weight: bold; margin-bottom: 2px; color: #333;}
+        .widget-text p { font-size: 11px; color: #888; }
+
+        /* Canvas (Center Panel) */
+        .builder-center { flex-grow: 1; background: #eef2f6; overflow-y: auto; padding: 40px; display: flex; justify-content: center; position:relative;}
+        .canvas-toolbar { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: white; padding: 8px 15px; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; gap: 15px; z-index: 100;}
+        .canvas-toolbar button { background: none; border: none; cursor: pointer; color: #555; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 20px;}
+        .canvas-toolbar button:hover { background: #f0f4f8; color: var(--navy); }
+        
+        .a4-canvas { width: 794px; min-height: 1123px; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 40px; padding: 40px; /* A4 aspect ratio padding */ transform-origin: top center; transition: transform 0.2s;}
+        
+        /* Canvas Modules */
+        .c-module { border: 2px dashed transparent; padding: 15px; margin-bottom: 15px; position: relative; cursor: pointer; border-radius: 8px; transition: 0.2s; }
+        .c-module:hover { border-color: #bbdefb; background: #fcfdfe; }
+        .c-module.selected { border-style: solid; border-color: var(--navy); box-shadow: 0 4px 15px rgba(26,35,126,0.1); background: white; z-index: 10;}
+        
+        /* Module Overlays */
+        .c-module-actions { position: absolute; top: -12px; right: 10px; background: var(--navy); display: none; padding: 4px 8px; border-radius: 4px; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+        .c-module.selected .c-module-actions { display: flex; }
+        .c-module-actions button { background: none; border: none; color: white; cursor: pointer; font-size: 12px; padding: 2px 5px;}
+        .c-module-actions button:hover { color: #ff9800; }
+
+        /* Property Panel (Right) */
+        .builder-right { width: 320px; background: white; border-left: 1px solid #ddd; display: flex; flex-direction: column; flex-shrink:0;}
+        .prop-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        .prop-section { margin-bottom: 25px; }
+        .prop-section h4 { font-size: 14px; font-weight: 800; color: #111; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #eee; display:flex; align-items:center; gap:8px;}
+        .prop-label { font-size: 12px; font-weight: bold; color: #555; margin-bottom: 5px; display: block; }
+        .prop-input { width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 8px 10px; font-size: 13px; font-family: inherit; margin-bottom: 10px; outline: none;}
+        .prop-input:focus { border-color: var(--navy); }
+        .prop-select { width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 8px 10px; font-size: 13px; font-family: inherit; margin-bottom: 10px; outline: none; background: white;}
+        
+        .data-mapping-box { background: #f8fbff; border: 1px dashed #bbdefb; border-radius: 6px; padding: 12px; margin-bottom: 10px;}
+        .mapping-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; }
+        .mapping-var { background: var(--navy); color: white; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 11px;}
+        
+        .color-preset { display: flex; gap: 10px; margin-bottom: 15px;}
+        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent;}
+        .color-dot.active { border-color: #333; transform: scale(1.1);}
+
+        /* Template Specific UI Elements (Rendered in Canvas) */
+        .tpl-header { text-align: center; border-bottom: 3px solid #1A237E; padding-bottom: 20px; margin-bottom: 20px; }
+        .tpl-title { font-size: 28px; font-weight: 900; color: #111; margin-bottom: 10px; }
+        .tpl-subtitle { font-size: 16px; color: #666; font-weight: bold;}
+        
+        .tpl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        .tpl-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .tpl-table th, .tpl-table td { border: 1px solid #ccc; padding: 10px 15px; text-align: center; font-size: 14px;}
+        .tpl-table th { background: #f5f5f5; font-weight: bold; color: #333;}
+        .tpl-table.navy-theme th { background: #1A237E; color: white; border-color: #1A237E; }
+        .tpl-table.navy-theme td { border-color: #ddd; }
+
+        .tpl-badge { font-weight: bold; color: #1A237E; background: #e8eaf6; padding: 5px 10px; border-radius: 4px; display: inline-block;}
+
+        /* Simulation Modal */
+        #sim-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; display:none; justify-content:center; align-items:center; }
+        .sim-box { background:white; width: 600px; border-radius:12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2);}
+        .sim-header { background: var(--navy); color:white; padding: 15px 20px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;}
+        .sim-body { padding: 30px; }
+        .excel-table-demo { width: 100%; border-collapse:collapse; margin-bottom: 20px; font-size: 13px;}
+        .excel-table-demo th { background: #e8f5e9; color: #2e7d32; padding: 8px; border: 1px solid #c8e6c9;}
+        .excel-table-demo td { padding: 8px; border: 1px solid #eee; color: #555;}
+        
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--navy); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .mapping-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; font-size: 14px; background:#f9f9f9; padding: 10px; border-radius: 6px;}
+        .mapping-line i { color: #ccc; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header" style="height: 60px;">
+        <div class="logo">
+            <h1>KATCH<span class="dot" style="color:#E91E63;">.</span> <span class="admin-badge">STUDIO</span></h1>
+        </div>
+        <div class="header-user">
+            <button class="btn-sm" style="background:#E91E63; color:white; border:none; margin-right:15px; border-radius: 4px;" onclick="saveTemplate()"><i class="fas fa-save"></i> 템플릿 저장</button>
+            <button class="btn-sm btn-outline-gray" onclick="window.location.href='index.html'">종료</button>
+        </div>
+    </header>
+
+    <div class="builder-layout">
+        <!-- Main Sidebar Navigation -->
+        <aside class="admin-sidebar" style="height: 100%; overflow-y:auto;">
+            <ul class="admin-nav mt-10">
+                <li><a href="dashboard_gvr.html"><i class="fas fa-home"></i> 대시보드</a></li>
+                <li><a href="admin_input.html"><i class="fas fa-pencil-alt"></i> 문제은행 입력기</a></li>
+                <li><a href="admin_exam_input.html"><i class="fas fa-file-signature"></i> 시험문제 입력기</a></li>
+                <li><a href="problem_bank.html"><i class="fas fa-folder-open"></i> 시험지(세트) 빌더</a></li>
+                <li><a href="dashboard_gvr.html"><i class="fas fa-users"></i> 학생·성적 관리</a></li>
+                <li class="active"><a href="admin_report_template.html"><i class="fas fa-magic"></i> 성적표 스튜디오</a></li>
+            </ul>
+        </aside>
+
+        <!-- Widget Library (Left) -->
+        <div class="builder-left">
+            <div class="panel-header">
+                <span><i class="fas fa-cubes text-gray"></i> 위젯 라이브러리</span>
+            </div>
+            <div class="widget-list">
+                <div class="widget-item">
+                    <div class="widget-icon"><i class="fas fa-heading"></i></div>
+                    <div class="widget-text">
+                        <h5>타이틀 / 헤더</h5>
+                        <p>성적표 상단 제목 및 학생 정보</p>
+                    </div>
+                </div>
+                <div class="widget-item">
+                    <div class="widget-icon"><i class="fas fa-table"></i></div>
+                    <div class="widget-text">
+                        <h5>점수 요약표</h5>
+                        <p>총점, 등급, 백분위 표기 테이블</p>
+                    </div>
+                </div>
+                <div class="widget-item">
+                    <div class="widget-icon"><i class="fas fa-chart-pie"></i></div>
+                    <div class="widget-text">
+                        <h5>방사형(Radar) 차트</h5>
+                        <p>영역별 취약점 밸런스 분석</p>
+                    </div>
+                </div>
+                <div class="widget-item">
+                    <div class="widget-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="widget-text">
+                        <h5>누적 성적 추이 (Line)</h5>
+                        <p>과거 회차별 성적 변화 그래프</p>
+                    </div>
+                </div>
+                <div class="widget-item">
+                    <div class="widget-icon"><i class="fas fa-list-ol"></i></div>
+                    <div class="widget-text">
+                        <h5>문항별 정오표</h5>
+                        <p>학생 답안 / 정답 / 문항분석표</p>
+                    </div>
+                </div>
+                <div class="widget-item">
+                    <div class="widget-icon"><i class="fas fa-comment-alt"></i></div>
+                    <div class="widget-text">
+                        <h5>강사 코멘트 박스</h5>
+                        <p>담임 강사 종합 의견 작성란</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas (Center) -->
+        <div class="builder-center">
+            
+            <div class="canvas-toolbar">
+                <button onclick="setZoom(0.8)"><i class="fas fa-search-minus"></i> 축소</button>
+                <button onclick="setZoom(1)"><i class="fas fa-expand"></i> 100%</button>
+                <button onclick="setZoom(1.2)"><i class="fas fa-search-plus"></i> 확대</button>
+                <div style="width:1px; background:#ddd; margin:0 5px;"></div>
+                <button style="color:var(--navy);" onclick="openSimModal()"><i class="fas fa-file-excel text-green"></i> 엑셀 매핑 시뮬레이터</button>
+            </div>
+
+            <!-- A4 Document -->
+            <div class="a4-canvas" id="canvas-doc">
+                
+                <!-- Module 1: Header -->
+                <div class="c-module selected" id="mod-header" onclick="selectMod('mod-header', 'header')">
+                    <div class="c-module-actions">
+                        <button title="위로"><i class="fas fa-arrow-up"></i></button>
+                        <button title="아래로"><i class="fas fa-arrow-down"></i></button>
+                        <button title="삭제"><i class="fas fa-trash"></i></button>
+                    </div>
+                    
+                    <div class="tpl-header" id="render-header">
+                        <h2 class="tpl-title">KATCH WEEKLY GVR REPORT</h2>
+                        <div class="tpl-subtitle">
+                            <span class="tpl-badge" id="val-school">{SCHOOL_NAME}</span>
+                            <span class="tpl-badge" id="val-grade">{GRADE_LVL}</span>
+                            <span style="display:inline-block; margin-left:10px; font-weight:bold; color:#111;">이름: <span id="val-name">{STUDENT_NAME}</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2: Score Summary -->
+                <div class="c-module" id="mod-score" onclick="selectMod('mod-score', 'score')">
+                    <div class="c-module-actions">
+                        <button><i class="fas fa-arrow-up"></i></button>
+                        <button><i class="fas fa-arrow-down"></i></button>
+                        <button><i class="fas fa-trash"></i></button>
+                    </div>
+
+                    <h3 style="font-size:18px; font-weight:bold; margin-bottom:10px;"><i class="fas fa-star text-gold"></i> 종합 점수 및 등급</h3>
+                    <table class="tpl-table navy-theme" id="render-score">
+                        <thead>
+                            <tr>
+                                <th>원점수</th>
+                                <th>반 평균</th>
+                                <th>최고점</th>
+                                <th>백분위</th>
+                                <th>산출 등급</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-size:24px; font-weight:bold; color:#E91E63;" id="val-score">{SCORE_TOTAL}</td>
+                                <td id="val-avg">{CLASS_AVG}</td>
+                                <td id="val-max">{CLASS_MAX}</td>
+                                <td>상위 <span id="val-pct">{PERCENTILE}</span>%</td>
+                                <td style="font-weight:bold; font-size:18px;" id="val-rank">{RANK_GRADE}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Module 3: Charts -->
+                <div class="c-module" id="mod-chart" onclick="selectMod('mod-chart', 'chart')">
+                    <div class="c-module-actions">
+                        <button><i class="fas fa-arrow-up"></i></button>
+                        <button><i class="fas fa-arrow-down"></i></button>
+                        <button><i class="fas fa-trash"></i></button>
+                    </div>
+                    
+                    <h3 style="font-size:18px; font-weight:bold; margin-bottom:10px;"><i class="fas fa-chart-bar text-navy"></i> AI 취약 / 강점 영역 분석</h3>
+                    <div class="tpl-grid">
+                        <div style="border:1px solid #e0e0e0; border-radius:8px; padding:20px; background:#fafbfc; display:flex; justify-content:center;">
+                            <canvas id="radarSimulator" width="300" height="250"></canvas>
+                        </div>
+                        <div style="border:1px solid #e0e0e0; border-radius:8px; padding:20px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+                            <h4 style="color:#111; font-weight:bold; margin-bottom:10px;">가장 취약한 파트</h4>
+                            <div style="font-size:24px; font-weight:bold; color:#E91E63; margin-bottom:15px;" id="val-weak">{WEAK_PART}</div>
+                            <p style="font-size:13px; color:#666; line-height:1.5;">{STUDENT_NAME} 학생은 어법/독해 대비 상대적으로 <b id="val-weak-b">{WEAK_PART}</b> 영역의 보완이 시급합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Property Panel (Right) -->
+        <div class="builder-right">
+            <div class="panel-header">
+                <span><i class="fas fa-sliders-h text-gray"></i> 속성 (Properties)</span>
+            </div>
+            
+            <div class="prop-body" id="prop-panel-content">
+                <!-- Dynamically populated based on selection -->
+                <div class="prop-section">
+                    <h4><i class="fas fa-paint-brush"></i> 공통 디자인 테마</h4>
+                    <label class="prop-label">메인 액센트 컬러</label>
+                    <div class="color-preset">
+                        <div class="color-dot active" style="background:#1A237E;" onclick="changeTheme('#1A237E', this)"></div>
+                        <div class="color-dot" style="background:#004d40;" onclick="changeTheme('#004d40', this)"></div>
+                        <div class="color-dot" style="background:#b71c1c;" onclick="changeTheme('#b71c1c', this)"></div>
+                        <div class="color-dot" style="background:#4a148c;" onclick="changeTheme('#4a148c', this)"></div>
+                    </div>
+                    
+                    <label class="prop-label">템플릿 저장명</label>
+                    <input type="text" class="prop-input" value="GVR 정규 과제 성적표">
+                </div>
+
+                <div id="dynamic-props">
+                    <!-- Default props for Header -->
+                    <div class="prop-section">
+                        <h4><i class="fas fa-heading"></i> 헤더 모듈 설정</h4>
+                        <label class="prop-label">인쇄 타이틀 텍스트</label>
+                        <input type="text" class="prop-input" value="KATCH WEEKLY GVR REPORT" onkeyup="document.querySelector('.tpl-title').innerText=this.value;">
+                        
+                        <label class="prop-label">헤더 데이터 매핑 (Excel 열 제목)</label>
+                        <div class="data-mapping-box">
+                            <div class="mapping-row">
+                                <span>학교명 변수</span>
+                                <span class="mapping-var">{SCHOOL_NAME}</span>
+                            </div>
+                            <div class="mapping-row">
+                                <span>학년 변수</span>
+                                <span class="mapping-var">{GRADE_LVL}</span>
+                            </div>
+                            <div class="mapping-row">
+                                <span>학생이름 변수</span>
+                                <span class="mapping-var">{STUDENT_NAME}</span>
+                            </div>
+                            <p style="font-size:11px; color:#777; margin-top:10px; line-height:1.4;">
+                                ※ 엑셀 업로드 시 첫 번째 줄(Header)에 위 영문 변수명과 일치하는 셀이 있으면 <strong style="color:var(--navy);">열의 위치(A열, C열 등)와 관계없이</strong> 해당 데이터를 자동으로 매치합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Excel Simulation Modal -->
+    <div id="sim-modal">
+        <div class="sim-box" id="sim-step-1">
+            <div class="sim-header">
+                <span><i class="fas fa-file-excel"></i> 엑셀 데이터 매핑 시뮬레이터</span>
+                <button style="background:none; border:none; color:white; font-size:18px; cursor:pointer;" onclick="closeSimModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="sim-body">
+                <p style="font-size:14px; color:#444; margin-bottom:15px; line-height:1.5;">
+                    실무자 실수로 엑셀 열(Column) 순서가 바뀌거나 중간에 열이 추가되어도 <b>[KATCH 헤더 매핑 기술]</b>을 통해 데이터가 꼬이지 않고 정확히 바인딩되는 과정을 테스트합니다.
+                </p>
+                
+                <h5 style="margin-bottom:10px; font-weight:bold; color:#111;">가상의 난잡한 엑셀 업로드 파일 (열 순서 뒤죽박죽)</h5>
+                <table class="excel-table-demo">
+                    <thead>
+                        <tr>
+                            <th>NO (A)</th>
+                            <th style="background:#c8e6c9;">SCHOOL_NAME (B)</th>
+                            <th>전화번호 (C)</th>
+                            <th style="background:#c8e6c9;">STUDENT_NAME (D)</th>
+                            <th>주소 (E)</th>
+                            <th style="background:#c8e6c9;">SCORE_TOTAL (F)</th>
+                            <th style="background:#c8e6c9;">WEAK_PART (G)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>휘문고</td>
+                            <td>010-xxxx</td>
+                            <td><strong>김대치</strong></td>
+                            <td>강남구 대치동</td>
+                            <td><strong>92</strong></td>
+                            <td>어휘 (Vocabulary)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button class="btn-primary bg-navy" style="font-weight:bold; padding:10px 20px; font-size:15px;" onclick="runSimulation()"><i class="fas fa-play"></i> 매핑 파싱(Parsing) 시작</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sim-box" id="sim-step-2" style="display:none;">
+            <div class="sim-header">
+                <span><i class="fas fa-cog fa-spin"></i> 데이터 매핑 진행 중...</span>
+            </div>
+            <div class="sim-body text-center">
+                <div class="loader"></div>
+                <p style="font-size:15px; font-weight:bold;">엑셀의 첫 줄(Header)을 분석하여 템플릿의 변수와 연결 중입니다.</p>
+                <div style="margin-top:20px; text-align:left; background:#f0f4f8; padding:20px; border-radius:8px;">
+                    <div class="mapping-line"><span><span class="mapping-var">{STUDENT_NAME}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">엑셀 D열(김대치) 매핑 완료!</strong></div>
+                    <div class="mapping-line"><span><span class="mapping-var">{SCORE_TOTAL}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">엑셀 F열(92) 매핑 완료!</strong></div>
+                    <div class="mapping-line"><span><span class="mapping-var">{WEAK_PART}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">엑셀 G열(어휘) 매핑 완료!</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="alert-modal" class="modal-overlay" style="display: none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; justify-content:center; align-items:center;">
+        <div style="background:white; padding:40px; border-radius:12px; text-align:center; width:350px;">
+            <i class="fas fa-check-circle text-green" style="font-size:40px; margin-bottom:15px;"></i>
+            <h3 style="font-size:20px; font-weight:bold; margin-bottom:10px;">저장 완료</h3>
+            <p style="color:#666; margin-bottom:20px;">새로운 노코드 템플릿 폼이<br>성공적으로 빌드되었습니다.</p>
+            <button class="btn-primary" onclick="document.getElementById('alert-modal').style.display='none'" style="width:100%;">확인</button>
+        </div>
+    </div>
+
+
+    <script>
+        // Init dummy Radar Chart
+        const ctxR = document.getElementById('radarSimulator').getContext('2d');
+        new Chart(ctxR, {
+            type: 'radar',
+            data: {
+                labels: ['어휘', '문법', '독해', '청취', '영작'],
+                datasets: [{
+                    label: '학생 점수',
+                    data: [85, 70, 95, 80, 75],
+                    backgroundColor: 'rgba(26, 35, 126, 0.2)',
+                    borderColor: '#1A237E',
+                    pointBackgroundColor: '#1A237E'
+                }]
+            },
+            options: { scales: { r: { suggestedMin: 0, suggestedMax: 100 } } }
+        });
+
+        // Zoom logic
+        function setZoom(scale) {
+            document.getElementById('canvas-doc').style.transform = `scale(${scale})`;
+        }
+
+        // Module Selection Logic
+        function selectMod(id, type) {
+            document.querySelectorAll('.c-module').forEach(m => m.classList.remove('selected'));
+            document.getElementById(id).classList.add('selected');
+
+            const propHtml = getPropHtml(type);
+            document.getElementById('dynamic-props').innerHTML = propHtml;
+        }
+
+        function getPropHtml(type) {
+            if(type === 'header') {
+                return `
+                    <div class="prop-section">
+                        <h4><i class="fas fa-heading"></i> 헤더 모듈 설정</h4>
+                        <label class="prop-label">인쇄 타이틀 텍스트</label>
+                        <input type="text" class="prop-input" value="KATCH WEEKLY GVR REPORT" onkeyup="document.querySelector('.tpl-title').innerText=this.value;">
+                        
+                        <label class="prop-label">헤더 데이터 매핑 (Excel Key)</label>
+                        <div class="data-mapping-box">
+                            <div class="mapping-row"><span>학교명 변수</span><span class="mapping-var">{SCHOOL_NAME}</span></div>
+                            <div class="mapping-row"><span>학년 변수</span><span class="mapping-var">{GRADE_LVL}</span></div>
+                            <div class="mapping-row"><span>학생이름 변수</span><span class="mapping-var">{STUDENT_NAME}</span></div>
+                        </div>
+                    </div>
+                `;
+            } else if(type === 'score') {
+                return `
+                    <div class="prop-section">
+                        <h4><i class="fas fa-table"></i> 점수 요약표 설정</h4>
+                        
+                        <label class="prop-label">테이블 스타일</label>
+                        <select class="prop-select">
+                            <option>단색 테두리형 (기본)</option>
+                            <option selected>헤더 색상형 (프리미엄)</option>
+                            <option>미니멀 텍스트형</option>
+                        </select>
+
+                        <label class="prop-label">데이터 매핑 (Excel Key)</label>
+                        <div class="data-mapping-box">
+                            <div class="mapping-row"><span>원점수</span><span class="mapping-var">{SCORE_TOTAL}</span></div>
+                            <div class="mapping-row"><span>반평균</span><span class="mapping-var">{CLASS_AVG}</span></div>
+                            <div class="mapping-row"><span>백분위</span><span class="mapping-var">{PERCENTILE}</span></div>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'chart') {
+                return `
+                    <div class="prop-section">
+                        <h4><i class="fas fa-chart-pie"></i> 차트 및 분석 설정</h4>
+                        
+                        <label class="prop-label">표시할 차트 종류 선택</label>
+                        <select class="prop-select">
+                            <option selected>방사형 차트 (영역별 분석)</option>
+                            <option>막대 차트 (반 평균 비교)</option>
+                            <option>선 차트 (누적 성적)</option>
+                        </select>
+
+                        <label class="prop-label">AI 총평 매핑 (Excel Key)</label>
+                        <div class="data-mapping-box">
+                            <div class="mapping-row"><span>취약영역명</span><span class="mapping-var">{WEAK_PART}</span></div>
+                             <p style="font-size:11px; color:#777; margin-top:5px; line-height:1.4;">
+                                ※ 엑셀에서 넘어온 텍스트가 AI 총평 영역에 렌더링 됩니다.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function changeTheme(color, elem) {
+            document.querySelectorAll('.color-dot').forEach(el => el.classList.remove('active'));
+            elem.classList.add('active');
+            
+            // Apply theme color
+            document.querySelector('.tpl-header').style.borderColor = color;
+            document.querySelector('.tpl-table.navy-theme th').style.backgroundColor = color;
+            document.querySelector('.tpl-table.navy-theme th').style.borderColor = color;
+            
+            document.querySelectorAll('.tpl-badge').forEach(b => b.style.color = color);
+            document.querySelector('.fa-chart-bar').style.color = color;
+        }
+
+        // Simulation Modals
+        function openSimModal() {
+            document.getElementById('sim-modal').style.display = 'flex';
+            document.getElementById('sim-step-1').style.display = 'block';
+            document.getElementById('sim-step-2').style.display = 'none';
+        }
+        
+        function closeSimModal() {
+            document.getElementById('sim-modal').style.display = 'none';
+        }
+
+        function runSimulation() {
+            document.getElementById('sim-step-1').style.display = 'none';
+            document.getElementById('sim-step-2').style.display = 'block';
+
+            // Simulate parsing delay
+            setTimeout(() => {
+                closeSimModal();
+                
+                // Inject actual parsed values into canvas visually to prove it worked
+                document.getElementById('val-school').innerText = "휘문고";
+                document.getElementById('val-grade').innerText = "고1";
+                document.getElementById('val-name').innerHTML = "<b>김대치</b>";
+                
+                document.getElementById('val-score').innerText = "92";
+                document.getElementById('val-avg').innerText = "75.4";
+                document.getElementById('val-pct').innerText = "4.2";
+                document.getElementById('val-rank').innerText = "1등급";
+                
+                document.getElementById('val-weak').innerText = "어휘 (Vocabulary)";
+                document.getElementById('val-weak-b').innerText = "어휘 (Vocabulary)";
+                
+                // Highlight changes
+                const elems = ['val-school', 'val-name', 'val-score', 'val-weak'];
+                elems.forEach(id => {
+                    const el = document.getElementById(id);
+                    el.style.backgroundColor = "#fffae6";
+                    el.style.transition = "1s";
+                    setTimeout(()=> el.style.backgroundColor = "transparent", 2000);
+                });
+
+            }, 2500);
+        }
+
+        function saveTemplate() {
+            document.getElementById('alert-modal').style.display = 'flex';
+        }
+
+    </script>
+</body>
+</html>

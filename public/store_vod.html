@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - VOD & 자료 스토어</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="cart.js"></script>
+    <style>
+        .store-hero { background: var(--navy); color: white; padding: 60px 0; text-align: center; }
+        .store-hero h2 { font-size: 32px; font-weight: 800; margin-bottom: 15px; }
+        .store-hero p { font-size: 16px; opacity: 0.8; }
+        .store-section { padding: 40px 0; border-bottom: 1px solid #eee; }
+        .store-section:nth-child(even) { background: #f9f9f9; }
+        .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
+        .section-head h3 { font-size: 24px; font-weight: 800; color: #333; display: flex; align-items: center; gap: 10px; }
+        .point-price { font-weight: 900; color: #f57c00; font-size: 18px; margin-top: 10px; }
+        .store-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .store-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: transform 0.2s; }
+        .store-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .s-thumb { background: #ddd; height: 160px; position: relative; display: flex; justify-content: center; align-items: center; }
+        .s-thumb i { font-size: 40px; color: rgba(0,0,0,0.2); }
+        .s-info { padding: 20px; }
+        .s-cat { font-size: 12px; font-weight: bold; color: var(--navy); margin-bottom: 5px; display: block; }
+        .s-title { font-size: 16px; font-weight: 700; color: #333; line-height: 1.4; height: 44px; overflow: hidden; margin-bottom: 10px;}
+        .v-free { background: #e8eaf6; }
+        .v-vip { background: #fff9e6; }
+        .v-partner { background: #e8f5e9; }
+        .s-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; }
+        
+        .point-modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index: 1000; }
+        .p-modal-content { background: #fff; width: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .p-modal-head { background: var(--navy); color: white; padding: 20px; font-size: 18px; font-weight: bold; text-align: center; }
+        .p-modal-body { padding: 30px; text-align: center; }
+        .p-modal-body p { font-size: 15px; color: #555; margin-bottom: 20px; }
+        .balance-box { background: #f5f5f5; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+        .balance-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+        .balance-row.final { border-top: 1px solid #ccc; padding-top: 10px; font-size: 16px; font-weight: bold; color: var(--navy); }
+        .p-modal-foot { display: flex; border-top: 1px solid #eee; }
+        .p-modal-btn { flex: 1; padding: 15px; border: none; background: #fff; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        .p-modal-btn.cancel { color: #888; border-right: 1px solid #eee; }
+        .p-modal-btn.confirm { color: #f57c00; }
+        .p-modal-btn:hover { background: #f9f9f9; }
+        
+        @media (max-width: 768px) {
+            .store-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-head { flex-direction: column; align-items: flex-start; gap:10px; }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="main-header" style="box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+            </div>
+            <nav class="gnb hide-mobile">
+                <ul>
+                    <li><a href="student_diagnostics.html">진단테스트</a></li>
+                    <li><a href="directory.html">문제은행</a></li>
+                    <li><a href="store_vod.html" class="text-orange" style="font-weight:900;">VOD 특강</a></li>
+                    <li><a href="store_vod.html">교재 스토어</a></li>
+                    <li><a href="lounge.html">VIP 라운지</a></li>
+                </ul>
+            </nav>
+            <!-- Action Icons -->
+            <div class="header-actions">
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:#1976d2; font-weight:bold;"><i class="fas fa-headset"></i> 카톡문의</a>
+                <span class="hide-mobile" style="margin-right:20px; font-weight:bold; color: #f57c00;"><i class="fas fa-coins text-gold"></i> <span id="my-points">1,500</span> P</span>
+                <button class="katch-cart-btn" onclick="openCart()" title="장바구니"><i class="fas fa-shopping-bag"></i><span class="katch-cart-badge" style="display:none;">0</span></button>
+                <a href="my_learning.html" class="icon-link user-icon" style="margin-left: 8px;" title="MY 학습진단"><i class="fas fa-user-circle"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="store-hero">
+        <div class="container">
+            <h2>정규 VOD & 자료 스토어</h2>
+            <p>대치동 최상위권의 비밀, 정규반에서 무제한으로 학습하세요</p>
+            
+            <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,215,0,0.3); border-radius:12px; padding:20px; max-width:600px; margin:25px auto 0; display:flex; align-items:center; gap:20px; text-align:left;">
+                <div style="font-size:36px; color:#FFD700;"><i class="fas fa-gem"></i></div>
+                <div>
+                    <h4 style="font-size:16px; font-weight:bold; color:#FFD700; margin-bottom:5px;">라운지에서 획득한 KATCH 포인트 사용 안내</h4>
+                    <p style="font-size:14px; color:#ddd; margin:0; line-height:1.4;">진단평가와 숙제로 차곡차곡 모은 포인트로 VIP 교재(수단비/앤솔로지) 라인업 및 전체 패키지를 즉시 결제하실 수 있습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 1: General Free VODs -->
+    <div class="store-section">
+        <div class="container">
+            <div class="section-head">
+                <h3><i class="fas fa-play-circle text-navy"></i> 일반 공개 특강 <span class="badge-new bg-green">FREE</span></h3>
+                <a href="directory.html" class="btn-text">전체보기 <i class="fas fa-chevron-right"></i></a>
+            </div>
+            
+            <div class="store-grid">
+                <div class="store-card">
+                    <div class="s-thumb v-free"><i class="fas fa-video"></i></div>
+                    <div class="s-info">
+                        <span class="s-cat">수능영어/독해</span>
+                        <h4 class="s-title">[강동진 원장] 고 3월 모의고사 대비 단기 특강</h4>
+                        <div class="s-foot">
+                            <span class="text-gray" style="font-size:13px;"><i class="fas fa-eye"></i> 1,420회</span>
+                            <button class="btn-sm btn-outline-gray">무료 수강</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="s-thumb v-free"><i class="fas fa-video"></i></div>
+                    <div class="s-info">
+                        <span class="s-cat">수능영어/어법</span>
+                        <h4 class="s-title">수능 어법 10년 기출 전격 분석 1부</h4>
+                        <div class="s-foot">
+                            <span class="text-gray" style="font-size:13px;"><i class="fas fa-eye"></i> 982회</span>
+                            <button class="btn-sm btn-outline-gray">무료 수강</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="s-thumb v-free"><i class="fas fa-video"></i></div>
+                    <div class="s-info">
+                        <span class="s-cat">학습법</span>
+                        <h4 class="s-title">중등 3학년 고교학점제 전면 대응 전략 설명회</h4>
+                        <div class="s-foot">
+                            <span class="text-gray" style="font-size:13px;"><i class="fas fa-eye"></i> 2,150회</span>
+                            <button class="btn-sm btn-outline-gray">무료 수강</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: VIP Point VODs & Materials (Sudanbi) -->
+    <div class="store-section">
+        <div class="container">
+            <div class="section-head">
+                <h3><i class="fas fa-crown text-gold"></i> VIP 교재 스토어 (수단비 시리즈) <span class="badge-new bg-orange">POINT</span></h3>
+                <p class="text-gray font-bold">대치동 최상위권의 비밀노트, 수단비 파생 VOD 및 자료입니다.</p>
+            </div>
+            
+            <div class="store-grid">
+                <!-- Item 1: Basic -->
+                <div class="store-card border-gold">
+                    <div class="s-thumb v-vip" style="padding:0; height:200px;">
+                        <div class="book-cover sud-core" style="background:linear-gradient(135deg, #4DB6AC, #00796B);">
+                            <div class="sud-top">대치동 최상위권의 비밀노트 시리즈</div>
+                            <div class="sud-mid">수능단어<br>비밀노트</div>
+                            <div class="sud-badge">기본편<br>Part I</div>
+                            <div class="sud-bot"></div>
+                        </div>
+                    </div>
+                    <div class="s-info">
+                        <span class="s-cat">VOD 특강</span>
+                        <h4 class="s-title">수단비 기본편 (중등 수능어휘 입문) 온라인 클래스</h4>
+                        <div class="point-price"><i class="fas fa-coins"></i> 200 P</div>
+                        <div class="s-foot mt-10">
+                            <span class="text-gray text-xs" style="text-decoration:line-through;">정가 30,000원</span>
+                            <button class="btn-sm btn-orange" onclick="buyWithPoints(200, '수단비 기본편 온라인 클래스', 'vod')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2: Core -->
+                <div class="store-card border-gold">
+                    <div class="s-thumb v-vip" style="padding:0; height:200px;">
+                        <div class="book-cover sud-core">
+                            <div class="sud-top">대치동 최상위권의 비밀노트 시리즈</div>
+                            <div class="sud-mid">수능단어<br>비밀노트</div>
+                            <div class="sud-badge">핵심편<br>Part I</div>
+                            <div class="sud-bot"></div>
+                        </div>
+                    </div>
+                    <div class="s-info">
+                        <span class="s-cat">PDF 자료</span>
+                        <h4 class="s-title">2026 수단비 핵심편 Vol.1 실전 오답노트 PDF</h4>
+                        <div class="point-price"><i class="fas fa-coins"></i> 150 P</div>
+                        <div class="s-foot mt-10">
+                            <span class="text-gray text-xs" style="text-decoration:line-through;">정가 15,000원</span>
+                            <button class="btn-sm btn-orange" onclick="buyWithPoints(150, '2026 수단비 핵심편 Vol.1 PDF', 'pdf')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Skill -->
+                <div class="store-card border-gold">
+                    <div class="s-thumb v-vip" style="padding:0; height:200px;">
+                        <div class="book-cover sud-skill">
+                            <div class="sud-top">대치동 최상위권의 비밀노트 시리즈</div>
+                            <div class="sud-mid">수능단어<br>비밀노트</div>
+                            <div class="sud-badge">실력편<br>Part I</div>
+                            <div class="sud-bot"></div>
+                            <span class="badge-hot bg-red" style="position:absolute; top:10px; left:10px; z-index:10;">HOT</span>
+                        </div>
+                    </div>
+                    <div class="s-info">
+                        <span class="s-cat">최상위 VOD</span>
+                        <h4 class="s-title">[극상위 시크릿] 실력편 빈칸추론 킬러문항 10제 해설강의</h4>
+                        <div class="point-price"><i class="fas fa-coins"></i> 300 P</div>
+                        <div class="s-foot mt-10">
+                            <span class="text-gray text-xs" style="text-decoration:line-through;">정가 45,000원</span>
+                            <button class="btn-sm btn-orange" onclick="buyWithPoints(300, '실력편 시크릿 해설강의', 'vod')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Master -->
+                <div class="store-card border-gold">
+                    <div class="s-thumb v-vip" style="padding:0; height:200px;">
+                        <div class="book-cover sud-core" style="background:linear-gradient(135deg, #111, #333);">
+                            <div class="sud-top" style="color:#d4af37;">대치동 최상위권의 비밀노트 시리즈</div>
+                            <div class="sud-mid" style="color:#fff;">수능단어<br>비밀노트</div>
+                            <div class="sud-badge" style="background:#d4af37; color:#111;">심화편<br>Part I</div>
+                            <div class="sud-bot" style="border-top-color:#555;"></div>
+                        </div>
+                    </div>
+                    <div class="s-info">
+                        <span class="s-cat">최상위 VOD</span>
+                        <h4 class="s-title">수단비 심화편 (의대/SKY반 전용) 고난도 독해 완성</h4>
+                        <div class="point-price"><i class="fas fa-coins"></i> 500 P</div>
+                        <div class="s-foot mt-10">
+                            <span class="text-gray text-xs" style="text-decoration:line-through;">정가 80,000원</span>
+                            <button class="btn-sm btn-orange" onclick="buyWithPoints(500, '수단비 심화편 VOD', 'vod')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Anthology Level Roadmap -->
+    <div class="store-section">
+        <div class="container">
+            <div class="section-head" style="flex-direction:column; align-items:flex-start; gap:10px;">
+                <h3><i class="fas fa-crown text-gold"></i> VIP 교재 스토어 (수능 앤솔로지) <span class="badge-new bg-orange">POINT</span></h3>
+                <p class="text-gray font-bold">수능 영어 1등급을 위한 정규 커리큘럼, CSAT Anthology. <strong>나의 레벨을 확인하고 맞는 단계부터 시작하세요.</strong></p>
+                <a href="student_diagnostics.html" style="display:inline-flex; align-items:center; gap:8px; background:#111; color:white; padding:10px 22px; border-radius:8px; font-weight:800; font-size:14px; text-decoration:none; transition:0.2s;" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#111'">
+                    <i class="fas fa-search-plus"></i> 내 추천 레벨 진단받기 →
+                </a>
+            </div>
+
+            <style>
+                /* Anthology Roadmap */
+                .anth-roadmap { display: flex; gap: 0; position: relative; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+                .anth-roadmap::before {
+                    content: ''; position: absolute; top: 60px; left: 40px; right: 40px; height: 4px;
+                    background: linear-gradient(to right, #2bd3ff, #f9a826, #26a69a, #5c6bc0, #f28033, #1f7842, #202e5b);
+                    z-index: 0; border-radius: 2px;
+                }
+                .anth-level {
+                    flex: 1; min-width: 140px; display: flex; flex-direction: column; align-items: center;
+                    position: relative; z-index: 1; cursor: pointer;
+                }
+                .anth-bubble {
+                    width: 72px; height: 72px; border-radius: 50%; border: 4px solid white;
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 22px; font-weight: 900; color: white;
+                    margin-bottom: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+                    transition: 0.3s; position: relative;
+                }
+                .anth-level:hover .anth-bubble { transform: scale(1.12); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+                .anth-level.active .anth-bubble { transform: scale(1.15); }
+                .anth-bubble .rec-badge {
+                    position: absolute; top: -8px; right: -8px;
+                    background: #E91E63; color: white; font-size: 9px; font-weight: 900;
+                    padding: 3px 7px; border-radius: 10px; border: 2px solid white; white-space: nowrap;
+                }
+                .anth-label { font-size: 13px; font-weight: 800; color: #111; text-align: center; line-height: 1.3; }
+                .anth-target { font-size: 11px; color: #888; text-align: center; margin-top: 3px; }
+                .anth-pts { font-size: 13px; font-weight: 900; color: #f57c00; margin-top: 5px; }
+
+                /* Expanded Detail Panel */
+                .anth-detail {
+                    background: white; border-radius: 16px; border: 2px solid transparent;
+                    padding: 30px; margin-top: 10px; display: none;
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+                    transition: 0.3s;
+                }
+                .anth-detail.show { display: block; }
+                .anth-detail-inner { display: grid; grid-template-columns: auto 1fr auto; gap: 30px; align-items: start; }
+                .anth-book-preview {
+                    width: 120px; height: 170px; border-radius: 4px 10px 10px 4px;
+                    display: flex; flex-direction: column; justify-content: space-between;
+                    padding: 15px; box-shadow: 6px 4px 15px rgba(0,0,0,0.2); flex-shrink: 0; position: relative;
+                }
+                .anth-book-preview .bp-lv { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.8); }
+                .anth-book-preview .bp-title { font-size: 18px; font-weight: 900; color: white; font-style: italic; line-height: 1.2; }
+                .anth-book-preview .bp-sub { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 600; }
+                .anth-detail-info h4 { font-size: 20px; font-weight: 900; color: #111; margin-bottom: 6px; }
+                .anth-detail-info .adi-target { font-size: 14px; color: #555; margin-bottom: 15px; }
+                .anth-feature-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+                .anth-feature-list li { font-size: 14px; color: #444; display: flex; align-items: flex-start; gap: 8px; }
+                .anth-detail-cta { text-align: right; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+                .anth-price-big { font-size: 28px; font-weight: 900; color: #f57c00; }
+                .anth-price-orig { font-size: 13px; color: #bbb; text-decoration: line-through; }
+            </style>
+
+            <!-- Level Roadmap -->
+            <div class="anth-roadmap">
+                <!-- L0 -->
+                <div class="anth-level" onclick="toggleAnth(0)" id="anth-lv-0">
+                    <div class="anth-bubble" style="background:#2bd3ff;">0</div>
+                    <div class="anth-label">수능 기초</div>
+                    <div class="anth-target">초6 ~ 중1</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 200P</div>
+                </div>
+                <!-- L1 -->
+                <div class="anth-level" onclick="toggleAnth(1)" id="anth-lv-1">
+                    <div class="anth-bubble" style="background:#f9a826;">1</div>
+                    <div class="anth-label">기출 분석</div>
+                    <div class="anth-target">중1 ~ 중2</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 250P</div>
+                </div>
+                <!-- L2 -->
+                <div class="anth-level" onclick="toggleAnth(2)" id="anth-lv-2">
+                    <div class="anth-bubble" style="background:#26a69a;">2</div>
+                    <div class="anth-label">고2 심화</div>
+                    <div class="anth-target">중2 ~ 중3</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 300P</div>
+                </div>
+                <!-- L3 — RECOMMENDED -->
+                <div class="anth-level" onclick="toggleAnth(3)" id="anth-lv-3">
+                    <div class="anth-bubble" style="background:#5c6bc0;">3<span class="rec-badge">추천</span></div>
+                    <div class="anth-label">수능 기초</div>
+                    <div class="anth-target">예비고1 ~ 고1</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 350P</div>
+                </div>
+                <!-- L4 -->
+                <div class="anth-level" onclick="toggleAnth(4)" id="anth-lv-4">
+                    <div class="anth-bubble" style="background:#f28033;">4</div>
+                    <div class="anth-label">실전 감각</div>
+                    <div class="anth-target">고1 ~ 고2</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 400P</div>
+                </div>
+                <!-- L5 -->
+                <div class="anth-level" onclick="toggleAnth(5)" id="anth-lv-5">
+                    <div class="anth-bubble" style="background:#1f7842;">5</div>
+                    <div class="anth-label">킬러 문항</div>
+                    <div class="anth-target">고2 ~ 고3</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 500P</div>
+                </div>
+                <!-- L6 -->
+                <div class="anth-level" onclick="toggleAnth(6)" id="anth-lv-6">
+                    <div class="anth-bubble" style="background:#202e5b;">6</div>
+                    <div class="anth-label">의대/SKY 파이널</div>
+                    <div class="anth-target">고3 최상위</div>
+                    <div class="anth-pts"><i class="fas fa-coins"></i> 600P</div>
+                </div>
+            </div>
+
+            <!-- Detail Panel (shows when level clicked) -->
+            <div class="anth-detail" id="anth-detail-panel">
+                <div class="anth-detail-inner">
+                    <div class="anth-book-preview" id="anth-book-el">
+                        <div class="bp-lv" id="anth-bp-lv"></div>
+                        <div class="bp-title">CSAT<br>ANTHOLOGY</div>
+                        <div class="bp-sub">KNS</div>
+                    </div>
+                    <div class="anth-detail-info">
+                        <h4 id="anth-d-title"></h4>
+                        <div class="adi-target" id="anth-d-target"></div>
+                        <ul class="anth-feature-list" id="anth-d-features"></ul>
+                    </div>
+                    <div class="anth-detail-cta">
+                        <div class="anth-price-orig" id="anth-d-orig"></div>
+                        <div class="anth-price-big" id="anth-d-price"></div>
+                        <button class="btn-sm btn-orange" id="anth-d-btn" style="padding:12px 24px; font-size:15px;" onclick="">포인트로 구매</button>
+                        <div style="font-size:12px; color:#aaa; margin-top:5px;">결제 후 즉시 이용 가능</div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            const authLevels = [
+                { color:'#2bd3ff', title:'수능 앤솔로지 Level 0 — 수능 영어 기초 다지기', target:'🎯 대상: 초6 ~ 중1 · 영어 기초 완성 목표', price:'200', orig:'정가 20,000원', features:['수능 영어 핵심 어휘 입문 500개', '기초 구문 독해 연습', '초등~중1 교육과정 완벽 커버'] },
+                { color:'#f9a826', title:'수능 앤솔로지 Level 1 — 고1 교육청 기출 분석', target:'🎯 대상: 중1 ~ 중2 · 기출 분석 입문', price:'250', orig:'정가 25,000원', features:['고1 교육청 기출 핵심 유형 해설', '서술형 대비 독해 패턴 훈련', '어법 기초편 포함'] },
+                { color:'#26a69a', title:'수능 앤솔로지 Level 2 — 고2 평가원 완벽 분해', target:'🎯 대상: 중2 ~ 중3 · 심화 사고력 훈련', price:'300', orig:'정가 35,000원', features:['고2 교육청 + 평가원 유사 문항', '빈칸추론 / 문장삽입 집중 훈련', '대의파악 및 함축 의미 파악'] },
+                { color:'#5c6bc0', title:'수능 앤솔로지 Level 3 — 고3 교육청 완벽 대비', target:'🎯 대상: 예비고1 ~ 고1 · 수능 기초 완성', price:'350', orig:'정가 40,000원', features:['고3 교육청 3~6월 기출 핵심', '수능 필수 유형 34문항 완전 정복', '대치 본원 현재 가장 많이 사용하는 레벨'] },
+                { color:'#f28033', title:'수능 앤솔로지 Level 4 — 정규 사설 실전 모의고사', target:'🎯 대상: 고1 ~ 고2 · 실전 감각 극대화', price:'400', orig:'정가 50,000원', features:['KATCH 자체 제작 사설 모의고사 5회', '실전과 동일한 45문항 구성', '오답 분석 PDF 포함'] },
+                { color:'#1f7842', title:'수능 앤솔로지 Level 5 — 평가원 킬러 문항 분석', target:'🎯 대상: 고2 ~ 고3 · 1등급 목표', price:'500', orig:'정가 60,000원', features:['평가원 기출 킬러 문항 집중 분해', '오답률 60% 이상 문항만 선별', '킬러별 풀이 전략 해설 제공'] },
+                { color:'#202e5b', title:'수능 앤솔로지 Level 6 — KATCH 모의고사 10회분', target:'🎯 대상: 고3 최상위 · 의대/SKY 목표', price:'600', orig:'정가 90,000원', features:['KATCH 실전 모의고사 10회 전 세트', '의대/SKY 전용 킬러 문항 특별 수록', '강사용 해설지 별도 제공'] },
+            ];
+
+            let activeLevel = -1;
+
+            function toggleAnth(lv) {
+                const isSame = activeLevel === lv;
+                // Reset all bubbles
+                document.querySelectorAll('.anth-level').forEach(el => el.classList.remove('active'));
+                
+                const panel = document.getElementById('anth-detail-panel');
+                if (isSame) {
+                    panel.classList.remove('show');
+                    activeLevel = -1;
+                    return;
+                }
+                activeLevel = lv;
+                document.getElementById('anth-lv-' + lv).classList.add('active');
+
+                const d = authLevels[lv];
+                // Update book
+                const book = document.getElementById('anth-book-el');
+                book.style.background = d.color;
+                document.getElementById('anth-bp-lv').textContent = 'Level ' + lv;
+                // Update info
+                document.getElementById('anth-d-title').textContent = d.title;
+                document.getElementById('anth-d-target').textContent = d.target;
+                const fl = document.getElementById('anth-d-features');
+                fl.innerHTML = d.features.map(f => `<li><i class="fas fa-check-circle" style="color:${d.color}; margin-top:3px;"></i> ${f}</li>`).join('');
+                document.getElementById('anth-d-price').innerHTML = `<i class="fas fa-coins"></i> ${d.price} P`;
+                document.getElementById('anth-d-orig').textContent = d.orig;
+                document.getElementById('anth-d-btn').setAttribute('onclick', `buyWithPoints(${d.price}, '앤솔로지 Level ${lv}', 'exam')`);
+                // Set border color
+                panel.style.borderColor = d.color;
+                panel.classList.add('show');
+                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            </script>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="s-foot mt-10">
+                            <button class="btn-sm btn-orange" onclick="buyWithPoints(250, '앤솔로지 Level 1', 'exam')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Franchise & Partner Materials -->
+    <div class="store-section">
+        <div class="container">
+            <div class="section-head">
+                <h3><i class="fas fa-handshake text-teal"></i> 파트너 초빙강사 자료관 <span class="badge-new bg-teal">NEW</span></h3>
+                <p class="text-gray font-bold">전국의 실력있는 학원과 강사들이 직접 올린 정규 파트너스 전용 자료입니다.</p>
+            </div>
+            
+            <div class="store-grid">
+                <div class="store-card">
+                    <div class="s-thumb v-partner"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="s-info">
+                        <span class="s-cat">초빙특강 / 대구수성구</span>
+                        <h4 class="s-title">수성구 1타 강사의 내신 1등급 직결 문법 짚어보기</h4>
+                        <div class="point-price"><i class="fas fa-coins"></i> 200 P</div>
+                        <div class="s-foot mt-10">
+                            <button class="btn-sm btn-outline-teal" onclick="buyWithPoints(200, '수성구 1타 강사의 내신 1등급 직결 문법 짚어보기', 'vod')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="s-thumb v-partner"><i class="fas fa-file-alt"></i></div>
+                    <div class="s-info">
+                        <span class="s-cat">자료 / 김영수 강사</span>
+                        <h4 class="s-title">2025학년도 EBS 수능특강 유사문제 모음 (150제)</h4>
+                        <div class="point-price"><i class="fas fa-coins"></i> 100 P</div>
+                        <div class="s-foot mt-10">
+                            <button class="btn-sm btn-outline-teal" onclick="buyWithPoints(100, '2025학년도 EBS 수능특강 유사문제 모음 (150제)', 'pdf')">포인트 구매</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Purchase Modal -->
+    <div id="buy-modal" class="point-modal">
+        <div class="p-modal-content">
+            <div class="p-modal-head" id="modal-type-head">
+                <i class="fas fa-shopping-cart"></i> 포인트 결제 확인
+            </div>
+            <div class="p-modal-body">
+                <p id="item-title-display" style="font-weight: 800; font-size: 16px; color: var(--navy);"></p>
+                <p>본 상품을 정규 포인트로 구매하시겠습니까?</p>
+                
+                <div class="balance-box">
+                    <div class="balance-row text-gray">
+                        <span>현재 보유 포인트</span>
+                        <span id="current-points-display">1,500 P</span>
+                    </div>
+                    <div class="balance-row text-red">
+                        <span>차감 예정 포인트</span>
+                        <span id="deduct-points-display">- 300 P</span>
+                    </div>
+                    <div class="balance-row final">
+                        <span>결제 후 잔여</span>
+                        <span id="remain-points-display">1,200 P</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-modal-foot">
+                <button class="p-modal-btn cancel" onclick="closeBuyModal()">취소</button>
+                <button class="p-modal-btn confirm" onclick="confirmPurchase()">결제하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="point-modal">
+        <div class="p-modal-content" style="width: 350px;">
+            <div class="p-modal-body" style="padding: 40px 20px;">
+                <i class="fas fa-check-circle text-green" style="font-size: 50px; margin-bottom: 20px;"></i>
+                <h3 style="font-size: 20px; color: #333; margin-bottom: 10px;">결제가 완료되었습니다!</h3>
+                <p style="color: #666; font-size: 14px;">구매하신 자료는 [내 강의실]에서<br>확인하실 수 있습니다.</p>
+                <button class="btn-primary btn-full mt-20" onclick="closeSuccessModal()">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let myPoints = 1500;
+        let pToDeduct = 0;
+
+        function updatePointsDisplay() {
+            document.getElementById('my-points').innerText = myPoints.toLocaleString();
+        }
+
+        function buyWithPoints(price, title, type) {
+            pToDeduct = price;
+            
+            document.getElementById('item-title-display').innerText = '"' + title + '"';
+            document.getElementById('current-points-display').innerText = myPoints.toLocaleString() + ' P';
+            document.getElementById('deduct-points-display').innerText = '- ' + price.toLocaleString() + ' P';
+            
+            let remain = myPoints - price;
+            let remainEl = document.getElementById('remain-points-display');
+            remainEl.innerText = remain.toLocaleString() + ' P';
+            
+            if(remain < 0) {
+                remainEl.style.color = 'red';
+            } else {
+                remainEl.style.color = 'var(--navy)';
+            }
+            
+            document.getElementById('buy-modal').style.display = 'flex';
+        }
+
+        function closeBuyModal() {
+            document.getElementById('buy-modal').style.display = 'none';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').style.display = 'none';
+        }
+
+        function confirmPurchase() {
+            if(myPoints < pToDeduct) {
+                alert("포인트가 부족합니다. 라운지에서 글쓰기 및 커뮤니티 활동을 통해 포인트를 모아보세요.");
+                closeBuyModal();
+                return;
+            }
+            
+            myPoints -= pToDeduct;
+            updatePointsDisplay();
+            
+            // Show Success Modal
+            closeBuyModal();
+            document.getElementById('success-modal').style.display = 'flex';
+        }
+
+        // Init global cart
+        document.addEventListener('DOMContentLoaded', () => {
+            initCartPanel();
+        });
+    </script>
+
+</body>
+</html>
