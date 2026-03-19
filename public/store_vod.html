@@ -9,51 +9,52 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="cart.js"></script>
-    <style>
-        .store-hero { background: var(--navy); color: white; padding: 60px 0 40px; text-align: center; }
-        .store-hero h2 { font-size: 32px; font-weight: 900; margin-bottom: 12px; }
-        .store-hero p { font-size: 16px; opacity: 0.8; margin-bottom: 25px; }
+        .store-hero { background: linear-gradient(135deg, #f0f4fd 0%, #ffeaf1 100%); color: #111; padding: 70px 0 50px; text-align: center; border-bottom: 1px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; }
+        .store-hero::before { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(233,30,99,0.1) 0%, transparent 70%); top: -100px; right: 10%; border-radius: 50%; }
+        .store-hero h2 { font-size: 38px; font-weight: 900; margin-bottom: 15px; letter-spacing: -1px; }
+        .store-hero p { font-size: 17px; color: #555; margin-bottom: 30px; }
         
-        .store-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .store-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; z-index: 2; position: relative; }
         .store-tab {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); 
-            color: rgba(255,255,255,0.7); font-weight: 700; font-size: 15px;
-            padding: 12px 24px; border-radius: 30px; cursor: pointer; transition: 0.2s;
+            background: white; border: 1px solid #ddd; 
+            color: #555; font-weight: 800; font-size: 16px;
+            padding: 14px 28px; border-radius: 40px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 8px;
         }
-        .store-tab:hover { background: rgba(255,255,255,0.2); color: white; }
-        .store-tab.active { background: #E91E63; border-color: #E91E63; color: white; box-shadow: 0 4px 15px rgba(233,30,99,0.3); }
+        .store-tab:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: #111; border-color: #bbb; }
+        .store-tab.active { background: linear-gradient(135deg, #E91E63, #9C27B0); border-color: transparent; color: white; box-shadow: 0 10px 25px rgba(233,30,99,0.3); }
 
-        .store-section { padding: 40px 0; border-bottom: 1px solid #eee; }
-        .store-section:nth-child(even) { background: #f9f9f9; }
+        .store-section { padding: 50px 0; border-bottom: 1px solid #eee; }
+        .store-section:nth-child(even) { background: #fdfdfd; }
         .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
-        .section-head h3 { font-size: 24px; font-weight: 800; color: #333; display: flex; align-items: center; gap: 10px; }
-        .point-price { font-weight: 900; color: #f57c00; font-size: 18px; margin-top: 10px; }
-        .store-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .store-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: transform 0.2s; }
-        .store-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .section-head h3 { font-size: 26px; font-weight: 900; color: #111; display: flex; align-items: center; gap: 10px; }
+        .point-price { font-weight: 900; color: #E91E63; font-size: 18px; margin-top: 10px; }
+        .store-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .store-card { background: #fff; border: 1px solid #eaeaea; border-radius: 16px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .store-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: #ddd; }
         .s-thumb { background: #ddd; height: 160px; position: relative; display: flex; justify-content: center; align-items: center; }
         .s-thumb i { font-size: 40px; color: rgba(0,0,0,0.2); }
-        .s-info { padding: 20px; }
-        .s-cat { font-size: 12px; font-weight: bold; color: var(--navy); margin-bottom: 5px; display: block; }
-        .s-title { font-size: 16px; font-weight: 700; color: #333; line-height: 1.4; height: 44px; overflow: hidden; margin-bottom: 10px;}
+        .s-info { padding: 24px; }
+        .s-cat { font-size: 12px; font-weight: 800; color: #E91E63; margin-bottom: 8px; display: block; }
+        .s-title { font-size: 17px; font-weight: 800; color: #222; line-height: 1.4; height: 48px; overflow: hidden; margin-bottom: 12px;}
         .v-free { background: #e8eaf6; }
         .v-vip { background: #fff9e6; }
         .v-partner { background: #e8f5e9; }
-        .s-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; }
+        .s-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #eee; padding-top: 18px; }
         
-        .point-modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index: 1000; }
-        .p-modal-content { background: #fff; width: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .p-modal-head { background: var(--navy); color: white; padding: 20px; font-size: 18px; font-weight: bold; text-align: center; }
-        .p-modal-body { padding: 30px; text-align: center; }
-        .p-modal-body p { font-size: 15px; color: #555; margin-bottom: 20px; }
-        .balance-box { background: #f5f5f5; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
-        .balance-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
-        .balance-row.final { border-top: 1px solid #ccc; padding-top: 10px; font-size: 16px; font-weight: bold; color: var(--navy); }
-        .p-modal-foot { display: flex; border-top: 1px solid #eee; }
-        .p-modal-btn { flex: 1; padding: 15px; border: none; background: #fff; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;}
-        .p-modal-btn.cancel { color: #888; border-right: 1px solid #eee; }
-        .p-modal-btn.confirm { color: #f57c00; }
-        .p-modal-btn:hover { background: #f9f9f9; }
+        .point-modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index: 1000; backdrop-filter: blur(4px); }
+        .p-modal-content { background: #fff; width: 420px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .p-modal-head { background: linear-gradient(135deg, #111, #333); color: white; padding: 24px; font-size: 20px; font-weight: 900; text-align: center; }
+        .p-modal-body { padding: 35px 30px; text-align: center; }
+        .p-modal-body p { font-size: 15px; color: #555; margin-bottom: 25px; line-height: 1.6; }
+        .balance-box { background: #f9f9f9; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+        .balance-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; }
+        .balance-row.final { border-top: 1px dashed #ccc; padding-top: 15px; font-size: 18px; font-weight: 900; color: #E91E63; }
+        .p-modal-foot { display: flex; padding: 0 30px 30px; gap: 10px; }
+        .p-modal-btn { flex: 1; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.2s;}
+        .p-modal-btn.cancel { background: #f5f5f5; color: #555; }
+        .p-modal-btn.confirm { background: #111; color: white; }
+        .p-modal-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         
         @media (max-width: 768px) {
             .store-grid { grid-template-columns: repeat(2, 1fr); }
@@ -106,11 +107,11 @@
                 <button class="store-tab" id="tab-b2b" onclick="switchStore('b2b')"><i class="fas fa-store-alt"></i> B2B 가맹 (대량구매)</button>
             </div>
             
-            <div id="point-info-box" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,215,0,0.3); border-radius:12px; padding:20px; max-width:600px; margin:25px auto 0; display:flex; align-items:center; gap:20px; text-align:left;">
-                <div style="font-size:36px; color:#FFD700;"><i class="fas fa-gem"></i></div>
+            <div id="point-info-box" style="background:rgba(255,255,255,0.7); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.8); border-radius:16px; padding:25px; max-width:650px; margin:30px auto 0; display:flex; align-items:center; gap:20px; text-align:left; box-shadow: 0 15px 35px rgba(0,0,0,0.05); position: relative; z-index: 2;">
+                <div style="font-size:40px;"><i class="fas fa-gem" style="color:#E91E63; background:linear-gradient(135deg, #ff8a65, #e91e63); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i></div>
                 <div>
-                    <h4 style="font-size:16px; font-weight:bold; color:#FFD700; margin-bottom:5px;">라운지에서 획득한 KATCH 포인트 사용 안내</h4>
-                    <p style="font-size:14px; color:#ddd; margin:0; line-height:1.4;">진단평가와 숙제로 차곡차곡 모은 포인트로 VIP 교재(수단비/앤솔로지) 라인업 및 전체 패키지를 즉시 결제하실 수 있습니다.</p>
+                    <h4 style="font-size:17px; font-weight:900; color:#111; margin-bottom:6px;">라운지에서 획득한 KATCH 포인트 사용 안내</h4>
+                    <p style="font-size:14px; color:#666; margin:0; line-height:1.5;">진단평가와 숙제로 차곡차곡 모은 포인트로 VIP 교재(수단비/앤솔로지) 라인업 및 전체 패키지를 즉시 결제하실 수 있습니다.</p>
                 </div>
             </div>
         </div>
