@@ -7,11 +7,11 @@ export async function GET() {
   try {
     const connectionString = process.env.DATABASE_URL;
     if (!connectionString) {
-      throw new Error("DATABASE_URL is not defined");
+      throw new Error('DATABASE_URL is not defined');
     }
 
     const sql = postgres(connectionString);
-    const result = await sql`SELECT NOW()`;
+    const result = await sqlSELECT NOW();
 
     return NextResponse.json({
       success: true,
@@ -27,4 +27,3 @@ export async function GET() {
     }, { status: 500 });
   }
 }
-export const dynamic = 'force-dynamic';
