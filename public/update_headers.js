@@ -23,14 +23,14 @@ const new_header = `    <!-- 1. Top Header -->
             </div>
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
-                <a href="student_diagnostics.html">레벨테스트</a>
+                <a href="level_test.html">레벨테스트</a>
                 <a href="problem_bank.html">문제은행</a>
                 <a href="store_vod.html">VOD 인강</a>
                 <a href="store_vod.html">교재 스토어</a>
                 <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
             <div class="header-utils">
-                <a href="dashboard_student.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
                 <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
             </div>
         </div>

@@ -227,9 +227,9 @@
     <!-- Hero -->
     <div class="diag-hero">
         <div class="container hero-inner">
-            <div class="hero-tag"><i class="fas fa-radar"></i> Diagnostic Hub · 2026</div>
-            <h1 class="hero-title">KATCH <em>진단테스트</em></h1>
-            <p class="hero-sub">데이터로 입시 전략의 기준을 세우다.<br>대치동의 압도적 성과를 정밀 진단으로 증명합니다.</p>
+            <div class="hero-tag"><i class="fas fa-award"></i> Admission Center · 2026</div>
+            <h1 class="hero-title">KATCH 고등관 <em>레벨테스트</em></h1>
+            <p class="hero-sub">KNS 고등관 예비고 입학을 위한 필수 관문입니다.<br>정밀 진단을 통해 영역별 약점을 파악하고 가장 적합한 반을 배정해 드립니다.</p>
             <div class="hero-stats">
                 <div class="h-stat">
                     <div class="h-stat-val"><span class="accent" id="cnt-applicants">0</span>명+</div>
@@ -249,145 +249,33 @@
 
     <div class="container" style="padding-bottom:60px;">
 
-        <!-- Process Bar -->
-        <div class="process-bar" style="margin-bottom: 40px;">
-            <div class="proc-step">
-                <div class="proc-icon done"><i class="fas fa-user-check"></i></div>
-                <div class="proc-text"><strong>STEP 1. 회원가입</strong><span>학생 정보 입력</span></div>
-            </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="proc-step">
-                <div class="proc-icon current"><i class="fas fa-clipboard-list"></i></div>
-                <div class="proc-text"><strong>STEP 2. 시험 신청</strong><span>목적/학년 맞춤 선택</span></div>
-            </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="proc-step">
-                <div class="proc-icon"><i class="fas fa-laptop-code"></i></div>
-                <div class="proc-text"><strong>STEP 3. CBT 응시</strong><span>온라인 실전 시험</span></div>
-            </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="proc-step">
-                <div class="proc-icon"><i class="fas fa-search-plus"></i></div>
-                <div class="proc-text"><strong>STEP 4. 약점 진단</strong><span>AI 데이터 분석</span></div>
-            </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="proc-step">
-                <div class="proc-icon"><i class="fas fa-prescription-bottle-alt"></i></div>
-                <div class="proc-text"><strong>STEP 5. 맞춤 처방</strong><span>VOD·교재 추천</span></div>
-            </div>
-        </div>
+        <!-- Process Bar Removed or Simplified -->
 
         <!-- Section title -->
-        <h2 style="font-size:24px; font-weight:900; color:#111; margin-bottom:6px;">📋 현재 신청 가능한 시험</h2>
-        <p style="font-size:15px; color:#888; margin-bottom:25px;">본인의 학년과 목적에 맞는 시험을 선택하여 신청하세요.</p>
+        <h2 style="font-size:24px; font-weight:900; color:#111; text-align:center; margin-bottom:6px;">📋 입학 레벨테스트 신청</h2>
+        <p style="font-size:15px; color:#888; text-align:center; margin-bottom:40px;">정해진 요일 전날 밤 9시까지 예약 후 응시해 주시기 바랍니다.</p>
 
         <!-- Main Exam Cards -->
-        <div class="exam-grid-main">
+        <div class="exam-grid-main" style="grid-template-columns: 1fr; max-width: 480px; margin: 0 auto 60px;">
 
             <!-- Card 1: Open -->
-            <div class="exam-card open">
+            <div class="exam-card open" style="border-color: #E91E63; box-shadow: 0 10px 30px rgba(233,30,99,0.1);">
                 <div class="ec-head">
-                    <div class="ec-status-pill pill-open">✅ 접수 중</div>
-                    <div class="ec-icon" style="background:#e3f2fd; color:#1976d2;"><i class="fas fa-school"></i></div>
-                    <div class="ec-title">예비고1<br>특목고 배치고사</div>
-                    <div class="ec-slogan">"대원외고 최종 평가!"</div>
-                    <div class="ec-deadline" style="color:#f57c00;"><i class="far fa-calendar-alt"></i> 2026.03.01 ~ <strong>03.15</strong></div>
+                    <div class="ec-status-pill pill-open" style="background:#E91E63;color:white;">★ 온라인 레벨테스트 신청</div>
+                    <div class="ec-icon" style="background:#fce4ec; color:#E91E63;"><i class="fas fa-award"></i></div>
+                    <div class="ec-title">KNS 고등관<br>레벨테스트 (입학평가)</div>
+                    <div class="ec-slogan" style="color:#E91E63;">"중2·3 레벨테스트 응시 필수!"</div>
+                    <div class="ec-deadline" style="color:#E91E63;"><i class="far fa-calendar-alt"></i> 상시 오픈 (전날 9PM 마감)</div>
                 </div>
                 <div class="ec-body">
-                    <div class="countdown-box">
-                        <i class="fas fa-fire-alt"></i> 신청 마감까지
-                        <span class="countdown-num" id="deadline-1">D-3</span>
-                    </div>
-                    <p class="ec-desc">특목/자사고 합격은 결국 고난도 영어에서 결정됩니다. KATCH의 빅데이터로 출제경향을 완벽 복제하여 지원 학교와의 궁합 및 내신 적응력을 가장 정확하게 진단해 드립니다.</p>
+                    <p class="ec-desc">안녕하십니까. KNS 고등관입니다. 입학을 위한 필수 진단고사로, 문법/독해/서술형/어휘 등 체계적인 데이터 평가가 진행됩니다.</p>
                     <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#2196F3;"></i> 목표: 특목고 지원 전 최종 점검 및 전국 단위 위치 파악</li>
-                        <li><i class="fas fa-list-ol" style="color:#2196F3;"></i> 구성: 공통(필수) + 학교별 선택 문항 (대원외고/하나고)</li>
-                        <li><i class="far fa-clock" style="color:#2196F3;"></i> 소요시간: 80분 · 온라인 CBT</li>
-                        <li><i class="fas fa-coins" style="color:#f57c00;"></i> 응시 시 <strong>+50 포인트</strong> 자동 적립</li>
+                        <li><i class="fas fa-bullseye" style="color:#E91E63;"></i> 대상: 중학교 2, 3학년 필수 응시</li>
+                        <li><i class="far fa-clock" style="color:#E91E63;"></i> 응시일: 수요일 / 토요일 / 일요일 (14:00, 16:00, 18:00)</li>
+                        <li><i class="fas fa-hourglass-half" style="color:#E91E63;"></i> 소요시간: 120분 · 온라인 CBT</li>
+                        <li><i class="fas fa-credit-card" style="color:#E91E63;"></i> 전형료: <strong>15,000원</strong></li>
                     </ul>
-                    <button class="sample-toggle" onclick="toggleSample(1)"><i class="fas fa-eye"></i> 샘플 문항 미리보기 <i class="fas fa-chevron-down" id="chev-1"></i></button>
-                    <div class="sample-content" id="sample-1">
-                        <strong>샘플 문항 (어법 — 도치 구문)</strong><br><br>
-                        "Not until the mid-nineteenth century ___ the concept of public health systematically..."<br>
-                        ① did emerged &nbsp;② emerged &nbsp;③ did emerge &nbsp;④ was emerging &nbsp;⑤ did it emerge<br>
-                        <small style="color:#aaa; margin-top:8px; display:block;">실제 시험은 총 40문항으로 구성됩니다.</small>
-                    </div>
-                    <a href="#" class="ec-cta cta-open" onclick="openRegModal('예비고1 특목고 배치고사', 'open'); return false;">시험 신청하기 →</a>
-                </div>
-            </div>
-
-            <!-- Card 2: Available -->
-            <div class="exam-card available">
-                <div class="ec-head">
-                    <div class="ec-status-pill pill-avail">🟣 상시 응시 가능</div>
-                    <div class="ec-icon" style="background:#f3e5f5; color:#8e24aa;"><i class="fas fa-fire"></i></div>
-                    <div class="ec-title">예비중3<br>Real 특목 모의고사</div>
-                    <div class="ec-slogan">"리얼한 실전 감각!"</div>
-                    <div class="ec-deadline" style="color:#9C27B0;"><i class="far fa-calendar-alt"></i> 상시 개방 · 언제든 응시</div>
-                </div>
-                <div class="ec-body">
-                    <p class="ec-desc" style="margin-top:10px;">학교별 유형과 킬러 문항을 100% 반영하여 특목 입시의 방향성을 제시하는 실전 심화 테스트. 모의 지원을 통해 합격 가능성을 타진해 보세요.</p>
-                    <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#9C27B0;"></i> 목표: 실전 모의고사 및 심화 사고력 측정</li>
-                        <li><i class="fas fa-list-ol" style="color:#9C27B0;"></i> 구성: 대원외고/하나고 기출 유형 34~40문항</li>
-                        <li><i class="far fa-clock" style="color:#9C27B0;"></i> 소요시간: 80분 · 온라인 CBT</li>
-                        <li><i class="fas fa-coins" style="color:#f57c00;"></i> 응시 시 <strong>+50 포인트</strong> 자동 적립</li>
-                    </ul>
-                    <button class="sample-toggle" onclick="toggleSample(2)"><i class="fas fa-eye"></i> 샘플 문항 미리보기 <i class="fas fa-chevron-down" id="chev-2"></i></button>
-                    <div class="sample-content" id="sample-2">
-                        <strong>샘플 문항 (빈칸추론 — 고난도)</strong><br><br>
-                        "Evolutionary biologists have long debated the exact mechanisms driving __ behavior in social animals, where natural selection typically favors individual fitness..."<br>
-                        <small style="color:#aaa; margin-top:8px; display:block;">① altruistic &nbsp;② competitive &nbsp;③ cooperative &nbsp;④ strategic</small>
-                    </div>
-                    <a href="#" class="ec-cta cta-avail" onclick="openRegModal('예비중3 Real 특목 모의고사', 'avail'); return false;">바로 응시하기 →</a>
-                </div>
-            </div>
-
-            <!-- Card 3: Closed -->
-            <div class="exam-card closed">
-                <div class="ec-head">
-                    <div class="ec-status-pill pill-closed">⏸️ 기간 만료</div>
-                    <div class="ec-icon" style="background:#f5f5f5; color:#aaa;"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="ec-title">예비중1<br>Hello 내신 시험</div>
-                    <div class="ec-slogan">"안녕 내신, 안녕 100점"</div>
-                    <div class="ec-deadline" style="color:#aaa; text-decoration:line-through;"><i class="far fa-calendar-alt"></i> 2026.02.01 ~ 02.28</div>
-                </div>
-                <div class="ec-body">
-                    <p class="ec-desc">강남권 23개교 기출 데이터를 분석해 내신 적응력을 높이고 서술형 감점을 완벽 차단합니다. 첫 내신 지필고사의 완벽한 시뮬레이션입니다.</p>
-                    <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#aaa;"></i> 목표: 중등 첫 지필고사 완벽 대비 및 취약 영역 파악</li>
-                        <li><i class="fas fa-list-ol" style="color:#aaa;"></i> 구성: 공통 + 강남권 기출 변형 총 50문항</li>
-                        <li><i class="far fa-clock" style="color:#aaa;"></i> 소요시간: 60분</li>
-                    </ul>
-                    <div class="ec-cta cta-closed">접수 마감되었습니다</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Upcoming section -->
-        <h2 style="font-size:22px; font-weight:900; color:#111; text-align:center; margin-bottom:6px;">📅 2026 예정 진단 평가</h2>
-        <p style="font-size:15px; color:#888; text-align:center; margin-bottom:25px;">예비 알림 신청을 통해 오픈 소식을 가장 먼저 받아보세요.</p>
-        <div class="upcoming-grid">
-            <div class="upcoming-card">
-                <div class="uc-head">
-                    <div class="uc-month-tag" style="background:#e0f2f1; color:#00796b;">5월 오픈 예정</div>
-                    <h3>중2 수준별 수능형 모의고사</h3>
-                    <div class="uc-date"><i class="far fa-clock"></i> 2026.05 확정</div>
-                </div>
-                <div class="uc-body">
-                    <p class="uc-desc">중학교 2학년, 본격적인 입시 레이스를 위해 수능형 문항에 대한 노출과 객관적인 자신의 위치를 파악하는 실전 테스트입니다.</p>
-                    <button class="btn-notify" id="notify-btn-1" onclick="setNotify(1)"><i class="far fa-bell"></i> 오픈 알림 신청하기</button>
-                </div>
-            </div>
-            <div class="upcoming-card">
-                <div class="uc-head">
-                    <div class="uc-month-tag" style="background:#fce4ec; color:#c2185b;">8월 대규모 업데이트</div>
-                    <h3>하반기 신규 정밀 진단 시스템</h3>
-                    <div class="uc-date"><i class="far fa-clock"></i> 2026.08 목표 수립 중</div>
-                </div>
-                <div class="uc-body">
-                    <p class="uc-desc">KATCH 연구소가 개발 중인 새로운 형태의 진단 평가. 기존의 한계를 뛰어넘는 다면적 문해력 측정 시스템이 찾아옵니다.</p>
-                    <button class="btn-notify" id="notify-btn-2" onclick="setNotify(2)" style="border-color:#E91E63; color:#E91E63;"><i class="far fa-bell"></i> 알림 신청하기</button>
+                    <a href="#" class="ec-cta cta-open" style="background:#111;" onclick="openRegModal('KNS 고등관 레벨테스트', 'open'); return false;">레벨테스트 신청 및 결제 →</a>
                 </div>
             </div>
         </div>
@@ -408,37 +296,75 @@
                 </div>
             </div>
             <div class="rm-body">
-                <!-- Step 1: Student Confirm -->
+                <!-- Step 1: Survey -->
                 <div class="step-page active" id="step-1">
-                    <div class="rm-step-title">학생 정보 확인</div>
-                    <div class="rm-step-sub">아래 정보가 맞는지 확인해주세요.</div>
-                    <div class="info-row"><span class="info-label">이름</span><span class="info-val">이준호</span></div>
-                    <div class="info-row"><span class="info-label">학년</span><span class="info-val">예비 고1</span></div>
-                    <div class="info-row"><span class="info-label">소속 학원</span><span class="info-val">KNS 대치본원</span></div>
-                    <div class="info-row"><span class="info-label">연락처</span><span class="info-val">010-****-2345</span></div>
+                    <div class="rm-step-title">STEP 1. 서베이 (기본 정보)</div>
+                    <div class="rm-step-sub">테스트 신청 전 사전 설문을 작성해주세요.</div>
+                    <div class="form-group">
+                        <label>학생 이름 *</label>
+                        <input type="text" placeholder="예: 김지훈" required>
+                    </div>
+                    <div class="form-group">
+                        <label>현재 학교/학년 *</label>
+                        <input type="text" placeholder="예: 대명중학교 3학년" required>
+                    </div>
+                    <div class="form-group">
+                        <label>목표 고등학교 / 대학</label>
+                        <input type="text" placeholder="예: 하나고등학교 / 서울대학교">
+                    </div>
+                    <div class="form-group">
+                        <label>최근 내신 영어 성적 (성취도)</label>
+                        <select><option>A (90점 이상)</option><option>B (80점대)</option><option>C (70점대)</option><option>D 이하</option></select>
+                    </div>
                 </div>
-                <!-- Step 2: Exam Confirm -->
+                <!-- Step 2: Schedule & Payment -->
                 <div class="step-page" id="step-2">
-                    <div class="rm-step-title">시험 선택 확인</div>
-                    <div class="rm-step-sub">신청하실 시험 정보를 확인하세요.</div>
-                    <div class="info-row"><span class="info-label">시험명</span><span class="info-val" id="rm-exam-name"></span></div>
-                    <div class="info-row"><span class="info-label">신청일</span><span class="info-val">2026.03.12</span></div>
-                    <div class="info-row"><span class="info-label">응시 형태</span><span class="info-val">온라인 CBT</span></div>
-                    <div class="info-row"><span class="info-label">적립 예정</span><span class="info-val" style="color:#f57c00; font-weight:800;">+50 포인트</span></div>
-                    <div class="form-group" style="margin-top:20px;">
-                        <label>희망 응시 날짜 선택</label>
-                        <select><option>2026.03.13 (목) 오후 6시</option><option>2026.03.14 (금) 오후 7시</option><option>2026.03.15 (토) 오전 10시</option></select>
+                    <div class="rm-step-title">STEP 2. 일정 선택 및 결제</div>
+                    <div class="rm-step-sub">시험명: <strong id="rm-exam-name"></strong></div>
+                    <div class="form-group" style="padding-bottom:15px; border-bottom:1px solid #eee;">
+                        <label style="color:#E91E63;"><i class="fas fa-exclamation-circle"></i> 응시 요일 하루 전날 밤 9시까지 결제 필수</label>
+                        <select style="border-color:#111; font-weight:600;">
+                            <option value="">응시 희망일 및 시간 선택</option>
+                            <option>수요일 오후 2시 (14:00)</option>
+                            <option>수요일 오후 4시 (16:00)</option>
+                            <option>수요일 오후 6시 (18:00)</option>
+                            <option>토요일 오후 2시 (14:00)</option>
+                            <option>토요일 오후 4시 (16:00)</option>
+                            <option>토요일 오후 6시 (18:00)</option>
+                            <option>일요일 오후 2시 (14:00)</option>
+                            <option>일요일 오후 4시 (16:00)</option>
+                            <option>일요일 오후 6시 (18:00)</option>
+                        </select>
+                    </div>
+                    
+                    <div style="background:#f9f9f9; padding:20px; border-radius:12px; margin-top:15px;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; color:#555;">
+                            <span>레벨테스트 전형료</span>
+                            <strong>15,000 원</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:14px; color:#555;">
+                            <span>할인 수단</span>
+                            <span>- 0 원</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; border-top:1px solid #ddd; padding-top:15px; font-size:18px;">
+                            <strong>최종 결제 금액</strong>
+                            <strong style="color:#E91E63;">15,000 원</strong>
+                        </div>
                     </div>
                 </div>
                 <!-- Step 3: Success -->
                 <div class="step-page" id="step-3">
                     <div class="success-anim">
-                        <div class="success-emoji">🎉</div>
-                        <div class="success-title">신청 완료!</div>
-                        <div class="success-sub">
-                            <strong id="rm-success-exam"></strong> 시험 신청이 완료되었습니다.<br>
-                            응시 전날 카카오톡으로 안내 문자를 보내드립니다.<br><br>
-                            <span style="color:#f57c00; font-weight:700;">🪙 +50 포인트 자동 적립 예정</span>
+                        <div class="success-emoji">💳</div>
+                        <div class="success-title">결제 완료 및 승인 대기</div>
+                        <div class="success-sub" style="margin-bottom:15px;">
+                            <strong id="rm-success-exam"></strong> 신청/결제가 정상 접수되었습니다.<br>
+                            현재 <strong>[관리자 승인 대기]</strong> 상태입니다.
+                        </div>
+                        <div style="background:#e3f2fd; color:#1976d2; padding:15px; border-radius:8px; font-size:13px; text-align:left; line-height:1.6;">
+                            <i class="fas fa-info-circle"></i> <strong>알림:</strong><br>
+                            원활한 상담 및 일정 운영을 위해 관리자 최종 승인 후 시험 응시가 가능합니다. 승인이 완료되면 카카오톡 알림톡으로 안내해 드립니다.<br>
+                            <span style="opacity:0.8;">(당일 아침 미승인 건은 담당자에게 경고 알림 전송)</span>
                         </div>
                     </div>
                 </div>
