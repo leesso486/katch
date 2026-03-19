@@ -279,50 +279,50 @@
                 <!-- L0 -->
                 <div class="anth-level" onclick="toggleAnth(0)" id="anth-lv-0">
                     <div class="anth-bubble" style="background:#2bd3ff;">0</div>
-                    <div class="anth-label">수능 기초</div>
-                    <div class="anth-target">초6 ~ 중1</div>
+                    <div class="anth-label">수능 Basic</div>
+                    <div class="anth-target">초5하~중1</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 200P</div>
                 </div>
                 <!-- L1 -->
                 <div class="anth-level" onclick="toggleAnth(1)" id="anth-lv-1">
                     <div class="anth-bubble" style="background:#f9a826;">1</div>
-                    <div class="anth-label">기출 분석</div>
-                    <div class="anth-target">중1 ~ 중2</div>
+                    <div class="anth-label">세부정보 파악</div>
+                    <div class="anth-target">초6하~중2</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 250P</div>
                 </div>
                 <!-- L2 -->
                 <div class="anth-level" onclick="toggleAnth(2)" id="anth-lv-2">
                     <div class="anth-bubble" style="background:#26a69a;">2</div>
-                    <div class="anth-label">고2 심화</div>
-                    <div class="anth-target">중2 ~ 중3</div>
+                    <div class="anth-label">중심내용 파악</div>
+                    <div class="anth-target">초5상~중3</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 300P</div>
                 </div>
                 <!-- L3 — RECOMMENDED -->
                 <div class="anth-level" onclick="toggleAnth(3)" id="anth-lv-3">
                     <div class="anth-bubble" style="background:#5c6bc0;">3<span class="rec-badge">추천</span></div>
-                    <div class="anth-label">수능 기초</div>
-                    <div class="anth-target">예비고1 ~ 고1</div>
+                    <div class="anth-label">유추/수사법</div>
+                    <div class="anth-target">초5최상~중3상</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 350P</div>
                 </div>
                 <!-- L4 -->
                 <div class="anth-level" onclick="toggleAnth(4)" id="anth-lv-4">
                     <div class="anth-bubble" style="background:#f28033;">4</div>
-                    <div class="anth-label">실전 감각</div>
-                    <div class="anth-target">고1 ~ 고2</div>
+                    <div class="anth-label">고1 기출/내신</div>
+                    <div class="anth-target">중1최상~중3상중</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 400P</div>
                 </div>
                 <!-- L5 -->
                 <div class="anth-level" onclick="toggleAnth(5)" id="anth-lv-5">
                     <div class="anth-bubble" style="background:#1f7842;">5</div>
-                    <div class="anth-label">킬러 문항</div>
-                    <div class="anth-target">고2 ~ 고3</div>
+                    <div class="anth-label">고2 기출/내신</div>
+                    <div class="anth-target">중2최상~중3상</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 500P</div>
                 </div>
                 <!-- L6 -->
                 <div class="anth-level" onclick="toggleAnth(6)" id="anth-lv-6">
                     <div class="anth-bubble" style="background:#202e5b;">6</div>
-                    <div class="anth-label">의대/SKY 파이널</div>
-                    <div class="anth-target">고3 최상위</div>
+                    <div class="anth-label">고3 최상위기출</div>
+                    <div class="anth-target">중3 최상</div>
                     <div class="anth-pts"><i class="fas fa-coins"></i> 600P</div>
                 </div>
             </div>
@@ -351,13 +351,13 @@
 
             <script>
             const authLevels = [
-                { color:'#2bd3ff', title:'수능 앤솔로지 Level 0 — 수능 영어 기초 다지기', target:'🎯 대상: 초6 ~ 중1 · 영어 기초 완성 목표', price:'200', orig:'정가 20,000원', features:['수능 영어 핵심 어휘 입문 500개', '기초 구문 독해 연습', '초등~중1 교육과정 완벽 커버'] },
-                { color:'#f9a826', title:'수능 앤솔로지 Level 1 — 고1 교육청 기출 분석', target:'🎯 대상: 중1 ~ 중2 · 기출 분석 입문', price:'250', orig:'정가 25,000원', features:['고1 교육청 기출 핵심 유형 해설', '서술형 대비 독해 패턴 훈련', '어법 기초편 포함'] },
-                { color:'#26a69a', title:'수능 앤솔로지 Level 2 — 고2 평가원 완벽 분해', target:'🎯 대상: 중2 ~ 중3 · 심화 사고력 훈련', price:'300', orig:'정가 35,000원', features:['고2 교육청 + 평가원 유사 문항', '빈칸추론 / 문장삽입 집중 훈련', '대의파악 및 함축 의미 파악'] },
-                { color:'#5c6bc0', title:'수능 앤솔로지 Level 3 — 고3 교육청 완벽 대비', target:'🎯 대상: 예비고1 ~ 고1 · 수능 기초 완성', price:'350', orig:'정가 40,000원', features:['고3 교육청 3~6월 기출 핵심', '수능 필수 유형 34문항 완전 정복', '대치 본원 현재 가장 많이 사용하는 레벨'] },
-                { color:'#f28033', title:'수능 앤솔로지 Level 4 — 정규 사설 실전 모의고사', target:'🎯 대상: 고1 ~ 고2 · 실전 감각 극대화', price:'400', orig:'정가 50,000원', features:['KATCH 자체 제작 사설 모의고사 5회', '실전과 동일한 45문항 구성', '오답 분석 PDF 포함'] },
-                { color:'#1f7842', title:'수능 앤솔로지 Level 5 — 평가원 킬러 문항 분석', target:'🎯 대상: 고2 ~ 고3 · 1등급 목표', price:'500', orig:'정가 60,000원', features:['평가원 기출 킬러 문항 집중 분해', '오답률 60% 이상 문항만 선별', '킬러별 풀이 전략 해설 제공'] },
-                { color:'#202e5b', title:'수능 앤솔로지 Level 6 — KATCH 모의고사 10회분', target:'🎯 대상: 고3 최상위 · 의대/SKY 목표', price:'600', orig:'정가 90,000원', features:['KATCH 실전 모의고사 10회 전 세트', '의대/SKY 전용 킬러 문항 특별 수록', '강사용 해설지 별도 제공'] },
+                { color:'#2bd3ff', title:'수능 앤솔로지 Level 0 — 수능 유형 Basic 이해', target:'🎯 학습: 중학교1 [교과서] / 권장: 초5하~초4중하', price:'200', orig:'정가 20,000원', features:['수능 유형 Basic 이해', '중학교 1학년 교과서 수준의 필수 어휘 및 구문', '수능식 문제 접근법 입문'] },
+                { color:'#f9a826', title:'수능 앤솔로지 Level 1 — 세부 정보 파악', target:'🎯 학습: 중학교2 [교과서] / 권장: 초6하~초4중상', price:'250', orig:'정가 25,000원', features:['세부 정보 파악 훈련', '중학교 2학년 교과서 수준 핵심 지문', '대의 파악 및 내용 일치 집중 연습'] },
+                { color:'#26a69a', title:'수능 앤솔로지 Level 2 — 중심 내용 파악', target:'🎯 학습: 중학교3 [교과서], 고1 학평 [3월] / 권장: 중3하~초5상', price:'300', orig:'정가 35,000원', features:['중심 내용 파악 및 주제/제목 추론', '중3 교과서 및 고1 3월 학력평가 난이도', '수능 기초 독해 체력 완성'] },
+                { color:'#5c6bc0', title:'수능 앤솔로지 Level 3 — 유추, 수사법 이해', target:'🎯 학습: 고1 학평 [6-11월] / 권장: 중3중상~초5최상', price:'350', orig:'정가 40,000원', features:['유추 및 수사법 이해, 고난도 추론', '고1 6~11월 학력평가 수준의 심화 지문', '대치동 최상위 예비고 필수 코스'] },
+                { color:'#f28033', title:'수능 앤솔로지 Level 4 — 기출 원서 + 내신유형 I', target:'🎯 학습: 고1 학평 [3월-11월] / 권장: 중3상중~중1최상', price:'400', orig:'정가 50,000원', features:['기출 원서 및 고난도 내신 변형 유형', '고1 학평 전범위 핵심 기출 분석', '내신 1등급과 수능 기초를 연결하는 브릿지'] },
+                { color:'#1f7842', title:'수능 앤솔로지 Level 5 — 기출 원서 + 내신유형 II', target:'🎯 학습: 고2 학평 / 권장: 중3상~중2최상', price:'500', orig:'정가 60,000원', features:['고2 학력평가 기출 원서 분석', '수능 필수 빈칸추론 / 순서삽입 도입', '수능 1등급 도약을 위한 본격 실전 훈련'] },
+                { color:'#202e5b', title:'수능 앤솔로지 Level 6 — 기출 원서 + 내신유형 III', target:'🎯 학습: 고3 학평, 모평 / 권장: 중3 최상', price:'600', orig:'정가 90,000원', features:['고3 학평 및 평가원 모평 킬러 문항', '원서 기반 최고난도 지문 및 내신 킬러 변형', '의대/SKY 진학을 위한 무결점 1등급 훈련'] },
             ];
 
             let activeLevel = -1;
