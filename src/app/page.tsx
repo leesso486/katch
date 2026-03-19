@@ -20,7 +20,7 @@ export default async function Home() {
   }
 
   // 2. Read the original index.html from public folder to perfectly preserve all links and formatting
-  const htmlPath = path.join(process.cwd(), 'public', 'index.html');
+  const htmlPath = path.join(process.cwd(), 'public', 'home_template.html');
   let content = fs.readFileSync(htmlPath, 'utf8');
   
   // Extract script block so we can run it cleanly in Next.js
