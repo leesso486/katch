@@ -16,11 +16,12 @@ export async function GET() {
       message: 'Successfully connected to Neon Database',
       time: result[0].now,
     });
-  } catch (error: any) {
+  } catch (error) {
+    const errMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json({
       success: false,
       message: 'Failed to connect to Neon Database',
-      error: error.message,
+      error: errMessage,
     }, { status: 500 });
   }
 }
