@@ -13,8 +13,25 @@
     
     <style>
         /* Landing Page Specific Overrides */
-        body { background-color: #f8f9fa; }
+        body { background-color: #fcfcfd; font-family: 'Pretendard', sans-serif; }
         
+        /* Text Gradients & Typography Enhancements */
+        .text-gradient {
+            background: linear-gradient(135deg, #E91E63 0%, #FF9800 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-blue {
+            background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         /* 1. Header (GNB) with Switch */
         .header-top-bar { background: #f0f2f5; padding: 5px 0; font-size: 12px; color: #666; border-bottom: 1px solid #e0e0e0; }
         .target-switch { display: inline-flex; background: #e0e4e8; border-radius: 20px; overflow: hidden; }
@@ -26,24 +43,28 @@
         .main-gnb .logo .dot { color: #E91E63; }
         .gnb-links { display: flex; gap: 30px; font-size: 16px; font-weight: 700; }
         .gnb-links a { color: #333; text-decoration: none; transition: 0.2s; }
-        .gnb-links a:hover { color: #111; }
+        .gnb-links a:hover { color: #E91E63; }
         .header-utils { display: flex; gap: 15px; align-items: center; font-size: 20px; color: #333; }
         
-        /* 2. Hero Rolling Banner */
-        .hero-banner { position: relative; width: 100%; height: 480px; background: #111; overflow: hidden; display: flex; align-items: center; justify-content: center; color: white; }
+        /* 2. Hero Rolling Banner (B2C Bright & Premium) */
+        .hero-banner { position: relative; width: 100%; height: 520px; background: #f8f9fa; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; opacity: 0; transition: opacity 0.5s ease-in-out; }
         .slide.active { opacity: 1; z-index: 2; }
-        .slide-bg1 { background: linear-gradient(135deg, #111 0%, #2A2A2A 100%); }
-        .slide-bg2 { background: linear-gradient(135deg, #004D40 0%, #00796B 100%); }
-        .slide-bg3 { background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%); }
-        .hero-badge { display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.2); border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
-        .hero-title { font-size: 42px; font-weight: 900; line-height: 1.3; margin-bottom: 20px; letter-spacing: -1px; }
-        .hero-desc { font-size: 18px; opacity: 0.9; margin-bottom: 30px; }
-        .hero-btn { background: #FFC107; color: #222; padding: 15px 35px; border-radius: 30px; font-size: 18px; font-weight: 800; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(255,193,7,0.4); transition: transform 0.2s; }
+        
+        /* Soft, premium pastel gradients for B2C */
+        .slide-bg1 { background: radial-gradient(circle at top right, #fff4f7 0%, #ffe3ec 100%); color: #111; }
+        .slide-bg2 { background: radial-gradient(circle at top right, #f2fafe 0%, #dfeffd 100%); color: #111; }
+        .slide-bg3 { background: radial-gradient(circle at top right, #fdfbfb 0%, #ebedee 100%); color: #111; }
+        
+        .hero-badge { display: inline-block; padding: 6px 18px; background: white; border-radius: 30px; font-size: 13px; font-weight: 800; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .hero-badge { display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.8); border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
+        .hero-title { font-size: 46px; font-weight: 900; line-height: 1.25; margin-bottom: 20px; letter-spacing: -2px; }
+        .hero-desc { font-size: 18px; color: #555; line-height: 1.6; margin-bottom: 35px; font-weight: 500; }
+        .hero-btn { background: #111; color: white; padding: 16px 36px; border-radius: 30px; font-size: 17px; font-weight: 800; text-decoration: none; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.2s; border: 2px solid #111; }
         .hero-btn:hover { transform: translateY(-3px); }
         .slider-nav { position: absolute; bottom: 35px; display: flex; gap: 10px; z-index: 10; }
-        .dot-nav { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; }
-        .dot-nav.active { background: white; }
+        .dot-nav { width: 12px; height: 12px; border-radius: 50%; background: rgba(0,0,0,0.15); cursor: pointer; transition: 0.3s; }
+        .dot-nav.active { background: #111; transform: scale(1.2); }
 
         /* 3. Quick Menu Grid */
         .quick-menu-section { transform: translateY(-30px); z-index: 10; position: relative; }
@@ -142,34 +163,34 @@
 
     <!-- 2. Hero Rolling Banner -->
     <section class="hero-banner">
-        <!-- Slide 1: Core Identity -->
+        <!-- Slide 1: B2C Core -->
         <div class="slide slide-bg1 active">
-            <span class="hero-badge text-blue">수능 예측 솔루션 KATCH 론칭</span>
-            <h2 class="hero-title">대치동 최상위권 4,500명의 리얼 데이터!<br>초중등부터 시작하는 올인원 수능 플랫폼</h2>
-            <p class="hero-desc">단순 레벨테스트가 아닙니다. 수능 킬러문항 트렌드 분석부터 VOD, 교재까지<br>상위 1%를 위한 대치동 시스템을 그대로 경험하세요.</p>
-            <div style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
-                <a href="student_diagnostics.html" class="hero-btn">나의 예상 수능 등급 확인하기 <i class="fas fa-arrow-right"></i></a>
-                <a href="store_vod.html" class="hero-btn" style="background:transparent; color:white; border:2px solid white;">프리미엄 VOD 미리보기</a>
+            <span class="hero-badge" style="color:#E91E63;"><i class="fas fa-crown"></i> 대치동 1위 KNS 고등관의 수능 솔루션</span>
+            <h2 class="hero-title">내 아이 영어를 1등급으로 완성하는<br><span class="text-gradient">단 하나의 수능 마스터플랜</span></h2>
+            <p class="hero-desc">단순한 감으로 푸는 영어가 아닙니다. 최상위 4,500명의 정밀 빅데이터로<br>우리아이의 약점을 완벽하게 분석하고 처방받으세요.</p>
+            <div style="display:flex; gap:15px; justify-content:center;">
+                <a href="student_diagnostics.html" class="hero-btn" style="background:#E91E63; border-color:#E91E63; color:white; box-shadow:0 10px 25px rgba(233,30,99,0.3);">우리아이 실력 진단하기 <i class="fas fa-arrow-right"></i></a>
+                <a href="store_vod.html" class="hero-btn" style="background:white; color:#111; border-color:#ddd;">프리미엄 커리큘럼 보기</a>
             </div>
         </div>
         
-        <!-- Slide 2: Daily Question / Question Bank -->
+        <!-- Slide 2: Daily Challenge -->
         <div class="slide slide-bg2" style="display:none;">
-            <span class="hero-badge text-orange">매일 아침 8시 업데이트</span>
-            <h2 class="hero-title">오늘의 대치동 킬러 문항 챌린지<br>지메리(지문 매일 리딩) 오픈</h2>
-            <p class="hero-desc">정답률 30% 미만! 실제 대치 본원에서 어제 틀린 킬러 문항을<br>매일 배달합니다. 지금 바로 도전하고 무료 VOD 해설을 확인하세요.</p>
-            <div style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
-                <a href="directory.html" class="hero-btn" style="background:#f57c00; color:white;">오늘의 킬러 문항 도전하기 <i class="fas fa-fire"></i></a>
+            <span class="hero-badge" style="color:#1E88E5;"><i class="fas fa-clock"></i> 매일 아침 8시 업데이트 (무료)</span>
+            <h2 class="hero-title">오늘의 대치동 킬러 문항 챌린지<br><span class="text-gradient-blue">지.매.리 (지문 매일 리딩)</span></h2>
+            <p class="hero-desc">정답률 30% 미만 극강의 난이도! 어제 대치동 선배들이 가장 많이 틀린 문항을 배달합니다.<br>아이와 함께 지금 바로 도전하고 무료 명품 해설을 들어보세요.</p>
+            <div style="display:flex; gap:15px; justify-content:center;">
+                <a href="omr.html" class="hero-btn" style="background:#1E88E5; border-color:#1E88E5; color:white; box-shadow:0 10px 25px rgba(30,136,229,0.3);">오늘의 킬러 문항 풀기 <i class="fas fa-fire"></i></a>
             </div>
         </div>
         
-        <!-- Slide 3: Franchise & B2B -->
+        <!-- Slide 3: VIP Parents -->
         <div class="slide slide-bg3" style="display:none;">
-            <span class="hero-badge text-green">원장님을 위한 강력한 무기</span>
-            <h2 class="hero-title">우리 학원을 대치동 시스템으로!<br>KATCH B2B 가맹 파트너 모집</h2>
-            <p class="hero-desc">LMS, 문제은행 출제 프로그램, 학부모 상담용 예측 리포트까지.<br>오직 KATCH에서만 가능한 압도적 데이터 솔루션을 도입하세요.</p>
-            <div style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="hero-btn" style="background:#4CAF50; color:white;">B2B 가맹 상담 신청하기 <i class="fas fa-headset"></i></a>
+            <span class="hero-badge" style="color:#8E2DE2;"><i class="fas fa-gem"></i> KATCH 학부모 멤버십 대상</span>
+            <h2 class="hero-title">상위 1% 학부모의 압도적 정보력,<br>KATCH <span class="text-gradient-purple">프라이빗 VIP 라운지</span></h2>
+            <p class="hero-desc">대치동 오프라인 입시 설명회 VOD부터 프라이빗 교육/입시 시크릿 자료까지.<br>이제 대치동 밖에서도 가장 빠르고 정확한 입시 전략을 세우세요.</p>
+            <div style="display:flex; gap:15px; justify-content:center;">
+                <a href="lounge.html" class="hero-btn" style="background:#8E2DE2; border-color:#8E2DE2; color:white; box-shadow:0 10px 25px rgba(142,45,226,0.3);">VIP 라운지 입장하기 <i class="fas fa-lock-open"></i></a>
             </div>
         </div>
         
@@ -279,8 +300,8 @@
     <section class="commerce-section">
         <div class="container text-center">
             <div class="section-title mb-30">
-                <h2>대치동 극상위권이 지금 가장 많이 찾는 맞춤형 전략 수단</h2>
-                <p>빅데이터가 분석한 우리 아이 학년/수준별 최적의 콘텐츠를 확인하세요.</p>
+                <h2 style="font-size:32px; letter-spacing:-1px;">우리아이 학년별 1등급 특별 커리큘럼</h2>
+                <p>빅데이터가 분석한 우리 아이 학년/수준별 최적의 콘텐츠를 집에서 만나보세요.</p>
             </div>
             
             <div class="commerce-tabs">
@@ -332,26 +353,26 @@
     </section>
 
     <!-- 5. System Infographic -->
-    <section class="system-section">
+    <section class="system-section" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
         <div class="container">
-            <h2 style="font-size:32px; font-weight:900; margin-bottom:15px;">단순한 평가가 아닙니다. KATCH의 완벽한 수능 예측 시스템</h2>
-            <p style="font-size:18px; opacity:0.8;">수만 건의 대치동 빅데이터가 내 아이의 약점을 분석하고 해결책을 제시합니다.</p>
+            <h2 style="font-size:36px; font-weight:900; margin-bottom:15px; letter-spacing:-1px;">내 아이를 위한 KATCH의 완벽한 수능 1등급 예측 시스템</h2>
+            <p style="font-size:18px; opacity:0.8;">누적 수만 건의 KNS 대치본원 풀이 데이터를 통해 아이의 미세한 약점까지 찾아내고 완벽히 보완합니다.</p>
             
             <div class="sys-grid">
                 <div class="sys-step">
-                    <div class="sys-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="sys-icon"><i class="fas fa-laptop-code text-gradient-blue"></i></div>
                     <h4>STEP 1. 진단 모의고사 응시</h4>
-                    <p>CBT 환경에서 실제 수능과<br>동일한 긴장감으로 테스트 진행</p>
+                    <p>내 집 방안에서 실제 수능과<br>동일한 긴장감으로 CBT 테스트 진행</p>
                 </div>
                 <div class="sys-step">
-                    <div class="sys-icon"><i class="fas fa-chart-pie"></i></div>
-                    <h4>STEP 2. MBTI식 데이터 분석</h4>
-                    <p>정답률, 풀이 패턴을 분석하여<br>정교한 수능 등급 및 약점 예측</p>
+                    <div class="sys-icon"><i class="fas fa-chart-pie text-gradient-blue"></i></div>
+                    <h4>STEP 2. 나만의 데이터 리포트</h4>
+                    <p>유형별 정답률, 풀이 패턴을 AI가 분석하여<br>가장 빠르고 정확한 수능 등급 위치 확인</p>
                 </div>
                 <div class="sys-step">
-                    <div class="sys-icon"><i class="fas fa-box-open"></i></div>
-                    <h4>STEP 3. 맞춤형 교재 추천</h4>
-                    <p>클리닉 교재(수단비) 및<br>VOD 강좌를 자동으로 매칭하여 처방</p>
+                    <div class="sys-icon"><i class="fas fa-box-open text-gradient-blue"></i></div>
+                    <h4>STEP 3. 1:1 맞춤형 처방</h4>
+                    <p>오답 패턴에 맞는 인강(VOD)과<br>시크릿 교재(수단비)를 자동 매칭하여 집중 학습</p>
                 </div>
             </div>
         </div>
@@ -368,40 +389,40 @@
                         <a href="lounge.html" class="text-xs text-gray" style="text-decoration:none;">더보기 +</a>
                     </div>
                     <ul class="b-list">
-                        <li><a href="lounge.html"><span class="b-tag tag-hot">LIVE</span> [오늘 20시] 신동원 원장 의대 진학반 설명회</a> <span class="text-xs text-gray">N</span></li>
-                        <li><a href="lounge.html"><span class="b-tag tag-data">자료</span> 2024 수능 영어 오답률 TOP 5 완벽 분석집</a> <span class="text-xs text-gray">4h</span></li>
-                        <li><a href="lounge.html"><span class="b-tag tag-event">이벤트</span> KATCH 첫 진단 응시생 전원 VOD 쿠폰 증정!</a> <span class="text-xs text-gray">1d</span></li>
-                        <li><a href="lounge.html"><span class="b-tag tag-hot">HOT</span> KNS 재원생 전용 주간 테스트 1회차 해설</a> <span class="text-xs text-gray">1d</span></li>
+                        <li><a href="lounge.html"><span class="b-tag tag-hot">LIVE</span> [오늘 20시] 신동원 원장 의대 진학반 프리미엄 설명회</a> <span class="text-xs text-gray">N</span></li>
+                        <li><a href="lounge.html"><span class="b-tag tag-data">자료</span> 2024 학년도 수능 영어 오답률 TOP 5 완벽 분석집</a> <span class="text-xs text-gray">4h</span></li>
+                        <li><a href="lounge.html"><span class="b-tag tag-event">이벤트</span> KATCH 첫 진단 응시생 전원 VOD 쿠폰 전원 증정!</a> <span class="text-xs text-gray">1d</span></li>
+                        <li><a href="lounge.html"><span class="b-tag tag-hot">HOT</span> KNS 재원생 전용 주간 테스트 1회차 문항 풀이</a> <span class="text-xs text-gray">1d</span></li>
                     </ul>
                 </div>
 
-                <!-- Board 2: Consulting Success Stories (New) -->
+                <!-- Board 2: Consulting Success Stories -->
                 <div class="b-panel">
                     <div class="b-header" style="border-bottom: 2px solid #E91E63;">
-                        <h3 style="font-size:18px; color:#E91E63;"><i class="fas fa-chart-line"></i> 성적 향상 & 컨설팅 후기</h3>
+                        <h3 style="font-size:18px; color:#E91E63;"><i class="fas fa-chart-line"></i> 압도적 성적 향상 후기</h3>
                         <a href="lounge.html" class="text-xs text-gray" style="text-decoration:none;">더보기 +</a>
                     </div>
                     <ul class="b-list">
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 초6 진단 4등급 → 중1 모의고사 1등급 달성</a> <span class="text-xs text-gray">N</span></li>
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> KATCH 데이터 컨설팅으로 외대부고 합격!</a> <span class="text-xs text-gray">2h</span></li>
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 수단비 VOD + 오답노트 2개월 활용기</a> <span class="text-xs text-gray">1d</span></li>
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> [컨설팅 만족도 1위] 김태희 수석 컨설턴트 리뷰</a> <span class="text-xs text-gray">2d</span></li>
+                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 초6 진단 4등급 → 중1 KATCH 후 수능 1등급 달성 비결!</a> <span class="text-xs text-gray">N</span></li>
+                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> KATCH 데이터 컨설팅으로 외대부고 당당히 합격!</a> <span class="text-xs text-gray">2h</span></li>
+                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 수단비 VOD 인강 + 오답노트 기능 2개월 200% 활용기</a> <span class="text-xs text-gray">1d</span></li>
+                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> [컨설팅 만족도 1위] 김태희 수석 컨설턴트 찐 후기 모음</a> <span class="text-xs text-gray">2d</span></li>
                     </ul>
                 </div>
                 
-                <!-- Board 3: B2B / Setup Notifications -->
-                <div class="b-panel" style="background: #f4f5f7; border: 1px solid #cfd8dc;">
-                    <div class="b-header" style="border-bottom: 2px solid #546E7A;">
-                        <h3 style="font-size:18px; color:#37474F;"><i class="fas fa-handshake"></i> 원장님 전용 B2B 라운지</h3>
-                        <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="text-xs text-gray" style="text-decoration:none;">더보기 +</a>
+                <!-- Board 3: New VODs & Books (Replaced B2B) -->
+                <div class="b-panel" style="background: #fdfbfb; border: 1px solid #e0e0e0;">
+                    <div class="b-header" style="border-bottom: 2px solid #8E2DE2;">
+                        <h3 style="font-size:18px; color:#7B1FA2;"><i class="fas fa-video"></i> 이번주 신규 오픈 VOD 강좌</h3>
+                        <a href="store_vod.html" class="text-xs text-gray" style="text-decoration:none;">더보기 +</a>
                     </div>
                     <ul class="b-list">
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#cfd8dc; color:#263238;">필독</span> KATCH 플랫폼 정식 론칭 및 파트너 모집</a> <span class="text-xs text-gray">03.10</span></li>
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#cfd8dc; color:#263238;">공지</span> B2B 전용 학부모 상담 리포트 활용 가이드</a> <span class="text-xs text-gray">03.08</span></li>
-                        <li><a href="lounge.html"><span class="b-tag tag-data">기능</span> 자체 문제 출제 (은행) 기능 업데이트 안내</a> <span class="text-xs text-gray">03.05</span></li>
+                        <li><a href="store_vod.html"><span class="b-tag" style="background:#f3e5f5; color:#8E2DE2;">오픈</span> [구문독해] 앤솔로지 Level 3 마스터 최지현 강사</a> <span class="text-xs text-gray">03.10</span></li>
+                        <li><a href="store_vod.html"><span class="b-tag" style="background:#f3e5f5; color:#8E2DE2;">BEST</span> 예비고1 필수! 겨울방학 어법 도치/가정법 총정리반</a> <span class="text-xs text-gray">03.08</span></li>
+                        <li><a href="store_vod.html"><span class="b-tag tag-data">특강</span> 강남권 주요 내신 기출 변형 100제 벼락치기 특강</a> <span class="text-xs text-gray">03.05</span></li>
                     </ul>
                     <div style="margin-top:20px; text-align:center;">
-                        <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="display:block; background:#263238; color:white; padding:10px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:14px;">가맹 입점 카톡 문의하기 <i class="fas fa-arrow-right"></i></a>
+                        <a href="store_vod.html" style="display:block; background:#8E2DE2; color:white; padding:10px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(142,45,226,0.2);">프리미엄 VOD 전체보기 <i class="fas fa-play"></i></a>
                     </div>
                 </div>
             </div>
@@ -422,28 +443,28 @@
     <!-- =============================================
          NEW SECTION 1: 성과 통계 인포그래픽
     ============================================= -->
-    <div style="background:#111; color:white; padding:70px 0;">
+    <div style="background:linear-gradient(135deg, #7b1fa2 0%, #311b92 100%); color:white; padding:80px 0;">
         <div class="container">
             <div style="text-align:center; margin-bottom:50px;">
-                <div style="font-size:13px; font-weight:700; letter-spacing:2px; color:#E91E63; margin-bottom:10px;">PROVEN RESULTS</div>
-                <h2 style="font-size:36px; font-weight:900; letter-spacing:-1px; margin:0;">숫자로 증명하는 KATCH의 힘</h2>
+                <div style="font-size:14px; font-weight:900; letter-spacing:3px; color:#E1BEE7; margin-bottom:10px;">PROVEN BEYOND DOUBT</div>
+                <h2 style="font-size:38px; font-weight:900; letter-spacing:-1px; margin:0;">수치로 증명하는 KATCH의 압도적 성과</h2>
             </div>
             <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:30px; text-align:center;">
-                <div style="padding:30px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px;">
-                    <div style="font-size:52px; font-weight:900; color:#E91E63;" class="counter" data-target="4500">0</div>
-                    <div style="font-size:16px; font-weight:700; margin-top:8px; opacity:0.8;">명+ 누적 응시자</div>
+                <div style="padding:40px 20px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:20px; backdrop-filter:blur(5px);">
+                    <div style="font-size:58px; font-weight:900; color:#FF8A80;" class="counter" data-target="4500">0</div>
+                    <div style="font-size:16px; font-weight:700; margin-top:12px; opacity:0.9;">명+ KNS 누적 데이터</div>
                 </div>
-                <div style="padding:30px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px;">
-                    <div style="font-size:52px; font-weight:900; color:#FFD700;" class="counter" data-target="87">0</div>
-                    <div style="font-size:16px; font-weight:700; margin-top:8px; opacity:0.8;">% 1등급 달성률</div>
+                <div style="padding:40px 20px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:20px; backdrop-filter:blur(5px);">
+                    <div style="font-size:58px; font-weight:900; color:#FFD54F;" class="counter" data-target="87">0</div>
+                    <div style="font-size:16px; font-weight:700; margin-top:12px; opacity:0.9;">% KATCH 회원 1등급 달성률</div>
                 </div>
-                <div style="padding:30px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px;">
-                    <div style="font-size:52px; font-weight:900; color:#4CAF50;" class="counter" data-target="22">0</div>
-                    <div style="font-size:16px; font-weight:700; margin-top:8px; opacity:0.8;">점 평균 성적 향상</div>
+                <div style="padding:40px 20px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:20px; backdrop-filter:blur(5px);">
+                    <div style="font-size:58px; font-weight:900; color:#81C784;" class="counter" data-target="22">0</div>
+                    <div style="font-size:16px; font-weight:700; margin-top:12px; opacity:0.9;">점 3개월 평균 향상 점수</div>
                 </div>
-                <div style="padding:30px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px;">
-                    <div style="font-size:52px; font-weight:900; color:#2196F3;" class="counter" data-target="230">0</div>
-                    <div style="font-size:16px; font-weight:700; margin-top:8px; opacity:0.8;">개+ 파트너 학원</div>
+                <div style="padding:40px 20px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:20px; backdrop-filter:blur(5px);">
+                    <div style="font-size:58px; font-weight:900; color:#64B5F6;" class="counter" data-target="98">0</div>
+                    <div style="font-size:16px; font-weight:700; margin-top:12px; opacity:0.9;">% 학부모 만족도</div>
                 </div>
             </div>
         </div>
@@ -612,15 +633,15 @@
     <!-- =============================================
          NEW SECTION 6: 최종 CTA
     ============================================= -->
-    <div style="background:linear-gradient(135deg,#0d0d0d 0%, #1e2d5a 100%); padding:100px 0; text-align:center; color:white; position:relative; overflow:hidden;">
-        <div style="position:absolute; top:-50%; left:50%; transform:translateX(-50%); width:800px; height:800px; background:radial-gradient(circle, rgba(233,30,99,0.15) 0%, transparent 60%); pointer-events:none;"></div>
+    <div style="background:linear-gradient(135deg, #FF9A44 0%, #FC6076 100%); padding:100px 0; text-align:center; color:white; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:-50%; left:50%; transform:translateX(-50%); width:800px; height:800px; background:radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%); pointer-events:none;"></div>
         <div class="container" style="position:relative; z-index:1;">
-            <div style="font-size:14px; font-weight:700; letter-spacing:2px; color:#E91E63; margin-bottom:18px;">START NOW</div>
-            <h2 style="font-size:44px; font-weight:900; letter-spacing:-2px; line-height:1.2; margin-bottom:16px;">지금 바로 무료로<br><span style="color:#E91E63;">진단테스트</span>를 신청하세요</h2>
-            <p style="font-size:18px; opacity:0.8; margin-bottom:45px; font-weight:300;">대치동 최상위권의 공부법을 데이터로 경험하세요.</p>
+            <div style="font-size:15px; font-weight:900; letter-spacing:3px; color:#ffe0b2; margin-bottom:18px;">START KATCH TODAY</div>
+            <h2 style="font-size:48px; font-weight:900; letter-spacing:-2px; line-height:1.2; margin-bottom:16px;">우리아이 수능 1등급의 꿈,<br><span style="color:#FFF8E1; text-shadow: 0 4px 10px rgba(0,0,0,0.1);">진단테스트로 첫 걸음을 내딛으세요</span></h2>
+            <p style="font-size:20px; opacity:0.95; margin-bottom:45px; font-weight:500;">이제 집에서도 상위 1% 대치동 최상위권의 공부법을 그대로 만날 수 있습니다.</p>
             <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-                <a href="student_diagnostics.html" style="display:inline-flex; align-items:center; gap:10px; background:#E91E63; color:white; padding:18px 40px; border-radius:12px; font-weight:900; font-size:18px; text-decoration:none; box-shadow:0 10px 30px rgba(233,30,99,0.4); transition:0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'"><i class="fas fa-laptop-code"></i> 무료 진단 신청하기</a>
-                <a href="mailto:denglemaster@gmail.com" style="display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:white; padding:18px 40px; border-radius:12px; font-weight:800; font-size:18px; text-decoration:none; transition:0.2s; backdrop-filter:blur(10px);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fas fa-handshake"></i> B2B 학원 입점 문의</a>
+                <a href="student_diagnostics.html" style="display:inline-flex; align-items:center; gap:10px; background:white; color:#FC6076; padding:18px 45px; border-radius:30px; font-weight:900; font-size:18px; text-decoration:none; box-shadow:0 10px 40px rgba(0,0,0,0.15); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'"><i class="fas fa-search-plus"></i> 무료 진단/레벨테스트 신청</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.2); border:2px solid rgba(255,255,255,0.8); color:white; padding:18px 45px; border-radius:30px; font-weight:800; font-size:18px; text-decoration:none; transition:0.2s; backdrop-filter:blur(10px);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'"><i class="fas fa-headset"></i> 학부모 카톡 무료 상담</a>
             </div>
         </div>
     </div>
