@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - ?�생 마이?�이지 (GVR ?�?�보??</title>
+    <title>KATCH - 학생 마이페이지 (GVR 대시보드)</title>
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
@@ -72,11 +72,11 @@
                 </a>
             </div>
             <nav class="gnb-links" style="display:flex; gap:30px; font-weight:700;">
-                <a href="student_diagnostics.html" style="color:#333; text-decoration:none;">진단?�스??/a>
-                <a href="directory.html" style="color:#333; text-decoration:none;">문제?�??/a>
-                <a href="store_vod.html" style="color:#333; text-decoration:none;">VOD ?�강/교재</a>
-                <a href="lounge.html" style="color:#333; text-decoration:none;">?�리미엄 ?�운지</a>
-                <a href="my_learning.html" style="color:#1976d2; text-decoration:none;"><i class="fas fa-home"></i> ?�의 강의??(MY ?�습진단)</a>
+                <a href="student_diagnostics.html" style="color:#333; text-decoration:none;">진단테스트</a>
+                <a href="directory.html" style="color:#333; text-decoration:none;">문제은행</a>
+                <a href="store_vod.html" style="color:#333; text-decoration:none;">VOD 특강/교재</a>
+                <a href="lounge.html" style="color:#333; text-decoration:none;">프리미엄 라운지</a>
+                <a href="my_learning.html" style="color:#1976d2; text-decoration:none;"><i class="fas fa-home"></i> 나의 강의실 (MY 학습진단)</a>
             </nav>
             <div class="header-utils">
                 <a href="my_learning.html" style="color:#1976d2; font-size:20px;"><i class="fas fa-user-circle"></i></a>
@@ -87,12 +87,12 @@
     <div class="app-layout">
         <!-- Sidebar Navigation -->
         <aside class="dash-sidebar" id="mySidebar">
-            <h3 class="sidebar-title"><i class="fas fa-chalkboard-teacher text-blue mr-5"></i> MY ?�습 진단</h3>
+            <h3 class="sidebar-title"><i class="fas fa-chalkboard-teacher text-blue mr-5"></i> MY 학습 진단</h3>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active" onclick="switchSidebarTab('overview', this)"><i class="fas fa-chart-pie" style="width:25px;"></i> 진단 ?�?�보??/a></li>
+                <li><a href="#" class="active" onclick="switchSidebarTab('overview', this)"><i class="fas fa-chart-pie" style="width:25px;"></i> 진단 대시보드</a></li>
                 <li><a href="#" onclick="switchSidebarTab('gvr', this)"><i class="fas fa-book-open" style="width:25px;"></i> 주간 GVR 과제 </a></li>
-                <li><a href="#" onclick="switchSidebarTab('diag', this)"><i class="fas fa-laptop-code" style="width:25px;"></i> ?�기 진단 ?�스??/a></li>
-                <li><a href="report_premium.html"><i class="fas fa-file-invoice" style="width:25px;"></i> ?�의 ?�적??모아보기</a></li>
+                <li><a href="#" onclick="switchSidebarTab('diag', this)"><i class="fas fa-laptop-code" style="width:25px;"></i> 정기 진단 테스트</a></li>
+                <li><a href="report_premium.html"><i class="fas fa-file-invoice" style="width:25px;"></i> 나의 성적표 모아보기</a></li>
             </ul>
         </aside>
 
@@ -101,8 +101,8 @@
             <!-- Profile Banner -->
             <div class="profile-banner">
                 <div class="profile-info">
-                    <h2>김지???�생</h2>
-                    <p>?�명중 3?�년 / 최상???�사고반</p>
+                    <h2>김지훈 학생</h2>
+                    <p>대명중 3학년 / 최상위 전사고반</p>
                     <div style="margin-top:15px; display:flex; align-items:center; gap:10px;">
                         <span style="background:rgba(255,255,255,0.2); padding:5px 12px; border-radius:20px; font-size:13px; font-weight:bold;"><i class="fas fa-gem text-gold"></i> VIP Member</span>
                         <span style="background:rgba(255,215,0,0.2); color:#FFD700; padding:5px 12px; border-radius:20px; font-size:14px; font-weight:900;"><i class="fas fa-coins"></i> 1,500 P</span>
@@ -111,11 +111,11 @@
                 <div class="profile-stats">
                     <div class="stat-item">
                         <div class="stat-val">4</div>
-                        <div class="stat-label">진행 �?과제</div>
+                        <div class="stat-label">진행 중 과제</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-val" style="color:#ffd54f;">A+</div>
-                        <div class="stat-label">?�균 ?�급</div>
+                        <div class="stat-label">평균 등급</div>
                     </div>
                 </div>
             </div>
@@ -127,83 +127,83 @@
             <div style="display:flex; align-items:center; gap:20px;">
                 <div style="width:50px; height:50px; background:#ff9800; color:white; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:24px; box-shadow:0 4px 10px rgba(255,152,0,0.3);"><i class="fas fa-gift"></i></div>
                 <div>
-                    <h3 style="font-size:18px; color:#e65100; margin-bottom:5px; font-weight:800;">[주간 미션] ?�번 �?모의?��?�??�료?�고 ?�리미엄 ?�료�??�람?�세??</h3>
-                    <p style="font-size:14px; color:#666;">과제 ?�료 ??500P 추�? ?�득! ?�득???�인?�로 ?�치동 ?�크�??�운지 콘텐츠�? ?�용?????�습?�다.</p>
+                    <h3 style="font-size:18px; color:#e65100; margin-bottom:5px; font-weight:800;">[주간 미션] 이번 주 모의평가를 완료하고 프리미엄 자료를 열람하세요!</h3>
+                    <p style="font-size:14px; color:#666;">과제 완료 시 500P 추가 획득! 획득한 포인트로 대치동 시크릿 라운지 콘텐츠를 이용할 수 있습니다.</p>
                 </div>
             </div>
-            <a href="lounge.html" class="btn-action" style="background:#e65100; color:white; padding:12px 25px; box-shadow:0 4px 12px rgba(230,81,0,0.3);"><i class="fas fa-crown"></i> ?�리미엄 ?�운지 ?�동</a>
+            <a href="lounge.html" class="btn-action" style="background:#e65100; color:white; padding:12px 25px; box-shadow:0 4px 12px rgba(230,81,0,0.3);"><i class="fas fa-crown"></i> 프리미엄 라운지 이동</a>
         </div>
 
         <!-- Dashboard Analytics Grid (2x2 Structure) -->
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:30px;">
             
-            <!-- Chart 1: ?�체 문항 ?�답�??�황 (GR ?�역) -->
+            <!-- Chart 1: 전체 문항 오답률 현황 (GR 영역) -->
             <div class="dash-section" style="margin-bottom:0; padding:25px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-search" style="color:#5D9CEC;"></i> ?�체 문항 ?�답�??�황 (GR ?�역)</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-search" style="color:#5D9CEC;"></i> 전체 문항 오답률 현황 (GR 영역)</div>
                 <div style="display:flex; justify-content:space-between; gap:15px; padding-bottom:10px;">
                     <!-- Q1~Q4 -->
                     <div style="flex:1;">
-                        <div style="text-align:center; font-size:12px; font-weight:bold; margin-bottom:10px; color:#555;">?�체 문항 ?�답�??�황</div>
+                        <div style="text-align:center; font-size:12px; font-weight:bold; margin-bottom:10px; color:#555;">전체 문항 오답률 현황</div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q1</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:29%;"></div><div style="position:absolute; right:5px; top:2px; font-size:11px; font-weight:bold; color:#111;">29%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q2</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:78%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">78%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q3</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:45%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">45%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q4</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:45%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">45%</div></div></div>
                         <div style="display:flex; justify-content:space-between; font-size:10px; color:#999; margin:0 5px;"><span>0</span><span>40</span><span>80</span><span>100</span></div>
-                        <div style="text-align:center; font-size:11px; color:#888; margin-top:5px;">?�답�?%)</div>
+                        <div style="text-align:center; font-size:11px; color:#888; margin-top:5px;">오답률(%)</div>
                     </div>
                     <!-- Q5~Q7 (Mockup shows overlapping Qs but lets adapt) -->
                     <div style="flex:1; border-left:1px dashed #ddd; padding-left:15px;">
-                        <div style="text-align:center; font-size:12px; font-weight:bold; margin-bottom:10px; color:#555;">?�체 문항 ?�답�??�황</div>
+                        <div style="text-align:center; font-size:12px; font-weight:bold; margin-bottom:10px; color:#555;">전체 문항 오답률 현황</div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q5</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:45%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">45%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q6</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:67%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">67%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q7</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:82%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">82%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px; visibility:hidden;"><div style="width:25px;"></div><div style="flex:1; height:20px;"></div></div>
                         <div style="display:flex; justify-content:space-between; font-size:10px; color:#999; margin:0 5px;"><span>0</span><span>40</span><span>80</span><span>100</span></div>
-                        <div style="text-align:center; font-size:11px; color:#888; margin-top:5px;">?�답�?%)</div>
+                        <div style="text-align:center; font-size:11px; color:#888; margin-top:5px;">오답률(%)</div>
                     </div>
                     <!-- Q8~Q10 -->
                     <div style="flex:1; border-left:1px dashed #ddd; padding-left:15px;">
-                        <div style="text-align:center; font-size:12px; font-weight:bold; margin-bottom:10px; color:#555;">?�체 문항 ?�답�??�황</div>
+                        <div style="text-align:center; font-size:12px; font-weight:bold; margin-bottom:10px; color:#555;">전체 문항 오답률 현황</div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q8</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:78%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">78%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q9</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:91%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">91%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px;"><div style="width:25px; font-weight:bold; font-size:12px; color:#666;">Q10</div><div style="flex:1; background:#f5f5f5; height:20px; position:relative;"><div style="background:#4A89DC; height:100%; width:63%;"></div><div style="position:absolute; right:-30px; top:2px; font-size:11px; font-weight:bold; color:#111;">63%</div></div></div>
                         <div class="hz-bar-group" style="margin-bottom:10px; display:flex; align-items:center; gap:5px; visibility:hidden;"><div style="width:25px;"></div><div style="flex:1; height:20px;"></div></div>
                         <div style="display:flex; justify-content:space-between; font-size:10px; color:#999; margin:0 5px;"><span>0</span><span>40</span><span>80</span><span>100</span></div>
-                        <div style="text-align:center; font-size:11px; color:#888; margin-top:5px;">?�답�?%)</div>
+                        <div style="text-align:center; font-size:11px; color:#888; margin-top:5px;">오답률(%)</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Chart 2: ?�의 ?�적 추이 -->
+            <!-- Chart 2: 나의 성적 추이 -->
             <div class="dash-section" style="margin-bottom:0; padding:25px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> ?�의 ?�적 추이 (최근 5??과제)</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> 나의 성적 추이 (최근 5회 과제)</div>
                 <div style="display:flex; justify-content:flex-end; gap:15px; font-size:12px; font-weight:bold; margin-bottom:5px;">
-                    <span style="color:#4A89DC;"><i class="fas fa-square"></i> ?�의 ?�수</span>
-                    <span style="color:#FF9800;"><i class="fas fa-circle"></i> ?�체 ?�균</span>
+                    <span style="color:#4A89DC;"><i class="fas fa-square"></i> 나의 점수</span>
+                    <span style="color:#FF9800;"><i class="fas fa-circle"></i> 전체 평균</span>
                 </div>
                 <div style="height:220px; width:100%;">
                     <canvas id="comboChart"></canvas>
                 </div>
             </div>
 
-            <!-- Chart 3: ?�역�??�체 ?�균 vs ?�의 ?�균 비교 -->
+            <!-- Chart 3: 영역별 전체 평균 vs 나의 평균 비교 -->
             <div class="dash-section" style="margin-bottom:0; padding:25px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-column" style="color:#5D9CEC;"></i> ?�역�??�체 ?�균 vs ?�의 ?�균 비교</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-column" style="color:#5D9CEC;"></i> 영역별 전체 평균 vs 나의 평균 비교</div>
                 <div style="display:flex; justify-content:flex-end; gap:15px; font-size:12px; font-weight:bold; margin-bottom:5px;">
-                    <span style="color:#4A89DC;"><i class="fas fa-square"></i> ?�체 ?�균</span>
-                    <span style="color:#FF9800;"><i class="fas fa-square"></i> ?�의 ?�균</span>
+                    <span style="color:#4A89DC;"><i class="fas fa-square"></i> 전체 평균</span>
+                    <span style="color:#FF9800;"><i class="fas fa-square"></i> 나의 평균</span>
                 </div>
                 <div style="height:220px; width:100%;">
                     <canvas id="avgCompareChart"></canvas>
                 </div>
             </div>
 
-            <!-- Chart 4: ?�의 ?�답 ?�형 vs ?�체 ?�답 ?�형 TOP 3 -->
+            <!-- Chart 4: 나의 오답 유형 vs 전체 오답 유형 TOP 3 -->
             <div class="dash-section" style="margin-bottom:0; padding:25px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-area" style="color:#37BC9B;"></i> ?�의 ?�답 ?�형 vs ?�체 ?�답 ?�형 TOP 3</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-area" style="color:#37BC9B;"></i> 나의 오답 유형 vs 전체 오답 유형 TOP 3</div>
                 <div style="display:flex; justify-content:flex-end; gap:15px; font-size:12px; font-weight:bold; margin-bottom:5px;">
-                    <span style="color:#4A89DC;"><i class="fas fa-square"></i> ?�체</span>
-                    <span style="color:#FF9800;"><i class="fas fa-square"></i> ?�의</span>
+                    <span style="color:#4A89DC;"><i class="fas fa-square"></i> 전체</span>
+                    <span style="color:#FF9800;"><i class="fas fa-square"></i> 나의</span>
                 </div>
                 <div style="height:220px; width:100%;">
                     <canvas id="typeCompareChart"></canvas>
@@ -215,12 +215,12 @@
             <div id="task-section" style="display:none;">
                 <div class="dash-section">
                     <div class="section-header">
-                        <h3 class="section-title" id="task-section-title"><i class="fas fa-list-alt" style="color:#3f51b5;"></i> 과제 관�?리스??/h3>
+                        <h3 class="section-title" id="task-section-title"><i class="fas fa-list-alt" style="color:#3f51b5;"></i> 과제 관리 리스트</h3>
                     </div>
                     
                     <div class="task-tabs" style="display:none;">
-                        <div class="task-tab active" id="tab-btn-gvr" onclick="switchTaskTab('gvr')">주간 GVR ?�제 관�?/div>
-                        <div class="task-tab" id="tab-btn-diag" onclick="switchTaskTab('diag')">?�기 진단 ?�스??결과</div>
+                        <div class="task-tab active" id="tab-btn-gvr" onclick="switchTaskTab('gvr')">주간 GVR 숙제 관리</div>
+                        <div class="task-tab" id="tab-btn-diag" onclick="switchTaskTab('diag')">정기 진단 테스트 결과</div>
                     </div>
 
             <!-- GVR Assignments Tab -->
@@ -231,13 +231,13 @@
                         <div class="task-info-left">
                             <div class="task-icon ti-pending"><i class="fas fa-edit"></i></div>
                             <div class="task-meta">
-                                <h4>주간 GVR - AT 6?�차 ?�라???�시</h4>
-                                <p><span class="task-badge badge-red">D-2</span> 기한: 2026.03.13 23:59까�? ?�출</p>
-                                <div style="margin-top:5px; font-size:12px; color:#e65100; font-weight:bold;"><i class="fas fa-coins"></i> ?�료 ??500P 지�??�정</div>
+                                <h4>주간 GVR - AT 6회차 온라인 응시</h4>
+                                <p><span class="task-badge badge-red">D-2</span> 기한: 2026.03.13 23:59까지 제출</p>
+                                <div style="margin-top:5px; font-size:12px; color:#e65100; font-weight:bold;"><i class="fas fa-coins"></i> 완료 시 500P 지급 예정</div>
                             </div>
                         </div>
                         <div class="task-actions">
-                            <a href="omr.html" class="btn-action btn-primary-action"><i class="fas fa-pencil-alt"></i> ?�험 ?�시 / OMR ?�력</a>
+                            <a href="omr.html" class="btn-action btn-primary-action"><i class="fas fa-pencil-alt"></i> 시험 응시 / OMR 입력</a>
                         </div>
                     </div>
 
@@ -246,16 +246,16 @@
                         <div class="task-info-left">
                             <div class="task-icon ti-completed"><i class="fas fa-check"></i></div>
                             <div class="task-meta">
-                                <h4>주간 GVR - AT 5?�차 ?�라???�시</h4>
-                                <p><span class="task-badge badge-gray">?�출 ?�료</span> ?�출?? 2026.03.05</p>
+                                <h4>주간 GVR - AT 5회차 온라인 응시</h4>
+                                <p><span class="task-badge badge-gray">제출 완료</span> 제출일: 2026.03.05</p>
                             </div>
                         </div>
                         <div class="task-actions" style="gap:20px;">
                             <div class="task-score" style="margin:0; text-align:right;">
-                                <div style="font-size:24px; font-weight:900; color:#1A237E; line-height:1;">92<span style="font-size:14px; color:#888;">??/span></div>
+                                <div style="font-size:24px; font-weight:900; color:#1A237E; line-height:1;">92<span style="font-size:14px; color:#888;">점</span></div>
                             </div>
                             <div style="height:40px; width:1px; background:#ddd;"></div>
-                            <a href="report_gvr.html" class="btn-action btn-secondary-action"><i class="fas fa-chart-bar"></i> 분석 리포??/a>
+                            <a href="report_gvr.html" class="btn-action btn-secondary-action"><i class="fas fa-chart-bar"></i> 분석 리포트</a>
                         </div>
                     </div>
                 </div>
@@ -269,16 +269,16 @@
                         <div class="task-info-left">
                             <div class="task-icon ti-completed"><i class="fas fa-check"></i></div>
                             <div class="task-meta">
-                                <h4>[?�리미엄] 3??모의고사 ?��??��?</h4>
-                                <p><span class="task-badge badge-gray">?�출 ?�료</span> 반영?? 2026.02.26</p>
+                                <h4>[프리미엄] 3월 모의고사 대비 평가</h4>
+                                <p><span class="task-badge badge-gray">제출 완료</span> 반영일: 2026.02.26</p>
                             </div>
                         </div>
                         <div class="task-actions" style="gap:20px;">
                             <div class="task-score" style="margin:0; text-align:right;">
-                                <div style="font-size:24px; font-weight:900; color:#1A237E; line-height:1;">88<span style="font-size:14px; color:#888;">??/span></div>
+                                <div style="font-size:24px; font-weight:900; color:#1A237E; line-height:1;">88<span style="font-size:14px; color:#888;">점</span></div>
                             </div>
                             <div style="height:40px; width:1px; background:#ddd;"></div>
-                            <a href="report_premium.html" class="btn-action" style="background:#f4f6f9; color:#111; border:1px solid #d4af37;"><i class="fas fa-crown text-gold"></i> VIP 리포???�인</a>
+                            <a href="report_premium.html" class="btn-action" style="background:#f4f6f9; color:#111; border:1px solid #d4af37;"><i class="fas fa-crown text-gold"></i> VIP 리포트 확인</a>
                         </div>
                     </div>
                     
@@ -286,12 +286,12 @@
                         <div class="task-info-left">
                             <div class="task-icon" style="background:#e8f5e9; color:#4CAF50;"><i class="fas fa-laptop-code"></i></div>
                             <div class="task-meta">
-                                <h4>[무료] ?�비�? ?�목�?지?��??�성 진단 배치고사</h4>
-                                <p><span class="task-badge" style="background:#e8f5e9; color:#4CAF50;">?�수 ?�료</span> ?�시가?? ?�시 개방</p>
+                                <h4>[무료] 예비중3 특목고 지원가능성 진단 배치고사</h4>
+                                <p><span class="task-badge" style="background:#e8f5e9; color:#4CAF50;">접수 완료</span> 응시가능: 상시 개방</p>
                             </div>
                         </div>
                         <div class="task-actions">
-                            <a href="student_take_test.html" class="btn-action" style="background:#4CAF50; color:white; border:none;"><i class="fas fa-play"></i> ?�라???��? ?�작</a>
+                            <a href="student_take_test.html" class="btn-action" style="background:#4CAF50; color:white; border:none;"><i class="fas fa-play"></i> 온라인 평가 시작</a>
                         </div>
                     </div>
                 </div>
@@ -317,11 +317,11 @@
                 document.getElementById('overview-section').style.display = 'block';
             } else if(tabId === 'gvr') {
                 document.getElementById('task-section').style.display = 'block';
-                document.getElementById('task-section-title').innerHTML = '<i class="fas fa-book-open" style="color:#3f51b5;"></i> 주간 GVR 과제 리스??;
+                document.getElementById('task-section-title').innerHTML = '<i class="fas fa-book-open" style="color:#3f51b5;"></i> 주간 GVR 과제 리스트';
                 switchTaskTab('gvr');
             } else if(tabId === 'diag') {
                 document.getElementById('task-section').style.display = 'block';
-                document.getElementById('task-section-title').innerHTML = '<i class="fas fa-laptop-code" style="color:#3f51b5;"></i> ?�기 진단 ?�스???�역';
+                document.getElementById('task-section-title').innerHTML = '<i class="fas fa-laptop-code" style="color:#3f51b5;"></i> 정기 진단 테스트 내역';
                 switchTaskTab('diag');
             }
         }
@@ -338,7 +338,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Chart 2: ?�의 ?�적 추이 (최근 5??과제) - Bar + Line combo
+            // Chart 2: 나의 성적 추이 (최근 5회 과제) - Bar + Line combo
             const ctxCombo = document.getElementById('comboChart').getContext('2d');
             new Chart(ctxCombo, {
                 type: 'bar',
@@ -347,7 +347,7 @@
                     datasets: [
                         {
                             type: 'line',
-                            label: '?�체 ?�균',
+                            label: '전체 평균',
                             data: [68, 72, 65, 78, 82],
                             borderColor: '#FF9800',
                             backgroundColor: '#FF9800',
@@ -358,7 +358,7 @@
                         },
                         {
                             type: 'bar',
-                            label: '?�의 ?�수',
+                            label: '나의 점수',
                             data: [65, 70, 62, 75, 80],
                             backgroundColor: '#4A89DC',
                             borderRadius: 2,
@@ -370,49 +370,49 @@
                     responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { min: 0, max: 100, title: { display: true, text: '?�의 ?�수 (0-100)', font: { size: 10 } } },
+                        y: { min: 0, max: 100, title: { display: true, text: '나의 점수 (0-100)', font: { size: 10 } } },
                         x: { grid: { display: false } }
                     }
                 }
             });
 
-            // Chart 3: ?�역�??�체 ?�균 vs ?�의 ?�균 비교
+            // Chart 3: 영역별 전체 평균 vs 나의 평균 비교
             const ctxAvg = document.getElementById('avgCompareChart').getContext('2d');
             new Chart(ctxAvg, {
                 type: 'bar',
                 data: {
-                    labels: ['?�해??, '?�휘', '문법'],
+                    labels: ['독해력', '어휘', '문법'],
                     datasets: [
-                        { label: '?�체 ?�균', data: [75, 80, 65], backgroundColor: '#4A89DC', borderRadius: 2 },
-                        { label: '?�의 ?�균', data: [68, 75, 72], backgroundColor: '#FFB74D', borderRadius: 2 }
+                        { label: '전체 평균', data: [75, 80, 65], backgroundColor: '#4A89DC', borderRadius: 2 },
+                        { label: '나의 평균', data: [68, 75, 72], backgroundColor: '#FFB74D', borderRadius: 2 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { min: 0, max: 100, title: { display: true, text: '?�균 ?�수 (%)', font: { size: 10 } } },
+                        y: { min: 0, max: 100, title: { display: true, text: '평균 점수 (%)', font: { size: 10 } } },
                         x: { grid: { display: false } }
                     }
                 }
             });
 
-            // Chart 4: ?�의 ?�답 ?�형 vs ?�체 ?�답 ?�형 TOP 3
+            // Chart 4: 나의 오답 유형 vs 전체 오답 유형 TOP 3
             const ctxType = document.getElementById('typeCompareChart').getContext('2d');
             new Chart(ctxType, {
                 type: 'bar',
                 data: {
-                    labels: ['추론', '?�해??, '문법', '?�리'],
+                    labels: ['추론', '독해력', '문법', '논리'],
                     datasets: [
-                        { label: '?�체 ?�답�?, data: [40, 35, 15, 30], backgroundColor: '#4A89DC', borderRadius: 2 },
-                        { label: '?�의 ?�답�?, data: [40, 35, 15, 45], backgroundColor: '#FFB74D', borderRadius: 2 }
+                        { label: '전체 오답률', data: [40, 35, 15, 30], backgroundColor: '#4A89DC', borderRadius: 2 },
+                        { label: '나의 오답률', data: [40, 35, 15, 45], backgroundColor: '#FFB74D', borderRadius: 2 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { min: 0, max: 60, title: { display: true, text: '?�답�?(%)', font: { size: 10 } } },
+                        y: { min: 0, max: 60, title: { display: true, text: '오답률 (%)', font: { size: 10 } } },
                         x: { grid: { display: false } }
                     }
                 }

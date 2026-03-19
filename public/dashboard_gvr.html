@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - GVR ?�제 ?�?�보??/title>
+    <title>KATCH - GVR 숙제 대시보드</title>
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
@@ -227,8 +227,8 @@
             </a>
         </div>
         <div class="header-user">
-            <span><strong>김지???�생??/strong> ??/span>
-            <a href="/" class="btn-sm btn-outline-white" style="margin-left:15px; text-decoration:none;">메인?�로 ?�아가�?/a>
+            <span><strong>김지훈 선생님</strong> 님</span>
+            <a href="/" class="btn-sm btn-outline-white" style="margin-left:15px; text-decoration:none;">메인으로 돌아가기</a>
         </div>
     </header>
 
@@ -236,23 +236,23 @@
         <!-- Sidebar Navigation -->
         <aside class="admin-sidebar">
             <ul class="admin-nav">
-                <li class="active"><a href="dashboard_gvr.html"><i class="fas fa-chart-pie"></i> 분석 ?�?�보??/a></li>
-                <li><a href="#"><i class="fas fa-check-double"></i> ?�술??주�???채점</a></li>
-                <li><a href="admin_input.html"><i class="fas fa-pencil-alt"></i> 문제?�???�력�?/a></li>
-                <li><a href="problem_bank.html"><i class="fas fa-folder-open"></i> ?�험지(?�트) 빌더</a></li>
-                <li><a href="#"><i class="fas fa-file-pdf"></i> ?�적???�플�?관�?/a></li>
-                <li><a href="#"><i class="fas fa-users"></i> ?�생·?�적 관�?/a></li>
+                <li class="active"><a href="dashboard_gvr.html"><i class="fas fa-chart-pie"></i> 분석 대시보드</a></li>
+                <li><a href="#"><i class="fas fa-check-double"></i> 서술형 주관식 채점</a></li>
+                <li><a href="admin_input.html"><i class="fas fa-pencil-alt"></i> 문제은행 입력기</a></li>
+                <li><a href="problem_bank.html"><i class="fas fa-folder-open"></i> 시험지(세트) 빌더</a></li>
+                <li><a href="#"><i class="fas fa-file-pdf"></i> 성적표 템플릿 관리</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> 학생·성적 관리</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="admin-main">
             <div class="admin-page-header flex-between" style="margin-bottom: 20px;">
-                <h2 style="font-size:24px; color:var(--navy);"><i class="fas fa-chart-line" style="color:#5D9CEC;"></i> 교사 ?�용 ?�업 ?�취??분석 ?�?�보??(�??�고?�사고반-C)</h2>
+                <h2 style="font-size:24px; color:var(--navy);"><i class="fas fa-chart-line" style="color:#5D9CEC;"></i> 교사 전용 학업 성취도 분석 대시보드 (중2외고전사고반-C)</h2>
                 <div class="filter-bar" style="margin:0; padding:0; background:transparent;">
                     <select style="border:1px solid #ddd; padding:8px 15px; border-radius:6px; background:#fff; outline:none;">
-                        <option>�??�택: �??�고?�사고반-C</option>
-                        <option>�??�고?�사고반-A</option>
+                        <option>반 선택: 중2외고전사고반-C</option>
+                        <option>중3외고전사고반-A</option>
                     </select>
                 </div>
             </div>
@@ -262,11 +262,11 @@
                 <div style="display: flex; align-items: center; gap: 20px;">
                     <div style="width: 50px; height: 50px; background: #3f51b5; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px;"><i class="fas fa-pen-nib"></i></div>
                     <div>
-                        <h3 style="font-size:18px; color:#1a237e; margin-bottom:5px; font-weight:800;">?�술??주�???채점 ?��?/h3>
-                        <p style="font-size:14px; color:#555;">[�??�고?�사고반-C] 주간 GVR - AT 6?�차 ?�술???�안??<strong style="color:#e91e63;">3�?/strong> ?��?중입?�다.</p>
+                        <h3 style="font-size:18px; color:#1a237e; margin-bottom:5px; font-weight:800;">서술형 주관식 채점 대기</h3>
+                        <p style="font-size:14px; color:#555;">[중2외고전사고반-C] 주간 GVR - AT 6회차 서술형 답안이 <strong style="color:#e91e63;">3건</strong> 대기 중입니다.</p>
                     </div>
                 </div>
-                <button class="btn-primary" style="background:#3f51b5; border:none; padding:12px 25px; border-radius:30px; font-weight:bold;"><i class="fas fa-check-double"></i> 채점/첨삭?�러 가�?/button>
+                <button class="btn-primary" style="background:#3f51b5; border:none; padding:12px 25px; border-radius:30px; font-weight:bold;"><i class="fas fa-check-double"></i> 채점/첨삭하러 가기</button>
             </div>
 
             <!-- NEW ANALYSIS DASHBOARD (Based on User Image 2) -->
@@ -275,16 +275,16 @@
                 <!-- Left Panel (Charts 1 & 3) -->
                 <div style="display:flex; flex-direction:column; gap:20px;">
                     
-                    <!-- Chart 1: 문항�??�세 분석 �??�답�?-->
+                    <!-- Chart 1: 문항별 상세 분석 및 오답률 -->
                     <div class="dash-panel" style="padding: 20px;">
                         <div class="panel-title" style="font-size:16px; margin-bottom:15px; display:flex; justify-content:space-between;">
-                            <span><i class="fas fa-search" style="color:#5D9CEC;"></i> 문항�??�세 분석 �??�답�?<span style="font-size:12px; font-weight:normal; color:#888;">[최신 2026.03.11 14:30 갱신]</span></span>
-                            <button class="btn-sm btn-outline-gray" style="font-size:11px; padding:3px 8px;">?�로고침</button>
+                            <span><i class="fas fa-search" style="color:#5D9CEC;"></i> 문항별 상세 분석 및 오답률 <span style="font-size:12px; font-weight:normal; color:#888;">[최신 2026.03.11 14:30 갱신]</span></span>
+                            <button class="btn-sm btn-outline-gray" style="font-size:11px; padding:3px 8px;">새로고침</button>
                         </div>
                         <div style="display:flex; justify-content:space-between; gap:15px; padding-bottom:10px; border-bottom:1px solid #eee;">
                             <!-- GR -->
                             <div style="flex:1;">
-                                <div style="text-align:center; font-size:13px; font-weight:bold; margin-bottom:10px;">GR 문항�??�답�?/div>
+                                <div style="text-align:center; font-size:13px; font-weight:bold; margin-bottom:10px;">GR 문항별 오답률</div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q1</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#A0D468; width:30%;"></div><div class="hz-val absolute-left">30%</div></div></div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q2</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#A0D468; width:15%;"></div><div class="hz-val absolute-left">15%</div></div></div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q3</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#A0D468; width:10%;"></div><div class="hz-val absolute-left">10%</div></div></div>
@@ -292,7 +292,7 @@
                             </div>
                             <!-- VO -->
                             <div style="flex:1; border-left:1px dashed #ddd; padding-left:15px;">
-                                <div style="text-align:center; font-size:13px; font-weight:bold; margin-bottom:10px;">VO 문항�??�답�?/div>
+                                <div style="text-align:center; font-size:13px; font-weight:bold; margin-bottom:10px;">VO 문항별 오답률</div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q4</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#4A89DC; width:35%;"></div><div class="hz-val absolute-left">35%</div></div></div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q5</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#4A89DC; width:18%;"></div><div class="hz-val absolute-left">18%</div></div></div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q6</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#4A89DC; width:40%;"></div><div class="hz-val absolute-left">40%</div></div></div>
@@ -300,7 +300,7 @@
                             </div>
                             <!-- RC -->
                             <div style="flex:1; border-left:1px dashed #ddd; padding-left:15px;">
-                                <div style="text-align:center; font-size:13px; font-weight:bold; margin-bottom:10px;">RC 문항�??�답�?/div>
+                                <div style="text-align:center; font-size:13px; font-weight:bold; margin-bottom:10px;">RC 문항별 오답률</div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q7</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#37BC9B; width:25%;"></div><div class="hz-val absolute-left">25%</div></div></div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q8</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#37BC9B; width:12%;"></div><div class="hz-val absolute-left">12%</div></div></div>
                                 <div class="hz-bar-group" style="margin-bottom:8px;"><div class="hz-label" style="width:25px;">Q9</div><div class="hz-bar-wrap" style="background:#f5f5f5;"><div class="hz-bar" style="background:#37BC9B; width:35%;"></div><div class="hz-val absolute-left">35%</div></div></div>
@@ -309,56 +309,56 @@
                             </div>
                         </div>
 
-                        <!-- Chart 3: 3�?문항 ?�답 분석 (Detailed) -->
+                        <!-- Chart 3: 3번 문항 오답 분석 (Detailed) -->
                         <div style="margin-top:20px;">
                             <div style="font-size:15px; font-weight:bold; margin-bottom:10px; display:flex; justify-content:space-between;">
-                                <span>3�?문항 ?�답 분석</span>
-                                <button class="btn-sm btn-outline-gray" style="font-size:11px; padding:3px 8px;">?�제 문항 �??�택지 보기</button>
+                                <span>3번 문항 오답 분석</span>
+                                <button class="btn-sm btn-outline-gray" style="font-size:11px; padding:3px 8px;">실제 문항 및 선택지 보기</button>
                             </div>
                             <table style="width:100%; border-collapse:collapse; border:1px solid #ddd; font-size:13px; text-align:center;">
                                 <tr style="background:#f8f9fa;">
                                     <th style="padding:10px; border:1px solid #ddd; width:20%;">Q3 문항</th>
-                                    <th style="padding:10px; border:1px solid #ddd;">?�생???�안</th>
-                                    <th style="padding:10px; border:1px solid #ddd; width:20%;">?�택 ?�원</th>
+                                    <th style="padding:10px; border:1px solid #ddd;">학생의 답안</th>
+                                    <th style="padding:10px; border:1px solid #ddd; width:20%;">선택 인원</th>
                                 </tr>
                                 <tr>
                                     <td rowspan="5" style="border:1px solid #ddd; vertical-align:middle; background:#fff;">
                                         <strong>Q3 문항</strong><br>
-                                        <span style="color:#f44336;">?�답�?30%</span>
+                                        <span style="color:#f44336;">오답률 30%</span>
                                     </td>
                                     <td style="border:1px solid #ddd; padding:8px; text-align:left;">
-                                        <i class="far fa-circle text-gray-500"></i> ??8%
+                                        <i class="far fa-circle text-gray-500"></i> ① 8%
                                     </td>
-                                    <td style="border:1px solid #ddd;">6�?/td>
+                                    <td style="border:1px solid #ddd;">6명</td>
                                 </tr>
                                 <tr style="background:#fff0f2;">
                                     <td style="border:1px solid #ddd; padding:8px; text-align:left; position:relative;">
                                         <span class="badge" style="background:#f44336; color:white; font-size:10px; padding:2px 5px; border-radius:3px; margin-right:5px;">H</span>
-                                        <strong>??45% (H Confused)</strong>
+                                        <strong>② 45% (H Confused)</strong>
                                         <div style="position:absolute; top:0; left:0; height:100%; width:45%; background:rgba(244,67,54,0.1); z-index:0;"></div>
                                         <span style="position:relative; z-index:1; float:right;">45%</span>
                                     </td>
-                                    <td style="border:1px solid #ddd; background:#fff0f2;">15�?/td>
+                                    <td style="border:1px solid #ddd; background:#fff0f2;">15명</td>
                                 </tr>
                                 <tr>
                                     <td style="border:1px solid #ddd; padding:8px; text-align:left;">
-                                        <i class="far fa-circle text-gray-500"></i> ??7%
+                                        <i class="far fa-circle text-gray-500"></i> ③ 7%
                                     </td>
-                                    <td style="border:1px solid #ddd;">3�?/td>
+                                    <td style="border:1px solid #ddd;">3명</td>
                                 </tr>
                                 <tr style="background:#e8f5e9;">
                                     <td style="border:1px solid #ddd; padding:8px; text-align:left; position:relative;">
                                         <i class="fas fa-check-circle" style="color:#4CAF50; margin-right:5px;"></i>
-                                        <strong>??30% (Correct)</strong>
+                                        <strong>④ 30% (Correct)</strong>
                                         <div style="position:absolute; top:0; left:0; height:100%; width:30%; background:rgba(76,175,80,0.1); z-index:0;"></div>
                                     </td>
-                                    <td style="border:1px solid #ddd; background:#e8f5e9;">6�?/td>
+                                    <td style="border:1px solid #ddd; background:#e8f5e9;">6명</td>
                                 </tr>
                                 <tr>
                                     <td style="border:1px solid #ddd; padding:8px; text-align:left;">
-                                        <i class="far fa-circle text-gray-500"></i> ??10%
+                                        <i class="far fa-circle text-gray-500"></i> ⑤ 10%
                                     </td>
-                                    <td style="border:1px solid #ddd;">1�?/td>
+                                    <td style="border:1px solid #ddd;">1명</td>
                                 </tr>
                             </table>
                         </div>
@@ -369,53 +369,53 @@
                 <!-- Right Panel (Charts 2 & 4) -->
                 <div style="display:flex; flex-direction:column; gap:20px;">
                     
-                    <!-- Chart 2: 반별 문항 ?�답�?�??�형 분석 -->
+                    <!-- Chart 2: 반별 문항 오답률 및 유형 분석 -->
                     <div class="dash-panel" style="padding: 20px;">
-                        <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-file-alt" style="color:#4FC1E9;"></i> 반별 문항 ?�답�?�??�형 분석</div>
+                        <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-file-alt" style="color:#4FC1E9;"></i> 반별 문항 오답률 및 유형 분석</div>
                         <div style="display:flex; gap:20px;">
                             <div style="flex:1;">
-                                <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px;">?�택 �? �??�고?�사고반-C</div>
+                                <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px;">선택 반: 중2외고전사고반-C</div>
                                 <table style="width:100%; border-collapse:collapse; border:1px solid #ddd; font-size:13px; text-align:center;">
                                     <tr style="background:#f8f9fa;">
                                         <th style="padding:8px; border:1px solid #ddd;">문항</th>
-                                        <th style="padding:8px; border:1px solid #ddd;">?�답??/th>
-                                        <th style="padding:8px; border:1px solid #ddd;">?�답�?/th>
-                                        <th style="padding:8px; border:1px solid #ddd;">문제 ?�형</th>
+                                        <th style="padding:8px; border:1px solid #ddd;">오답수</th>
+                                        <th style="padding:8px; border:1px solid #ddd;">오답률</th>
+                                        <th style="padding:8px; border:1px solid #ddd;">문제 유형</th>
                                     </tr>
                                     <tr>
                                         <td style="padding:8px; border:1px solid #ddd;">1</td>
-                                        <td style="padding:8px; border:1px solid #ddd;">4�?/td>
+                                        <td style="padding:8px; border:1px solid #ddd;">4명</td>
                                         <td style="padding:8px; border:1px solid #ddd;">20%</td>
-                                        <td style="padding:8px; border:1px solid #ddd; font-size:11px;">?�해??/td>
+                                        <td style="padding:8px; border:1px solid #ddd; font-size:11px;">독해력</td>
                                     </tr>
                                     <tr style="background:#f9f9f9;">
                                         <td style="padding:8px; border:1px solid #ddd;">2</td>
-                                        <td style="padding:8px; border:1px solid #ddd;">7�?/td>
+                                        <td style="padding:8px; border:1px solid #ddd;">7명</td>
                                         <td style="padding:8px; border:1px solid #ddd; font-weight:bold; color:#E91E63;">35%</td>
-                                        <td style="padding:8px; border:1px solid #ddd; font-size:11px;">?�휘</td>
+                                        <td style="padding:8px; border:1px solid #ddd; font-size:11px;">어휘</td>
                                     </tr>
                                     <tr>
                                         <td style="padding:8px; border:1px solid #ddd; font-weight:bold;">3</td>
-                                        <td style="padding:8px; border:1px solid #ddd; font-weight:bold;">10�?/td>
+                                        <td style="padding:8px; border:1px solid #ddd; font-weight:bold;">10명</td>
                                         <td style="padding:8px; border:1px solid #ddd; font-weight:bold; color:#E91E63;">48%</td>
                                         <td style="padding:8px; border:1px solid #ddd; font-size:11px; font-weight:bold;">문법</td>
                                     </tr>
                                     <tr style="background:#f9f9f9;">
                                         <td style="padding:8px; border:1px solid #ddd;">4</td>
-                                        <td style="padding:8px; border:1px solid #ddd;">5�?/td>
+                                        <td style="padding:8px; border:1px solid #ddd;">5명</td>
                                         <td style="padding:8px; border:1px solid #ddd;">23%</td>
                                         <td style="padding:8px; border:1px solid #ddd; font-size:11px;">추론</td>
                                     </tr>
                                     <tr>
                                         <td style="padding:8px; border:1px solid #ddd;">5</td>
-                                        <td style="padding:8px; border:1px solid #ddd;">2�?/td>
+                                        <td style="padding:8px; border:1px solid #ddd;">2명</td>
                                         <td style="padding:8px; border:1px solid #ddd;">10%</td>
-                                        <td style="padding:8px; border:1px solid #ddd; font-size:11px;">?�리</td>
+                                        <td style="padding:8px; border:1px solid #ddd; font-size:11px;">논리</td>
                                     </tr>
                                 </table>
                             </div>
                             <div style="flex:1;">
-                                <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px; text-align:center;">반별 ?�답 TOP 5 ?�형</div>
+                                <div style="font-size:12px; font-weight:bold; color:#555; margin-bottom:5px; text-align:center;">반별 오답 TOP 5 유형</div>
                                 <div style="height: 180px;">
                                     <canvas id="top5Chart"></canvas>
                                 </div>
@@ -423,9 +423,9 @@
                         </div>
                     </div>
 
-                    <!-- Chart 4: ?�역�??�차�??�적 추이 -->
+                    <!-- Chart 4: 영역별/회차별 성적 추이 -->
                     <div class="dash-panel" style="padding: 20px;">
-                        <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> ?�역�??�차�??�적 추이</div>
+                        <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> 영역별/회차별 성적 추이</div>
                         <div style="height: 200px;">
                             <canvas id="trendCompareChart"></canvas>
                         </div>
@@ -440,13 +440,13 @@
     <!-- Script for Charts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Chart 2 (Right Top): 반별 ?�답 TOP 5 ?�형
+            // Chart 2 (Right Top): 반별 오답 TOP 5 유형
             new Chart(document.getElementById('top5Chart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['추론', '?�해??, '문법', '?�리', '?�휘'],
+                    labels: ['추론', '독해력', '문법', '논리', '어휘'],
                     datasets: [{
-                        label: '?�답�?(%)',
+                        label: '오답률 (%)',
                         data: [40, 35, 15, 5, 5],
                         backgroundColor: '#4A89DC',
                         borderRadius: 2,
@@ -460,7 +460,7 @@
                 }
             });
 
-            // Chart 4 (Right Bottom): ?�역�??�차�??�적 추이
+            // Chart 4 (Right Bottom): 영역별/회차별 성적 추이
             new Chart(document.getElementById('trendCompareChart').getContext('2d'), {
                 type: 'bar',
                 data: {

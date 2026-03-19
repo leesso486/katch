@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - ?�합 ?�?�보??/title>
+    <title>KATCH - 통합 대시보드</title>
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
@@ -228,16 +228,16 @@
                         KATCH<span style="color:#E91E63;">.</span></h1>
                 </a>
             </div>
-            <a href="/" style="color:#555; text-decoration:none; font-weight:bold;"><i class="fas fa-home"></i> ???�면?�로</a>
+            <a href="/" style="color:#555; text-decoration:none; font-weight:bold;"><i class="fas fa-home"></i> 홈 화면으로</a>
             <div class="dash-container">
         
         <div class="streak-banner">
             <div class="streak-info">
-                <h2>?��????�생, ?�영?�니??</h2>
-                <p>?�늘??KATCH?� ?�께 ?�능 ?�공????걸음 ???��?가?�요.</p>
+                <h2>이준호 학생, 환영합니다!</h2>
+                <p>오늘도 KATCH와 함께 수능 성공에 한 걸음 더 다가가세요.</p>
             </div>
             <div class="streak-badge">
-                <span style="font-size:24px;">?��</span> ?�번 �??�속 출석 3?�째!
+                <span style="font-size:24px;">🔥</span> 이번 주 연속 출석 3일째!
             </div>
         </div>
 
@@ -246,53 +246,53 @@
             <!-- Study Time -->
             <div class="widget-card w-time">
                 <div class="widget-header">
-                    <h3>주간 ?�습 리포??/h3>
+                    <h3>주간 학습 리포트</h3>
                     <div class="widget-icon"><i class="fas fa-clock"></i></div>
                 </div>
-                <div class="widget-value">12?�간 30�?/div>
-                <div class="widget-desc">?�번 �?�??�습 ?�간 (목표 ?�성�?85%)</div>
+                <div class="widget-value">12시간 30분</div>
+                <div class="widget-desc">이번 주 총 학습 시간 (목표 달성률 85%)</div>
                 <div class="progress-bg"><div class="progress-bar" style="width: 85%; background:#1976d2;"></div></div>
             </div>
 
             <!-- Next VOD -->
             <div class="widget-card w-vod">
                 <div class="widget-header">
-                    <h3>?�어보기 (VOD ?�강)</h3>
+                    <h3>이어보기 (VOD 특강)</h3>
                     <div class="widget-icon"><i class="fas fa-play"></i></div>
                 </div>
-                <div class="vod-title">[?�화관 ?�크�? 빈칸추론 ?�러문항 10???�설강의</div>
-                <div class="vod-meta">3�? 고난??빈칸 추론 ?�근�?(15:24 / 45:00)</div>
+                <div class="vod-title">[심화관 시크릿] 빈칸추론 킬러문항 10제 해설강의</div>
+                <div class="vod-meta">3강. 고난도 빈칸 추론 접근법 (15:24 / 45:00)</div>
                 <div class="progress-bg"><div class="progress-bar" style="width: 35%;"></div></div>
-                <a href="store_vod.html" class="btn-sm btn-outline-gray" style="display:block; text-align:center; margin-top:15px; border-color:#e0e0e0;">강의???�장?�기</a>
+                <a href="store_vod.html" class="btn-sm btn-outline-gray" style="display:block; text-align:center; margin-top:15px; border-color:#e0e0e0;">강의실 입장하기</a>
             </div>
 
             <!-- AI Weakness -->
             <div class="widget-card w-ai">
                 <div class="widget-header">
-                    <h3>AI 맞춤 ?�답 ?�련</h3>
+                    <h3>AI 맞춤 오답 훈련</h3>
                     <div class="widget-icon"><i class="fas fa-robot"></i></div>
                 </div>
-                <div style="font-size:14px; color:#555; margin-bottom:10px;">최근 ?�험 기�?, 가??취약???�형??모아 ?��?/div>
+                <div style="font-size:14px; color:#555; margin-bottom:10px;">최근 시험 기준, 가장 취약한 유형을 모아 풀기</div>
                 <div style="display:flex; gap:5px; margin-bottom:15px;">
-                    <span class="tag bg-navy text-white text-xs px-10 py-5 rounded-4">?�법 (?�치)</span>
+                    <span class="tag bg-navy text-white text-xs px-10 py-5 rounded-4">어법 (도치)</span>
                     <span class="tag bg-navy text-white text-xs px-10 py-5 rounded-4">빈칸 추론</span>
                 </div>
-                <button class="btn-sm bg-navy text-white" style="width:100%; border:none; padding:10px;" onclick="location.href='directory.html'"><i class="fas fa-dumbbell"></i> 10???�성 �??�련 ?�작</button>
+                <button class="btn-sm bg-navy text-white" style="width:100%; border:none; padding:10px;" onclick="location.href='directory.html'"><i class="fas fa-dumbbell"></i> 10제 생성 및 훈련 시작</button>
             </div>
         </div>
 
         <!-- NEW ANALYSIS DASHBOARD (Based on User Image 1) -->
-        <h2 style="font-size: 24px; margin: 30px 0 20px; color: var(--navy);"><i class="fas fa-chart-bar" style="color:#5D9CEC;"></i> ?�생 ?�적 �??�답 분석 ?�?�보??(?��????�생)</h2>
+        <h2 style="font-size: 24px; margin: 30px 0 20px; color: var(--navy);"><i class="fas fa-chart-bar" style="color:#5D9CEC;"></i> 학생 성적 및 오답 분석 대시보드 (이준호 학생)</h2>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             
-            <!-- Chart 1: ?�체 문항 ?�답�??�황 (GR ?�역) -->
+            <!-- Chart 1: 전체 문항 오답률 현황 (GR 영역) -->
             <div class="dash-panel" style="padding: 20px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-search"></i> ?�체 문항 ?�답�??�황 (GR ?�역)</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:15px;"><i class="fas fa-search"></i> 전체 문항 오답률 현황 (GR 영역)</div>
                 <div style="display:flex; justify-content:space-between; gap:15px;">
                     <!-- Col 1 -->
                     <div style="flex:1;">
-                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">?�답�?(%)</div>
+                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">오답률 (%)</div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q1</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:29%;"></div><div class="hz-val absolute-left">29%</div></div></div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q2</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:78%;"></div><div class="hz-val absolute-left">78%</div></div></div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q3</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:45%;"></div><div class="hz-val absolute-left">45%</div></div></div>
@@ -300,7 +300,7 @@
                     </div>
                     <!-- Col 2 -->
                     <div style="flex:1;">
-                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">?�답�?(%)</div>
+                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">오답률 (%)</div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q5</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:45%;"></div><div class="hz-val absolute-left">45%</div></div></div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q6</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:67%;"></div><div class="hz-val absolute-left">67%</div></div></div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q7</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:82%;"></div><div class="hz-val absolute-left">82%</div></div></div>
@@ -308,7 +308,7 @@
                     </div>
                     <!-- Col 3 -->
                     <div style="flex:1;">
-                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">?�답�?(%)</div>
+                        <div style="text-align:center; font-size:11px; color:#666; font-weight:bold; margin-bottom:10px;">오답률 (%)</div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q9</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:78%;"></div><div class="hz-val absolute-left">78%</div></div></div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q10</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:91%;"></div><div class="hz-val absolute-left">91%</div></div></div>
                         <div class="hz-bar-group"><div class="hz-label" style="width:25px;">Q11</div><div class="hz-bar-wrap"><div class="hz-bar bg-cool-blue" style="width:63%;"></div><div class="hz-val absolute-left">63%</div></div></div>
@@ -321,25 +321,25 @@
                 </div></div>
             </div>
 
-            <!-- Chart 2: ?�의 ?�적 추이 (최근 5??과제) -->
+            <!-- Chart 2: 나의 성적 추이 (최근 5회 과제) -->
             <div class="dash-panel" style="padding: 20px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-line" style="color:#5D9CEC;"></i> ?�의 ?�적 추이 (최근 5??과제)</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-line" style="color:#5D9CEC;"></i> 나의 성적 추이 (최근 5회 과제)</div>
                 <div style="height: 200px;">
                     <canvas id="scoreTrendChart"></canvas>
                 </div>
             </div>
 
-            <!-- Chart 3: ?�역�??�체 ?�균 vs. ?�의 ?�균 비교 -->
+            <!-- Chart 3: 영역별 전체 평균 vs. 나의 평균 비교 -->
             <div class="dash-panel" style="padding: 20px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> ?�역�??�체 ?�균 vs. ?�의 ?�균 비교</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#A0D468;"></i> 영역별 전체 평균 vs. 나의 평균 비교</div>
                 <div style="height: 200px;">
                     <canvas id="avgCompareChart"></canvas>
                 </div>
             </div>
 
-            <!-- Chart 4: ?�의 ?�답 ?�형 vs. ?�체 ?�답 ?�형 TOP 3 -->
+            <!-- Chart 4: 나의 오답 유형 vs. 전체 오답 유형 TOP 3 -->
             <div class="dash-panel" style="padding: 20px;">
-                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#4FC1E9;"></i> ?�의 ?�답 ?�형 vs. ?�체 ?�답 ?�형 TOP 3</div>
+                <div class="panel-title" style="font-size:16px; margin-bottom:5px;"><i class="fas fa-chart-bar" style="color:#4FC1E9;"></i> 나의 오답 유형 vs. 전체 오답 유형 TOP 3</div>
                 <div style="height: 200px;">
                     <canvas id="errTypeTop3Chart"></canvas>
                 </div>
@@ -348,16 +348,16 @@
         </div>
 
         <div class="dash-panel" style="margin-top:20px;">
-            <div class="panel-title">최근 ?�시 ?�력 <span style="font-size:14px; color:var(--navy); font-weight:normal; cursor:pointer;" onclick="location.href='report_premium.html'">?�세 ?�적??모아보기 <i class="fas fa-angle-right"></i></span></div>
+            <div class="panel-title">최근 응시 이력 <span style="font-size:14px; color:var(--navy); font-weight:normal; cursor:pointer;" onclick="location.href='report_premium.html'">상세 성적표 모아보기 <i class="fas fa-angle-right"></i></span></div>
             <div class="exam-history-list">
                 <div class="eh-item">
                     <div>
-                        <div class="eh-title"><span class="eh-badge bg-online">?�라??/span> ??3??KATCH 모의고사 (?�어)</div>
-                        <div class="eh-meta">2026.04.15 | KATCH ?�랫???�시</div>
+                        <div class="eh-title"><span class="eh-badge bg-online">온라인</span> 제 3회 KATCH 모의고사 (영어)</div>
+                        <div class="eh-meta">2026.04.15 | KATCH 플랫폼 응시</div>
                     </div>
                     <div style="text-align:right;">
-                        <div class="eh-score">84<span style="font-size:14px; color:#888;">??/span></div>
-                        <a href="report_premium.html" style="font-size:12px; color:var(--navy); font-weight:bold; text-decoration:none;">?�적??보기</a>
+                        <div class="eh-score">84<span style="font-size:14px; color:#888;">점</span></div>
+                        <a href="report_premium.html" style="font-size:12px; color:var(--navy); font-weight:bold; text-decoration:none;">성적표 보기</a>
                     </div>
                 </div>
             </div>
@@ -367,13 +367,13 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Chart 2: ?�의 ?�적 추이
+            // Chart 2: 나의 성적 추이
             new Chart(document.getElementById('scoreTrendChart').getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: ['3/2', '3/9', '3/16', '3/23', '3/30'],
                     datasets: [{
-                        label: '?�의 ?�수',
+                        label: '나의 점수',
                         data: [68, 72, 65, 78, 82],
                         type: 'bar',
                         backgroundColor: '#4A89DC',
@@ -381,7 +381,7 @@
                         barPercentage: 0.6,
                         order: 2
                     }, {
-                        label: '?�체 ?�균',
+                        label: '전체 평균',
                         data: [65, 70, 62, 75, 80],
                         type: 'line',
                         borderColor: '#F6BB42',
@@ -401,18 +401,18 @@
                 }
             });
 
-            // Chart 3: ?�역�??�체 ?�균 vs. ?�의 ?�균 비교
+            // Chart 3: 영역별 전체 평균 vs. 나의 평균 비교
             new Chart(document.getElementById('avgCompareChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['?�해??, '?�휘', '문법'],
+                    labels: ['독해력', '어휘', '문법'],
                     datasets: [{
-                        label: '?�체 ?�균',
+                        label: '전체 평균',
                         data: [75, 80, 65],
                         backgroundColor: '#4A89DC',
                         borderRadius: 2
                     }, {
-                        label: '?�의 ?�균',
+                        label: '나의 평균',
                         data: [68, 75, 72],
                         backgroundColor: '#F6BB42',
                         borderRadius: 2
@@ -425,18 +425,18 @@
                 }
             });
 
-            // Chart 4: ?�의 ?�답 ?�형 vs. ?�체 ?�답 ?�형 TOP 3
+            // Chart 4: 나의 오답 유형 vs. 전체 오답 유형 TOP 3
             new Chart(document.getElementById('errTypeTop3Chart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['추론/문법', '?�해??, '문법/?�리'],
+                    labels: ['추론/문법', '독해력', '문법/논리'],
                     datasets: [{
-                        label: '?�체 ?�답�?(%)',
+                        label: '전체 오답률 (%)',
                         data: [40, 40, 15],
                         backgroundColor: '#4A89DC',
                         borderRadius: 2
                     }, {
-                        label: '?�의 ?�답�?(%)',
+                        label: '나의 오답률 (%)',
                         data: [45, 60, 25],
                         backgroundColor: '#F6BB42',
                         borderRadius: 2

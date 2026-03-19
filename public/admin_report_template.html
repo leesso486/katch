@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - ?깆쟻???쒗뵆由?鍮뚮뜑 (Studio)</title>
+    <title>KATCH - 성적표 템플릿 빌더 (Studio)</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
@@ -103,8 +103,8 @@
             <h1>KATCH<span class="dot" style="color:#E91E63;">.</span> <span class="admin-badge">STUDIO</span></h1>
         </div>
         <div class="header-user">
-            <button class="btn-sm" style="background:#E91E63; color:white; border:none; margin-right:15px; border-radius: 4px;" onclick="saveTemplate()"><i class="fas fa-save"></i> ?쒗뵆由????/button>
-            <button class="btn-sm btn-outline-gray" onclick="window.location.href='/'">醫낅즺</button>
+            <button class="btn-sm" style="background:#E91E63; color:white; border:none; margin-right:15px; border-radius: 4px;" onclick="saveTemplate()"><i class="fas fa-save"></i> 템플릿 저장</button>
+            <button class="btn-sm btn-outline-gray" onclick="window.location.href='/'">종료</button>
         </div>
     </header>
 
@@ -112,61 +112,61 @@
         <!-- Main Sidebar Navigation -->
         <aside class="admin-sidebar" style="height: 100%; overflow-y:auto;">
             <ul class="admin-nav mt-10">
-                <li><a href="dashboard_gvr.html"><i class="fas fa-home"></i> ??쒕낫??/a></li>
-                <li><a href="admin_input.html"><i class="fas fa-pencil-alt"></i> 臾몄젣????낅젰湲?/a></li>
-                <li><a href="admin_exam_input.html"><i class="fas fa-file-signature"></i> ?쒗뿕臾몄젣 ?낅젰湲?/a></li>
-                <li><a href="problem_bank.html"><i class="fas fa-folder-open"></i> ?쒗뿕吏(?명듃) 鍮뚮뜑</a></li>
-                <li><a href="dashboard_gvr.html"><i class="fas fa-users"></i> ?숈깮쨌?깆쟻 愿由?/a></li>
-                <li class="active"><a href="admin_report_template.html"><i class="fas fa-magic"></i> ?깆쟻???ㅽ뒠?붿삤</a></li>
+                <li><a href="dashboard_gvr.html"><i class="fas fa-home"></i> 대시보드</a></li>
+                <li><a href="admin_input.html"><i class="fas fa-pencil-alt"></i> 문제은행 입력기</a></li>
+                <li><a href="admin_exam_input.html"><i class="fas fa-file-signature"></i> 시험문제 입력기</a></li>
+                <li><a href="problem_bank.html"><i class="fas fa-folder-open"></i> 시험지(세트) 빌더</a></li>
+                <li><a href="dashboard_gvr.html"><i class="fas fa-users"></i> 학생·성적 관리</a></li>
+                <li class="active"><a href="admin_report_template.html"><i class="fas fa-magic"></i> 성적표 스튜디오</a></li>
             </ul>
         </aside>
 
         <!-- Widget Library (Left) -->
         <div class="builder-left">
             <div class="panel-header">
-                <span><i class="fas fa-cubes text-gray"></i> ?꾩젽 ?쇱씠釉뚮윭由?/span>
+                <span><i class="fas fa-cubes text-gray"></i> 위젯 라이브러리</span>
             </div>
             <div class="widget-list">
                 <div class="widget-item">
                     <div class="widget-icon"><i class="fas fa-heading"></i></div>
                     <div class="widget-text">
-                        <h5>??댄? / ?ㅻ뜑</h5>
-                        <p>?깆쟻???곷떒 ?쒕ぉ 諛??숈깮 ?뺣낫</p>
+                        <h5>타이틀 / 헤더</h5>
+                        <p>성적표 상단 제목 및 학생 정보</p>
                     </div>
                 </div>
                 <div class="widget-item">
                     <div class="widget-icon"><i class="fas fa-table"></i></div>
                     <div class="widget-text">
-                        <h5>?먯닔 ?붿빟??/h5>
-                        <p>珥앹젏, ?깃툒, 諛깅텇???쒓린 ?뚯씠釉?/p>
+                        <h5>점수 요약표</h5>
+                        <p>총점, 등급, 백분위 표기 테이블</p>
                     </div>
                 </div>
                 <div class="widget-item">
                     <div class="widget-icon"><i class="fas fa-chart-pie"></i></div>
                     <div class="widget-text">
-                        <h5>諛⑹궗??Radar) 李⑦듃</h5>
-                        <p>?곸뿭蹂?痍⑥빟??諛몃윴??遺꾩꽍</p>
+                        <h5>방사형(Radar) 차트</h5>
+                        <p>영역별 취약점 밸런스 분석</p>
                     </div>
                 </div>
                 <div class="widget-item">
                     <div class="widget-icon"><i class="fas fa-chart-line"></i></div>
                     <div class="widget-text">
-                        <h5>?꾩쟻 ?깆쟻 異붿씠 (Line)</h5>
-                        <p>怨쇨굅 ?뚯감蹂??깆쟻 蹂??洹몃옒??/p>
+                        <h5>누적 성적 추이 (Line)</h5>
+                        <p>과거 회차별 성적 변화 그래프</p>
                     </div>
                 </div>
                 <div class="widget-item">
                     <div class="widget-icon"><i class="fas fa-list-ol"></i></div>
                     <div class="widget-text">
-                        <h5>臾명빆蹂??뺤삤??/h5>
-                        <p>?숈깮 ?듭븞 / ?뺣떟 / 臾명빆遺꾩꽍??/p>
+                        <h5>문항별 정오표</h5>
+                        <p>학생 답안 / 정답 / 문항분석표</p>
                     </div>
                 </div>
                 <div class="widget-item">
                     <div class="widget-icon"><i class="fas fa-comment-alt"></i></div>
                     <div class="widget-text">
-                        <h5>媛뺤궗 肄붾찘??諛뺤뒪</h5>
-                        <p>?댁엫 媛뺤궗 醫낇빀 ?섍껄 ?묒꽦?</p>
+                        <h5>강사 코멘트 박스</h5>
+                        <p>담임 강사 종합 의견 작성란</p>
                     </div>
                 </div>
             </div>
@@ -176,11 +176,11 @@
         <div class="builder-center">
             
             <div class="canvas-toolbar">
-                <button onclick="setZoom(0.8)"><i class="fas fa-search-minus"></i> 異뺤냼</button>
+                <button onclick="setZoom(0.8)"><i class="fas fa-search-minus"></i> 축소</button>
                 <button onclick="setZoom(1)"><i class="fas fa-expand"></i> 100%</button>
-                <button onclick="setZoom(1.2)"><i class="fas fa-search-plus"></i> ?뺣?</button>
+                <button onclick="setZoom(1.2)"><i class="fas fa-search-plus"></i> 확대</button>
                 <div style="width:1px; background:#ddd; margin:0 5px;"></div>
-                <button style="color:var(--navy);" onclick="openSimModal()"><i class="fas fa-file-excel text-green"></i> ?묒? 留ㅽ븨 ?쒕??덉씠??/button>
+                <button style="color:var(--navy);" onclick="openSimModal()"><i class="fas fa-file-excel text-green"></i> 엑셀 매핑 시뮬레이터</button>
             </div>
 
             <!-- A4 Document -->
@@ -189,9 +189,9 @@
                 <!-- Module 1: Header -->
                 <div class="c-module selected" id="mod-header" onclick="selectMod('mod-header', 'header')">
                     <div class="c-module-actions">
-                        <button title="?꾨줈"><i class="fas fa-arrow-up"></i></button>
-                        <button title="?꾨옒濡?><i class="fas fa-arrow-down"></i></button>
-                        <button title="??젣"><i class="fas fa-trash"></i></button>
+                        <button title="위로"><i class="fas fa-arrow-up"></i></button>
+                        <button title="아래로"><i class="fas fa-arrow-down"></i></button>
+                        <button title="삭제"><i class="fas fa-trash"></i></button>
                     </div>
                     
                     <div class="tpl-header" id="render-header">
@@ -199,7 +199,7 @@
                         <div class="tpl-subtitle">
                             <span class="tpl-badge" id="val-school">{SCHOOL_NAME}</span>
                             <span class="tpl-badge" id="val-grade">{GRADE_LVL}</span>
-                            <span style="display:inline-block; margin-left:10px; font-weight:bold; color:#111;">?대쫫: <span id="val-name">{STUDENT_NAME}</span></span>
+                            <span style="display:inline-block; margin-left:10px; font-weight:bold; color:#111;">이름: <span id="val-name">{STUDENT_NAME}</span></span>
                         </div>
                     </div>
                 </div>
@@ -212,15 +212,15 @@
                         <button><i class="fas fa-trash"></i></button>
                     </div>
 
-                    <h3 style="font-size:18px; font-weight:bold; margin-bottom:10px;"><i class="fas fa-star text-gold"></i> 醫낇빀 ?먯닔 諛??깃툒</h3>
+                    <h3 style="font-size:18px; font-weight:bold; margin-bottom:10px;"><i class="fas fa-star text-gold"></i> 종합 점수 및 등급</h3>
                     <table class="tpl-table navy-theme" id="render-score">
                         <thead>
                             <tr>
-                                <th>?먯젏??/th>
-                                <th>諛??됯퇏</th>
-                                <th>理쒓퀬??/th>
-                                <th>諛깅텇??/th>
-                                <th>?곗텧 ?깃툒</th>
+                                <th>원점수</th>
+                                <th>반 평균</th>
+                                <th>최고점</th>
+                                <th>백분위</th>
+                                <th>산출 등급</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -228,7 +228,7 @@
                                 <td style="font-size:24px; font-weight:bold; color:#E91E63;" id="val-score">{SCORE_TOTAL}</td>
                                 <td id="val-avg">{CLASS_AVG}</td>
                                 <td id="val-max">{CLASS_MAX}</td>
-                                <td>?곸쐞 <span id="val-pct">{PERCENTILE}</span>%</td>
+                                <td>상위 <span id="val-pct">{PERCENTILE}</span>%</td>
                                 <td style="font-weight:bold; font-size:18px;" id="val-rank">{RANK_GRADE}</td>
                             </tr>
                         </tbody>
@@ -243,15 +243,15 @@
                         <button><i class="fas fa-trash"></i></button>
                     </div>
                     
-                    <h3 style="font-size:18px; font-weight:bold; margin-bottom:10px;"><i class="fas fa-chart-bar text-navy"></i> AI 痍⑥빟 / 媛뺤젏 ?곸뿭 遺꾩꽍</h3>
+                    <h3 style="font-size:18px; font-weight:bold; margin-bottom:10px;"><i class="fas fa-chart-bar text-navy"></i> AI 취약 / 강점 영역 분석</h3>
                     <div class="tpl-grid">
                         <div style="border:1px solid #e0e0e0; border-radius:8px; padding:20px; background:#fafbfc; display:flex; justify-content:center;">
                             <canvas id="radarSimulator" width="300" height="250"></canvas>
                         </div>
                         <div style="border:1px solid #e0e0e0; border-radius:8px; padding:20px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
-                            <h4 style="color:#111; font-weight:bold; margin-bottom:10px;">媛??痍⑥빟???뚰듃</h4>
+                            <h4 style="color:#111; font-weight:bold; margin-bottom:10px;">가장 취약한 파트</h4>
                             <div style="font-size:24px; font-weight:bold; color:#E91E63; margin-bottom:15px;" id="val-weak">{WEAK_PART}</div>
-                            <p style="font-size:13px; color:#666; line-height:1.5;">{STUDENT_NAME} ?숈깮? ?대쾿/?낇빐 ?鍮??곷??곸쑝濡?<b id="val-weak-b">{WEAK_PART}</b> ?곸뿭??蹂댁셿???쒓툒?⑸땲??</p>
+                            <p style="font-size:13px; color:#666; line-height:1.5;">{STUDENT_NAME} 학생은 어법/독해 대비 상대적으로 <b id="val-weak-b">{WEAK_PART}</b> 영역의 보완이 시급합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -262,14 +262,14 @@
         <!-- Property Panel (Right) -->
         <div class="builder-right">
             <div class="panel-header">
-                <span><i class="fas fa-sliders-h text-gray"></i> ?띿꽦 (Properties)</span>
+                <span><i class="fas fa-sliders-h text-gray"></i> 속성 (Properties)</span>
             </div>
             
             <div class="prop-body" id="prop-panel-content">
                 <!-- Dynamically populated based on selection -->
                 <div class="prop-section">
-                    <h4><i class="fas fa-paint-brush"></i> 怨듯넻 ?붿옄???뚮쭏</h4>
-                    <label class="prop-label">硫붿씤 ?≪꽱??而щ윭</label>
+                    <h4><i class="fas fa-paint-brush"></i> 공통 디자인 테마</h4>
+                    <label class="prop-label">메인 액센트 컬러</label>
                     <div class="color-preset">
                         <div class="color-dot active" style="background:#1A237E;" onclick="changeTheme('#1A237E', this)"></div>
                         <div class="color-dot" style="background:#004d40;" onclick="changeTheme('#004d40', this)"></div>
@@ -277,33 +277,33 @@
                         <div class="color-dot" style="background:#4a148c;" onclick="changeTheme('#4a148c', this)"></div>
                     </div>
                     
-                    <label class="prop-label">?쒗뵆由???λ챸</label>
-                    <input type="text" class="prop-input" value="GVR ?뺢퇋 怨쇱젣 ?깆쟻??>
+                    <label class="prop-label">템플릿 저장명</label>
+                    <input type="text" class="prop-input" value="GVR 정규 과제 성적표">
                 </div>
 
                 <div id="dynamic-props">
                     <!-- Default props for Header -->
                     <div class="prop-section">
-                        <h4><i class="fas fa-heading"></i> ?ㅻ뜑 紐⑤뱢 ?ㅼ젙</h4>
-                        <label class="prop-label">?몄뇙 ??댄? ?띿뒪??/label>
+                        <h4><i class="fas fa-heading"></i> 헤더 모듈 설정</h4>
+                        <label class="prop-label">인쇄 타이틀 텍스트</label>
                         <input type="text" class="prop-input" value="KATCH WEEKLY GVR REPORT" onkeyup="document.querySelector('.tpl-title').innerText=this.value;">
                         
-                        <label class="prop-label">?ㅻ뜑 ?곗씠??留ㅽ븨 (Excel ???쒕ぉ)</label>
+                        <label class="prop-label">헤더 데이터 매핑 (Excel 열 제목)</label>
                         <div class="data-mapping-box">
                             <div class="mapping-row">
-                                <span>?숆탳紐?蹂??/span>
+                                <span>학교명 변수</span>
                                 <span class="mapping-var">{SCHOOL_NAME}</span>
                             </div>
                             <div class="mapping-row">
-                                <span>?숇뀈 蹂??/span>
+                                <span>학년 변수</span>
                                 <span class="mapping-var">{GRADE_LVL}</span>
                             </div>
                             <div class="mapping-row">
-                                <span>?숈깮?대쫫 蹂??/span>
+                                <span>학생이름 변수</span>
                                 <span class="mapping-var">{STUDENT_NAME}</span>
                             </div>
                             <p style="font-size:11px; color:#777; margin-top:10px; line-height:1.4;">
-                                ???묒? ?낅줈????泥?踰덉㎏ 以?Header)?????곷Ц 蹂?섎챸怨??쇱튂?섎뒗 ????덉쑝硫?<strong style="color:var(--navy);">?댁쓽 ?꾩튂(A?? C????? 愿怨꾩뾾??/strong> ?대떦 ?곗씠?곕? ?먮룞?쇰줈 留ㅼ튂?⑸땲??
+                                ※ 엑셀 업로드 시 첫 번째 줄(Header)에 위 영문 변수명과 일치하는 셀이 있으면 <strong style="color:var(--navy);">열의 위치(A열, C열 등)와 관계없이</strong> 해당 데이터를 자동으로 매치합니다.
                             </p>
                         </div>
                     </div>
@@ -317,23 +317,23 @@
     <div id="sim-modal">
         <div class="sim-box" id="sim-step-1">
             <div class="sim-header">
-                <span><i class="fas fa-file-excel"></i> ?묒? ?곗씠??留ㅽ븨 ?쒕??덉씠??/span>
+                <span><i class="fas fa-file-excel"></i> 엑셀 데이터 매핑 시뮬레이터</span>
                 <button style="background:none; border:none; color:white; font-size:18px; cursor:pointer;" onclick="closeSimModal()"><i class="fas fa-times"></i></button>
             </div>
             <div class="sim-body">
                 <p style="font-size:14px; color:#444; margin-bottom:15px; line-height:1.5;">
-                    ?ㅻТ???ㅼ닔濡??묒? ??Column) ?쒖꽌媛 諛붾뚭굅??以묎컙???댁씠 異붽??섏뼱??<b>[KATCH ?ㅻ뜑 留ㅽ븨 湲곗닠]</b>???듯빐 ?곗씠?곌? 瑗ъ씠吏 ?딄퀬 ?뺥솗??諛붿씤?⑸릺??怨쇱젙???뚯뒪?명빀?덈떎.
+                    실무자 실수로 엑셀 열(Column) 순서가 바뀌거나 중간에 열이 추가되어도 <b>[KATCH 헤더 매핑 기술]</b>을 통해 데이터가 꼬이지 않고 정확히 바인딩되는 과정을 테스트합니다.
                 </p>
                 
-                <h5 style="margin-bottom:10px; font-weight:bold; color:#111;">媛?곸쓽 ?쒖옟???묒? ?낅줈???뚯씪 (???쒖꽌 ?ㅼ＝諛뺤＝)</h5>
+                <h5 style="margin-bottom:10px; font-weight:bold; color:#111;">가상의 난잡한 엑셀 업로드 파일 (열 순서 뒤죽박죽)</h5>
                 <table class="excel-table-demo">
                     <thead>
                         <tr>
                             <th>NO (A)</th>
                             <th style="background:#c8e6c9;">SCHOOL_NAME (B)</th>
-                            <th>?꾪솕踰덊샇 (C)</th>
+                            <th>전화번호 (C)</th>
                             <th style="background:#c8e6c9;">STUDENT_NAME (D)</th>
-                            <th>二쇱냼 (E)</th>
+                            <th>주소 (E)</th>
                             <th style="background:#c8e6c9;">SCORE_TOTAL (F)</th>
                             <th style="background:#c8e6c9;">WEAK_PART (G)</th>
                         </tr>
@@ -341,32 +341,32 @@
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>?섎Ц怨?/td>
+                            <td>휘문고</td>
                             <td>010-xxxx</td>
-                            <td><strong>源?移?/strong></td>
-                            <td>媛뺣궓援??移섎룞</td>
+                            <td><strong>김대치</strong></td>
+                            <td>강남구 대치동</td>
                             <td><strong>92</strong></td>
-                            <td>?댄쐶 (Vocabulary)</td>
+                            <td>어휘 (Vocabulary)</td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="text-right">
-                    <button class="btn-primary bg-navy" style="font-weight:bold; padding:10px 20px; font-size:15px;" onclick="runSimulation()"><i class="fas fa-play"></i> 留ㅽ븨 ?뚯떛(Parsing) ?쒖옉</button>
+                    <button class="btn-primary bg-navy" style="font-weight:bold; padding:10px 20px; font-size:15px;" onclick="runSimulation()"><i class="fas fa-play"></i> 매핑 파싱(Parsing) 시작</button>
                 </div>
             </div>
         </div>
         
         <div class="sim-box" id="sim-step-2" style="display:none;">
             <div class="sim-header">
-                <span><i class="fas fa-cog fa-spin"></i> ?곗씠??留ㅽ븨 吏꾪뻾 以?..</span>
+                <span><i class="fas fa-cog fa-spin"></i> 데이터 매핑 진행 중...</span>
             </div>
             <div class="sim-body text-center">
                 <div class="loader"></div>
-                <p style="font-size:15px; font-weight:bold;">?묒???泥?以?Header)??遺꾩꽍?섏뿬 ?쒗뵆由우쓽 蹂?섏? ?곌껐 以묒엯?덈떎.</p>
+                <p style="font-size:15px; font-weight:bold;">엑셀의 첫 줄(Header)을 분석하여 템플릿의 변수와 연결 중입니다.</p>
                 <div style="margin-top:20px; text-align:left; background:#f0f4f8; padding:20px; border-radius:8px;">
-                    <div class="mapping-line"><span><span class="mapping-var">{STUDENT_NAME}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">?묒? D??源?移? 留ㅽ븨 ?꾨즺!</strong></div>
-                    <div class="mapping-line"><span><span class="mapping-var">{SCORE_TOTAL}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">?묒? F??92) 留ㅽ븨 ?꾨즺!</strong></div>
-                    <div class="mapping-line"><span><span class="mapping-var">{WEAK_PART}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">?묒? G???댄쐶) 留ㅽ븨 ?꾨즺!</strong></div>
+                    <div class="mapping-line"><span><span class="mapping-var">{STUDENT_NAME}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">엑셀 D열(김대치) 매핑 완료!</strong></div>
+                    <div class="mapping-line"><span><span class="mapping-var">{SCORE_TOTAL}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">엑셀 F열(92) 매핑 완료!</strong></div>
+                    <div class="mapping-line"><span><span class="mapping-var">{WEAK_PART}</span> </span> <i class="fas fa-arrow-right"></i> <strong style="color:var(--navy);">엑셀 G열(어휘) 매핑 완료!</strong></div>
                 </div>
             </div>
         </div>
@@ -376,9 +376,9 @@
     <div id="alert-modal" class="modal-overlay" style="display: none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; justify-content:center; align-items:center;">
         <div style="background:white; padding:40px; border-radius:12px; text-align:center; width:350px;">
             <i class="fas fa-check-circle text-green" style="font-size:40px; margin-bottom:15px;"></i>
-            <h3 style="font-size:20px; font-weight:bold; margin-bottom:10px;">????꾨즺</h3>
-            <p style="color:#666; margin-bottom:20px;">?덈줈???몄퐫???쒗뵆由??쇱씠<br>?깃났?곸쑝濡?鍮뚮뱶?섏뿀?듬땲??</p>
-            <button class="btn-primary" onclick="document.getElementById('alert-modal').style.display='none'" style="width:100%;">?뺤씤</button>
+            <h3 style="font-size:20px; font-weight:bold; margin-bottom:10px;">저장 완료</h3>
+            <p style="color:#666; margin-bottom:20px;">새로운 노코드 템플릿 폼이<br>성공적으로 빌드되었습니다.</p>
+            <button class="btn-primary" onclick="document.getElementById('alert-modal').style.display='none'" style="width:100%;">확인</button>
         </div>
     </div>
 
@@ -389,9 +389,9 @@
         new Chart(ctxR, {
             type: 'radar',
             data: {
-                labels: ['?댄쐶', '臾몃쾿', '?낇빐', '泥?랬', '?곸옉'],
+                labels: ['어휘', '문법', '독해', '청취', '영작'],
                 datasets: [{
-                    label: '?숈깮 ?먯닔',
+                    label: '학생 점수',
                     data: [85, 70, 95, 80, 75],
                     backgroundColor: 'rgba(26, 35, 126, 0.2)',
                     borderColor: '#1A237E',
@@ -419,55 +419,55 @@
             if(type === 'header') {
                 return `
                     <div class="prop-section">
-                        <h4><i class="fas fa-heading"></i> ?ㅻ뜑 紐⑤뱢 ?ㅼ젙</h4>
-                        <label class="prop-label">?몄뇙 ??댄? ?띿뒪??/label>
+                        <h4><i class="fas fa-heading"></i> 헤더 모듈 설정</h4>
+                        <label class="prop-label">인쇄 타이틀 텍스트</label>
                         <input type="text" class="prop-input" value="KATCH WEEKLY GVR REPORT" onkeyup="document.querySelector('.tpl-title').innerText=this.value;">
                         
-                        <label class="prop-label">?ㅻ뜑 ?곗씠??留ㅽ븨 (Excel Key)</label>
+                        <label class="prop-label">헤더 데이터 매핑 (Excel Key)</label>
                         <div class="data-mapping-box">
-                            <div class="mapping-row"><span>?숆탳紐?蹂??/span><span class="mapping-var">{SCHOOL_NAME}</span></div>
-                            <div class="mapping-row"><span>?숇뀈 蹂??/span><span class="mapping-var">{GRADE_LVL}</span></div>
-                            <div class="mapping-row"><span>?숈깮?대쫫 蹂??/span><span class="mapping-var">{STUDENT_NAME}</span></div>
+                            <div class="mapping-row"><span>학교명 변수</span><span class="mapping-var">{SCHOOL_NAME}</span></div>
+                            <div class="mapping-row"><span>학년 변수</span><span class="mapping-var">{GRADE_LVL}</span></div>
+                            <div class="mapping-row"><span>학생이름 변수</span><span class="mapping-var">{STUDENT_NAME}</span></div>
                         </div>
                     </div>
                 `;
             } else if(type === 'score') {
                 return `
                     <div class="prop-section">
-                        <h4><i class="fas fa-table"></i> ?먯닔 ?붿빟???ㅼ젙</h4>
+                        <h4><i class="fas fa-table"></i> 점수 요약표 설정</h4>
                         
-                        <label class="prop-label">?뚯씠釉??ㅽ???/label>
+                        <label class="prop-label">테이블 스타일</label>
                         <select class="prop-select">
-                            <option>?⑥깋 ?뚮몢由ы삎 (湲곕낯)</option>
-                            <option selected>?ㅻ뜑 ?됱긽??(?꾨━誘몄뾼)</option>
-                            <option>誘몃땲硫 ?띿뒪?명삎</option>
+                            <option>단색 테두리형 (기본)</option>
+                            <option selected>헤더 색상형 (프리미엄)</option>
+                            <option>미니멀 텍스트형</option>
                         </select>
 
-                        <label class="prop-label">?곗씠??留ㅽ븨 (Excel Key)</label>
+                        <label class="prop-label">데이터 매핑 (Excel Key)</label>
                         <div class="data-mapping-box">
-                            <div class="mapping-row"><span>?먯젏??/span><span class="mapping-var">{SCORE_TOTAL}</span></div>
-                            <div class="mapping-row"><span>諛섑룊洹?/span><span class="mapping-var">{CLASS_AVG}</span></div>
-                            <div class="mapping-row"><span>諛깅텇??/span><span class="mapping-var">{PERCENTILE}</span></div>
+                            <div class="mapping-row"><span>원점수</span><span class="mapping-var">{SCORE_TOTAL}</span></div>
+                            <div class="mapping-row"><span>반평균</span><span class="mapping-var">{CLASS_AVG}</span></div>
+                            <div class="mapping-row"><span>백분위</span><span class="mapping-var">{PERCENTILE}</span></div>
                         </div>
                     </div>
                 `;
             } else if (type === 'chart') {
                 return `
                     <div class="prop-section">
-                        <h4><i class="fas fa-chart-pie"></i> 李⑦듃 諛?遺꾩꽍 ?ㅼ젙</h4>
+                        <h4><i class="fas fa-chart-pie"></i> 차트 및 분석 설정</h4>
                         
-                        <label class="prop-label">?쒖떆??李⑦듃 醫낅쪟 ?좏깮</label>
+                        <label class="prop-label">표시할 차트 종류 선택</label>
                         <select class="prop-select">
-                            <option selected>諛⑹궗??李⑦듃 (?곸뿭蹂?遺꾩꽍)</option>
-                            <option>留됰? 李⑦듃 (諛??됯퇏 鍮꾧탳)</option>
-                            <option>??李⑦듃 (?꾩쟻 ?깆쟻)</option>
+                            <option selected>방사형 차트 (영역별 분석)</option>
+                            <option>막대 차트 (반 평균 비교)</option>
+                            <option>선 차트 (누적 성적)</option>
                         </select>
 
-                        <label class="prop-label">AI 珥앺룊 留ㅽ븨 (Excel Key)</label>
+                        <label class="prop-label">AI 총평 매핑 (Excel Key)</label>
                         <div class="data-mapping-box">
-                            <div class="mapping-row"><span>痍⑥빟?곸뿭紐?/span><span class="mapping-var">{WEAK_PART}</span></div>
+                            <div class="mapping-row"><span>취약영역명</span><span class="mapping-var">{WEAK_PART}</span></div>
                              <p style="font-size:11px; color:#777; margin-top:5px; line-height:1.4;">
-                                ???묒??먯꽌 ?섏뼱???띿뒪?멸? AI 珥앺룊 ?곸뿭???뚮뜑留??⑸땲??
+                                ※ 엑셀에서 넘어온 텍스트가 AI 총평 영역에 렌더링 됩니다.
                             </p>
                         </div>
                     </div>
@@ -508,17 +508,17 @@
                 closeSimModal();
                 
                 // Inject actual parsed values into canvas visually to prove it worked
-                document.getElementById('val-school').innerText = "?섎Ц怨?;
-                document.getElementById('val-grade').innerText = "怨?";
-                document.getElementById('val-name').innerHTML = "<b>源?移?/b>";
+                document.getElementById('val-school').innerText = "휘문고";
+                document.getElementById('val-grade').innerText = "고1";
+                document.getElementById('val-name').innerHTML = "<b>김대치</b>";
                 
                 document.getElementById('val-score').innerText = "92";
                 document.getElementById('val-avg').innerText = "75.4";
                 document.getElementById('val-pct').innerText = "4.2";
-                document.getElementById('val-rank').innerText = "1?깃툒";
+                document.getElementById('val-rank').innerText = "1등급";
                 
-                document.getElementById('val-weak').innerText = "?댄쐶 (Vocabulary)";
-                document.getElementById('val-weak-b').innerText = "?댄쐶 (Vocabulary)";
+                document.getElementById('val-weak').innerText = "어휘 (Vocabulary)";
+                document.getElementById('val-weak-b').innerText = "어휘 (Vocabulary)";
                 
                 // Highlight changes
                 const elems = ['val-school', 'val-name', 'val-score', 'val-weak'];

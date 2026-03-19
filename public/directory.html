@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - 문제?�???�렉?�리</title>
+    <title>KATCH - 문제은행 디렉토리</title>
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
@@ -167,10 +167,10 @@
             </div>
             <nav class="gnb hide-mobile" style="flex:1; margin:0 40px;">
                 <ul style="display:flex; gap:30px; list-style:none; margin:0; padding:0; font-weight:bold;">
-                    <li><a href="student_diagnostics.html" style="color:#333; text-decoration:none; transition:0.2s;">진단?�스??/a></li>
-                    <li><a href="directory.html" style="color:#1A237E; text-decoration:none; border-bottom:2px solid #1A237E; padding-bottom:5px;">문제?�???�렉?�리</a></li>
-                    <li><a href="store_vod.html" style="color:#333; text-decoration:none; transition:0.2s;">VOD ?�강</a></li>
-                    <li><a href="lounge.html" style="color:#333; text-decoration:none; transition:0.2s;">VIP ?�운지</a></li>
+                    <li><a href="student_diagnostics.html" style="color:#333; text-decoration:none; transition:0.2s;">진단테스트</a></li>
+                    <li><a href="directory.html" style="color:#1A237E; text-decoration:none; border-bottom:2px solid #1A237E; padding-bottom:5px;">문제은행 디렉토리</a></li>
+                    <li><a href="store_vod.html" style="color:#333; text-decoration:none; transition:0.2s;">VOD 특강</a></li>
+                    <li><a href="lounge.html" style="color:#333; text-decoration:none; transition:0.2s;">VIP 라운지</a></li>
                 </ul>
             </nav>
             <div style="display:flex; align-items:center; gap: 20px;">
@@ -178,9 +178,9 @@
                     <div style="background:#fff8e1; color:#f57c00; width:30px; height:30px; border-radius:50%; display:flex; justify-content:center; align-items:center; border:1px solid #ffe0b2;">
                         <i class="fas fa-coins text-gold"></i>
                     </div> 
-                    ??지�? <strong id="header-wallet" style="color:#f57c00; font-size:16px;">1,500 P</strong>
+                    내 지갑: <strong id="header-wallet" style="color:#f57c00; font-size:16px;">1,500 P</strong>
                 </span>
-                <a href="dashboard_online.html" class="btn-outline-gray btn-sm" style="border-radius:20px; font-weight:bold;">?�?�보??/a>
+                <a href="dashboard_online.html" class="btn-outline-gray btn-sm" style="border-radius:20px; font-weight:bold;">대시보드</a>
             </div>
         </div>
     </header>
@@ -189,13 +189,13 @@
     <div class="dir-hero">
         <div class="dir-hero-inner">
             <div class="hero-title">
-                <h2>KATCH 문제 ?�렉?�리</h2>
-                <p>?�치동 ?�위 1%가 ?�는 ?�러 문항부?? ?�만??맞춤 ?�답?�트?� 기출 변?�을 ?�성?�세??</p>
+                <h2>KATCH 문제 디렉토리</h2>
+                <p>대치동 상위 1%가 푸는 킬러 문항부터, 나만의 맞춤 오답노트와 기출 변형을 생성하세요.</p>
             </div>
             <div class="hero-stats hide-mobile">
-                <div class="stat-box"><span class="str">14,208</span><span class="lbl"><i class="fas fa-database"></i> ?�적 문항 ??/span></div>
-                <div class="stat-box"><span class="str">852</span><span class="lbl"><i class="fas fa-bolt"></i> ?�늘 ?�규(지메리)</span></div>
-                <div class="stat-box"><span class="str">98%</span><span class="lbl"><i class="fas fa-chart-line"></i> SKY ?�격???�용�?/span></div>
+                <div class="stat-box"><span class="str">14,208</span><span class="lbl"><i class="fas fa-database"></i> 누적 문항 수</span></div>
+                <div class="stat-box"><span class="str">852</span><span class="lbl"><i class="fas fa-bolt"></i> 오늘 신규(지메리)</span></div>
+                <div class="stat-box"><span class="str">98%</span><span class="lbl"><i class="fas fa-chart-line"></i> SKY 합격생 이용률</span></div>
             </div>
         </div>
     </div>
@@ -205,33 +205,33 @@
         <!-- Left: Filters -->
         <aside class="filter-panel">
             <div class="filter-group" style="background:#f8f9fa; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #e0e0e0;">
-                <div class="f-title" style="margin-bottom:10px; font-size:13px; color:#1A237E;">?�속 권한 (?�모??</div>
+                <div class="f-title" style="margin-bottom:10px; font-size:13px; color:#1A237E;">접속 권한 (데모용)</div>
                 <div style="display:flex; gap:10px;">
-                    <button id="btn-role-student" onclick="setRole('student')" style="flex:1; padding:8px; border-radius:6px; font-weight:bold; font-size:12px; border:2px solid #1A237E; background:#1A237E; color:white; cursor:pointer;">?�생 ?�면</button>
-                    <button id="btn-role-teacher" onclick="setRole('teacher')" style="flex:1; padding:8px; border-radius:6px; font-weight:bold; font-size:12px; border:2px solid #ddd; background:white; color:#555; cursor:pointer;">강사 ?�면</button>
+                    <button id="btn-role-student" onclick="setRole('student')" style="flex:1; padding:8px; border-radius:6px; font-weight:bold; font-size:12px; border:2px solid #1A237E; background:#1A237E; color:white; cursor:pointer;">학생 화면</button>
+                    <button id="btn-role-teacher" onclick="setRole('teacher')" style="flex:1; padding:8px; border-radius:6px; font-weight:bold; font-size:12px; border:2px solid #ddd; background:white; color:#555; cursor:pointer;">강사 화면</button>
                 </div>
             </div>
             <div class="filter-group">
-                <div class="f-title">목표 ?�수 / ?��?<span class="f-clear" onclick="alert('?�터�?초기?�합?�다.')"><i class="fas fa-redo-alt"></i> 초기??/span></div>
+                <div class="f-title">목표 점수 / 타겟 <span class="f-clear" onclick="alert('필터를 초기화합니다.')"><i class="fas fa-redo-alt"></i> 초기화</span></div>
                 <div class="target-score">
                     <!-- Javascript will toggle 'selected' class on parent label -->
                     <label class="ts-badge" onclick="selectScoreTarget(this)">
                         <input type="radio" name="targetScore"> 
-                        <div><div class="ts-score">900+ (?��?/SKY)</div><div class="ts-desc">초극�??�러, 최상?�권 ?�전 ?��?/div></div>
+                        <div><div class="ts-score">900+ (의대/SKY)</div><div class="ts-desc">초극강 킬러, 최상위권 실전 대비</div></div>
                     </label>
                     <label class="ts-badge selected" onclick="selectScoreTarget(this)">
                         <input type="radio" name="targetScore" checked> 
-                        <div><div class="ts-score">800+ (?�정 1?�급)</div><div class="ts-desc">고난??빈칸/?�서 ?�벽 ?��?/div></div>
+                        <div><div class="ts-score">800+ (안정 1등급)</div><div class="ts-desc">고난도 빈칸/순서 완벽 대비</div></div>
                     </label>
                     <label class="ts-badge" onclick="selectScoreTarget(this)">
                         <input type="radio" name="targetScore"> 
-                        <div><div class="ts-score">초중???�능 ?�행</div><div class="ts-desc">기본�?�??�행 ?�능 ?�문</div></div>
+                        <div><div class="ts-score">초중등 수능 선행</div><div class="ts-desc">기본기 및 선행 수능 입문</div></div>
                     </label>
                 </div>
             </div>
 
             <div class="filter-group">
-                <div class="f-title">?�이???�스??(Level 1~10)</div>
+                <div class="f-title">난이도 시스템 (Level 1~10)</div>
                 <div class="level-grid">
                     <div class="lvl-btn" onclick="this.classList.toggle('active')">1</div>
                     <div class="lvl-btn" onclick="this.classList.toggle('active')">2</div>
@@ -245,55 +245,55 @@
                     <div class="lvl-btn" onclick="this.classList.toggle('active')">10</div>
                 </div>
                 <div style="display:flex; justify-content:space-between; font-size:11px; color:#888; margin-top:8px; padding:0 5px; font-weight:bold;">
-                    <span>기초</span><span>극악(?��??�위 1%)</span>
+                    <span>기초</span><span>극악(대치 상위 1%)</span>
                 </div>
             </div>
 
             <div class="filter-group">
-                <div class="f-title">?�역 ?�택</div>
-                <label class="f-check"><input type="checkbox" checked> ?�해 (Reading)</label>
-                <label class="f-check"><input type="checkbox" checked> ?�법 (Grammar)</label>
-                <label class="f-check"><input type="checkbox"> ?�휘 (Vocabulary)</label>
+                <div class="f-title">영역 선택</div>
+                <label class="f-check"><input type="checkbox" checked> 독해 (Reading)</label>
+                <label class="f-check"><input type="checkbox" checked> 어법 (Grammar)</label>
+                <label class="f-check"><input type="checkbox"> 어휘 (Vocabulary)</label>
                 <label class="f-check"><input type="checkbox"> 구문 (Syntax)</label>
             </div>
 
             <div class="filter-group">
-                <div class="f-title">문항 ?�태</div>
-                <label class="f-check"><input type="checkbox" checked> 객�???(Multiple Choice)</label>
-                <label class="f-check"><input type="checkbox"> ?�술??(Descriptive)</label>
+                <div class="f-title">문항 형태</div>
+                <label class="f-check"><input type="checkbox" checked> 객관식 (Multiple Choice)</label>
+                <label class="f-check"><input type="checkbox"> 서술형 (Descriptive)</label>
             </div>
 
             <div class="filter-group">
-                <div class="f-title">출제 기�?</div>
-                <label class="f-check"><input type="checkbox" checked> KNS ?�설 / 강사 ?�체 출제</label>
-                <label class="f-check"><input type="checkbox" checked> ?�국교육과정?��???(?�능/모평)</label>
-                <label class="f-check"><input type="checkbox"> ?�국?�합?�력?��? (교육�?</label>
-                <label class="f-check"><input type="checkbox"> ?�목/?�사�??�신 기출</label>
+                <div class="f-title">출제 기관</div>
+                <label class="f-check"><input type="checkbox" checked> KNS 사설 / 강사 자체 출제</label>
+                <label class="f-check"><input type="checkbox" checked> 한국교육과정평가원 (수능/모평)</label>
+                <label class="f-check"><input type="checkbox"> 전국연합학력평가 (교육청)</label>
+                <label class="f-check"><input type="checkbox"> 특목/자사고 내신 기출</label>
             </div>
 
             <div class="filter-group">
-                <div class="f-title">?��? ?�형</div>
+                <div class="f-title">세부 유형</div>
                 <select style="width:100%; padding:12px 10px; border:1px solid #ddd; border-radius:8px; font-family:inherit; font-weight:bold; color:#333; cursor:pointer;">
-                    <option>?�체 ?�형</option>
-                    <option>빈칸 추론 (최다 ?�답)</option>
-                    <option>?�서 배열</option>
-                    <option>문장 ?�입</option>
-                    <option>주제/?��?/?�목</option>
-                    <option>?�법/?�휘 ?�어</option>
+                    <option>전체 유형</option>
+                    <option>빈칸 추론 (최다 오답)</option>
+                    <option>순서 배열</option>
+                    <option>문장 삽입</option>
+                    <option>주제/요지/제목</option>
+                    <option>어법/어휘 숙어</option>
                 </select>
             </div>
             
-            <button style="width:100%; padding:15px; border:none; background:#1A237E; color:white; font-weight:bold; border-radius:8px; font-size:15px; cursor:pointer;"><i class="fas fa-filter"></i> 조건 검???�용</button>
+            <button style="width:100%; padding:15px; border:none; background:#1A237E; color:white; font-weight:bold; border-radius:8px; font-size:15px; cursor:pointer;"><i class="fas fa-filter"></i> 조건 검색 적용</button>
         </aside>
 
         <!-- Center: List & Interactivity -->
         <main>
             <div class="list-header">
-                <h3><i class="fas fa-list-ul" style="color:#1A237E;"></i> ?�터 결과 <span style="color:#E91E63; font-size:18px;">42</span>�?/h3>
+                <h3><i class="fas fa-list-ul" style="color:#1A237E;"></i> 필터 결과 <span style="color:#E91E63; font-size:18px;">42</span>건</h3>
                 <select class="sort-select">
-                    <option>?�답�??��? ??(추천)</option>
-                    <option>최신 출제 ??/option>
-                    <option>조회??많�? ??/option>
+                    <option>오답률 높은 순 (추천)</option>
+                    <option>최신 출제 순</option>
+                    <option>조회수 많은 순</option>
                 </select>
             </div>
 
@@ -302,18 +302,18 @@
                 <div class="q-row">
                     <div class="q-summary" onclick="toggleDetail('q1')">
                         <div class="q-checkbox" onclick="event.stopPropagation();">
-                            <input type="checkbox" onchange="toggleCart('q1', '2026?�년??3???�평 ?��??�?�파???�답�?1??변??, 0, this.checked)">
+                            <input type="checkbox" onchange="toggleCart('q1', '2026학년도 3월 학평 대비 대의파악 오답률 1위 변형', 0, this.checked)">
                         </div>
                         <div class="q-main">
-                            <span class="q-id">ID: KNS-8842 <span style="margin:0 5px; color:#ddd;">|</span> 출처: 3???�력?��? 변??<span style="margin:0 5px; color:#ddd;">|</span> ?�원: ?�?�파??/span>
-                            <div class="q-title">2026?�년??3??모의고사 ?�?�파???�답�?1??변??/div>
+                            <span class="q-id">ID: KNS-8842 <span style="margin:0 5px; color:#ddd;">|</span> 출처: 3월 학력평가 변형 <span style="margin:0 5px; color:#ddd;">|</span> 단원: 대의파악</span>
+                            <div class="q-title">2026학년도 3월 모의고사 대의파악 오답률 1위 변형</div>
                             <div class="q-tags">
-                                <span class="q-tag bg-tag-blue">?�해</span><span class="q-tag bg-tag-gray">빈칸 추론</span><span class="q-tag" style="background:#ffebee; color:#c62828; border:1px solid #ffcdd2;">#?�답�?70%</span>
+                                <span class="q-tag bg-tag-blue">독해</span><span class="q-tag bg-tag-gray">빈칸 추론</span><span class="q-tag" style="background:#ffebee; color:#c62828; border:1px solid #ffcdd2;">#오답률 70%</span>
                             </div>
                         </div>
                         <div class="q-meta">
                             <div class="q-level lvl-orange">Level 7</div>
-                            <div class="q-stat">?�답�?34.2%</div>
+                            <div class="q-stat">정답률 34.2%</div>
                             <div class="q-free"><i class="fas fa-unlock"></i> 무료 문항</div>
                         </div>
                     </div>
@@ -324,7 +324,7 @@
                                 As scientific understanding grows, it becomes increasingly clear that our perceptions are not direct recordings of the world, but rather active constructions. Our brain continuously predicts what is out there based on past experiences, and sensory input merely serves to ____________. If the input matches the prediction, the brain confirms the internal model; if not, an error signal is generated to update it, allowing us to navigate a complex environment with high efficiency.
                             </div>
                             <div class="s-question-area">
-                                <div class="s-question">Q. ?�음 빈칸???�어�?말로 가???�절??것�??</div>
+                                <div class="s-question">Q. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
                                 <div class="s-choices">
                                     <label class="choice-label"><input type="radio" name="ans1" onclick="previewAnswer('q1_res')"> <span class="c-text">validate or correct these internal models</span></label>
                                     <label class="choice-label"><input type="radio" name="ans1" onclick="previewAnswer('q1_res')"> <span class="c-text">create completely new evolutionary pathways</span></label>
@@ -332,21 +332,21 @@
                                     <label class="choice-label"><input type="radio" name="ans1" onclick="previewAnswer('q1_res')"> <span class="c-text">record the exact visual representation of objects</span></label>
                                     <label class="choice-label"><input type="radio" name="ans1" onclick="previewAnswer('q1_res')"> <span class="c-text">suppress the generation of error signals entirely</span></label>
                                 </div>
-                                <button class="btn-check-ans" onclick="checkAnswer('q1_res')"><i class="fas fa-check-double"></i> ?�답 ?�출 �??�설 분석 보기</button>
+                                <button class="btn-check-ans" onclick="checkAnswer('q1_res')"><i class="fas fa-check-double"></i> 정답 제출 및 해설 분석 보기</button>
                                 
                                 <div class="s-result correct" id="q1_res">
-                                    <div class="res-head"><i class="fas fa-check-circle"></i> ?�답?�니?? (?�택 비율: 34.2%)</div>
+                                    <div class="res-head"><i class="fas fa-check-circle"></i> 정답입니다! (선택 비율: 34.2%)</div>
                                     <div class="res-exp">
-                                        <strong>[KATCH ?�문 ?�설]</strong><br><br>
-                                        글???�심?� ?��? ?�상???�동?�으�?기록?�는 것이 ?�니??'?�동?�으�?구성(?�측)'?�다??것입?�다. 빈칸 ?�문?�에???�측 ?�치 ?��????�라 모델??계속 ?�인?�거?? ?�류 ?�호�??�해 모델?????�황??맞게 '?�데?�트'?�다�??�술?�고 ?�습?�다. ?�라??감각 ?�력?� ?�의 ?��? 모델??'검증하거나 ?�정?�는(validate or correct)' ??��???�니??
+                                        <strong>[KATCH 전문 해설]</strong><br><br>
+                                        글의 핵심은 뇌가 세상을 수동적으로 기록하는 것이 아니라 '능동적으로 구성(예측)'한다는 것입니다. 빈칸 뒷문장에서 예측 일치 여부에 따라 모델을 계속 확인하거나, 오류 신호를 통해 모델을 현 상황에 맞게 '업데이트'한다고 서술하고 있습니다. 따라서 감각 입력은 뇌의 내부 모델을 '검증하거나 수정하는(validate or correct)' 역할을 합니다.
                                         <br><br>
                                         <div style="background:#fff; border:1px solid #ddd; padding:10px; border-radius:6px; font-size:13px;">
-                                            <span style="color:#E91E63; font-weight:bold;">[?��? 매력??분석]</span><br>
-                                            ??34.2% (?�답)<br>
-                                            ??28.5% (?�답 1?? - �?문장??'direct recordings of the world'가 ?�니?�고 명시?�어 ?�으?? record?�는 ?�어??매몰?�어 ?�답?�로 체크??비율??매우 ?�습?�다.
+                                            <span style="color:#E91E63; font-weight:bold;">[선지 매력도 분석]</span><br>
+                                            ① 34.2% (정답)<br>
+                                            ④ 28.5% (오답 1위) - 첫 문장에 'direct recordings of the world'가 아니라고 명시되어 있으나, record라는 단어에 매몰되어 오답으로 체크한 비율이 매우 높습니다.
                                         </div>
                                     </div>
-                                    <button class="btn-outline-gray btn-sm" onclick="alert('?�답?�트 즐겨찾기??보�??�었?�니??')" style="border-radius:20px; font-weight:bold;"><i class="fas fa-star text-gold"></i> 즐겨찾기??보�? (무료)</button>
+                                    <button class="btn-outline-gray btn-sm" onclick="alert('오답노트 즐겨찾기에 보관되었습니다.')" style="border-radius:20px; font-weight:bold;"><i class="fas fa-star text-gold"></i> 즐겨찾기에 보관 (무료)</button>
                                 </div>
                             </div>
                         </div>
@@ -357,19 +357,19 @@
                 <div class="q-row" style="background-color: #fdfaf6;">
                     <div class="q-summary" onclick="toggleDetail('q2')">
                         <div class="q-checkbox" onclick="event.stopPropagation();">
-                            <input type="checkbox" onchange="toggleCart('q2', '?�치동 ?�강 ?�크�??�용 - 극악 ?�치구문 ?�술???��?, 50, this.checked)">
+                            <input type="checkbox" onchange="toggleCart('q2', '대치동 현강 시크릿 전용 - 극악 도치구문 서술형 대비', 50, this.checked)">
                         </div>
                         <div class="q-main">
-                            <span class="q-id" style="color:#d32f2f;">ID: KNS-9105 (Premium Exclusive) <span style="margin:0 5px; color:#ddd;">|</span> 출처: ?�치동 KNS 본원 ?�료??<span style="margin:0 5px; color:#ddd;">|</span> ?�원: ?�수구문</span>
-                            <div class="q-title" style="color:#d32f2f;">?�치동 ?�강 ?�크�??�용 - 극악 ?�치구문 ?�술???��?/div>
+                            <span class="q-id" style="color:#d32f2f;">ID: KNS-9105 (Premium Exclusive) <span style="margin:0 5px; color:#ddd;">|</span> 출처: 대치동 KNS 본원 자료실 <span style="margin:0 5px; color:#ddd;">|</span> 단원: 특수구문</span>
+                            <div class="q-title" style="color:#d32f2f;">대치동 현강 시크릿 전용 - 극악 도치구문 서술형 대비</div>
                             <div class="q-tags">
-                                <span class="q-tag bg-tag-blue">?�법</span><span class="q-tag bg-tag-gray">?�수 ?�치</span><span class="q-tag" style="background:#fff3e0; color:#e65100; border:1px solid #ffe0b2;">고난???�술??/span><span class="q-tag" style="background:#e8f5e9; color:#2e7d32; border:1px solid #c8e6c9;">#VVIP?�용</span>
+                                <span class="q-tag bg-tag-blue">어법</span><span class="q-tag bg-tag-gray">특수 도치</span><span class="q-tag" style="background:#fff3e0; color:#e65100; border:1px solid #ffe0b2;">고난도 서술형</span><span class="q-tag" style="background:#e8f5e9; color:#2e7d32; border:1px solid #c8e6c9;">#VVIP전용</span>
                             </div>
                         </div>
                         <div class="q-meta">
                             <div class="q-level lvl-red">Level 9</div>
-                            <div class="q-stat" style="color:#d32f2f;">?�답�?12.8%</div>
-                            <div class="q-price"><i class="fas fa-coins" style="color:#f57c00;"></i> ?�리미엄 50 P</div>
+                            <div class="q-stat" style="color:#d32f2f;">정답률 12.8%</div>
+                            <div class="q-price"><i class="fas fa-coins" style="color:#f57c00;"></i> 프리미엄 50 P</div>
                         </div>
                     </div>
                     <!-- Inline Detail 2 -->
@@ -378,10 +378,10 @@
                             <div style="width:70px; height:70px; background:white; border-radius:50%; display:flex; justify-content:center; align-items:center; margin:0 auto 20px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
                                 <i class="fas fa-lock" style="font-size:30px; color:#f57c00;"></i>
                             </div>
-                            <h4 style="font-size:20px; font-weight:900; margin-bottom:10px; color:#e65100;">?�치동 VVIP ?�용 ?�크�?문항?�니??</h4>
-                            <p style="font-size:15px; color:#666; margin-bottom:30px; line-height:1.6;">�?문항?� ?�답�?90%???�박?�는 초고?�도 기출�??�문가 변?�이 ?�료??컨텐츠입?�다.<br>좌측??체크박스�??�러 '?�만??모의고사 PDF ?�바구니'???�거??<br><strong>50 ?�인??/strong>�??�용?�여 ???�면?�서 즉시 ?�람?�고 ?�?�할 ???�습?�다.</p>
+                            <h4 style="font-size:20px; font-weight:900; margin-bottom:10px; color:#e65100;">대치동 VVIP 전용 시크릿 문항입니다.</h4>
+                            <p style="font-size:15px; color:#666; margin-bottom:30px; line-height:1.6;">본 문항은 오답률 90%에 육박하는 초고난도 기출로 전문가 변형이 완료된 컨텐츠입니다.<br>좌측의 체크박스를 눌러 '나만의 모의고사 PDF 장바구니'에 담거나,<br><strong>50 포인트</strong>를 사용하여 이 화면에서 즉시 열람하고 풀이할 수 있습니다.</p>
                             <button style="background:linear-gradient(135deg, #f57c00, #ff9800); color:white; border:none; padding:15px 30px; font-weight:900; font-size:16px; border-radius:30px; cursor:pointer; box-shadow:0 5px 15px rgba(245,124,0,0.3); transition:0.2s;" onclick="unlockQuestion('q2')" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                                <i class="fas fa-unlock-alt"></i> 50 P ?�용?�고 즉시 ?�람?�기
+                                <i class="fas fa-unlock-alt"></i> 50 P 사용하고 즉시 열람하기
                             </button>
                         </div>
                     </div>
@@ -391,18 +391,18 @@
                 <div class="q-row">
                     <div class="q-summary" onclick="toggleDetail('q3')">
                         <div class="q-checkbox" onclick="event.stopPropagation();">
-                            <input type="checkbox" onchange="toggleCart('q3', '2024?�년??9???��???문장?�입 기출?�용', 0, this.checked)">
+                            <input type="checkbox" onchange="toggleCart('q3', '2024학년도 9월 평가원 문장삽입 기출응용', 0, this.checked)">
                         </div>
                         <div class="q-main">
-                            <span class="q-id">ID: KNS-7721 <span style="margin:0 5px; color:#ddd;">|</span> 출처: ?��???기출 <span style="margin:0 5px; color:#ddd;">|</span> ?�원: 간접?�기</span>
-                            <div class="q-title">2024?�년??9???��????�어?�역 문장?�입 기출?�용</div>
+                            <span class="q-id">ID: KNS-7721 <span style="margin:0 5px; color:#ddd;">|</span> 출처: 평가원 기출 <span style="margin:0 5px; color:#ddd;">|</span> 단원: 간접쓰기</span>
+                            <div class="q-title">2024학년도 9월 평가원 영어영역 문장삽입 기출응용</div>
                             <div class="q-tags">
-                                <span class="q-tag bg-tag-blue">?�해</span><span class="q-tag bg-tag-gray">문장 ?�입</span><span class="q-tag" style="background:#ff9800; color:white; border:1px solid #e65100;">?�술??/span><span class="q-tag" style="background:#f3e5f5; color:#7b1fa2; border:1px solid #e1bee7;">#?��??�기�?/span>
+                                <span class="q-tag bg-tag-blue">독해</span><span class="q-tag bg-tag-gray">문장 삽입</span><span class="q-tag" style="background:#ff9800; color:white; border:1px solid #e65100;">서술형</span><span class="q-tag" style="background:#f3e5f5; color:#7b1fa2; border:1px solid #e1bee7;">#평가원기출</span>
                             </div>
                         </div>
                         <div class="q-meta">
                             <div class="q-level lvl-orange">Level 8</div>
-                            <div class="q-stat">?�답�?41.5%</div>
+                            <div class="q-stat">정답률 41.5%</div>
                             <div class="q-free"><i class="fas fa-unlock"></i> 무료 문항</div>
                         </div>
                     </div>
@@ -410,7 +410,7 @@
                     <div class="q-detail" id="q3">
                         <div style="padding: 40px; text-align:center; color:#888; border:1px dashed #ddd; border-radius:8px; background:white;">
                             <i class="fas fa-spinner fa-spin" style="font-size:30px; margin-bottom:15px; color:#ddd;"></i><br>
-                            ?�청?�신 문항 ?�이??지�??��?)�?로딩 중입?�다...
+                            요청하신 문항 데이터(지문/선지)를 로딩 중입니다...
                         </div>
                     </div>
                 </div>
@@ -419,93 +419,93 @@
                 <div class="q-row" style="background-color: #fdfaf6;">
                     <div class="q-summary" onclick="toggleDetail('q4')">
                         <div class="q-checkbox" onclick="event.stopPropagation();">
-                            <input type="checkbox" onchange="toggleCart('q4', '?�나�??�신 ?�러 변??- ?�휘 추론', 30, this.checked)">
+                            <input type="checkbox" onchange="toggleCart('q4', '하나고 내신 킬러 변형 - 어휘 추론', 30, this.checked)">
                         </div>
                         <div class="q-main">
-                            <span class="q-id" style="color:#d32f2f;">ID: KNS-5282 (Premium) <span style="margin:0 5px; color:#ddd;">|</span> 출처: ?��?부�??�나�??�신 기출</span>
-                            <div class="q-title" style="color:#d32f2f;">?�나고등?�교 1?�년 ?�신 ?�러 변??- 문맥???�휘 추론</div>
+                            <span class="q-id" style="color:#d32f2f;">ID: KNS-5282 (Premium) <span style="margin:0 5px; color:#ddd;">|</span> 출처: 외대부고/하나고 내신 기출</span>
+                            <div class="q-title" style="color:#d32f2f;">하나고등학교 1학년 내신 킬러 변형 - 문맥상 어휘 추론</div>
                             <div class="q-tags">
-                                <span class="q-tag bg-tag-blue">?�휘</span><span class="q-tag bg-tag-gray">?�의??추론</span>
+                                <span class="q-tag bg-tag-blue">어휘</span><span class="q-tag bg-tag-gray">다의어 추론</span>
                             </div>
                         </div>
                         <div class="q-meta">
                             <div class="q-level lvl-red">Level 10</div>
-                            <div class="q-stat" style="color:#d32f2f;">?�답�?8.2%</div>
-                            <div class="q-price"><i class="fas fa-coins" style="color:#f57c00;"></i> ?�리미엄 30 P</div>
+                            <div class="q-stat" style="color:#d32f2f;">정답률 8.2%</div>
+                            <div class="q-price"><i class="fas fa-coins" style="color:#f57c00;"></i> 프리미엄 30 P</div>
                         </div>
                     </div>
                     <!-- Inline Detail 4 -->
                     <div class="q-detail" id="q4">
                         <div style="padding: 40px; text-align:center; color:#888; border:1px dashed #ddd; border-radius:8px; background:white;">
-                            ?�리미엄 컨텐�??�어�??�해 ?��? 처리?�었?�니??
+                            프리미엄 컨텐츠 제어로 인해 숨김 처리되었습니다.
                         </div>
                     </div>
                 </div>
             </div>
             
             <div style="text-align:center; margin-top:30px; margin-bottom:30px;">
-                <button style="padding:15px 40px; border-radius:30px; font-weight:bold; background:white; border:2px solid #ddd; color:#555; font-size:15px; cursor:pointer;" onmouseover="this.style.borderColor='#1A237E'; this.style.color='#1A237E'" onmouseout="this.style.borderColor='#ddd'; this.style.color='#555'">??많�? 문항 불러?�기 (1 ?�이지 / �?140 ?�이지) <i class="fas fa-angle-down"></i></button>
+                <button style="padding:15px 40px; border-radius:30px; font-weight:bold; background:white; border:2px solid #ddd; color:#555; font-size:15px; cursor:pointer;" onmouseover="this.style.borderColor='#1A237E'; this.style.color='#1A237E'" onmouseout="this.style.borderColor='#ddd'; this.style.color='#555'">더 많은 문항 불러오기 (1 페이지 / 총 140 페이지) <i class="fas fa-angle-down"></i></button>
             </div>
         </main>
 
         <!-- Right: Cart & Monetization -->
         <aside class="cart-panel">
             <div class="cart-header" id="cart-header-role">
-                <h3 id="cart-title-role"><i class="fas fa-file-pdf text-white"></i> 맞춤 ?�답?�트 보�???/h3>
+                <h3 id="cart-title-role"><i class="fas fa-file-pdf text-white"></i> 맞춤 오답노트 보관함</h3>
             </div>
             <div class="cart-body">
                 <div class="wallet-box" id="student-wallet-box">
-                    <span class="wb-lbl">??지�??�재</span>
+                    <span class="wb-lbl">내 지갑 시재</span>
                     <span class="wb-val" id="my-wallet">1,500 P</span>
                 </div>
 
                 <div class="cart-title">
-                    <span>?�집??문항 리스??/span>
+                    <span>수집된 문항 리스트</span>
                     <span class="cart-count" id="cart-count">0</span>
                 </div>
                 
                 <div class="cart-list" id="cart-list">
                     <div class="cart-empty" id="cart-empty">
                         <i class="fas fa-box-open"></i>
-                        <span>좌측 리스?�에??체크박스�??�러<br>?�만???�험지�?구성?�세??</span>
+                        <span>좌측 리스트에서 체크박스를 눌러<br>나만의 시험지를 구성하세요.</span>
                     </div>
                 </div>
 
                 <div class="receipt-box" id="student-receipt-box">
                     <div class="r-row">
-                        <span>PDF ?�성 ?�진 기본 ?�용�?</span>
+                        <span>PDF 생성 엔진 기본 이용료 </span>
                         <span><b style="color:#111;">100 P</b></span>
                     </div>
                     <div class="r-row">
-                        <span>?�리미엄 문항 ?�계�?/span>
+                        <span>프리미엄 문항 합계료</span>
                         <span id="premium-cost" style="font-weight:bold; color:#f57c00;">+ 0 P</span>
                     </div>
                     <div class="r-row total">
-                        <span>�?차감 ?�정 ?�인??/span>
+                        <span>총 차감 예정 포인트</span>
                         <span class="val" id="total-cost">100 P</span>
                     </div>
                 </div>
 
                 <!-- Instructor Action Inputs (Hidden by default) -->
                 <div id="teacher-action-box" style="display:none; margin-bottom: 20px;">
-                    <label style="font-size:12px; font-weight:bold; color:#555; display:block; margin-bottom:5px;">과제 배포 ?�??�??�택</label>
+                    <label style="font-size:12px; font-weight:bold; color:#555; display:block; margin-bottom:5px;">과제 배포 대상 반 선택</label>
                     <select style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:10px; font-family:inherit;">
-                        <option>�? ?��?관 S1�?/option>
-                        <option>�? ?�신?��??�동�?/option>
-                        <option>�? ?�비 ?�카?�반</option>
+                        <option>고3 의대관 S1반</option>
+                        <option>고2 내신대비 특동반</option>
+                        <option>고1 예비 스카이반</option>
                     </select>
-                    <label style="font-size:12px; font-weight:bold; color:#555; display:block; margin-bottom:5px;">?�료 ?�태</label>
+                    <label style="font-size:12px; font-weight:bold; color:#555; display:block; margin-bottom:5px;">자료 형태</label>
                     <select style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-family:inherit;">
-                        <option>?�라???�시 (?�?�보???�송)</option>
-                        <option>PDF 교재 ?�식 ?�운로드</option>
-                        <option>교사???�답/?�설지 ?�일</option>
+                        <option>온라인 응시 (대시보드 전송)</option>
+                        <option>PDF 교재 형식 다운로드</option>
+                        <option>교사용 정답/해설지 파일</option>
                     </select>
                 </div>
 
-                <button class="btn-checkout" id="btn-cart-action" onclick="checkout()"><i class="fas fa-cloud-download-alt"></i> 맞춤 PDF ?�성 �?결제</button>
+                <button class="btn-checkout" id="btn-cart-action" onclick="checkout()"><i class="fas fa-cloud-download-alt"></i> 맞춤 PDF 생성 및 결제</button>
                 <div id="cart-notice-role" style="text-align:center; margin-top:15px; font-size:12px; color:#888; line-height:1.4;">
-                    * 1???�성??PDF??<b>[?�?�보?? > [마이 보�???</b>?�서<br>기한 ?�한 ?�이 계속 ?�운로드 ?????�습?�다. <br>
-                    * ?�답 �??�설지가 ?�동?�로 ?�께 ?�성?�니??
+                    * 1회 생성된 PDF는 <b>[대시보드] > [마이 보관함]</b>에서<br>기한 제한 없이 계속 다운로드 할 수 있습니다. <br>
+                    * 정답 및 해설지가 자동으로 함께 생성됩니다.
                 </div>
             </div>
         </aside>
@@ -517,11 +517,11 @@
             <div style="width:80px; height:80px; background:#e8f5e9; border-radius:50%; display:flex; justify-content:center; align-items:center; margin:0 auto 20px;">
                 <i class="fas fa-check" style="font-size:40px; color:#4CAF50;"></i>
             </div>
-            <h3 style="font-size:24px; font-weight:900; color:#111; margin-bottom:15px;">?�만???�험지 ?�성 ?�료!</h3>
-            <p style="font-size:15px; color:#555; line-height:1.6; margin-bottom:30px; background:#f5f5f5; padding:15px; border-radius:8px;">?�인??결제가 ?�상?�으�?처리?�었?�니??<br>지�?바로 맞춤???�답?�트 PDF�??�쇄?�보?�요.</p>
+            <h3 style="font-size:24px; font-weight:900; color:#111; margin-bottom:15px;">나만의 시험지 생성 완료!</h3>
+            <p style="font-size:15px; color:#555; line-height:1.6; margin-bottom:30px; background:#f5f5f5; padding:15px; border-radius:8px;">포인트 결제가 정상적으로 처리되었습니다.<br>지금 바로 맞춤형 오답노트 PDF를 인쇄해보세요.</p>
             <div style="display:flex; gap:10px;">
-                <button style="flex:1; padding:15px; font-weight:bold; border-radius:8px; border:1px solid #ddd; background:white; color:#555; cursor:pointer;" onclick="closeModal()">계속 ?�색?�기</button>
-                <button style="flex:1; padding:15px; font-weight:bold; border-radius:8px; border:none; background:#1A237E; color:white; cursor:pointer;" onclick="location.href='dashboard_online.html'"><i class="fas fa-chart-line"></i> ?�?�보?�로 ?�동</button>
+                <button style="flex:1; padding:15px; font-weight:bold; border-radius:8px; border:1px solid #ddd; background:white; color:#555; cursor:pointer;" onclick="closeModal()">계속 탐색하기</button>
+                <button style="flex:1; padding:15px; font-weight:bold; border-radius:8px; border:none; background:#1A237E; color:white; cursor:pointer;" onclick="location.href='dashboard_online.html'"><i class="fas fa-chart-line"></i> 대시보드로 이동</button>
             </div>
         </div>
     </div>
@@ -582,7 +582,7 @@
                 listEl.innerHTML = `
                     <div class="cart-empty" id="cart-empty">
                         <i class="fas fa-box-open"></i>
-                        <span>좌측 리스?�에??체크박스�??�러<br>?�만???�험지�?구성?�세??</span>
+                        <span>좌측 리스트에서 체크박스를 눌러<br>나만의 시험지를 구성하세요.</span>
                     </div>`;
                 premCostEl.innerText = '+ 0 P';
                 totalCostEl.innerText = '100 P'; 
@@ -613,7 +613,7 @@
 
         function checkout() {
             if(cartItems.length === 0) {
-                alert("?�바구니가 비어?�습?�다. ?�집??문항 좌측??체크박스�??�택?�주?�요.");
+                alert("장바구니가 비어있습니다. 수집할 문항 좌측의 체크박스를 선택해주세요.");
                 return;
             }
 
@@ -622,7 +622,7 @@
             const grandTotal = basePdfCost + premiumTotal;
 
             if(myWallet < grandTotal) {
-                alert("?�인?��? 부족합?�다. VIP ?�운지?�서 ?�동?�거???�인?��? 충전?�주?�요.");
+                alert("포인트가 부족합니다. VIP 라운지에서 활동하거나 포인트를 충전해주세요.");
                 return;
             }
 
@@ -647,10 +647,10 @@
 
         function unlockQuestion(id) {
             if(myWallet < 50) {
-                 alert("?�인?��? 부족합?�다. (?�요 ?�인?? 50 P)");
+                 alert("포인트가 부족합니다. (필요 포인트: 50 P)");
                  return;
             }
-            if(confirm("???�리미엄 ?�설???�람?�기 ?�해 50 P�??�용?�시겠습?�까?")) {
+            if(confirm("이 프리미엄 해설을 열람하기 위해 50 P를 사용하시겠습니까?")) {
                 myWallet -= 50;
                 document.getElementById('my-wallet').innerText = myWallet.toLocaleString() + ' P';
                 document.getElementById('header-wallet').innerText = myWallet.toLocaleString() + ' P';
@@ -660,24 +660,24 @@
                 container.innerHTML = `
                     <div class="solver-grid">
                         <div class="s-passage" style="border-left: 4px solid #E91E63; border-radius: 0 8px 8px 0;">
-                            <strong>[Unlocked Premium Insight - ?��?강동�??�장 ?�체 출제]</strong><br><br>
+                            <strong>[Unlocked Premium Insight - 대치 강동진 원장 자체 출제]</strong><br><br>
                             Not only did the theory of relativity change our understanding of fundamental physics, but it also __________. Over time, philosophical debates evolved entirely relying on its implications regarding time and space, effectively stripping humanity of its false sense of absolute chronological certainty. 
                         </div>
                         <div class="s-question-area">
-                            <div class="s-question">Q. ?�음 빈칸???�어�?말로 가???�절??것�??</div>
+                            <div class="s-question">Q. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
                             <div class="s-choices">
                                 <label class="choice-label"><input type="radio" name="ans2"> <span class="c-text">provided a mathematical basis for the existence of absolute time</span></label>
                                 <label class="choice-label"><input type="radio" name="ans2"> <span class="c-text">compelled thinkers to reconsider the philosophical nature of reality</span></label>
                                 <label class="choice-label"><input type="radio" name="ans2"> <span class="c-text">proved that physics can largely exist without philosophical interpretations</span></label>
                                 <label class="choice-label"><input type="radio" name="ans2"> <span class="c-text">restricted theoretical limits exclusively within the bounds of light's speed</span></label>
                             </div>
-                            <button class="btn-check-ans" style="background:linear-gradient(135deg, #f57c00, #ff9800); border:none;" onclick="checkAnswer('q2_res')">?�답 ?�인 �??��??�크�??�설 보기</button>
+                            <button class="btn-check-ans" style="background:linear-gradient(135deg, #f57c00, #ff9800); border:none;" onclick="checkAnswer('q2_res')">정답 확인 및 대치 시크릿 해설 보기</button>
                             
                             <div class="s-result correct" id="q2_res" style="border-left-color:#E91E63;">
-                                <div class="res-head"><i class="fas fa-crown text-gold"></i> ?�답?�니?? (?�답�?87.2%??극강 ?�러)</div>
+                                <div class="res-head"><i class="fas fa-crown text-gold"></i> 정답입니다! (오답률 87.2%의 극강 킬러)</div>
                                 <div class="res-exp" style="background:white; border:1px solid #ffecb3;">
-                                    <strong>[?�강 ?�크�??�설 / 강동�??�장]</strong><br><br>
-                                    ?�치 구문???�황?��? 마십?�오. 'Not only did A, but it also B' 구조?�니?? ?�문?�에??빈칸??결정???�트�?줍니?? '철학???�쟁?�이 ?�공간에 ?�???�의???�적?�로 ?�존?�여 진화?�다'�??��??��?�? 그것?� ?��? 물리?�을 바꾼 것을 ?�어 '?�상가?�로 ?�여�??�실??철학??본질???�고?�도�?강요(compelled)'?�다??2번이 ?�답?�니?? ??지문이 ?��?부�??�신?�서 ?�떻�?변??출제?�었?��? ?�래 링크?�서 ?�인?�세??
+                                    <strong>[현강 시크릿 해설 / 강동진 원장]</strong><br><br>
+                                    도치 구문에 당황하지 마십시오. 'Not only did A, but it also B' 구조입니다. 뒷문장에서 빈칸의 결정적 힌트를 줍니다. '철학적 논쟁들이 시공간에 대한 함의에 전적으로 의존하여 진화했다'고 하였으므로, 그것은 단지 물리학을 바꾼 것을 넘어 '사상가들로 하여금 현실의 철학적 본질을 재고하도록 강요(compelled)'했다는 2번이 정답입니다. 이 지문이 외대부고 내신에서 어떻게 변형 출제되었는지 아래 링크에서 확인하세요.
                                 </div>
                             </div>
                         </div>
@@ -706,23 +706,23 @@
                 btnT.style.background = 'white'; btnT.style.color = '#555'; btnT.style.borderColor = '#ddd';
                 
                 header.style.background = '#1A237E';
-                title.innerHTML = '<i class="fas fa-file-pdf text-white"></i> 맞춤 ?�답?�트 보�???;
+                title.innerHTML = '<i class="fas fa-file-pdf text-white"></i> 맞춤 오답노트 보관함';
                 studentBox1.style.display = 'flex';
                 studentBox2.style.display = 'block';
                 teacherBox.style.display = 'none';
-                actionBtn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> 맞춤 PDF ?�성 �?결제';
-                notice.innerHTML = '* 1???�성??PDF??<b>[?�?�보?? > [마이 보�???</b>?�서<br>기한 ?�한 ?�이 계속 ?�운로드 ?????�습?�다. <br>* ?�답 �??�설지가 ?�동?�로 ?�께 ?�성?�니??';
+                actionBtn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> 맞춤 PDF 생성 및 결제';
+                notice.innerHTML = '* 1회 생성된 PDF는 <b>[대시보드] > [마이 보관함]</b>에서<br>기한 제한 없이 계속 다운로드 할 수 있습니다. <br>* 정답 및 해설지가 자동으로 함께 생성됩니다.';
             } else {
                 btnT.style.background = '#3949AB'; btnT.style.color = 'white'; btnT.style.borderColor = '#3949AB';
                 btnS.style.background = 'white'; btnS.style.color = '#555'; btnS.style.borderColor = '#ddd';
 
                 header.style.background = '#3949AB';
-                title.innerHTML = '<i class="fas fa-layer-group text-white"></i> 강사 맞춤 ?�료 추출�?;
+                title.innerHTML = '<i class="fas fa-layer-group text-white"></i> 강사 맞춤 자료 추출기';
                 studentBox1.style.display = 'none';
                 studentBox2.style.display = 'none';
                 teacherBox.style.display = 'block';
-                actionBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ?�료 추출 �?배포?�기';
-                notice.innerHTML = '* ?�택??반의 ?�생 ?�?�보?�로 과제가 ?�송?�니??<br>* KNS 강사 계정?� ?�인???�진 ?�이 무제???�용 가?�합?�다.';
+                actionBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 자료 추출 및 배포하기';
+                notice.innerHTML = '* 선택한 반의 학생 대시보드로 과제가 전송됩니다.<br>* KNS 강사 계정은 포인트 소진 없이 무제한 이용 가능합니다.';
             }
         }
     </script>
