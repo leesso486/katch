@@ -63,40 +63,45 @@
         .proc-text span { font-size: 12px; color: #888; text-align: center; display: block; }
         .proc-arrow { color: #ccc; font-size: 20px; padding: 0 10px; flex-shrink: 0; }
 
-        /* ===== MAIN EXAM CARDS ===== */
+        /* ===== MAIN EXAM CARDS (CUTE / CHARMING) ===== */
         .exam-grid-main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
 
         .exam-card {
-            background: white; border-radius: 20px; overflow: hidden;
-            border: 2px solid transparent; transition: 0.3s;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.06); display: flex; flex-direction: column;
+            background: white; border-radius: 28px; overflow: hidden;
+            border: 3px solid transparent; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); display: flex; flex-direction: column;
+            position: relative;
         }
-        .exam-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
-        .exam-card.open { border-color: #2196F3; }
-        .exam-card.available { border-color: #9C27B0; }
-        .exam-card.closed { opacity: 0.55; filter: grayscale(0.6); }
-        .exam-card.closed:hover { transform: none; }
+        .exam-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .exam-card.open { border-color: #bbdefb; background: left top/100px no-repeat url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="40" fill="%23e3f2fd" opacity="0.6"/></svg>'); }
+        .exam-card.available { border-color: #e1bee7; background: right bottom/100px no-repeat url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="90" cy="90" r="40" fill="%23f3e5f5" opacity="0.6"/></svg>'); }
+        .exam-card.closed { opacity: 0.7; filter: grayscale(0.5); border-color: #eee; }
+        .exam-card.closed:hover { transform: none; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
 
-        .ec-head { padding: 35px 28px 28px; position: relative; }
+        .ec-head { padding: 40px 28px 25px; position: relative; text-align: center; }
         .ec-status-pill {
-            position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-            border-radius: 30px; padding: 6px 20px; font-size: 12px; font-weight: 900;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2); white-space: nowrap; letter-spacing: 0.5px;
+            position: absolute; top: 15px; right: 15px;
+            border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: inline-flex; align-items: center; gap: 6px;
         }
-        .pill-open { background: #2196F3; color: white; }
-        .pill-avail { background: #9C27B0; color: white; }
-        .pill-closed { background: #757575; color: white; }
+        .pill-open { background: #e3f2fd; color: #1976d2; }
+        .pill-avail { background: #f3e5f5; color: #7b1fa2; }
+        .pill-closed { background: #f5f5f5; color: #757575; }
 
-        .ec-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; }
-        .ec-title { font-size: 22px; font-weight: 900; color: #111; line-height: 1.3; margin-bottom: 6px; }
-        .ec-slogan { font-size: 13px; color: #888; font-style: italic; margin-bottom: 12px; }
-        .ec-deadline { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .ec-icon { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); background: white; }
+        .exam-card.open .ec-icon { color: #2196F3; border: 2px solid #bbdefb; }
+        .exam-card.available .ec-icon { color: #9C27B0; border: 2px solid #e1bee7; }
+        .exam-card.closed .ec-icon { color: #999; border: 2px solid #eee; }
 
-        .ec-body { padding: 0 28px 28px; flex: 1; display: flex; flex-direction: column; }
-        .ec-desc { font-size: 14px; color: #555; line-height: 1.7; padding: 16px 0; border-top: 1px dashed #eee; border-bottom: 1px dashed #eee; margin-bottom: 16px; }
-        .ec-features { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-        .ec-features li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #444; line-height: 1.5; }
-        .ec-features li i { margin-top: 3px; font-size: 13px; flex-shrink: 0; }
+        .ec-title { font-size: 22px; font-weight: 900; color: #333; line-height: 1.3; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .ec-slogan { font-size: 14px; color: #777; margin-bottom: 20px; font-weight: 600; }
+        .ec-deadline { font-size: 13.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; background: #fff8e1; color: #ff8f00; padding: 6px 16px; border-radius: 20px; }
+
+        .ec-body { padding: 0 28px 30px; flex: 1; display: flex; flex-direction: column; }
+        .ec-desc { font-size: 14.5px; color: #555; line-height: 1.6; padding: 18px 0; border-top: 2px dashed #f0f0f0; border-bottom: 2px dashed #f0f0f0; margin-bottom: 20px; font-weight: 600; text-align: center; }
+        .ec-features { list-style: none; padding: 0; margin: 0 0 25px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .ec-features li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; font-weight: 700; background: #f9f9f9; padding: 10px 15px; border-radius: 12px; }
+        .ec-features li i { color: #E91E63; font-size: 16px; }
 
         /* Sample Preview Dropdown */
         .sample-toggle { font-size: 13px; color: #888; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 8px 0; border: none; background: none; font-family: inherit; width: 100%; justify-content: center; border-top: 1px solid #f5f5f5; transition: 0.2s; }
@@ -104,12 +109,12 @@
         .sample-content { display: none; background: #fafafa; border-radius: 8px; padding: 15px; margin-top: 10px; font-size: 13px; color: #555; line-height: 1.6; border: 1px solid #eee; }
         .sample-content.show { display: block; }
 
-        .ec-cta { display: block; text-align: center; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 800; text-decoration: none; transition: 0.2s; margin-top: auto; }
+        .ec-cta { display: block; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 900; text-decoration: none; transition: 0.3s; margin-top: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .cta-open { background: #2196F3; color: white; }
-        .cta-open:hover { background: #1976D2; }
+        .cta-open:hover { background: #1976D2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(33,150,243,0.3); }
         .cta-avail { background: #9C27B0; color: white; }
-        .cta-avail:hover { background: #7B1FA2; }
-        .cta-closed { background: #e0e0e0; color: #888; cursor: not-allowed; }
+        .cta-avail:hover { background: #7B1FA2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(156,39,176,0.3); }
+        .cta-closed { background: #eeeeee; color: #999; cursor: not-allowed; box-shadow: none; pointer-events: none; }
 
         /* Countdown */
         .countdown-box { background: #fff3e0; border: 1px solid #ffcc80; border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; color: #e65100; font-weight: 700; }
@@ -287,8 +292,8 @@
             <!-- Card 1: Open -->
             <div class="exam-card open">
                 <div class="ec-head">
-                    <div class="ec-status-pill pill-open">✅ 접수 중</div>
-                    <div class="ec-icon" style="background:#e3f2fd; color:#1976d2;"><i class="fas fa-school"></i></div>
+                    <div class="ec-status-pill pill-open"><i class="fas fa-check-circle"></i> 접수 중</div>
+                    <div class="ec-icon"><i class="fas fa-school"></i></div>
                     <div class="ec-title">예비고1<br>특목고 배치고사</div>
                     <div class="ec-slogan">"대원외고 최종 평가!"</div>
                     <div class="ec-deadline" style="color:#f57c00;"><i class="far fa-calendar-alt"></i> 2026.03.01 ~ <strong>03.15</strong></div>
@@ -319,8 +324,8 @@
             <!-- Card 2: Available -->
             <div class="exam-card available">
                 <div class="ec-head">
-                    <div class="ec-status-pill pill-avail">🟣 상시 응시 가능</div>
-                    <div class="ec-icon" style="background:#f3e5f5; color:#8e24aa;"><i class="fas fa-fire"></i></div>
+                    <div class="ec-status-pill pill-avail"><i class="fas fa-bolt"></i> 상시 응시 가능</div>
+                    <div class="ec-icon"><i class="fas fa-fire"></i></div>
                     <div class="ec-title">예비중3<br>Real 특목 모의고사</div>
                     <div class="ec-slogan">"리얼한 실전 감각!"</div>
                     <div class="ec-deadline" style="color:#9C27B0;"><i class="far fa-calendar-alt"></i> 상시 개방 · 언제든 응시</div>
@@ -346,8 +351,8 @@
             <!-- Card 3: Closed -->
             <div class="exam-card closed">
                 <div class="ec-head">
-                    <div class="ec-status-pill pill-closed">⏸️ 기간 만료</div>
-                    <div class="ec-icon" style="background:#f5f5f5; color:#aaa;"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="ec-status-pill pill-closed"><i class="fas fa-lock"></i> 기간 만료</div>
+                    <div class="ec-icon"><i class="fas fa-graduation-cap"></i></div>
                     <div class="ec-title">예비중1<br>Hello 내신 시험</div>
                     <div class="ec-slogan">"안녕 내신, 안녕 100점"</div>
                     <div class="ec-deadline" style="color:#aaa; text-decoration:line-through;"><i class="far fa-calendar-alt"></i> 2026.02.01 ~ 02.28</div>

@@ -63,57 +63,48 @@
         .proc-text span { font-size: 12px; color: #888; text-align: center; display: block; }
         .proc-arrow { color: #ccc; font-size: 20px; padding: 0 10px; flex-shrink: 0; }
 
-        /* ===== MAIN EXAM CARDS ===== */
-        .exam-grid-main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+        /* ===== MAIN EXAM CARDS (PREMIUM ADMISSION) ===== */
+        .exam-grid-main { display: grid; grid-template-columns: 1fr; max-width: 500px; margin: 0 auto 40px; }
 
         .exam-card {
-            background: white; border-radius: 20px; overflow: hidden;
-            border: 2px solid transparent; transition: 0.3s;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.06); display: flex; flex-direction: column;
+            background: #111; border-radius: 12px; overflow: hidden; color: white;
+            border: 1px solid #333; transition: 0.3s;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); display: flex; flex-direction: column;
+            position: relative;
         }
-        .exam-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
-        .exam-card.open { border-color: #2196F3; }
-        .exam-card.available { border-color: #9C27B0; }
-        .exam-card.closed { opacity: 0.55; filter: grayscale(0.6); }
-        .exam-card.closed:hover { transform: none; }
+        .exam-card:hover { transform: translateY(-4px); box-shadow: 0 25px 50px rgba(0,0,0,0.6); border-color: #E91E63; }
+        
+        /* Subtle Gold/Pink Glow */
+        .exam-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #E91E63, #ff8f00); }
 
-        .ec-head { padding: 35px 28px 28px; position: relative; }
+        .ec-head { padding: 45px 35px 30px; position: relative; text-align: center; border-bottom: 1px dashed rgba(255,255,255,0.1); }
         .ec-status-pill {
-            position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-            border-radius: 30px; padding: 6px 20px; font-size: 12px; font-weight: 900;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2); white-space: nowrap; letter-spacing: 0.5px;
+            position: absolute; top: 20px; right: 20px;
+            border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 800;
+            background: rgba(233,30,99,0.1); color: #ff6b9d; border: 1px solid rgba(233,30,99,0.3);
+            letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px;
         }
-        .pill-open { background: #2196F3; color: white; }
-        .pill-avail { background: #9C27B0; color: white; }
-        .pill-closed { background: #757575; color: white; }
 
-        .ec-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; }
-        .ec-title { font-size: 22px; font-weight: 900; color: #111; line-height: 1.3; margin-bottom: 6px; }
-        .ec-slogan { font-size: 13px; color: #888; font-style: italic; margin-bottom: 12px; }
-        .ec-deadline { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .ec-icon { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 20px; background: linear-gradient(135deg, #E91E63, #8e24aa); color: white; box-shadow: 0 10px 20px rgba(233,30,99,0.3); }
 
-        .ec-body { padding: 0 28px 28px; flex: 1; display: flex; flex-direction: column; }
-        .ec-desc { font-size: 14px; color: #555; line-height: 1.7; padding: 16px 0; border-top: 1px dashed #eee; border-bottom: 1px dashed #eee; margin-bottom: 16px; }
-        .ec-features { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-        .ec-features li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #444; line-height: 1.5; }
-        .ec-features li i { margin-top: 3px; font-size: 13px; flex-shrink: 0; }
+        .ec-title { font-size: 26px; font-weight: 900; color: white; line-height: 1.3; margin-bottom: 10px; letter-spacing: -1px; }
+        .ec-slogan { font-size: 14px; color: #aaa; margin-bottom: 25px; font-weight: 400; font-family: 'Montserrat', sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+        .ec-deadline { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; color: #ddd; }
+        .ec-deadline i { color: #E91E63; }
 
-        /* Sample Preview Dropdown */
-        .sample-toggle { font-size: 13px; color: #888; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 8px 0; border: none; background: none; font-family: inherit; width: 100%; justify-content: center; border-top: 1px solid #f5f5f5; transition: 0.2s; }
-        .sample-toggle:hover { color: #111; }
-        .sample-content { display: none; background: #fafafa; border-radius: 8px; padding: 15px; margin-top: 10px; font-size: 13px; color: #555; line-height: 1.6; border: 1px solid #eee; }
+        .ec-body { padding: 30px 35px 35px; flex: 1; display: flex; flex-direction: column; background: #0a0a0a; }
+        .ec-desc { font-size: 15px; color: #ccc; line-height: 1.7; margin-bottom: 25px; text-align: center; font-weight: 300; }
+        .ec-features { list-style: none; padding: 0; margin: 0 0 30px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+        .ec-features li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #eee; font-weight: 400; padding: 12px 18px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); }
+        .ec-features li i { color: #E91E63; font-size: 14px; width: 20px; text-align: center; }
+
+        .sample-toggle { font-size: 13px; color: #888; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 8px 0; border: none; background: none; font-family: inherit; width: 100%; justify-content: center; border-top: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .sample-toggle:hover { color: white; }
+        .sample-content { display: none; background: #1a1a1a; border-radius: 8px; padding: 15px; margin-top: 10px; font-size: 13px; color: #ccc; line-height: 1.6; border: 1px solid #333; }
         .sample-content.show { display: block; }
 
-        .ec-cta { display: block; text-align: center; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 800; text-decoration: none; transition: 0.2s; margin-top: auto; }
-        .cta-open { background: #2196F3; color: white; }
-        .cta-open:hover { background: #1976D2; }
-        .cta-avail { background: #9C27B0; color: white; }
-        .cta-avail:hover { background: #7B1FA2; }
-        .cta-closed { background: #e0e0e0; color: #888; cursor: not-allowed; }
-
-        /* Countdown */
-        .countdown-box { background: #fff3e0; border: 1px solid #ffcc80; border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; color: #e65100; font-weight: 700; }
-        .countdown-num { font-size: 20px; font-weight: 900; background: #e65100; color: white; padding: 3px 10px; border-radius: 6px; }
+        .ec-cta { display: block; text-align: center; padding: 18px; border-radius: 8px; font-size: 16px; font-weight: 800; text-decoration: none; transition: 0.3s; margin-top: auto; background: white; color: #111; border: 2px solid white; box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
+        .ec-cta:hover { background: #111; color: white; border-color: #E91E63; box-shadow: 0 8px 25px rgba(233,30,99,0.3); }
 
         /* ===== UPCOMING SECTION ===== */
         .upcoming-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 800px; margin: 0 auto 60px; }
@@ -256,26 +247,25 @@
         <p style="font-size:15px; color:#888; text-align:center; margin-bottom:40px;">정해진 요일 전날 밤 9시까지 예약 후 응시해 주시기 바랍니다.</p>
 
         <!-- Main Exam Cards -->
-        <div class="exam-grid-main" style="grid-template-columns: 1fr; max-width: 480px; margin: 0 auto 60px;">
-
-            <!-- Card 1: Open -->
-            <div class="exam-card open" style="border-color: #E91E63; box-shadow: 0 10px 30px rgba(233,30,99,0.1);">
+        <div class="exam-grid-main">
+            <!-- Card 1: Admission Level Test -->
+            <div class="exam-card">
                 <div class="ec-head">
-                    <div class="ec-status-pill pill-open" style="background:#E91E63;color:white;">★ 온라인 레벨테스트 신청</div>
-                    <div class="ec-icon" style="background:#fce4ec; color:#E91E63;"><i class="fas fa-award"></i></div>
-                    <div class="ec-title">KNS 고등관<br>레벨테스트 (입학평가)</div>
-                    <div class="ec-slogan" style="color:#E91E63;">"중2·3 레벨테스트 응시 필수!"</div>
-                    <div class="ec-deadline" style="color:#E91E63;"><i class="far fa-calendar-alt"></i> 상시 오픈 (전날 9PM 마감)</div>
+                    <div class="ec-status-pill"><i class="fas fa-crown"></i> Admission 2026</div>
+                    <div class="ec-icon"><i class="fas fa-award"></i></div>
+                    <div class="ec-title">KATCH<br>레벨테스트 (입학평가)</div>
+                    <div class="ec-slogan">"상위 1%를 향한 첫 걸음"</div>
+                    <div class="ec-deadline"><i class="far fa-calendar-check"></i> 상시 오픈 (전날 9PM 마감)</div>
                 </div>
                 <div class="ec-body">
-                    <p class="ec-desc">안녕하십니까. KNS 고등관입니다. 입학을 위한 필수 진단고사로, 문법/독해/서술형/어휘 등 체계적인 데이터 평가가 진행됩니다.</p>
+                    <p class="ec-desc">대치동 최상위권의 검증된 문항으로 학생의 현재 위치를 정확히 판단합니다. 문법/독해/서술형/어휘의 다면적 평가를 통해 최적의 반을 배정합니다.</p>
                     <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#E91E63;"></i> 대상: 중학교 2, 3학년 필수 응시</li>
-                        <li><i class="far fa-clock" style="color:#E91E63;"></i> 응시일: 수요일 / 토요일 / 일요일 (14:00, 16:00, 18:00)</li>
-                        <li><i class="fas fa-hourglass-half" style="color:#E91E63;"></i> 소요시간: 120분 · 온라인 CBT</li>
-                        <li><i class="fas fa-credit-card" style="color:#E91E63;"></i> 전형료: <strong>15,000원</strong></li>
+                        <li><i class="fas fa-user-graduate"></i> 예비고1 및 중등 최상위권</li>
+                        <li><i class="far fa-clock"></i> 수요일 / 토요일 / 일요일</li>
+                        <li><i class="fas fa-hourglass-half"></i> 120분 · 온라인 CBT</li>
+                        <li><i class="fas fa-credit-card"></i> <strong>전형료 15,000원</strong></li>
                     </ul>
-                    <a href="#" class="ec-cta cta-open" style="background:#111;" onclick="openRegModal('KNS 고등관 레벨테스트', 'open'); return false;">레벨테스트 신청 및 결제 →</a>
+                    <a href="#" class="ec-cta" onclick="openRegModal('KATCH 레벨테스트', 'open'); return false;">레벨테스트 신청 및 결제 →</a>
                 </div>
             </div>
         </div>
