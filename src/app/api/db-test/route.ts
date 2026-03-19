@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import postgres from 'postgres';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const connectionString = process.env.DATABASE_URL;
@@ -25,3 +27,4 @@ export async function GET() {
     }, { status: 500 });
   }
 }
+export const dynamic = 'force-dynamic';
