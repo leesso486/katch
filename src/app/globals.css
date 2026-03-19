@@ -33,7 +33,7 @@ body {
 .hero-desc { font-size: 18px; opacity: 0.9; margin-bottom: 30px; }
 .hero-btn { background: #FFC107; color: #222; padding: 15px 35px; border-radius: 30px; font-size: 18px; font-weight: 800; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(255,193,7,0.4); transition: transform 0.2s; }
 .hero-btn:hover { transform: translateY(-3px); }
-.slider-nav { position: absolute; bottom: 20px; display: flex; gap: 10px; z-index: 10; }
+.slider-nav { position: absolute; bottom: 50px; display: flex; gap: 10px; z-index: 10; }
 .dot-nav { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; }
 .dot-nav.active { background: white; }
 
