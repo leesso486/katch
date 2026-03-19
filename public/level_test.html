@@ -12,38 +12,35 @@
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Noto+Serif+KR:wght@700;900&display=swap');
         body { background: #fdfbf7; }
 
-        /* ===== HERO ===== */
+        /* ===== HERO (ANTIQUE ADMISSION STYLE) ===== */
         .diag-hero {
             position: relative; overflow: hidden;
-            background: #0a0a0a; color: white; padding: 80px 0 100px;
+            background: #1a2639 url('https://www.transparenttextures.com/patterns/stardust.png'); color: #fdfaf0; padding: 100px 0 120px;
+            border-bottom: 6px solid #8b0000;
         }
         .diag-hero::before {
             content: ''; position: absolute; top: -60%; right: -10%;
             width: 700px; height: 700px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(233,30,99,0.18) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
         }
-        .diag-hero::after {
-            content: ''; position: absolute; bottom: -40%; left: -5%;
-            width: 500px; height: 500px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(33,150,243,0.15) 0%, transparent 70%);
-        }
+        .diag-hero::after { display: none; }
         .hero-inner { position: relative; z-index: 2; text-align: center; }
         .hero-tag {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(233,30,99,0.15); border: 1px solid rgba(233,30,99,0.3);
-            color: #ff6b9d; padding: 6px 18px; border-radius: 30px;
-            font-size: 13px; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.5px;
+            background: rgba(139,0,0,0.8); border: 1px solid #D4AF37;
+            color: #D4AF37; padding: 8px 24px; border-radius: 4px;
+            font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; margin-bottom: 25px; letter-spacing: 2px;
         }
-        .hero-title { font-size: 52px; font-weight: 900; letter-spacing: -2px; line-height: 1.15; margin-bottom: 16px; }
-        .hero-title em { font-style: normal; color: #E91E63; }
-        .hero-sub { font-size: 18px; font-weight: 300; opacity: 0.8; line-height: 1.6; margin-bottom: 40px; }
+        .hero-title { font-family: 'Noto Serif KR', serif; font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1.2; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .hero-title em { font-style: normal; color: #D4AF37; }
+        .hero-sub { font-family: 'Noto Serif KR', serif; font-size: 19px; font-weight: 400; opacity: 0.9; line-height: 1.6; margin-bottom: 50px; color: #e0d8c0; }
 
         /* Stats row */
-        .hero-stats { display: inline-flex; gap: 40px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 20px 40px; backdrop-filter: blur(10px); }
+        .hero-stats { display: inline-flex; gap: 40px; background: rgba(0,0,0,0.3); border: 1px solid #D4AF37; border-radius: 4px; padding: 25px 50px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .h-stat { text-align: center; }
-        .h-stat-val { font-size: 32px; font-weight: 900; color: white; }
-        .h-stat-val .accent { color: #E91E63; }
-        .h-stat-label { font-size: 13px; opacity: 0.65; margin-top: 4px; }
+        .h-stat-val { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: #D4AF37; }
+        .h-stat-val .accent { color: #fdfaf0; font-family: 'Pretendard', sans-serif; }
+        .h-stat-label { font-family: 'Noto Serif KR', serif; font-size: 14px; color: #e0d8c0; margin-top: 8px; font-weight: 500; letter-spacing: 1px; }
 
         /* ===== PROCESS FLOW ===== */
         .process-bar {
@@ -223,9 +220,9 @@
     <!-- Hero -->
     <div class="diag-hero">
         <div class="container hero-inner">
-            <div class="hero-tag"><i class="fas fa-award"></i> Admission Center · 2026</div>
-            <h1 class="hero-title">KATCH 고등관 <em>레벨테스트</em></h1>
-            <p class="hero-sub">KNS 고등관 예비고 입학을 위한 필수 관문입니다.<br>정밀 진단을 통해 영역별 약점을 파악하고 가장 적합한 반을 배정해 드립니다.</p>
+            <div class="hero-tag"><i class="fas fa-landmark"></i> Admission Center · 2026</div>
+            <h1 class="hero-title">KATCH <em>레벨테스트</em></h1>
+            <p class="hero-sub">예비고 입학을 위한 필수 관문입니다.<br>정밀 진단을 통해 영역별 약점을 파악하고 가장 적합한 반을 배정해 드립니다.</p>
             <div class="hero-stats">
                 <div class="h-stat">
                     <div class="h-stat-val"><span class="accent" id="cnt-applicants">0</span>명+</div>
