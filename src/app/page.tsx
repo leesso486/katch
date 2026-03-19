@@ -34,12 +34,8 @@ export default async function Home() {
      bodyContent = content.match(/<body>([\s\S]*?)<\/body>/)?.[1] || '';
   }
   
-  // 3. Inject the DB connection status directly into the HTML's top bar!
-  bodyContent = bodyContent.replace(
-    '<div class="header-top-bar">',
-    `<div class="header-top-bar">\n<div class="container" style="text-align:center; color: #E91E63; font-weight: 900; font-size: 14px; padding: 5px 0;">${dbStatus}</div>`
-  );
-
+  // The DB connection is verified silently. Returning clean HTML.
+  
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: bodyContent }} />
