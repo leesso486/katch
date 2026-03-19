@@ -31,7 +31,7 @@
                     <h1 class="student-name">김유진 <span class="student-id">| JTR4648</span></h1>
                     <p class="report-subtitle">2026 KATCH 최상위 예비고1반 GVR 학습 데이터</p>
                 </div>
-                <div class="tag-badge bg-navy text-white">온라인사전부</div>
+                <div class="tag-badge bg-navy text-white">온라인사업부</div>
             </div>
         </div>
 
@@ -48,71 +48,7 @@
                 <div class="flex-row gap-20">
                     <!-- Bar Chart -->
                     <div class="chart-col flex-2 bg-white rounded-10 p-20 shadow-sm relative">
-                        <div class="bar-chart-container">
-                            <!-- Y-axis scale -->
-                            <div class="y-axis">
-                                <span>50</span><span>40</span><span>30</span><span>20</span><span>10</span><span>0</span>
-                            </div>
-                            <!-- Bar Groups -->
-                            <div class="bar-group-wrapper">
-                                <!-- LC -->
-                                <div class="bar-group">
-                                    <div class="bars">
-                                        <div class="bar bar-at1" style="height: 56%;" data-val="28"></div>
-                                        <div class="bar bar-at2" style="height: 54%;" data-val="27"></div>
-                                        <div class="bar bar-at3" style="height: 58%;" data-val="29"></div>
-                                        <div class="bar bar-at4" style="height: 58%;" data-val="29"></div>
-                                        <div class="bar bar-at5" style="height: 0%;" data-val="0"></div>
-                                        <div class="bar bar-at6" style="height: 54%;" data-val="27"></div>
-                                    </div>
-                                    <div class="x-label">LC</div>
-                                </div>
-                                <!-- GR -->
-                                <div class="bar-group">
-                                    <div class="bars">
-                                        <div class="bar bar-at1" style="height: 90%;" data-val="45"></div>
-                                        <div class="bar bar-at2" style="height: 90%;" data-val="45"></div>
-                                        <div class="bar bar-at3" style="height: 90%;" data-val="45"></div>
-                                        <div class="bar bar-at4" style="height: 86%;" data-val="43"></div>
-                                        <div class="bar bar-at5" style="height: 0%;" data-val="0"></div>
-                                        <div class="bar bar-at6" style="height: 92%;" data-val="46"></div>
-                                    </div>
-                                    <div class="x-label">GR</div>
-                                </div>
-                                <!-- VO -->
-                                <div class="bar-group">
-                                    <div class="bars">
-                                        <div class="bar bar-at1" style="height: 42%;" data-val="21"></div>
-                                        <div class="bar bar-at2" style="height: 50%;" data-val="25"></div>
-                                        <div class="bar bar-at3" style="height: 48%;" data-val="24"></div>
-                                        <div class="bar bar-at4" style="height: 48%;" data-val="24"></div>
-                                        <div class="bar bar-at5" style="height: 0%;" data-val="0"></div>
-                                        <div class="bar bar-at6" style="height: 44%;" data-val="22"></div>
-                                    </div>
-                                    <div class="x-label">VO</div>
-                                </div>
-                                <!-- RC -->
-                                <div class="bar-group">
-                                    <div class="bars">
-                                        <div class="bar bar-at1" style="height: 36%;" data-val="18"></div>
-                                        <div class="bar bar-at2" style="height: 36%;" data-val="18"></div>
-                                        <div class="bar bar-at3" style="height: 38%;" data-val="19"></div>
-                                        <div class="bar bar-at4" style="height: 38%;" data-val="19"></div>
-                                        <div class="bar bar-at5" style="height: 0%;" data-val="0"></div>
-                                        <div class="bar bar-at6" style="height: 40%;" data-val="20"></div>
-                                    </div>
-                                    <div class="x-label">RC</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chart-legend mt-20 text-center">
-                            <span class="legend-item"><span class="dot bg-at1"></span>AT1</span>
-                            <span class="legend-item"><span class="dot bg-at2"></span>AT2</span>
-                            <span class="legend-item"><span class="dot bg-at3"></span>AT3</span>
-                            <span class="legend-item"><span class="dot bg-at4"></span>AT4</span>
-                            <span class="legend-item"><span class="dot bg-at5"></span>AT5</span>
-                            <span class="legend-item"><span class="dot bg-at6"></span>AT6</span>
-                        </div>
+                        <canvas id="gvrTrendChart" style="width:100%; height:280px;"></canvas>
                     </div>
 
                     <!-- Side Table -->
@@ -309,5 +245,29 @@
             <h1 class="logo-text" style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size:32px; color:var(--navy); letter-spacing:-1px;">KATCH<span style="color:#E91E63;">.</span></h1>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('gvrTrendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['LC (리스닝)', 'GR (문법)', 'VO (어휘)', 'RC (독해)'],
+                    datasets: [
+                        { label: 'AT1 테스트', data: [28, 45, 21, 18], backgroundColor: '#64B5F6', borderRadius: 4 },
+                        { label: 'AT2 테스트', data: [27, 45, 25, 18], backgroundColor: '#81C784', borderRadius: 4 },
+                        { label: 'AT3 테스트', data: [29, 45, 24, 19], backgroundColor: '#4a78e6', borderRadius: 4 },
+                        { label: 'AT4 테스트', data: [29, 43, 24, 19], backgroundColor: '#E91E63', borderRadius: 4 },
+                        { label: 'AT6 테스트', data: [27, 46, 22, 20], backgroundColor: '#FFCA28', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, font: {family:'Pretendard', size:12} } } },
+                    scales: { y: { beginAtZero: true, max: 50, grid: { borderDash: [5, 5] } }, x: { grid: { display: false } } }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
