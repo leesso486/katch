@@ -11,7 +11,7 @@ export async function GET() {
     }
 
     const sql = postgres(connectionString);
-    const result = await sqlSELECT NOW();
+    const result = await sql`SELECT NOW()`;
 
     return NextResponse.json({
       success: true,
