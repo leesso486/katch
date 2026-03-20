@@ -1,0 +1,55 @@
+﻿
+> katch-web@0.1.0 build
+> next build
+
+??Next.js 16.2.0 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+node.exe : 
+위치 줄:1 문자:1
++ & "C:\Program Files\nod
+ejs/node.exe" "C:\Program
+ Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo       
+       : NotSpecifi    ed
+: (:String) [],     Remot
+eException
+    + FullyQualifiedEr   
+ rorId : NativeComm    an
+dError
+ 
+> Build error occurred
+Error: Turbopack build fa
+iled with 1 errors:
+./src/app/api/db-test/rou
+te.ts:14:36
+Expected a semicolon
+  [90m12 |[0m
+  [90m13 |[0m     [36m
+const[0m sql = postgres(
+connectionString);
+[31m[1m>[0m [90m14 |
+[0m     [36mconst[0m re
+sult = [36mawait[0m sql
+SELECT [33mNOW[0m();
+  [90m   |[0m          
+                         
+ [31m[1m^^^[0m
+  [90m15 |[0m
+  [90m16 |[0m     [36m
+return[0m [33mNextRespo
+nse[0m.json({
+  [90m17 |[0m       suc
+cess: [36mtrue[0m,
+
+Parsing ecmascript source
+ code failed
+
+
+    at <unknown> (./src/a
+pp/api/db-test/route.ts:1
+4:36)

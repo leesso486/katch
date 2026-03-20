@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - VOD 인강</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f5f7f9; }
+        
+        /* VOD Hero */
+        .vod-hero {
+            background: linear-gradient(135deg, #0d121a, #1a2639);
+            color: white; padding: 60px 0; position: relative; overflow: hidden;
+        }
+        .vod-hero::after {
+            content: ''; position: absolute; right: -5%; top: -20%;
+            width: 500px; height: 500px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(233,30,99,0.15) 0%, transparent 70%);
+        }
+        .hero-layout { display: flex; gap: 40px; align-items: center; position: relative; z-index: 2; }
+        .hero-text { flex: 1; }
+        .hero-tag { background: #E91E63; color: white; display: inline-block; padding: 6px 14px; border-radius: 4px; font-size: 13px; font-weight: 800; margin-bottom: 20px; letter-spacing: 1px; }
+        .hero-title { font-size: 44px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; font-family: 'Noto Serif KR', serif; }
+        .hero-desc { font-size: 16px; color: #aab4c3; line-height: 1.6; margin-bottom: 30px; }
+        
+        .hero-player { width: 560px; height: 320px; background: #000; border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); }
+        .hero-player img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.3s; }
+        .hero-player:hover img { opacity: 0.5; transform: scale(1.05); }
+        .play-btn-huge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: rgba(233,30,99,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; margin-left: 5px; cursor: pointer; transition: 0.3s; outline: 6px solid rgba(233,30,99,0.3); }
+        .hero-player:hover .play-btn-huge { background: #E91E63; outline: 10px solid rgba(233,30,99,0.4); }
+
+        /* Section */
+        .v-sec { padding: 60px 0; }
+        .v-sec-title { font-size: 24px; font-weight: 900; color: #111; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+        .v-sec-title i { color: #E91E63; }
+
+        /* Course List Horizontal */
+        .course-list { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; }
+        .course-card { min-width: 300px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: 0.3s; border: 1px solid #ebeeef; }
+        .course-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .c-thumb { height: 170px; background: #222; position: relative; overflow: hidden; }
+        .c-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s; }
+        .course-card:hover .c-thumb img { transform: scale(1.05); opacity: 0.6; }
+        .c-time { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; font-size: 12px; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
+        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; opacity: 0; transition: 0.3s; }
+        .course-card:hover .play-overlay { opacity: 1; }
+        .c-info { padding: 20px; }
+        .c-target { font-size: 12px; font-weight: 800; color: #5c6bc0; margin-bottom: 8px; }
+        .c-title { font-size: 16px; font-weight: 800; color: #222; margin-bottom: 12px; line-height: 1.4; height: 44px; overflow: hidden; }
+        .c-inst { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #666; font-weight: 600; border-top: 1px solid #f0f0f0; padding-top: 15px; }
+        .c-inst img { width: 24px; height: 24px; border-radius: 50%; background: #ddd; object-fit: cover; }
+        .c-price { margin-left: auto; font-size: 14px; font-weight: 900; color: #E91E63; }
+        .c-price.free { color: #1f7842; }
+
+        /* Progress Card */
+        .my-progress-card { background: white; border-radius: 12px; padding: 25px; display: flex; gap: 25px; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #ebeeef; margin-bottom: 40px; }
+        .mp-thumb { width: 160px; height: 100px; background: #eee; border-radius: 8px; position: relative; overflow: hidden; flex-shrink: 0; }
+        .mp-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .mp-info { flex: 1; }
+        .mp-title { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 10px; }
+        .mp-d { font-size: 13px; color: #666; margin-bottom: 15px; }
+        .mp-bar-bg { width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+        .mp-bar-fill { height: 100%; background: #E91E63; width: 45%; border-radius: 3px; }
+        .mp-percent { font-size: 12px; font-weight: 800; color: #E91E63; }
+        .mp-btn { background: #1a2639; color: white; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 800; text-decoration: none; transition: 0.2s; }
+        .mp-btn:hover { background: #E91E63; }
+
+    </style>
+</head>
+<body>
+    <!-- Top Header & GNB -->
+    <div class="header-top-bar">
+        <div class="container flex-between align-center">
+            <div class="target-switch">
+                <a href="dashboard_online.html" class="active">학생·학부모</a>
+                <a href="problem_bank.html">가맹 원장·강사</a>
+            </div>
+            <div>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
+        <div class="container main-gnb">
+            <div class="logo">
+                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="level_test.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <!-- Updated Nav -->
+                <a href="vod_class.html" class="active">VOD 인강</a>
+                <a href="store_vod.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- VOD Hero -->
+    <div class="vod-hero">
+        <div class="container hero-layout">
+            <div class="hero-text">
+                <div class="hero-tag">🔥 대표 강좌 무료 공개</div>
+                <h2 class="hero-title">고 3월 모의고사 대비<br>단기 특강 집중 분석</h2>
+                <p class="hero-desc">대치동 최상위권을 위한 강동진 원장의 특강. 평가원 기출의 비밀과 안정적인 1등급을 위한 독해 기술을 단 3강으로 정리합니다.</p>
+                <a href="#" class="btn-primary" style="padding: 14px 30px; font-size:16px;"><i class="fas fa-play"></i> 맛보기 영상 재생</a>
+            </div>
+            <div class="hero-player">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Lecture Cover">
+                <div class="play-btn-huge"><i class="fas fa-play"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding: 50px 0;">
+        
+        <!-- My Progress (Status) -->
+        <h3 class="v-sec-title"><i class="fas fa-forward"></i> 최근 이어보기</h3>
+        <div class="my-progress-card">
+            <div class="mp-thumb">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="진행중인 강좌">
+                <div class="c-time">32:15 남음</div>
+            </div>
+            <div class="mp-info">
+                <div class="mp-title">수능 어법 10년 기출 전격 분석 - 2강. 관계사의 이해</div>
+                <div class="mp-d">김태형 강사님 · 마지막 수강일: 2026.03.18</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="flex:1; margin-right:20px;">
+                        <div class="mp-bar-bg"><div class="mp-bar-fill"></div></div>
+                        <div class="mp-percent">45% 수강 완료</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="mp-btn"><i class="fas fa-play"></i> 바로 재생</a>
+        </div>
+
+        <!-- Curated Courses -->
+        <h3 class="v-sec-title mt-40"><i class="fas fa-star text-orange"></i> KATCH 프리미엄 앤솔로지 특강</h3>
+        <div class="course-list">
+            <div class="course-card">
+                <div class="c-thumb">
+                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="c-time">총 12강</div>
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info">
+                    <div class="c-target">앤솔로지 LEVEL 4</div>
+                    <h4 class="c-title">고1 6월 모평 전범위 집중 분석 및 변형 문제 대비</h4>
+                    <div class="c-inst">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg"> 최성훈 <span class="c-price">350 P</span>
+                    </div>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="c-thumb">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="c-time">총 8강</div>
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info">
+                    <div class="c-target">앤솔로지 LEVEL 3</div>
+                    <h4 class="c-title">유추와 수사법: 수능 영어 고난도 추론의 정석</h4>
+                    <div class="c-inst">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg"> 이수아 <span class="c-price">300 P</span>
+                    </div>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="c-thumb">
+                    <img src="https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="c-time">총 16강</div>
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info">
+                    <div class="c-target">수단비 필수편 연계</div>
+                    <h4 class="c-title">중학 어휘의 완성: 고1 첫 모의고사 1등급 브릿지</h4>
+                    <div class="c-inst">
+                        <img src="https://randomuser.me/api/portraits/men/55.jpg"> 강석호 <span class="c-price">400 P</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free Lectures Section -->
+        <h3 class="v-sec-title mt-60"><i class="fas fa-gift text-green"></i> 모두를 위한 무료 공개 특강</h3>
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
+            <div class="course-card">
+                <div class="c-thumb" style="height:140px;">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info" style="padding:15px;">
+                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">[강동진 원장] 고 3월 모의고사 대비 단기 특강</h4>
+                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 1,420 <span class="c-price free">FREE</span></div>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="c-thumb" style="height:140px;">
+                    <img src="https://images.unsplash.com/photo-1427504494785-319ce8372605?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info" style="padding:15px;">
+                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">수능 어법 10년 기출 전격 분석 1부</h4>
+                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 982 <span class="c-price free">FREE</span></div>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="c-thumb" style="height:140px;">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info" style="padding:15px;">
+                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">중등 3학년 고교학점제 전면 대응 전략 설명회</h4>
+                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 2,150 <span class="c-price free">FREE</span></div>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="c-thumb" style="height:140px;">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                </div>
+                <div class="c-info" style="padding:15px;">
+                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">수성구 1타 강사의 내신 1등급 직결 문법 짚어보기</h4>
+                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 4,500 <span class="c-price free">FREE</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer style="background:#f0f2f5; padding:40px 0; border-top:1px solid #ddd; margin-top:60px;">
+        <div class="container text-center text-gray" style="font-size:14px;">
+            <strong>주식회사 케이엔에스북스</strong> | 대표이사 김치삼 | 사업자번호 777-81-03746<br>
+            서울특별시 강남구 역삼로78길 21, 칼텍빌딩 3층(대치동) | e-mail: denglemaster@gmail.com<br><br>
+            © 2026 KATCH. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

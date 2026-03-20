@@ -1,0 +1,25 @@
+﻿
+> katch-web@0.1.0 build
+> next build
+
+??Next.js 16.2.0 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+??Compiled successfully in 1254ms
+  Running TypeScript ...
+  Finished TypeScript in 1384ms ...
+  Collecting page data using 6 workers ...
+  Generating static pages using 6 workers (0/3) ...
+??Generating static pages using 6 workers (3/3) in 365ms
+  Finalizing page optimization ...
+
+Route (app)
+??? /
+????/_not-found
+??? /api/db-test
+
+
+?? (Static)   prerendered as static content
+?  (Dynamic)  server-rendered on demand
+

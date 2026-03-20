@@ -206,7 +206,7 @@
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
                 <a href="problem_bank.html">문제은행</a>
-                <a href="store_vod.html">VOD 인강</a>
+                <a href="vod_class.html">VOD 인강</a>
                 <a href="store_vod.html">교재 스토어</a>
                 <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
@@ -268,7 +268,10 @@
                     <div class="ec-icon"><i class="fas fa-award"></i></div>
                     <div class="ec-title">KATCH<br>레벨테스트 (입학평가)</div>
                     <div class="ec-slogan">"상위 1%를 향한 첫 걸음"</div>
-                    <div class="ec-deadline"><i class="far fa-calendar-check"></i> 상시 오픈 (전날 9PM 마감)</div>
+                    <div class="ec-deadline" style="background:#f9f5ed; border:1px solid #D4AF37; border-radius:8px; padding:12px 20px; color:#1a2639; font-weight:800; font-size:15px; margin-top:20px; display:inline-flex; flex-direction:column; align-items:center; width:auto; text-align:center;">
+                        <span style="font-size:13px; color:#c79618; font-family:'Pretendard', sans-serif; margin-bottom:4px;">TEST SCHEDULE</span>
+                        상시 오픈 <span style="font-size:13px; font-weight:600; color:#8b0000; margin-top:4px;">(희망 요일 전날 밤 9시 예약 마감)</span>
+                    </div>
                 </div>
                 <div class="ec-body">
                     <p class="ec-desc">대치동 최상위권의 검증된 문항으로 학생의 현재 위치를 정확히 판단합니다. 문법/독해/서술형/어휘의 다면적 평가를 통해 최적의 반을 배정합니다.</p>
@@ -324,19 +327,31 @@
                 <div class="step-page" id="step-2">
                     <div class="rm-step-title">STEP 2. 일정 선택 및 결제</div>
                     <div class="rm-step-sub">시험명: <strong id="rm-exam-name"></strong></div>
+                    <div style="background:#fffaf0; border:1px solid #ffe0b2; border-radius:12px; padding:20px; margin-bottom:20px; text-align:center;">
+                        <i class="fas fa-clock" style="color:#ff9800; font-size:24px; margin-bottom:10px;"></i>
+                        <div style="font-size:16px; font-weight:800; color:#e65100; margin-bottom:5px;">응시 요일 하루 전날 밤 9시 예약 마감</div>
+                        <p style="font-size:13px; color:#795548; line-height:1.5; margin:0;">원활한 테스트 준비를 위해 기한 내에 결제를 완료해주시기 바랍니다.</p>
+                    </div>
+                    
                     <div class="form-group" style="padding-bottom:15px; border-bottom:1px solid #eee;">
-                        <label style="color:#E91E63;"><i class="fas fa-exclamation-circle"></i> 응시 요일 하루 전날 밤 9시까지 결제 필수</label>
-                        <select style="border-color:#111; font-weight:600;">
-                            <option value="">응시 희망일 및 시간 선택</option>
-                            <option>수요일 오후 2시 (14:00)</option>
-                            <option>수요일 오후 4시 (16:00)</option>
-                            <option>수요일 오후 6시 (18:00)</option>
-                            <option>토요일 오후 2시 (14:00)</option>
-                            <option>토요일 오후 4시 (16:00)</option>
-                            <option>토요일 오후 6시 (18:00)</option>
-                            <option>일요일 오후 2시 (14:00)</option>
-                            <option>일요일 오후 4시 (16:00)</option>
-                            <option>일요일 오후 6시 (18:00)</option>
+                        <label style="font-size:14px; font-weight:800; color:#111; margin-bottom:10px;">희망 응시일 및 시간 선택 *</label>
+                        <select style="width:100%; border:2px solid #1a2639; border-radius:10px; padding:15px; font-size:16px; font-weight:700; color:#1a2639; background-color:#fff; cursor:pointer; appearance:auto; outline:none; transition:0.3s; box-shadow:0 4px 10px rgba(0,0,0,0.05);" onfocus="this.style.boxShadow='0 0 0 4px rgba(26,38,57,0.1)'" onblur="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.05)'">
+                            <option value="">🗓️ 요일 및 시간을 선택해주세요</option>
+                            <optgroup label="■ 수요일 일정">
+                                <option>수요일 오후 2시 (14:00)</option>
+                                <option>수요일 오후 4시 (16:00)</option>
+                                <option>수요일 오후 6시 (18:00)</option>
+                            </optgroup>
+                            <optgroup label="■ 토요일 일정">
+                                <option>토요일 오후 2시 (14:00)</option>
+                                <option>토요일 오후 4시 (16:00)</option>
+                                <option>토요일 오후 6시 (18:00)</option>
+                            </optgroup>
+                            <optgroup label="■ 일요일 일정">
+                                <option>일요일 오후 2시 (14:00)</option>
+                                <option>일요일 오후 4시 (16:00)</option>
+                                <option>일요일 오후 6시 (18:00)</option>
+                            </optgroup>
                         </select>
                     </div>
                     

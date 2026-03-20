@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KATCH - 오답문항 프린트</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; background: #e0e4e8; color: #111; }
+        
+        /* Print Navigation (Hidden on Print) */
+        .print-nav { background: #1a2639; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-logo { font-size: 20px; font-weight: 900; font-family: 'Noto Serif KR', serif; }
+        .nav-logo span { color: #E91E63; }
+        .print-btn { background: #D4AF37; color: #1a2639; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+        .print-btn:hover { background: #f1c40f; transform: translateY(-1px); }
+        .back-btn { color: white; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .back-btn:hover { color: #D4AF37; }
+
+        /* A4 Page Container */
+        .a4-page { 
+            width: 210mm; 
+            min-height: 297mm; 
+            margin: 40px auto; 
+            background: white; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            padding: 20mm; 
+            box-sizing: border-box;
+        }
+
+        /* Note Header */
+        .note-header { margin-bottom: 25px; }
+        .note-title { text-align: center; font-size: 24px; font-weight: 900; margin-bottom: 15px; letter-spacing: -0.5px; }
+        .info-table { width: 100%; border-collapse: collapse; border: 2px solid #111; text-align: center; font-size: 14px; font-weight: 800; }
+        .info-table th { background: #f0f2f5; border: 1px solid #111; padding: 8px; font-weight: 800; width: 10%; }
+        .info-table td { border: 1px solid #111; padding: 8px; width: 23%; font-weight: 700; color: #333; }
+
+        /* Two Column Layout for Questions */
+        .questions-container { 
+            column-count: 2; 
+            column-gap: 30px; 
+            column-rule: 1px solid #e0e4e8; 
+        }
+
+        /* Question Block */
+        .q-block { break-inside: avoid; margin-bottom: 30px; font-size: 13.5px; line-height: 1.6; }
+        .q-section-title { font-weight: 900; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #111; font-size: 15px; }
+        
+        .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .q-meta { font-weight: 900; }
+        .q-id { color: #111; }
+        .q-type { color: #666; font-size: 12px; font-weight: 700; margin-left: 5px; }
+        .q-er { color: #E91E63; font-weight: 900; font-size: 13px; }
+
+        .q-prompt { color: #111; margin-bottom: 10px; text-align: justify; }
+        
+        .q-options { list-style: none; padding: 0; margin: 0; }
+        .q-option { margin-bottom: 4px; display: flex; gap: 8px; }
+        .opt-label { width: 20px; font-weight: 700; }
+
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .print-nav { display: none !important; }
+            .a4-page { margin: 0; width: 100%; height: 100%; box-shadow: none; padding: 10mm; }
+            @page { size: A4; margin: 10mm; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Print Navigation -->
+    <div class="print-nav">
+        <div>
+            <a href="omr.html" class="back-btn"><i class="fas fa-arrow-left"></i> OMR 창으로 돌아가기</a>
+        </div>
+        <div class="nav-logo">KATCH<span>.</span> PRINT</div>
+        <div>
+            <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> 오답노트 인쇄하기</button>
+        </div>
+    </div>
+
+    <!-- A4 Printable Area -->
+    <div class="a4-page">
+        <div class="note-header">
+            <div class="note-title">2026 KATCH 외고전사고 GVR67 AT1 오답문항</div>
+            <table class="info-table">
+                <tr>
+                    <th>반</th>
+                    <td>외고전사고</td>
+                    <th>이름</th>
+                    <td>김은영</td>
+                    <th>수험번호</th>
+                    <td>JTR4648</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="questions-container">
+            
+            <div class="q-section-title">[Questions 1~40] Choose the best answer for the blank.</div>
+
+            <!-- Question 1 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[GR-16]</span> <span class="q-type">(기본형식 > 3형식)</span></div>
+                    <div class="q-er">ER: 59%</div>
+                </div>
+                <div class="q-prompt">
+                    A: How did you get a hold of this information?<br>
+                    B: _______ when she sent it.
+                </div>
+                <ul class="q-options">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>I copied Leanne on the email</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>Leanne emailed a copy me</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>The email was copied me and Leanne</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>Leanne copied me on the email</div></li>
+                </ul>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[GR-28]</span> <span class="q-type">(형용사절 > 유사관계대명사)</span></div>
+                    <div class="q-er">ER: 14%</div>
+                </div>
+                <div class="q-prompt">
+                    Legislators may further cut teacher pay, _______ many educators will be forced to take a second job.
+                </div>
+                <ul class="q-options">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>in which case</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>which in case</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>in case of</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>of which case</div></li>
+                </ul>
+            </div>
+
+            <div class="q-section-title mt-20">[Questions 41~50] Identify the error.</div>
+
+            <!-- Question 3 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[GR-42]</span> <span class="q-type">(시제 > 완료)</span></div>
+                    <div class="q-er">ER: 55%</div>
+                </div>
+                <ul class="q-options" style="margin-bottom:0;">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>A: Have you found that the book of mine that you lost?</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>B: Yes, I've found it behind the washing machine last night.</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>A: How on earth did it get back there?</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>B: I must have been reading it while waiting for the laundry.</div></li>
+                </ul>
+            </div>
+
+             <!-- Question 4 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[GR-47]</span> <span class="q-type">(분사 > 분사)</span></div>
+                    <div class="q-er">ER: 17%</div>
+                </div>
+                <div class="q-prompt" style="text-indent: 10px;">
+                    (a) Modern communities are constructed with one very glaring deficit, accorded by some activists. (b) Our most popular social meeting spaces, they say, all emphasize one thing: consumerism. (c) We congregate in coffee shops, at bars, and in shopping malls, all of which emphasize, and typically require, the purchase of goods and services. (d) These activists would have us create new spaces where socialization can occur outside the influence of capitalism.
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[GR-50]</span> <span class="q-type">(어순 > 도치의 어순)</span></div>
+                    <div class="q-er">ER: 31%</div>
+                </div>
+                <div class="q-prompt" style="text-indent: 10px;">
+                    (a) We often think of the Arctic as a relatively desolate region, supporting little life. (b) But some is the fact that 21,000 species of animals, plants, funguses, and microbes call the Arctic home. (c) And all of them are directly threatened by the environmental changes unfolding as a result of global warming. (d) Without urgent action on the part of humans, the biodiversity of an entire eco-zone may be all but annihilated.
+                </div>
+            </div>
+
+            <div class="q-section-title mt-20">[Questions 1~50] Choose the best answer.</div>
+
+            <!-- Question 6 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[VO-26]</span></div>
+                    <div class="q-er">ER: 54%</div>
+                </div>
+                <div class="q-prompt">
+                    Driving in icy conditions is dangerous, as tires may _______ when brakes are applied.
+                </div>
+                <ul class="q-options">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>slip</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>trip</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>rub</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>skid</div></li>
+                </ul>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[VO-38]</span></div>
+                    <div class="q-er">ER: 21%</div>
+                </div>
+                <div class="q-prompt">
+                    Although the _______ punishment for littering is a $500 fine, most violators are assessed less than $100.
+                </div>
+                <ul class="q-options">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>redundant</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>sufficient</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>excessive</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>maximum</div></li>
+                </ul>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[VO-44]</span></div>
+                    <div class="q-er">ER: 43%</div>
+                </div>
+                <div class="q-prompt">
+                    SymTech's tagging system is guaranteed to _______ seamlessly with whatever ad server you currently use.
+                </div>
+                <ul class="q-options">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>integrate</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>attune</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>embody</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>mingle</div></li>
+                </ul>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="q-block">
+                <div class="q-header">
+                    <div class="q-meta"><span class="q-id">[VO-46]</span></div>
+                    <div class="q-er">ER: 21%</div>
+                </div>
+                <div class="q-prompt">
+                    Many of Dickens' longer works were published in _______ form, meted out in weekly installments.
+                </div>
+                <ul class="q-options">
+                    <li class="q-option"><div class="opt-label">(a)</div><div>lenient</div></li>
+                    <li class="q-option"><div class="opt-label">(b)</div><div>serial</div></li>
+                    <li class="q-option"><div class="opt-label">(c)</div><div>buoyant</div></li>
+                    <li class="q-option"><div class="opt-label">(d)</div><div>foregone</div></li>
+                </ul>
+            </div>
+
+        </div> <!-- end container -->
+    </div>
+</body>
+</html>
