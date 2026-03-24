@@ -12,43 +12,48 @@
 <body class="bg-gray">
     <!-- B2B Header -->
         <!-- 1. Top Header -->
-    <div class="header-top-bar">
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
-            <div class="target-switch">
-                <a href="dashboard_online.html" class="active">학생·학부모</a>
-                <a href="problem_bank.html">가맹 원장·강사</a>
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
-            <div>
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
                 <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
             </div>
         </div>
     </div>
-    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
-        <div class="container main-gnb">
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
             <div class="logo">
-                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
             </div>
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
                 <a href="problem_bank.html">문제은행</a>
-                <a href="vod_class.html">VOD 인강</a>
-                <a href="store_vod.html">교재 스토어</a>
-                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
-            <div class="header-utils">
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
                 <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
                 <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
             </div>
         </div>
     </header>
 
-    <div class="container pb-layout" style="display:block;">
-
-        <!-- Main Content -->
-        <main class="pb-main" style="padding:40px 0;">
-            <div class="pb-header flex-between mb-20">
+    <div class="page-wrapper" style="padding: 40px 0; background: #f5f7f9; min-height: calc(100vh - 150px);">
+        <div class="container">
+            <!-- Main Content -->
+            <main class="pb-main" style="width: 100%;">
+                <div class="pb-header flex-between mb-20" style="background: white; padding: 25px 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
                 <h2><i class="fas fa-search"></i> 문제 검색 및 세트 구성</h2>
                 <div class="search-large">
                     <input type="text" placeholder="검색어 또는 문항 ID를 입력하세요">
@@ -56,253 +61,146 @@
                 </div>
             </div>
 
-            <style>
-            /* G-MAT Style Overrides */
-            .gmat-filters { background: white; border: 1px solid #ddd; border-top: 3px solid var(--navy); border-radius: 4px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-            .gmat-filters h5 { font-size: 13px; font-weight: 900; color: #111; margin-bottom: 12px; display:flex; align-items:center; gap:6px; border-bottom: 1px solid #eee; padding-bottom: 8px;}
-            .filter-group { margin-bottom: 25px; }
-            .gmat-radio, .gmat-check { display: block; margin-bottom: 8px; font-size: 12px; color: #444; cursor: pointer; font-weight: 500;}
-            .gmat-radio input, .gmat-check input { margin-right: 6px; }
-
-            .gmat-table-wrap { background: white; border: 1px solid #ddd; border-top: 3px solid #f57c00; border-radius: 4px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-            .gmat-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; }
-            .gmat-table th { background: #f8f9fa; border-bottom: 1px solid #ccc; padding: 12px 6px; font-weight: 800; color: #333; font-size: 11px; white-space: nowrap; }
-            .gmat-table td { border-bottom: 1px solid #eee; padding: 10px 6px; color: #555; vertical-align: middle; }
-            .gmat-table tr:hover { background: #f4f6f9; }
-            .gmat-table .text-left { text-align: left; }
-            
-            .gmat-badge { padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; white-space: nowrap; }
-            .badge-eval { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
-            .badge-edu { background: #f3e5f5; color: #6a1b9a; border: 1px solid #e1bee7; }
-            .badge-ebs { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-            .badge-kns { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
-            
-            .g-diff-top { color: #E91E63; font-weight: 900; }
-            .g-diff-mid { color: #f57c00; font-weight: 800; }
-            .g-diff-low { color: #4CAF50; font-weight: 800; }
-            
-            .q-preview { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; max-width: 250px; margin-top: 4px; font-family:serif;}
-            .q-title { font-size: 12px; font-weight: 800; color: #222; margin-bottom: 2px;}
-            
-            .btn-add-q { background: white; border: 1px solid #ccc; color: #333; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; transition: 0.2s; font-weight: bold;}
-            .btn-add-q:hover { background: var(--navy); color: white; border-color: var(--navy); }
-            .btn-add-q.added { background: #f57c00; color: white; border-color: #f57c00; }
-
-            .range-select-box { background: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 4px; display: flex; align-items: center; gap: 10px; font-size: 12px; margin-bottom: 15px; font-weight: bold;}
-            .range-select-box input { width: 50px; padding: 4px; border: 1px solid #ccc; text-align: center; border-radius: 2px;}
-            </style>
-
-            <div class="bank-layout pb-grid" style="align-items: start; grid-template-columns: 240px 1fr 280px;">
-                <!-- G-MAT Sidebar Filters -->
-                <aside class="gmat-filters">
-                    <div class="filter-group">
-                        <h5><i class="fas fa-bullseye text-orange"></i> 목표 점수대별</h5>
-                        <label class="gmat-radio"><input type="radio" name="target" checked> 전체 범위</label>
-                        <label class="gmat-radio"><input type="radio" name="target"> <strong style="color:#E91E63;">100점 만점</strong> (극상위용)</label>
-                        <label class="gmat-radio"><input type="radio" name="target"> <strong>90점 이상</strong> (안정적 1등급)</label>
-                        <label class="gmat-radio"><input type="radio" name="target"> <strong>80점 돌파</strong> (2등급 진입)</label>
+            <div class="bank-layout pb-grid">
+                <!-- Filters -->
+                <aside class="bank-filters">
+                    <div class="filter-box">
+                        <h5><i class="fas fa-graduation-cap"></i> 학년 / 대상</h5>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox"> 초등 고학년</label>
+                            <label><input type="checkbox" checked> 중등 내신</label>
+                            <label><input type="checkbox" checked> 고등 수능</label>
+                        </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h5><i class="fas fa-landmark text-navy"></i> 기출 출처</h5>
-                        <label class="gmat-check"><input type="checkbox" checked> <strong>[평가원 기출]</strong> 6·9평 및 수능</label>
-                        <label class="gmat-check"><input type="checkbox" checked> <strong>[교육청 학평]</strong> 전국연합</label>
-                        <label class="gmat-check"><input type="checkbox"> <strong>[EBS 연계]</strong> 수특, 수완 변형</label>
-                        <label class="gmat-check"><input type="checkbox"> <strong>[해외 원서]</strong> KNS 자체 고난도</label>
+                    <div class="filter-box">
+                        <h5><i class="fas fa-book"></i> 영역별</h5>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" checked> 독해</label>
+                            <label><input type="checkbox"> 어법 (Grammar)</label>
+                            <label><input type="checkbox"> 어휘 (Voca)</label>
+                        </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h5><i class="fas fa-graduation-cap text-orange"></i> 학년 및 대상</h5>
-                        <label class="gmat-check"><input type="checkbox" checked> 고3 / N수생</label>
-                        <label class="gmat-check"><input type="checkbox"> 고2 대상</label>
-                        <label class="gmat-check"><input type="checkbox"> 고1 진입</label>
-                        <label class="gmat-check"><input type="checkbox"> 예비고 (중등 KNS 정규)</label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h5><i class="fas fa-tags text-navy"></i> 세부 유형별 카테고리</h5>
-                        <select class="form-control" style="font-size:12px; padding:6px; margin-bottom:6px;">
-                            <option>=== [독해] 전 영역 ===</option>
-                            <option selected>빈칸 추론 (31~34번)</option>
-                            <option>문장 삽입 (38~39번)</option>
-                            <option>순서 배열 (36~37번)</option>
-                            <option>대의 파악 (주제, 요지)</option>
-                            <option>함축 의미 추론 (21번)</option>
-                        </select>
-                        <select class="form-control" style="font-size:12px; padding:6px; margin-bottom:6px;">
-                            <option>=== [어법/어휘] ===</option>
-                            <option>수능 밑줄 어법</option>
-                            <option>내신용 서술형 어법</option>
-                            <option>문맥상 어휘 추론</option>
+                    <div class="filter-box">
+                        <h5><i class="fas fa-tags"></i> 세부 유형</h5>
+                        <select class="form-control mb-10">
+                            <option>전체</option>
+                            <option>빈칸 추론</option>
+                            <option>순서 배열</option>
+                            <option>주제/제목</option>
                         </select>
                     </div>
-                    
-                    <button class="btn-full mt-10" style="padding:10px; background:var(--navy); color:white; border:none; border-radius:4px; font-weight:800; font-size:13px;"><i class="fas fa-filter"></i> 필터 적용하여 검색</button>
-                    <button class="btn-full mt-5" style="padding:10px; background:white; color:#666; border:1px solid #ccc; border-radius:4px; font-weight:bold; font-size:12px;"><i class="fas fa-undo"></i> 초기화</button>
+                    <div class="filter-box">
+                        <h5><i class="fas fa-signal"></i> 난이도</h5>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox"> 중 하</label>
+                            <label><input type="checkbox" checked> 상</label>
+                            <label><input type="checkbox" checked> 최상 (대치동 1%)</label>
+                        </div>
+                    </div>
+                    <button class="btn-full mt-10" style="padding:12px; background:var(--navy); color:white; border:none; border-radius:6px; font-weight:bold;"><i class="fas fa-filter"></i> 적용하기</button>
                 </aside>
 
-                <!-- Center Results Box -->
+                <!-- Results -->
                 <div class="bank-list">
-                    <div class="flex-between mb-10" style="align-items:flex-end;">
-                        <span style="font-size:14px; font-weight:900; color:#111;">검색 결과 <span style="color:var(--navy);">14,028</span> 문항</span>
-                        
-                        <div class="sort-actions" style="display:flex; gap:10px;">
-                            <select class="sort-select" style="font-size:12px; padding:4px 8px;">
-                                <option>정답률 낮은 순 (킬러 배치)</option>
-                                <option>최신 기출순</option>
-                                <option>오답자 많은 순</option>
+                    <div class="list-tools flex-between mb-15">
+                        <span class="result-count">검색 결과 <strong>14,028</strong>건</span>
+                        <div class="sort-actions">
+                            <select class="sort-select">
+                                <option>최신순</option>
+                                <option>정답률 낮은 순</option>
+                                <option>출제 빈도 높은 순</option>
                             </select>
                         </div>
                     </div>
 
-                    <!-- Range Selector / Batch Adder -->
-                    <div class="range-select-box">
-                        <i class="fas fa-check-double text-orange"></i> 
-                        <span>빠른 구간 선택 :</span>
-                        <span><input type="text" placeholder="10"> 번부터</span>
-                        <span><input type="text" placeholder="20"> 번까지</span>
-                        <button class="btn-sm" style="background:#E91E63; color:white; border:none; margin-left:10px;">일괄 담기</button>
-                        <span style="margin-left:auto; font-size:11px; color:#888;"><i class="fas fa-mouse-pointer"></i> Shift+클릭 또는 드래그 다중 선택</span>
+                    <!-- Problem 1 -->
+                    <div class="prob-item">
+                        <div class="prob-meta flex-between">
+                            <div class="p-tags">
+                                <span class="tag tag-blue">[고등] 독해</span>
+                                <span class="tag tag-gray">빈칸 추론</span>
+                                <span class="tag tag-red">오답률 85%</span>
+                            </div>
+                            <span class="diff diff-hard">난이도 최상</span>
+                        </div>
+                        <div class="prob-content">
+                            <p><strong>[ID: KNS-9912]</strong> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</p>
+                            <p class="prob-eng">One of the most paradoxical aspects of modern technology is that while it effectively shrinks the world by enhancing communication, it simultaneously ____________. For instance, social media platforms allow us to connect with people globally, yet studies show an increase in feelings of isolation among heavy users.</p>
+                        </div>
+                        <div class="prob-actions text-right">
+                            <span class="stat-text mr-15 text-gray"><i class="fas fa-user-check"></i> 정답률 15.2%</span>
+                            <button class="btn-sm btn-outline-gray"><i class="fas fa-eye"></i> 해설 보기</button>
+                            <button class="btn-sm" style="background:#E91E63; color:white; border:none;"><i class="fas fa-plus"></i> 시험지에 담기</button>
+                        </div>
                     </div>
 
-                    <div class="gmat-table-wrap">
-                        <table class="gmat-table">
-                            <thead>
-                                <tr>
-                                    <th style="width:30px;"><input type="checkbox"></th>
-                                    <th style="width:70px;">문항 ID</th>
-                                    <th>출처/기출</th>
-                                    <th>학년/난도</th>
-                                    <th>유형</th>
-                                    <th class="text-left" style="width:300px;">문항 미리보기</th>
-                                    <th>정답률</th>
-                                    <th>액션</th>
-                                </tr>
-                            </thead>
-                            <tbody id="problem-table-body">
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td style="font-weight:bold; color:#555;">KNS-9912</td>
-                                    <td><span class="gmat-badge badge-eval">24학년도 수능</span></td>
-                                    <td>고3 <span class="g-diff-top">최상</span></td>
-                                    <td>빈칸 추론</td>
-                                    <td class="text-left">
-                                        <div class="q-title">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
-                                        <div class="q-preview">One of the most paradoxical aspects of modern technology is that while it effectively shrinks...</div>
-                                    </td>
-                                    <td style="color:#E91E63; font-weight:900;">15.2%</td>
-                                    <td><button class="btn-add-q added" onclick="this.innerHTML='<i class=\'fas fa-plus\'></i> 담기'; this.classList.remove('added');"><i class="fas fa-check"></i> 담음</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td style="font-weight:bold; color:#555;">KNS-8843</td>
-                                    <td><span class="gmat-badge badge-edu">23년 3월 학평</span></td>
-                                    <td>고3 <span class="g-diff-mid">상</span></td>
-                                    <td>순서 배열</td>
-                                    <td class="text-left">
-                                        <div class="q-title">주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오.</div>
-                                        <div class="q-preview">Economic theory suggests that individuals act rationally to maximize their utility. However...</div>
-                                    </td>
-                                    <td style="color:#f57c00; font-weight:900;">38.9%</td>
-                                    <td><button class="btn-add-q added"><i class="fas fa-check"></i> 담음</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td style="font-weight:bold; color:#555;">KNS-7721</td>
-                                    <td><span class="gmat-badge badge-eval">22학년도 9평</span></td>
-                                    <td>고3 <span class="g-diff-top">최상</span></td>
-                                    <td>문장 삽입</td>
-                                    <td class="text-left">
-                                        <div class="q-title">글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.</div>
-                                        <div class="q-preview">Still, it is arguable that advertisers worry rather too much about this problem...</div>
-                                    </td>
-                                    <td style="color:#E91E63; font-weight:900;">22.4%</td>
-                                    <td><button class="btn-add-q"><i class="fas fa-plus"></i> 담기</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td style="font-weight:bold; color:#555;">KNS-6512</td>
-                                    <td><span class="gmat-badge badge-ebs">수능특강 영독</span></td>
-                                    <td>고3 <span class="g-diff-mid">상</span></td>
-                                    <td>빈칸 추론</td>
-                                    <td class="text-left">
-                                        <div class="q-title">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
-                                        <div class="q-preview">When you are successful and the new habit feels normal, it is time to create an anchor...</div>
-                                    </td>
-                                    <td style="color:#555; font-weight:bold;">41.0%</td>
-                                    <td><button class="btn-add-q"><i class="fas fa-plus"></i> 담기</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td style="font-weight:bold; color:#555;">KNS-1102</td>
-                                    <td><span class="gmat-badge badge-kns">해외 원서 발췌</span></td>
-                                    <td>고2 <span class="g-diff-low">중상</span></td>
-                                    <td>대의 파악</td>
-                                    <td class="text-left">
-                                        <div class="q-title">다음 글의 요지로 가장 적절한 것은?</div>
-                                        <div class="q-preview">Many people believe that their intellectual ability is hardwired from birth. Recent studies in neuroplasticity...</div>
-                                    </td>
-                                    <td style="color:#555; font-weight:bold;">58.5%</td>
-                                    <td><button class="btn-add-q"><i class="fas fa-plus"></i> 담기</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td style="font-weight:bold; color:#555;">KNS-9442</td>
-                                    <td><span class="gmat-badge badge-edu">23년 10월 학평</span></td>
-                                    <td>고3 <span class="g-diff-top">최상</span></td>
-                                    <td>함축 의미</td>
-                                    <td class="text-left">
-                                        <div class="q-title">밑줄 친 'playing the devil's advocate'가 의미하는 바로 가장 적절한 것은?</div>
-                                        <div class="q-preview">To avoid groupthink, some managers intentionally assign a team member the role of...</div>
-                                    </td>
-                                    <td style="color:#E91E63; font-weight:900;">29.1%</td>
-                                    <td><button class="btn-add-q"><i class="fas fa-plus"></i> 담기</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Problem 2 -->
+                    <div class="prob-item" style="border:1px solid #ffcc80; background:#fffdf8;">
+                        <div class="prob-meta flex-between">
+                            <div class="p-tags">
+                                <span class="tag tag-blue">[고등] 독해</span>
+                                <span class="tag tag-gray">순서 배열</span>
+                                <span class="tag" style="background:#FFC107; color:#3e2723;"><i class="fas fa-crown"></i> PRO 전용 문항</span>
+                            </div>
+                            <span class="diff diff-mid">난이도 상</span>
+                        </div>
+                        <div class="prob-content" style="opacity:0.6; filter:blur(1px); user-select:none;">
+                            <p><strong>[ID: KNS-8843]</strong> 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오.</p>
+                            <p class="prob-eng">Economic theory suggests that individuals act rationally to maximize their utility. However, behavioral economics challenges this assumption by highlighting how cognitive biases influence decision-making.</p>
+                        </div>
+                        <div class="prob-actions flex-between" style="align-items:center;">
+                            <div style="font-size:12px; color:#d84315; font-weight:bold;">
+                                <i class="fas fa-lock"></i> 프리미엄(PRO) 등급 강사 전용 문항입니다.
+                            </div>
+                            <div>
+                                <span class="stat-text mr-15 text-gray"><i class="fas fa-user-check"></i> 정답률 38.9%</span>
+                                <button class="btn-sm" style="background:#f5f5f5; color:#999; border:1px solid #ddd; cursor:not-allowed;" title="PRO 등급 업그레이드 필요">
+                                    <i class="fas fa-lock"></i> 시험지에 담기
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div style="text-align:center; padding: 20px;">
-                        <button class="btn-sm" style="background:white; border:1px solid #ccc; font-weight:bold; color:#555; padding:8px 20px;">더 보기 (1 / 1,402 페이지) <i class="fas fa-chevron-down"></i></button>
-                    </div>
+                    <button class="btn-full btn-outline-gray mt-20">더 보기 (1/140 페이지) <i class="fas fa-chevron-down"></i></button>
                 </div>
 
-                <!-- Right Cart -->
+                <!-- Cart (Right) -->
                 <aside class="bank-cart sticky">
                     <div class="cart-head flex-between">
                         <h4>내 시험지 장바구니</h4>
                         <span class="badge-round bg-orange">2 문항</span>
                     </div>
-                    <div class="cart-body" style="max-height: 50vh; overflow-y:auto; font-size:12px;">
-                        <ul class="cart-items" style="list-style:none; padding:0; margin:0;">
-                            <li style="padding:10px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:flex-start;">
-                                <div>
-                                    <strong style="color:var(--navy);">1. KNS-9912</strong> (빈칸추론)<br>
-                                    <span style="color:#888; font-size:11px;">24학년도 수능 / 오답률 84.8%</span>
-                                </div>
-                                <i class="fas fa-times" style="color:#ccc; cursor:pointer;" onclick="this.parentElement.remove()"></i>
-                            </li>
-                            <li style="padding:10px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:flex-start;">
-                                <div>
-                                    <strong style="color:var(--navy);">2. KNS-8843</strong> (순서배열)<br>
-                                    <span style="color:#888; font-size:11px;">23년 3월 학평 / 오답률 61.1%</span>
-                                </div>
-                                <i class="fas fa-times" style="color:#ccc; cursor:pointer;" onclick="this.parentElement.remove()"></i>
-                            </li>
+                    <div class="cart-body">
+                        <ul class="cart-items">
+                            <li>1. KNS-9912 (빈칸추론) <i class="fas fa-times"></i></li>
+                            <li>2. KNS-8843 (순서배열) <i class="fas fa-times"></i></li>
                         </ul>
+                        <div class="cart-empty" style="display:none; text-align:center; padding: 20px 0; color:#999; font-size:13px;">
+                            담긴 문제가 없습니다.<br>좌측에서 문제를 담아보세요.
+                        </div>
                     </div>
-                    <div class="cart-options mt-15" style="border-top:1px solid #aaa; padding-top:15px;">
-                        <input type="text" class="form-control mb-10" placeholder="시험지 이름 (예: 특강 모의고사)" style="font-size:12px; padding:8px;">
-                        <label class="mb-5 d-block text-gray" style="font-size:12px;"><input type="checkbox" checked> 정답 및 해설지 포함 생성</label>
-                        <label class="d-block text-gray" style="font-size:12px;"><input type="checkbox"> LMS용 학생 OMR 동시 생성</label>
+                    <div class="cart-options mt-15">
+                        <label style="font-size:13px; font-weight:bold; margin-bottom:5px; display:block;">시험지 이름 (네이밍 규칙 권장)</label>
+                        <div style="display:flex; gap:5px; margin-bottom:10px;">
+                            <select class="form-control" style="width:90px; padding:8px; background:#e8eaf6; color:#3f51b5; border:1px solid #c5cae9; font-weight:bold;">
+                                <option value="GVR-">GVR-</option>
+                                <option value="MT-">MT-</option>
+                                <option value="SC-">SC-</option>
+                                <option value="" selected>직접입력</option>
+                            </select>
+                            <input type="text" class="form-control" placeholder="예: 01회차 모의고사" style="flex:1;">
+                        </div>
+                        <label class="mb-5 d-block text-gray"><input type="checkbox" checked> 정답 및 해설지 포함 인쇄</label>
+                        <label class="d-block text-gray"><input type="checkbox"> 학생별 OMR 생성</label>
                     </div>
                     <div class="cart-foot mt-15">
-                        <button class="btn-full text-white" style="background:#f57c00; padding:12px; font-size:14px; font-weight:bold; border:none; border-radius:4px; margin-bottom:8px;"><i class="fas fa-save"></i> 세트로 저장 및 배포</button>
-                        <button class="btn-full" style="background:white; border:1px solid #ccc; color:#555; padding:12px; font-size:13px; font-weight:bold; border-radius:4px;"><i class="fas fa-file-pdf"></i> PDF 즉시 출력</button>
+                        <button class="btn-full bg-navy text-white" style="padding:12px; font-size:15px; font-weight:bold; border:none; border-radius:6px; margin-bottom:10px;"><i class="fas fa-save"></i> 세트로 저장하기</button>
+                        <button class="btn-full btn-outline-gray"><i class="fas fa-print"></i> PDF 즉시 출력</button>
                     </div>
                 </aside>
             </div>
         </main>
+        </div>
     </div>
 </body>
 </html>

@@ -3,246 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KATCH - 오답문항 프린트</title>
+    <title>KATCH - 오답문항 다시 풀기</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; background: #e0e4e8; color: #111; }
+        body { background: #f0f2f6; font-family: 'Pretendard', sans-serif; color: #111; margin: 0; padding: 0; }
         
-        /* Print Navigation (Hidden on Print) */
-        .print-nav { background: #1a2639; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .nav-logo { font-size: 20px; font-weight: 900; font-family: 'Noto Serif KR', serif; }
-        .nav-logo span { color: #E91E63; }
-        .print-btn { background: #D4AF37; color: #1a2639; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
-        .print-btn:hover { background: #f1c40f; transform: translateY(-1px); }
-        .back-btn { color: white; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-        .back-btn:hover { color: #D4AF37; }
-
-        /* A4 Page Container */
-        .a4-page { 
-            width: 210mm; 
-            min-height: 297mm; 
-            margin: 40px auto; 
-            background: white; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            padding: 20mm; 
-            box-sizing: border-box;
-        }
-
-        /* Note Header */
-        .note-header { margin-bottom: 25px; }
-        .note-title { text-align: center; font-size: 24px; font-weight: 900; margin-bottom: 15px; letter-spacing: -0.5px; }
-        .info-table { width: 100%; border-collapse: collapse; border: 2px solid #111; text-align: center; font-size: 14px; font-weight: 800; }
-        .info-table th { background: #f0f2f5; border: 1px solid #111; padding: 8px; font-weight: 800; width: 10%; }
-        .info-table td { border: 1px solid #111; padding: 8px; width: 23%; font-weight: 700; color: #333; }
-
-        /* Two Column Layout for Questions */
-        .questions-container { 
-            column-count: 2; 
-            column-gap: 30px; 
-            column-rule: 1px solid #e0e4e8; 
-        }
-
-        /* Question Block */
-        .q-block { break-inside: avoid; margin-bottom: 30px; font-size: 13.5px; line-height: 1.6; }
-        .q-section-title { font-weight: 900; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #111; font-size: 15px; }
+        /* Top Navbar */
+        .top-navbar { background: #1a2639; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .logo { font-size: 22px; font-weight: 900; letter-spacing: -1px; font-family: 'Montserrat', sans-serif; }
+        .logo span { color: #E91E63; }
+        .back-btn { color: white; text-decoration: none; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .back-btn:hover { color: #FF9800; }
         
-        .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .q-meta { font-weight: 900; }
-        .q-id { color: #111; }
-        .q-type { color: #666; font-size: 12px; font-weight: 700; margin-left: 5px; }
-        .q-er { color: #E91E63; font-weight: 900; font-size: 13px; }
-
-        .q-prompt { color: #111; margin-bottom: 10px; text-align: justify; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
         
-        .q-options { list-style: none; padding: 0; margin: 0; }
-        .q-option { margin-bottom: 4px; display: flex; gap: 8px; }
-        .opt-label { width: 20px; font-weight: 700; }
+        /* Header Info Card */
+        .header-card { background: linear-gradient(135deg, #111, #1e2d5a); color: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+        .header-card::after { content: ''; position: absolute; right: -50px; top: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(233,30,99,0.2) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+        .header-info { position: relative; z-index: 2; }
+        .header-info h1 { font-size: 24px; font-weight: 900; margin: 0 0 12px; letter-spacing: -0.5px; }
+        .header-stats { display: flex; gap: 20px; }
+        .h-stat { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 6px 15px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(5px); }
+        
+        /* Section Titles */
+        .q-section-title { font-size: 18px; font-weight: 900; color: #1a2639; margin: 40px 0 20px; padding-bottom: 12px; border-bottom: 2px solid #1a2639; display: flex; align-items: center; gap: 10px; }
+        .q-section-title i { color: #E91E63; }
+        
+        /* Question Cards */
+        .q-card { background: white; border-radius: 20px; padding: 35px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #e8eaf0; transition: 0.3s; }
+        .q-card:hover { border-color: #c5cae9; box-shadow: 0 10px 30px rgba(26,38,57,0.08); }
+        
+        /* Question Header */
+        .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .q-meta { display: flex; align-items: center; gap: 10px; }
+        .q-id { font-size: 16px; font-weight: 900; color: #1a2639; background: #eef2f5; padding: 6px 14px; border-radius: 10px; }
+        .q-type { font-size: 14px; font-weight: 700; color: #666; }
+        .q-er { font-size: 14px; font-weight: 900; color: #E91E63; background: #fce4ec; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; gap: 5px; }
+        
+        /* Question Content */
+        .q-prompt { font-size: 16px; line-height: 1.7; color: #222; margin-bottom: 30px; font-weight: 500; }
+        
+        /* Interactive Options */
+        .q-options { display: flex; flex-direction: column; gap: 12px; }
+        .q-option-label { display: flex; align-items: center; padding: 15px 20px; border: 2px solid #eef0f5; border-radius: 14px; cursor: pointer; transition: 0.2s; background: #fff; }
+        .q-option-label:hover { border-color: #c5cae9; background: #f8f9fc; }
+        .q-option-label input[type="radio"] { display: none; }
+        .opt-btn { width: 32px; height: 32px; border-radius: 10px; background: #f0f2f5; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 14px; color: #555; margin-right: 15px; transition: 0.2s; flex-shrink: 0; }
+        .opt-btn.char { text-transform: lowercase; }
+        .opt-text { font-size: 15px; color: #333; font-weight: 600; line-height: 1.5; }
+        
+        /* Interactive States */
+        .q-option-label input[type="radio"]:checked + .opt-btn { background: #1a2639; color: white; box-shadow: 0 4px 10px rgba(26,38,57,0.3); }
+        .q-option-label.selected { border-color: #1a2639; background: #f5f7fa; box-shadow: 0 4px 15px rgba(26,38,57,0.05); }
+        
+        /* Post-Grading States */
+        .q-card.graded { pointer-events: none; } /* freeze interactions */
+        .q-card.correct .q-option-label.is-correct { border-color: #4CAF50; background: #e8f5e9; box-shadow: 0 4px 15px rgba(76,175,80,0.1); }
+        .q-card.correct .q-option-label.is-correct .opt-btn { background: #4CAF50; color: white; }
+        
+        .q-card.incorrect .q-option-label.is-correct { border-color: #4CAF50; background: transparent; }
+        .q-card.incorrect .q-option-label.is-correct .opt-btn { background: #4CAF50; color: white; box-shadow: 0 4px 10px rgba(76,175,80,0.3); }
+        
+        .q-card.incorrect .q-option-label.selected { border-color: #f44336; background: #ffebee; }
+        .q-card.incorrect .q-option-label.selected .opt-btn { background: #f44336; color: white; }
+        
+        /* Explanations / Feedback Area */
+        .result-msg { font-size: 15px; font-weight: 800; margin-top: 20px; display: none; padding: 15px 20px; border-radius: 12px; align-items: center; gap: 10px; }
+        .q-card.correct .result-msg { display: flex; background: #e8f5e9; color: #2e7d32; }
+        .q-card.incorrect .result-msg { display: flex; background: #ffebee; color: #c62828; }
+        
+        .explanation { display: none; margin-top: 15px; font-size: 14px; color: #555; background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px dashed #cfd8dc; line-height: 1.6; }
+        .q-card.graded .explanation { display: block; }
+        
+        /* Action Button */
+        .bottom-action { text-align: center; margin-top: 50px; padding-bottom: 60px; }
+        .btn-submit { background: #E91E63; color: white; border: none; padding: 20px 50px; border-radius: 40px; font-size: 18px; font-weight: 900; cursor: pointer; box-shadow: 0 10px 30px rgba(233,30,99,0.3); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-flex; align-items: center; gap: 12px; }
+        .btn-submit:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 15px 40px rgba(233,30,99,0.4); background: #d81b60; }
+        
+        /* Modal Info */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal.active { display: flex; }
+        .modal-content { background: white; width: 420px; padding: 40px; border-radius: 24px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+        .modal-icon { width: 80px; height: 80px; background: #e8f5e9; color: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px; box-shadow: 0 10px 20px rgba(76,175,80,0.2); }
+        .modal-title { font-size: 26px; font-weight: 900; color: #111; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .modal-desc { font-size: 16px; color: #666; margin-bottom: 30px; font-weight: 600; }
+        .modal-score { font-size: 36px; font-weight: 900; color: #E91E63; margin-bottom: 30px; background: #fce4ec; padding: 10px 20px; border-radius: 12px; display: inline-block; }
+        .btn-modal { background: #1a2639; color: white; border: none; padding: 16px 0; width: 100%; border-radius: 16px; font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.2s; box-shadow: 0 8px 20px rgba(26,38,57,0.2); }
+        .btn-modal:hover { background: #E91E63; box-shadow: 0 8px 25px rgba(233,30,99,0.3); }
 
-        @media print {
-            body { background: white; margin: 0; padding: 0; }
-            .print-nav { display: none !important; }
-            .a4-page { margin: 0; width: 100%; height: 100%; box-shadow: none; padding: 10mm; }
-            @page { size: A4; margin: 10mm; }
-        }
     </style>
 </head>
 <body>
-    <!-- Print Navigation -->
-    <div class="print-nav">
-        <div>
-            <a href="omr.html" class="back-btn"><i class="fas fa-arrow-left"></i> OMR 창으로 돌아가기</a>
+
+    <!-- Top Navbar -->
+    <div class="top-navbar">
+        <a href="omr.html" class="back-btn"><i class="fas fa-arrow-left"></i> 목록으로 돌아가기</a>
+        <div class="logo">KATCH<span>.</span> CBT</div>
+        <div style="width: 80px;"></div> <!-- Spacer for flex alignment -->
+    </div>
+
+    <div class="container">
+        <!-- Header Info -->
+        <div class="header-card">
+            <div class="header-info">
+                <h1>2026 KATCH 외고전사고 GVR67 AT1 오답노트</h1>
+                <div class="header-stats">
+                    <div class="h-stat"><i class="fas fa-user-graduate"></i> 김은영 (JTR4648)</div>
+                    <div class="h-stat"><i class="fas fa-list-ol"></i> 총 9문항</div>
+                    <div class="h-stat"><i class="fas fa-clock"></i> 제한 시간 없음</div>
+                </div>
+            </div>
+            <i class="fas fa-pen-nib" style="font-size: 80px; color: rgba(255,255,255,0.1); position: absolute; right: 30px;"></i>
         </div>
-        <div class="nav-logo">KATCH<span>.</span> PRINT</div>
-        <div>
-            <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> 오답노트 인쇄하기</button>
+
+        <div class="q-section-title"><i class="fas fa-tag"></i> [Questions 1~40] Choose the best answer for the blank.</div>
+
+        <!-- Question 1 -->
+        <div class="q-card" data-answer="d">
+            <div class="q-header">
+                <div class="q-meta">
+                    <span class="q-id">GR-16</span>
+                    <span class="q-type">기본형식 > 3형식</span>
+                </div>
+                <div class="q-er"><i class="fas fa-chart-line"></i> 오답률: 59%</div>
+            </div>
+            <div class="q-prompt">
+                A: How did you get a hold of this information?<br>
+                B: _______ when she sent it.
+            </div>
+            <div class="q-options">
+                <label class="q-option-label">
+                    <input type="radio" name="q1" value="a">
+                    <span class="opt-btn char">a</span><span class="opt-text">I copied Leanne on the email</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q1" value="b">
+                    <span class="opt-btn char">b</span><span class="opt-text">Leanne emailed a copy me</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q1" value="c">
+                    <span class="opt-btn char">c</span><span class="opt-text">The email was copied me and Leanne</span>
+                </label>
+                <label class="q-option-label is-correct">
+                    <input type="radio" name="q1" value="d">
+                    <span class="opt-btn char">d</span><span class="opt-text">Leanne copied me on the email</span>
+                </label>
+            </div>
+            <div class="result-msg"><i class="fas fa-info-circle"></i> <span></span></div>
+            <div class="explanation"><strong>[해설]</strong> 'copy A on B' 구조 (B 이메일 송신 시 A를 참조에 넣다)를 알아야 풀 수 있는 3형식 문항입니다. 따라서 Leanne copied me on the email이 적절합니다.</div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="q-card" data-answer="a">
+            <div class="q-header">
+                <div class="q-meta">
+                    <span class="q-id">GR-28</span>
+                    <span class="q-type">형용사절 > 유사관계대명사</span>
+                </div>
+                <div class="q-er"><i class="fas fa-chart-line"></i> 오답률: 14%</div>
+            </div>
+            <div class="q-prompt">
+                Legislators may further cut teacher pay, _______ many educators will be forced to take a second job.
+            </div>
+            <div class="q-options">
+                <label class="q-option-label is-correct">
+                    <input type="radio" name="q2" value="a">
+                    <span class="opt-btn char">a</span><span class="opt-text">in which case</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q2" value="b">
+                    <span class="opt-btn char">b</span><span class="opt-text">which in case</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q2" value="c">
+                    <span class="opt-btn char">c</span><span class="opt-text">in case of</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q2" value="d">
+                    <span class="opt-btn char">d</span><span class="opt-text">of which case</span>
+                </label>
+            </div>
+            <div class="result-msg"><i class="fas fa-info-circle"></i> <span></span></div>
+            <div class="explanation"><strong>[해설]</strong> 전치사 + 관계대명사 구조에서 소유격 관계대명사의 변형적 활용입니다. '그러한 경우에' 라는 의미로 in which case가 관용적으로 쓰입니다.</div>
+        </div>
+
+        <div class="q-section-title"><i class="fas fa-tag"></i> [Questions 41~50] Identify the error.</div>
+
+        <!-- Question 3 -->
+        <div class="q-card" data-answer="b">
+            <div class="q-header">
+                <div class="q-meta">
+                    <span class="q-id">GR-42</span>
+                    <span class="q-type">시제 > 완료</span>
+                </div>
+                <div class="q-er"><i class="fas fa-chart-line"></i> 오답률: 55%</div>
+            </div>
+            <div class="q-options">
+                <label class="q-option-label">
+                    <input type="radio" name="q3" value="a">
+                    <span class="opt-btn char">a</span><span class="opt-text">A: Have you found that the book of mine that you lost?</span>
+                </label>
+                <label class="q-option-label is-correct">
+                    <input type="radio" name="q3" value="b">
+                    <span class="opt-btn char">b</span><span class="opt-text">B: Yes, I've found it behind the washing machine last night.</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q3" value="c">
+                    <span class="opt-btn char">c</span><span class="opt-text">A: How on earth did it get back there?</span>
+                </label>
+                <label class="q-option-label">
+                    <input type="radio" name="q3" value="d">
+                    <span class="opt-btn char">d</span><span class="opt-text">B: I must have been reading it while waiting for the laundry.</span>
+                </label>
+            </div>
+            <div class="result-msg"><i class="fas fa-info-circle"></i> <span></span></div>
+            <div class="explanation"><strong>[해설]</strong> last night 이라는 명백한 과거 시점을 나타내는 부사구가 있으므로 현재완료(I've found)를 사용할 수 없고 과거시제(I found)를 써야 합니다.</div>
+        </div>
+
+        <!-- Bottom Submit -->
+        <div class="bottom-action">
+            <button class="btn-submit" onclick="submitAnswers()"><i class="fas fa-check-double"></i> 정답 확인 및 채점하기</button>
+        </div>
+
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon"><i class="fas fa-check"></i></div>
+            <div class="modal-title">채점 완료!</div>
+            <div class="modal-desc">오답문항 다시 풀기 결과입니다.<br>아래 점수와 해설을 확인해보세요.</div>
+            <div class="modal-score" id="modalScore">2 / 3</div>
+            <button class="btn-modal" onclick="closeModal()">해설 확인하기</button>
         </div>
     </div>
 
-    <!-- A4 Printable Area -->
-    <div class="a4-page">
-        <div class="note-header">
-            <div class="note-title">2026 KATCH 외고전사고 GVR67 AT1 오답문항</div>
-            <table class="info-table">
-                <tr>
-                    <th>반</th>
-                    <td>외고전사고</td>
-                    <th>이름</th>
-                    <td>김은영</td>
-                    <th>수험번호</th>
-                    <td>JTR4648</td>
-                </tr>
-            </table>
-        </div>
+    <script>
+        // Handle radio selection styling
+        document.querySelectorAll('.q-option-label input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const name = e.target.name;
+                document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                    r.closest('.q-option-label').classList.remove('selected');
+                });
+                if(e.target.checked) {
+                    e.target.closest('.q-option-label').classList.add('selected');
+                }
+            });
+        });
 
-        <div class="questions-container">
+        // Grading function
+        function submitAnswers() {
+            const questions = document.querySelectorAll('.q-card');
+            let score = 0;
             
-            <div class="q-section-title">[Questions 1~40] Choose the best answer for the blank.</div>
+            questions.forEach(q => {
+                const answer = q.getAttribute('data-answer');
+                const selected = q.querySelector('input[type="radio"]:checked');
+                const resultMsg = q.querySelector('.result-msg span');
+                
+                // Clear state
+                q.classList.remove('correct', 'incorrect');
+                q.classList.add('graded');
+                
+                if (selected && selected.value === answer) {
+                    q.classList.add('correct');
+                    resultMsg.innerHTML = "<strong>정답입니다!</strong> 다시 풀기 성공!";
+                    score++;
+                } else {
+                    q.classList.add('incorrect');
+                    const correctChar = answer.toUpperCase();
+                    if(selected) {
+                        resultMsg.innerHTML = `틀렸습니다. 정답은 <strong>(${correctChar})</strong> 입니다.`;
+                    } else {
+                        resultMsg.innerHTML = `선택하지 않았습니다. 정답은 <strong>(${correctChar})</strong> 입니다.`;
+                    }
+                }
+            });
+            
+            // Show modal
+            document.getElementById('modalScore').textContent = `${score} / ${questions.length}`;
+            document.getElementById('resultModal').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            <!-- Question 1 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[GR-16]</span> <span class="q-type">(기본형식 > 3형식)</span></div>
-                    <div class="q-er">ER: 59%</div>
-                </div>
-                <div class="q-prompt">
-                    A: How did you get a hold of this information?<br>
-                    B: _______ when she sent it.
-                </div>
-                <ul class="q-options">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>I copied Leanne on the email</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>Leanne emailed a copy me</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>The email was copied me and Leanne</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>Leanne copied me on the email</div></li>
-                </ul>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[GR-28]</span> <span class="q-type">(형용사절 > 유사관계대명사)</span></div>
-                    <div class="q-er">ER: 14%</div>
-                </div>
-                <div class="q-prompt">
-                    Legislators may further cut teacher pay, _______ many educators will be forced to take a second job.
-                </div>
-                <ul class="q-options">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>in which case</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>which in case</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>in case of</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>of which case</div></li>
-                </ul>
-            </div>
-
-            <div class="q-section-title mt-20">[Questions 41~50] Identify the error.</div>
-
-            <!-- Question 3 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[GR-42]</span> <span class="q-type">(시제 > 완료)</span></div>
-                    <div class="q-er">ER: 55%</div>
-                </div>
-                <ul class="q-options" style="margin-bottom:0;">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>A: Have you found that the book of mine that you lost?</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>B: Yes, I've found it behind the washing machine last night.</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>A: How on earth did it get back there?</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>B: I must have been reading it while waiting for the laundry.</div></li>
-                </ul>
-            </div>
-
-             <!-- Question 4 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[GR-47]</span> <span class="q-type">(분사 > 분사)</span></div>
-                    <div class="q-er">ER: 17%</div>
-                </div>
-                <div class="q-prompt" style="text-indent: 10px;">
-                    (a) Modern communities are constructed with one very glaring deficit, accorded by some activists. (b) Our most popular social meeting spaces, they say, all emphasize one thing: consumerism. (c) We congregate in coffee shops, at bars, and in shopping malls, all of which emphasize, and typically require, the purchase of goods and services. (d) These activists would have us create new spaces where socialization can occur outside the influence of capitalism.
-                </div>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[GR-50]</span> <span class="q-type">(어순 > 도치의 어순)</span></div>
-                    <div class="q-er">ER: 31%</div>
-                </div>
-                <div class="q-prompt" style="text-indent: 10px;">
-                    (a) We often think of the Arctic as a relatively desolate region, supporting little life. (b) But some is the fact that 21,000 species of animals, plants, funguses, and microbes call the Arctic home. (c) And all of them are directly threatened by the environmental changes unfolding as a result of global warming. (d) Without urgent action on the part of humans, the biodiversity of an entire eco-zone may be all but annihilated.
-                </div>
-            </div>
-
-            <div class="q-section-title mt-20">[Questions 1~50] Choose the best answer.</div>
-
-            <!-- Question 6 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[VO-26]</span></div>
-                    <div class="q-er">ER: 54%</div>
-                </div>
-                <div class="q-prompt">
-                    Driving in icy conditions is dangerous, as tires may _______ when brakes are applied.
-                </div>
-                <ul class="q-options">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>slip</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>trip</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>rub</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>skid</div></li>
-                </ul>
-            </div>
-
-            <!-- Question 7 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[VO-38]</span></div>
-                    <div class="q-er">ER: 21%</div>
-                </div>
-                <div class="q-prompt">
-                    Although the _______ punishment for littering is a $500 fine, most violators are assessed less than $100.
-                </div>
-                <ul class="q-options">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>redundant</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>sufficient</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>excessive</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>maximum</div></li>
-                </ul>
-            </div>
-
-            <!-- Question 8 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[VO-44]</span></div>
-                    <div class="q-er">ER: 43%</div>
-                </div>
-                <div class="q-prompt">
-                    SymTech's tagging system is guaranteed to _______ seamlessly with whatever ad server you currently use.
-                </div>
-                <ul class="q-options">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>integrate</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>attune</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>embody</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>mingle</div></li>
-                </ul>
-            </div>
-
-            <!-- Question 9 -->
-            <div class="q-block">
-                <div class="q-header">
-                    <div class="q-meta"><span class="q-id">[VO-46]</span></div>
-                    <div class="q-er">ER: 21%</div>
-                </div>
-                <div class="q-prompt">
-                    Many of Dickens' longer works were published in _______ form, meted out in weekly installments.
-                </div>
-                <ul class="q-options">
-                    <li class="q-option"><div class="opt-label">(a)</div><div>lenient</div></li>
-                    <li class="q-option"><div class="opt-label">(b)</div><div>serial</div></li>
-                    <li class="q-option"><div class="opt-label">(c)</div><div>buoyant</div></li>
-                    <li class="q-option"><div class="opt-label">(d)</div><div>foregone</div></li>
-                </ul>
-            </div>
-
-        </div> <!-- end container -->
-    </div>
+        function closeModal() {
+            document.getElementById('resultModal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>

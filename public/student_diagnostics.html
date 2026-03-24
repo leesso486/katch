@@ -2,533 +2,1257 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - 진단테스트 허브</title>
+    <title>진단테스트 - KATCH Edu</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #f0f2f6; }
+        /* Base Reset */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background: #000208; color:#fff; overflow-x:hidden; }
+        
+        /* Layout Utilities */
+        .container { max-width: 1200px; margin: 0 auto; width: 90%; position:relative; z-index:10; }
 
-        /* ===== HERO ===== */
-        .diag-hero {
-            position: relative; overflow: hidden;
-            background: #0a0a0a; color: white; padding: 80px 0 100px;
+        
+        /* Deep Space Aurora Hero */
+        .aurora-hero { position: relative; padding: 140px 0 160px; text-align: center; overflow: hidden; background: #010815; border-bottom: 1px solid rgba(255,255,255,0.05);}
+        .aurora-bg {
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.2), transparent 40%),
+                radial-gradient(circle at 30% 70%, rgba(0, 255, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 70% 30%, rgba(255, 0, 128, 0.15), transparent 40%);
+            animation: auroraSpin 25s infinite linear; pointer-events: none; z-index: 0; filter: blur(40px);
         }
-        .diag-hero::before {
-            content: ''; position: absolute; top: -60%; right: -10%;
-            width: 700px; height: 700px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(233,30,99,0.18) 0%, transparent 70%);
+        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .stars {
+            position: absolute; top:0; left:0; right:0; bottom:0;
+            background-image: radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent), radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.6), transparent);
+            background-size: 100px 100px; animation: starsMove 40s linear infinite; opacity: 0.5; z-index: 0;
         }
-        .diag-hero::after {
-            content: ''; position: absolute; bottom: -40%; left: -5%;
-            width: 500px; height: 500px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(33,150,243,0.15) 0%, transparent 70%);
+        @keyframes starsMove { from { background-position: 0 0; } to { background-position: -500px 500px; } }
+        
+        .sparkles-bg {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events:none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><circle cx="20" cy="20" r="1.5" fill="%23ffffff" opacity="0.8"/><circle cx="80" cy="150" r="2" fill="%237dd3fc" opacity="0.9"/><circle cx="160" cy="50" r="1" fill="%23e0f2fe" opacity="0.6"/><circle cx="120" cy="110" r="2.5" fill="%23ffffff" opacity="1"/></svg>');
+            animation: twinkle 15s linear infinite alternate;
         }
-        .hero-inner { position: relative; z-index: 2; text-align: center; }
-        .hero-tag {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(233,30,99,0.15); border: 1px solid rgba(233,30,99,0.3);
-            color: #ff6b9d; padding: 6px 18px; border-radius: 30px;
-            font-size: 13px; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.5px;
+        @keyframes twinkle { 0% { opacity: 0.1; transform: scale(1); } 100% { opacity: 0.8; transform: scale(1.1); } }
+        
+        .ah-tag {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(138,43,226,0.15); border: 1px solid rgba(168,85,247,0.5);
+            color: #d8b4fe; padding: 10px 28px; border-radius: 30px; font-size: 14px; font-weight: 800; margin-bottom: 25px; letter-spacing: 3px;
+            box-shadow: 0 0 25px rgba(138,43,226,0.4); backdrop-filter: blur(10px); text-transform: uppercase;
         }
-        .hero-title { font-size: 52px; font-weight: 900; letter-spacing: -2px; line-height: 1.15; margin-bottom: 16px; }
-        .hero-title em { font-style: normal; color: #E91E63; }
-        .hero-sub { font-size: 18px; font-weight: 300; opacity: 0.8; line-height: 1.6; margin-bottom: 40px; }
 
-        /* Stats row */
-        .hero-stats { display: inline-flex; gap: 40px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 20px 40px; backdrop-filter: blur(10px); }
-        .h-stat { text-align: center; }
-        .h-stat-val { font-size: 32px; font-weight: 900; color: white; }
-        .h-stat-val .accent { color: #E91E63; }
-        .h-stat-label { font-size: 13px; opacity: 0.65; margin-top: 4px; }
-
-        /* ===== PROCESS FLOW ===== */
-        .process-bar {
-            background: white; margin-top: -40px; position: relative; z-index: 10;
-            border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            padding: 25px 40px; display: flex; justify-content: center; align-items: center; gap: 0;
+        .btn-hero-solid {
+            background: linear-gradient(135deg, #00d4ff, #8c52ff); padding: 16px 36px; border-radius: 30px;
+            color: #fff; font-size: 16px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 30px rgba(138,43,226,0.4); transition: transform 0.3s;
         }
-        .proc-step { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1; }
-        .proc-icon {
-            width: 56px; height: 56px; border-radius: 50%;
-            background: #f0f4ff; color: #5c6bc0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; transition: 0.3s; position: relative;
+        .btn-hero-solid:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(138,43,226,0.6); color: #fff; }
+
+        .btn-hero-outline {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); padding: 16px 36px; border-radius: 30px;
+            color: #fff; font-size: 16px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+            backdrop-filter: blur(10px); transition: 0.3s;
         }
-        .proc-icon.done { background: #111; color: white; }
-        .proc-icon.current { background: #E91E63; color: white; box-shadow: 0 0 0 5px rgba(233,30,99,0.2); transform: scale(1.1); }
-        .proc-text strong { display: block; font-size: 14px; font-weight: 800; color: #111; text-align: center; }
-        .proc-text span { font-size: 12px; color: #888; text-align: center; display: block; }
-        .proc-arrow { color: #ccc; font-size: 20px; padding: 0 10px; flex-shrink: 0; }
+        .btn-hero-outline:hover { transform: translateY(-3px); }
 
-        /* ===== MAIN EXAM CARDS (CUTE / CHARMING) ===== */
-        .exam-grid-main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
-
-        .exam-card {
-            background: white; border-radius: 28px; overflow: hidden;
-            border: 3px solid transparent; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); display: flex; flex-direction: column;
+        /* Clean, Ethereal Holographic Title */
+        .ah-title {
+            font-size: 96px;
+            letter-spacing: -2px;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            display: inline-block;
             position: relative;
+            font-family: 'Black Han Sans', 'Pretendard', sans-serif;
+            font-weight: 900;
+            
+            /* Solid White Fill */
+            color: #ffffff;
+            
+            /* Clean Stroke Outline + Outer Neon Glow, No 3D Extrusion */
+            -webkit-text-stroke: 1.5px #0bd4ff;
+            text-shadow: 
+                0px 0px 20px rgba(0, 212, 255, 0.8),
+                0px 5px 40px rgba(138, 43, 226, 0.5);
         }
-        .exam-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        .exam-card.open { border-color: #bbdefb; background: left top/100px no-repeat url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="40" fill="%23e3f2fd" opacity="0.6"/></svg>'); }
-        .exam-card.available { border-color: #e1bee7; background: right bottom/100px no-repeat url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="90" cy="90" r="40" fill="%23f3e5f5" opacity="0.6"/></svg>'); }
-        .exam-card.closed { opacity: 0.7; filter: grayscale(0.5); border-color: #eee; }
-        .exam-card.closed:hover { transform: none; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
 
-        .ec-head { padding: 25px 24px 20px; position: relative; text-align: center; }
-        .ec-status-pill {
-            position: absolute; top: 15px; right: 15px;
-            border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 800;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: inline-flex; align-items: center; gap: 6px;
+        /* ----- STRUCT GROUP 1 (특목고 배치고사) ----- */
+        .sg1-container { 
+            background: rgba(15, 8, 30, 0.85); 
+            border: 1px solid rgba(138, 43, 226, 0.4); 
+            border-radius: 16px; 
+            overflow: hidden; 
+            margin-top: 30px; 
+            font-family: 'Pretendard', sans-serif;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(0, 212, 255, 0.1);
+            backdrop-filter: blur(20px);
         }
-        .pill-open { background: #e3f2fd; color: #1976d2; }
-        .pill-avail { background: #f3e5f5; color: #7b1fa2; }
-        .pill-closed { background: #f5f5f5; color: #757575; }
+        .sg1-tabs { display: flex; background: rgba(0, 0, 0, 0.4); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sg1-tab { flex: 1; padding: 18px 0; text-align: center; color: #888; font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.3s; border-right: 1px solid rgba(255,255,255,0.05); }
+        .sg1-tab:last-child { border-right: none; }
+        .sg1-tab.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .sg1-tab.active[data-target="sg1-basic"] { background: rgba(245, 158, 11, 0.15); box-shadow: inset 0 -3px 0 #f59e0b; }
+        .sg1-tab.active[data-target="sg1-daewon"] { background: rgba(250, 204, 21, 0.15); box-shadow: inset 0 -3px 0 #facc15; }
+        .sg1-tab.active[data-target="sg1-daeil"] { background: rgba(234, 88, 12, 0.15); box-shadow: inset 0 -3px 0 #ea580c; }
+        .sg1-tab.active[data-target="sg1-hanyang"] { background: rgba(251, 191, 36, 0.15); box-shadow: inset 0 -3px 0 #fbbf24; }
+        .sg1-tab.active[data-target="sg1-hankuk"] { background: rgba(234, 179, 8, 0.15); box-shadow: inset 0 -3px 0 #eab308; }
 
-        .ec-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); background: white; }
-        .exam-card.open .ec-icon { color: #2196F3; border: 2px solid #bbdefb; }
-        .exam-card.available .ec-icon { color: #9C27B0; border: 2px solid #e1bee7; }
-        .exam-card.closed .ec-icon { color: #999; border: 2px solid #eee; }
+        .sg1-panel { padding: 30px; display: none; }
+        .sg1-panel.active { display: block; }
 
-        .ec-title { font-size: 22px; font-weight: 900; color: #333; line-height: 1.3; margin-bottom: 6px; letter-spacing: -0.5px; }
-        .ec-slogan { font-size: 14px; color: #777; margin-bottom: 20px; font-weight: 600; }
-        .ec-deadline { font-size: 13.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; background: #fff8e1; color: #ff8f00; padding: 6px 16px; border-radius: 20px; }
+        .sg1-title { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 15px; }
+        .sg1-title .hi-red { color: #ef4444; }
+        .sg1-desc { font-size: 14px; color: #ccc; line-height: 1.6; margin-bottom: 25px; word-break: keep-all; }
+        
+        .sg1-flow { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .sg1-circle { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #facc15; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .sg1-circle-t1 { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+        .sg1-circle-t2 { font-size: 11px; color: #aaa; }
+        .sg1-plus { color: #facc15; font-size: 20px; font-weight: 900; }
 
-        .ec-body { padding: 0 24px 24px; flex: 1; display: flex; flex-direction: column; }
-        .ec-desc { font-size: 14.5px; color: #555; line-height: 1.6; padding: 18px 0; border-top: 2px dashed #f0f0f0; border-bottom: 2px dashed #f0f0f0; margin-bottom: 20px; font-weight: 600; text-align: center; }
-        .ec-features { list-style: none; padding: 0; margin: 0 0 25px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .ec-features li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; font-weight: 700; background: #f9f9f9; padding: 10px 15px; border-radius: 12px; }
-        .ec-features li i { color: #E91E63; font-size: 16px; }
+        .sg1-stats-row { display: flex; gap: 20px; margin-bottom: 30px; align-items: stretch;}
+        .sg1-stats-left { flex: 1.2; border: 1px solid rgba(250, 204, 21, 0.5); padding: 20px; display: flex; flex-direction: column; justify-content: center; gap: 10px; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border-radius:12px; }
+        .sg1-s-item { font-size: 16px; font-weight: 800; color: #facc15; }
+        
+        .sg1-center-logo { flex: 0.8; display:flex; justify-content:center; align-items:center; }
+        .sg1-logo-badge { width: 80px; height: 80px; border-radius: 50%; display:flex; align-items:center; justify-content:center; flex-direction:column; font-weight:900; border:2px solid; color:#fff; font-size:14px; text-shadow:0 1px 3px rgba(0,0,0,0.8); background:rgba(0,0,0,0.5); backdrop-filter:blur(5px);}
+        .sg1-logo-badge.daewon { border-color:#93c5fd; color:#93c5fd; }
+        .sg1-logo-badge.daeil { border-color:#fdba74; color:#fdba74; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); border-radius:0; border:none;}
+        .sg1-logo-badge.hanyang { border-color:#7dd3fc; color:#7dd3fc; }
+        .sg1-logo-badge.hankuk { border-color:#fef08a; color:#fef08a; border-radius:12px; }
 
-        /* Sample Preview Dropdown */
-        .sample-toggle { font-size: 13px; color: #888; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 8px 0; border: none; background: none; font-family: inherit; width: 100%; justify-content: center; border-top: 1px solid #f5f5f5; transition: 0.2s; }
-        .sample-toggle:hover { color: #111; }
-        .sample-content { display: none; background: #fafafa; border-radius: 8px; padding: 15px; margin-top: 10px; font-size: 13px; color: #555; line-height: 1.6; border: 1px solid #eee; }
-        .sample-content.show { display: block; }
+        .sg1-stats-right { flex: 3; display: flex; flex-direction: column; }
+        .sg1-sr-grid { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; border: 1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:hidden;}
+        .sg1-sr-col { display: flex; flex-direction: column; }
+        .sg1-sr-head { padding: 10px; text-align: center; font-size: 14px; font-weight: 800; color: #fff; }
+        .sg1-sr-head.blue { background: rgba(37, 99, 235, 0.8); }
+        .sg1-sr-head.purple { background: rgba(147, 51, 234, 0.8); }
+        .sg1-sr-head.pink { background: rgba(190, 18, 60, 0.8); }
+        .sg1-sr-val { padding: 15px; text-align: center; font-size: 16px; font-weight: 800; color: #fff; background: rgba(0,0,0,0.3); flex: 1; display:flex; align-items:center; justify-content:center; border-right:1px solid rgba(255,255,255,0.05);}
+        .sg1-sr-col:last-child .sg1-sr-val { border-right:none; }
 
-        .ec-cta { display: block; text-align: center; padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 900; text-decoration: none; transition: 0.3s; margin-top: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .cta-open { background: #2196F3; color: white; }
-        .cta-open:hover { background: #1976D2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(33,150,243,0.3); }
-        .cta-avail { background: #9C27B0; color: white; }
-        .cta-avail:hover { background: #7B1FA2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(156,39,176,0.3); }
-        .cta-closed { background: #eeeeee; color: #999; cursor: not-allowed; box-shadow: none; pointer-events: none; }
+        .sg1-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; background: rgba(0,0,0,0.2); backdrop-filter: blur(10px); }
+        .sg1-table th, .sg1-table td { border-bottom: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); padding: 15px; font-size: 13px; color: #e2e8f0; vertical-align: middle; }
+        .sg1-table th:last-child, .sg1-table td:last-child { border-right: none; }
+        .sg1-table tr:last-child td { border-bottom: none; }
+        .sg1-table th { background: rgba(250, 204, 21, 0.85); color: #000; font-weight: 900; font-size: 14px; text-align: center; }
+        .sg1-table .tr-red td { color: #fca5a5; font-weight: 800; text-align: center; font-size: 13px; background: rgba(239, 68, 68, 0.05); }
+        .sg1-table .tr-sub td { font-size: 12px; color: #cbd5e1; text-align: center; line-height: 1.6; }
+        .sg1-table .tr-desc td { line-height: 1.6; color: #94a3b8; }
+        .sg1-table .th-side { background: rgba(0,0,0,0.4); color: #aaa; width:80px; text-align:center; font-weight:bold; }
+        .sg1-table ul { margin: 0; padding-left: 15px; }
+        .sg1-table li { margin-bottom: 5px; }
 
-        /* Countdown */
-        .countdown-box { background: #fff3e0; border: 1px solid #ffcc80; border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; color: #e65100; font-weight: 700; }
-        .countdown-num { font-size: 20px; font-weight: 900; background: #e65100; color: white; padding: 3px 10px; border-radius: 6px; }
+        /* ----- STRUCT GROUP 2 (Real Teukmok) ----- */
+        .sg2-container { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 30px; backdrop-filter: blur(10px); margin-top: 30px; text-align: center; }
+        .sg2-header-desc { font-size: 18px; color: #fff; margin-bottom: 30px; line-height: 1.5; font-weight: 500; }
+        .sg2-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .sg2-card { background: #fff; border-radius: 12px; padding: 0 0 20px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2); text-align: center; color: #333; position: relative; }
+        .sg2-c-title { font-size: 12px; color: #666; font-weight: bold; margin-top: 20px; margin-bottom: 6px; }
+        .sg2-c-sch { font-size: 22px; font-weight: 900; color: #111; margin-bottom: 10px; }
+        .sg2-ribbon { padding: 12px 10px; font-weight: 800; color: #fff; font-size: 15px; margin-bottom: 20px; }
+        .sg2-ribbon.daewon { background: #8b5cf6; } .sg2-ribbon.daeil { background: #6366f1; } .sg2-ribbon.hanyang { background: #a855f7; } .sg2-ribbon.hankuk { background: #7c3aed; }
+        .sg2-img-ph { width: 80%; height: 160px; background: #f8f9fa; margin: 0 auto; border: 1px solid #ddd; border-radius: 4px; position:relative; overflow:hidden; }
+        .sg2-img-ph::after { content:''; position:absolute; inset:10px; background: repeating-linear-gradient(180deg, #eee, #eee 1px, transparent 1px, transparent 20px); }
+        .sg2-logo { width: 50px; height: 50px; background: #fff; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin: -25px auto 15px; position:relative; z-index:2; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:16px; border:2px solid; }
+        .sg2-c-desc { font-size: 13px; color: #555; padding: 0 15px; line-height: 1.4; height: 60px; display:flex; align-items:center; justify-content:center; margin-bottom: 10px; }
+        .sg2-c-foot { font-size: 18px; font-weight: 900; }
+        
+        /* ----- STRUCT GROUP 3 (Hello Naeshin) ----- */
+        .sg3-container { margin-top: 30px; text-align: center; }
+        .sg3-header-desc { font-size: 20px; color: #fff; margin-bottom: 30px; line-height: 1.5; font-weight: 600; }
+        .sg3-main-flex { display: flex; gap: 30px; margin-bottom: 30px; align-items: stretch; }
+        .sg3-left { flex: 1; background: rgba(255,255,255,0.08); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); display:flex; flex-direction:column; justify-content:center; }
+        .sg3-left-title1 { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+        .sg3-left-title2 { color: #fff; font-size: 32px; font-weight: 900; margin-bottom: 20px; }
+        .sg3-paper { background: #fff; border-radius: 8px; padding: 20px; border-bottom: 4px solid #eee; position: relative; margin: 0 20px; height:200px; }
+        .sg3-paper::before { content:''; position:absolute; bottom:-8px; left:0; width:100%; height:8px; background: repeating-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), repeating-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff); background-position:0 0, 4px 4px; background-size:8px 8px; }
+        .sg3-left-title3 { color: #facc15; font-size: 18px; font-weight: bold; margin-top: 40px; margin-bottom: 5px;}
+        .sg3-left-title4 { color: #fff; font-size: 32px; font-weight: 900; line-height: 1.2;}
+        
+        .sg3-right { flex: 1.2; display: flex; flex-direction: column; gap: 20px; }
+        .sg3-r-box { background: rgba(255,255,255,0.05); border: 2px solid; border-radius: 20px; padding: 30px; text-align: left; backdrop-filter: blur(10px); flex:1; display:flex; flex-direction:column; justify-content:center; }
+        .sg3-r-box.pink { border-color: rgba(255,77,109,0.5); box-shadow: 0 0 30px rgba(255,77,109,0.15); }
+        .sg3-r-box.yellow { border-color: rgba(250,204,21,0.5); box-shadow: 0 0 30px rgba(250,204,21,0.15); }
+        .sg3-box-title { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 15px; text-align: center; }
+        .sg3-box-desc { font-size: 16px; color: #ddd; line-height: 1.6; }
+        
+        .sg3-schools { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 30px; text-align: center; }
+        .sg3-schools-title { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 20px; }
+        .sg3-school-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 20px; }
+        .sg3-sch-badge { width: 40px; height: 40px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #333; border: 2px solid; box-shadow: 0 2px 5px rgba(0,0,0,0.3);}
+        .sg3-school-names { font-size: 15px; color: #aaa; line-height: 1.8; }
 
-        /* ===== UPCOMING SECTION ===== */
-        .upcoming-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 800px; margin: 0 auto 60px; }
-        .upcoming-card { background: white; border: 2px dashed #ddd; border-radius: 16px; overflow: hidden; transition: 0.3s; }
-        .upcoming-card:hover { border-color: #999; }
-        .uc-head { padding: 28px 24px 20px; background: #fafafa; border-bottom: 1px dashed #eee; text-align: center; position: relative; }
-        .uc-month-tag { display: inline-block; padding: 5px 16px; border-radius: 30px; font-size: 12px; font-weight: 900; margin-bottom: 10px; }
-        .uc-head h3 { font-size: 18px; font-weight: 800; color: #333; margin-bottom: 6px; }
-        .uc-date { font-size: 13px; color: #aaa; }
-        .uc-body { padding: 20px 24px; }
-        .uc-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 16px; }
-        .btn-notify { width: 100%; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; border: 2px solid #111; background: white; transition: 0.2s; }
-        .btn-notify:hover { background: #111; color: white; }
-        .btn-notify.notified { background: #111; color: white; cursor: default; }
-
-        /* ===== REGISTRATION MODAL ===== */
-        .reg-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s;
-            backdrop-filter: blur(4px);
+        .text-grad-purple {
+            background: linear-gradient(180deg, #ffffff 5%, #e9d5ff 25%, #c084fc 75%, #a855f7 95%, #ffffff 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .reg-modal-overlay.active { opacity: 1; visibility: visible; }
-        .reg-modal {
-            background: white; width: 520px; border-radius: 20px; overflow: hidden;
-            transform: scale(0.95) translateY(20px); transition: 0.3s;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        .text-grad-blue {
+            background: linear-gradient(180deg, #ffffff 5%, #cffafe 25%, #7dd3fc 75%, #38bdf8 95%, #ffffff 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .reg-modal-overlay.active .reg-modal { transform: scale(1) translateY(0); }
-
-        .rm-header { background: linear-gradient(135deg, #111, #1e2d5a); color: white; padding: 28px 30px; }
-        .rm-header h2 { font-size: 20px; font-weight: 900; margin: 0; }
-        .rm-steps { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
-        .rm-step-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: 0.3s; }
-        .rm-step-dot.active { background: white; transform: scale(1.3); }
-        .rm-body { padding: 30px; }
-
-        .step-page { display: none; }
-        .step-page.active { display: block; }
-
-        .rm-step-title { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 5px; }
-        .rm-step-sub { font-size: 14px; color: #888; margin-bottom: 25px; }
-
-        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f5f5f5; font-size: 15px; }
-        .info-label { color: #888; font-weight: 500; }
-        .info-val { font-weight: 700; color: #111; }
-
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 7px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 1.5px solid #ddd; border-radius: 8px; font-family: 'Pretendard', sans-serif; font-size: 15px; outline: none; transition: 0.2s; box-sizing: border-box; }
-        .form-group input:focus, .form-group select:focus { border-color: #111; box-shadow: 0 0 0 3px rgba(17,17,17,0.08); }
-
-        .rm-footer { padding: 20px 30px; background: #fafafa; border-top: 1px solid #eee; display: flex; gap: 10px; justify-content: flex-end; }
-        .btn-rm-cancel { padding: 12px 24px; border: 1.5px solid #ddd; border-radius: 8px; background: white; color: #555; font-weight: 700; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .btn-rm-cancel:hover { background: #f5f5f5; }
-        .btn-rm-next { padding: 12px 28px; background: #111; color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .btn-rm-next:hover { background: #333; }
-        .btn-rm-confirm { padding: 12px 28px; background: linear-gradient(135deg, #E91E63, #c2185b); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .btn-rm-confirm:hover { opacity: 0.9; }
-
-        /* Confetti success */
-        .success-anim { text-align: center; padding: 10px 0 20px; }
-        .success-emoji { font-size: 64px; animation: bounce 0.6s ease forwards; }
-        @keyframes bounce { 0%{transform:scale(0)} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
-        .success-title { font-size: 24px; font-weight: 900; color: #111; margin: 15px 0 8px; }
-        .success-sub { font-size: 14px; color: #888; line-height: 1.6; }
-
-        @media (max-width: 992px) {
-            .exam-grid-main { grid-template-columns: 1fr; }
-            .upcoming-grid { grid-template-columns: 1fr; }
-            .hero-title { font-size: 36px; }
-            .hero-stats { gap: 20px; padding: 15px 20px; }
-            .process-bar { flex-direction: column; padding: 20px; gap: 15px; }
+        .dx-title { font-size: 28px; line-height: 1.3; margin-bottom: 15px; letter-spacing: -0.5px; position:relative; display:inline-block; font-family: 'Pretendard', sans-serif; font-weight:900; color:#fff;}
+        h3.dx-title {
+            color: #fff;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 212, 255, 0.4), 0 4px 10px rgba(0,0,0,0.8);
         }
+        
+
+        /* Sparkles for 3D Text */
+        .sparkle-icon { position: absolute; width: 25px; height: 25px; background: radial-gradient(circle, #fff 10%, transparent 60%); clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%); animation: bling 2s infinite alternate; pointer-events:none; }
+        .s1 { top: -15px; right: -25px; animation-delay: 0s; }
+        .s2 { bottom: 10px; left: -25px; transform: scale(0.6); animation-delay: 1s; }
+        @keyframes bling { 0% { transform: scale(0) rotate(0deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: scale(1) rotate(90deg); opacity: 0; } }
+        
+        .ah-sub { font-size: 22px; font-weight: 300; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 60px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
+        .ah-stats { display: inline-flex; gap: 40px; background: rgba(15,8,30,0.6); padding: 35px 60px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(30px); box-shadow: 0 25px 60px rgba(0,0,0,0.8), inset 0 0 30px rgba(138,43,226,0.2); position: relative; overflow:hidden; }
+        .ah-stats::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, transparent, #8c52ff, #00d4ff, transparent); }
+        .ahs-item { text-align: center; }
+        .ahs-val { font-size: 44px; font-weight: 900; color: #fff; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+        .ahs-val .unit { font-size: 24px; color: #a855f7; display:inline-block; margin-left:4px; }
+        .ahs-label { font-size: 15px; color: #a5f3fc; font-weight: 700; letter-spacing: 1px; }
+
+        /* Progress Steps (Deep Space Theme) */
+        .step-container { margin-top: -60px; position:relative; z-index:10; margin-bottom: 80px; }
+        .proc-bar { background: rgba(8,5,20,0.85); border: 1px solid rgba(140, 82, 255, 0.3); padding: 40px 40px; border-radius: 20px; display: flex; justify-content: space-between; align-items:flex-start; backdrop-filter: blur(20px); box-shadow: 0 30px 80px rgba(0,0,0,0.8), inset 0 0 30px rgba(138,43,226,0.1); }
+        .proc-step { display:flex; flex-direction:column; align-items:center; gap:16px; position:relative; text-align:center; flex:1; }
+        .proc-icon-wrap { position:relative; display:flex; padding:6px; border-radius:50%; background:transparent; transition: 0.4s; }
+        .proc-step.active .proc-icon-wrap { background:rgba(233, 30, 99, 0.2); box-shadow: 0 0 25px rgba(233,30,99,0.5); }
+        .proc-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.05); color: #888; font-size: 24px; display: flex; justify-content:center; align-items:center; transition: 0.4s; border: 1px solid rgba(255,255,255,0.1); }
+        .proc-step.done .proc-icon { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.4); }
+        .proc-step.active .proc-icon { background: linear-gradient(135deg, #ff0844, #e91e63); color: #fff; transform: scale(1.1); border:none; box-shadow: 0 5px 20px rgba(233, 30, 99, 0.6); }
+        .proc-title { font-size: 15px; font-weight: 800; color: rgba(255,255,255,0.6); font-family:'Pretendard', sans-serif; white-space: nowrap;}
+        .proc-desc { font-size: 13px; color: #888; letter-spacing:-0.5px; font-family:'Pretendard', sans-serif; white-space: nowrap;}
+        .proc-step.done .proc-title { color: #fff; }
+        .proc-step.done .proc-desc { color: #ccc; }
+        .proc-step.active .proc-title { color: #f8bbd0; text-shadow: 0 0 10px rgba(233,30,99,0.6); }
+        .proc-step.active .proc-desc { color: #fff; }
+        .proc-arrow { color: rgba(255,255,255,0.15); font-size: 20px; margin-top: 26px; }
+
+        /* Section title */
+        .section-title.glowing { font-size: 38px; font-weight: 900; color: #fff; text-align: center; margin-bottom: 50px; text-shadow: 0 0 20px rgba(255,255,255,0.4); letter-spacing: -1px; }
+
+        /* ===== NEW EXAM SECTION STYLES ===== */
+        .exam-section { padding: 80px 0 120px; background: #000208; }
+        .exam-section-header { text-align: center; margin-bottom: 60px; }
+        .exam-section-tag { display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,220,100,0.5); color: #fde68a; padding: 7px 20px; border-radius:30px; font-size:13px; font-weight:800; letter-spacing:2px; margin-bottom:18px; background:rgba(255,200,50,0.08); }
+        .exam-section-title { 
+            font-size: 44px; 
+            font-weight: 900; 
+            letter-spacing: -1.5px; 
+            margin-bottom: 16px; 
+            font-family: 'Black Han Sans', 'Pretendard', sans-serif;
+            
+            /* Solid White Fill */
+            color: #ffffff;
+            
+            /* Clean Stroke Outline + Outer Neon Glow, No 3D Extrusion */
+            -webkit-text-stroke: 1.5px #3b82f6;
+            text-shadow: 
+                0px 0px 20px rgba(59, 130, 246, 0.8),
+                0px 5px 30px rgba(139, 92, 246, 0.5);
+        }
+        .exam-section-sub { font-size:18px; color:rgba(255,255,255,0.6); font-weight:400; line-height:1.7; }
+
+        /* exam cards grid */
+        .exam-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top:20px; }
+
+        .ec { border-radius: 24px; overflow: hidden; position:relative; display:flex; flex-direction:column; transition:all 0.3s ease; padding: 40px 30px; }
+        .ec:hover { transform: translateY(-8px); }
+
+        /* background & borders */
+        .ec-purple { background: #0b021a; border: 2px solid #3c1e6e; box-shadow: 0 20px 40px rgba(60,30,110,0.2); }
+        .ec-purple:hover, .ec-purple.active-exam { border-color: #00d4ff; box-shadow: 0 0 40px rgba(0,212,255,0.3); }
+
+        .ec-cyan { background: #001217; border: 2px solid #004d5b; box-shadow: 0 20px 40px rgba(0,77,91,0.2); }
+        .ec-cyan:hover, .ec-cyan.active-exam { border-color: #00d4ff; box-shadow: 0 0 40px rgba(0,212,255,0.3); }
+
+        .ec-grey { background: #0a0a0c; border: 2px solid #222; opacity:0.6; }
+        .ec-grey:hover, .ec-grey.active-exam { border-color: #00d4ff; box-shadow: 0 0 40px rgba(0,212,255,0.3); opacity: 1; }
+
+        /* status badge (top right absolute) */
+        .ec-badge { position:absolute; top:32px; right:30px; display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:30px; font-size:11px; font-weight:800; letter-spacing:0.5px; }
+        .ec-badge-purple { background:rgba(160,100,255,0.15); color:#d8b4fe; border:1px solid rgba(160,100,255,0.4); }
+        .ec-badge-cyan { background:rgba(0,200,255,0.12); color:#67e8f9; border:1px solid rgba(0,200,255,0.3); }
+        .ec-badge-grey { background:rgba(255,255,255,0.05); color:#777; border:1px solid rgba(255,255,255,0.1); }
+        
+        /* icon */
+        .ec-icon { font-size: 32px; margin-bottom: 24px; }
+        .ec-purple .ec-icon { color: #c084fc; text-shadow: 0 0 15px rgba(192,132,252,0.5); }
+        .ec-cyan .ec-icon { color: #22d3ee; text-shadow: 0 0 15px rgba(34,211,238,0.5); }
+        .ec-grey .ec-icon { color: #555; }
+
+        /* title & desc */
+        .ec-exam-name { font-size:26px; font-weight:900; color:#fff; line-height:1.2; letter-spacing:-0.5px; font-family:'Pretendard',sans-serif; margin-bottom:14px; word-break: keep-all; }
+        .ec-exam-desc { font-size:13.5px; color:rgba(255,255,255,0.5); line-height:1.6; word-break:keep-all; margin-bottom: 24px; }
+
+        /* pill tags (under desc) */
+        .ec-pills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 35px; }
+        .ec-pill { padding:6px 14px; border-radius:30px; font-size:11.5px; font-weight:700; letter-spacing:-0.2px; }
+        .ec-purple .ec-pill { background:rgba(160,100,255,0.12); color:#e9d5ff; border:1px solid rgba(160,100,255,0.3); }
+        .ec-cyan .ec-pill { background:rgba(0,200,255,0.1); color:#cffafe; border:1px solid rgba(0,200,255,0.3); }
+        .ec-grey .ec-pill { background:transparent; color:#666; border:1px solid #333; }
+
+        /* info box (details) */
+        .ec-details { background:rgba(255,255,255,0.03); border-radius:14px; padding:20px 24px; margin-bottom:30px; }
+        .ec-detail-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; font-size:13px; }
+        .ec-detail-row:not(:last-child) { border-bottom:1px dashed rgba(255,255,255,0.1); }
+        .ec-dl { color:rgba(255,255,255,0.5); display:flex; align-items:center; gap:8px; font-weight:500; }
+        .ec-purple .ec-dl i { color:#c084fc; font-size:14px; }
+        .ec-cyan .ec-dl i { color:#22d3ee; font-size:14px; }
+        .ec-grey .ec-dl i { color:#555; font-size:14px; }
+        .ec-dv { color:#fff; font-weight:800; text-align:right; }
+        .ec-dv.highlight-cyan { color:#22d3ee; }
+
+        /* types section */
+        .ec-types { margin-bottom: auto; /* Push remaining content to bottom */ padding-bottom:30px; }
+        .ec-types-label { font-size:11px; font-weight:800; letter-spacing:1px; margin-bottom:12px; }
+        .ec-purple .ec-types-label { color:#c084fc; }
+        .ec-cyan .ec-types-label { color:#22d3ee; }
+        .ec-types-grid { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+        .ec-type-tag { padding:5px 12px; border-radius:6px; font-size:11.5px; font-weight:700; }
+        .ec-type-tag.required { border:1px solid rgba(251,191,36,0.6); color:#fbbf24; }
+        .ec-type-tag.optional { background:transparent; color:rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.2); }
+        .ec-type-tag.optional-cyan { background:transparent; color:rgba(255,255,255,0.6); border:1px solid rgba(34,211,238,0.3); }
+        .ec-types-desc { font-size:11px; color:rgba(255,255,255,0.4); line-height:1.5; }
+
+        /* bottom area (price & btn) */
+        .ec-bottom { border-top:1px solid rgba(255,255,255,0.06); margin: 0 -30px -40px; padding: 25px 30px 40px; margin-top: auto; }
+        
+        .ec-price-wrap { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:20px; }
+        .ec-price-label { font-size:13px; color:rgba(255,255,255,0.4); font-weight:500; }
+        .ec-price { font-size:28px; font-weight:900; line-height:1; }
+        .ec-purple .ec-price { color:#fff; }
+        .ec-cyan .ec-price { color:#fff; }
+        .ec-price small { font-size:14px; font-weight:600; opacity:0.6; margin-left:2px; }
+        
+        /* button */
+        .ec-btn { display:flex; justify-content:center; align-items:center; width:100%; padding:18px; border-radius:12px; font-size:16px; font-weight:800; text-decoration:none; transition:0.2s; letter-spacing:-0.5px; }
+        .ec-purple .ec-btn { background:#7c3aed; color:#fff; }
+        .ec-purple .ec-btn:hover { background:#8b5cf6; }
+        .ec-cyan .ec-btn { background:#0891b2; color:#fff; }
+        .ec-cyan .ec-btn:hover { background:#06b6d4; }
+        .ec-grey .ec-btn { background:transparent; color:#555; border:1px solid #333; cursor:not-allowed; }
+
+        /* exam structure tabs */
+        .exam-struct-sec { background:#050810; border-top:1px solid rgba(255,255,255,0.06); padding:80px 0 100px; }
+        .struct-tabs { display:flex; justify-content:center; gap:12px; margin-bottom:40px; }
+        .struct-tab { background:transparent; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.6); padding:12px 28px; border-radius:30px; font-size:15px; font-weight:700; cursor:pointer; transition:0.3s; }
+        .struct-tab:hover { border-color:rgba(255,255,255,0.4); color:#fff; }
+        .struct-tab.required-tab { border-color:rgba(251,191,36,0.6); color:#fbbf24; }
+        .struct-tab.active { background:#fff; color:#000; border-color:#fff; }
+        .struct-tab.required-tab.active { background:#fbbf24; color:#000; border-color:#fbbf24; box-shadow:0 0 20px rgba(251,191,36,0.4); }
+
+        .struct-panel { display:none; animation:fadeIn 0.4s ease; max-width:900px; margin:0 auto; }
+        .struct-panel.active { display:block; }
+        .struct-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:40px; }
+        
+        .struct-info { display:flex; align-items:center; gap:30px; margin-bottom:24px; }
+        .struct-badge { padding:8px 20px; border-radius:30px; font-size:14px; font-weight:800; background:rgba(251,191,36,0.15); color:#fbbf24; border:1px solid rgba(251,191,36,0.5); }
+        .struct-stats { display:flex; gap:24px; }
+        .struct-stat { display:flex; flex-direction:column; }
+        .struct-stat-val { font-size:24px; font-weight:900; color:#fff; line-height:1; }
+        .struct-stat-val span { font-size:14px; font-weight:600; opacity:0.6; margin-left:4px; }
+        .struct-stat-label { font-size:13px; color:rgba(255,255,255,0.4); margin-top:6px; }
+
+        .struct-desc { font-size:16px; color:rgba(255,255,255,0.7); line-height:1.6; padding-left:20px; border-left:2px solid rgba(255,255,255,0.2); margin-bottom:30px; }
+        
+        .struct-q-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+        .struct-q-item { background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.05); padding:20px; border-radius:12px; text-align:center; }
+        .struct-q-subject { font-size:14px; color:rgba(255,255,255,0.5); font-weight:700; margin-bottom:8px; }
+        .struct-q-count { font-size:22px; font-weight:900; color:#fff; }
+        .struct-q-count span { font-size:13px; font-weight:600; opacity:0.5; margin-left:2px; }
+
+        /* New KNS R&D Section */
+        .kns-rd-sec { padding:80px 0 100px; background:transparent; border-top:1px solid rgba(255,255,255,0.06); }
+        .krd-box { background:rgba(20,20,30,0.4); border-radius:16px; padding:45px; margin-bottom:40px; box-shadow:0 12px 35px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.08); max-width:1000px; margin-left:auto; margin-right:auto; backdrop-filter:blur(10px); }
+        .krd-title-bar { background:linear-gradient(90deg, rgba(34,211,238,0.15) 0%, transparent 100%); border-left:6px solid #22d3ee; padding:16px 24px; font-size:20px; font-weight:800; color:#e0f2fe; margin-bottom:30px; display:flex; align-items:center; gap:12px; letter-spacing:-0.5px; text-shadow:0 0 10px rgba(34,211,238,0.3); }
+        .krd-title-bar .num { font-size:24px; font-weight:900; color:#22d3ee; }
+        
+        .krd-grid-2 { display:grid; grid-template-columns: 260px 1fr; gap:20px; align-items:center; margin-bottom:12px; }
+        .krd-grid-label { background:rgba(255,255,255,0.03); border:1px solid rgba(34,211,238,0.3); padding:16px; text-align:center; font-weight:700; color:#22d3ee; border-radius:8px; font-size:16px; letter-spacing:-0.3px; box-shadow:inset 0 0 10px rgba(34,211,238,0.1); }
+        .krd-grid-desc { font-size:16px; color:rgba(255,255,255,0.7); font-weight:500; text-shadow:0 2px 4px rgba(0,0,0,0.5); }
+
+        .krd-list { list-style:none; padding:0; margin:0 0 30px 20px; }
+        .krd-list li { position:relative; padding-left:24px; font-size:16px; color:rgba(255,255,255,0.7); margin-bottom:12px; line-height:1.6; font-weight:500; }
+        .krd-list li::before { content:''; position:absolute; left:0; top:8px; width:7px; height:7px; background:#c084fc; border-radius:50%; box-shadow:0 0 8px #c084fc; }
+
+        /* 3 Blue Cards (Analysis Results) -> Dark Neon Cards */
+        .result-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; margin-top:60px; max-width:1100px; margin-left:auto; margin-right:auto; }
+        .rc-item { background:linear-gradient(135deg, rgba(30,20,45,0.8), rgba(15,10,25,0.9)); border:1px solid rgba(139,92,246,0.2); border-radius:16px; padding:40px 30px; text-align:center; transition:0.3s; box-shadow:inset 0 0 20px rgba(139,92,246,0.02); }
+        .rc-item:hover { transform:translateY(-5px); box-shadow:0 15px 30px rgba(0,0,0,0.5), inset 0 0 30px rgba(139,92,246,0.15); border-color:#c084fc; }
+        .rc-title { font-size:22px; font-weight:900; color:#fff; margin-bottom:20px; letter-spacing:-0.5px; text-shadow:0 0 15px rgba(255,255,255,0.2); }
+        .rc-desc { font-size:15px; color:rgba(255,255,255,0.6); line-height:1.7; word-break:keep-all; font-weight:500; }
+        .rc-desc strong { color:#e9d5ff; font-weight:800; text-shadow:0 0 8px rgba(139,92,246,0.4); }
+
+
+        /* 5-Step Evaluation System */
+        .eval-sec { position: relative; background: #000208; padding: 100px 0 120px; border-top: 1px solid rgba(140,82,255,0.4); }
+        .eval-header { text-align: center; margin-bottom: 70px; }
+        .eval-title { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 20px; text-shadow: 0 0 20px rgba(140,82,255,0.4); letter-spacing:-1px; }
+        .eval-sub { font-size: 18px; color: #a5f3fc; font-weight: 300; line-height: 1.6; }
+        
+        .eval-list { display: flex; flex-direction: column; gap: 30px; }
+        .eval-item { display: flex; background: rgba(15,8,30,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; position: relative; transition: 0.4s; padding: 40px; align-items: center; gap: 40px; backdrop-filter: blur(10px); }
+        .eval-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background: linear-gradient(180deg, #8c52ff, #00d4ff); opacity:0.3; transition:0.4s; }
+        .eval-item:hover { transform: translateX(10px); background: rgba(20,10,40,0.8); border-color: rgba(140,82,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .eval-item:hover::before { opacity:1; box-shadow: 0 0 20px #8c52ff; width:6px; }
+
+        .eval-step-box { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 140px; height: 140px; background: rgba(0,0,0,0.5); border-radius: 20px; border: 1px solid rgba(140,82,255,0.2); box-shadow: inset 0 0 20px rgba(140,82,255,0.1); }
+        .es-num { font-size: 13px; font-weight: 800; color: #d8b4fe; letter-spacing: 2px; margin-bottom: 12px; border: 1px solid rgba(216, 180, 254, 0.4); padding: 4px 14px; border-radius: 20px; background: rgba(216, 180, 254, 0.1); }
+        .es-name { font-size: 20px; font-weight: 900; color: #fff; text-align: center; line-height: 1.4; word-break: keep-all; }
+
+        .eval-content { flex: 1; }
+        .ec-point { font-size: 17px; font-weight: 800; color: #a5f3fc; margin-bottom: 15px; display:flex; align-items:center; gap:8px; }
+        .ec-point i { color: #8c52ff; }
+        .ec-desc { font-size: 15px; color: #ccc; line-height: 1.7; font-weight: 400; word-break: keep-all; }
+
+        @media (max-width: 768px) {
+            .eval-item { flex-direction: column; text-align: center; gap: 20px; padding: 30px 20px; }
+            .eval-item:hover { transform: translateY(-5px); }
+            .eval-item::before { width: 100%; height: 4px; bottom: auto; }
+            .eval-item:hover::before { width: 100%; height: 6px; }
+            .ec-point { justify-content: center; }
+            .ah-stats { flex-wrap: wrap; justify-content: center; gap: 20px; padding: 25px; }
+            .ah-title { font-size: 48px; }
+        }
+        
+        /* Dark Footer */
+        .dark-footer { background: #010409; padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.05); color: #666; font-size: 13px; }
+        .dark-footer .df-top { display:flex; justify-content:space-between; margin-bottom:30px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:30px;}
+        .df-links a { color: #888; text-decoration:none; margin-right: 20px; font-weight:700; }
+        .df-links a:hover { color: #fff; }
     </style>
 </head>
 <body>
-        <!-- 1. Top Header -->
-    <div class="header-top-bar">
+
+    <!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
-            <div class="target-switch">
-                <a href="dashboard_online.html" class="active">학생·학부모</a>
-                <a href="problem_bank.html">가맹 원장·강사</a>
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
-            <div>
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
                 <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
             </div>
         </div>
     </div>
-    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
-        <div class="container main-gnb">
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
             <div class="logo">
-                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
             </div>
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
                 <a href="problem_bank.html">문제은행</a>
-                <a href="vod_class.html">VOD 인강</a>
-                <a href="store_vod.html">교재 스토어</a>
-                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
-            <div class="header-utils">
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
                 <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
                 <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <div class="diag-hero">
+    <!-- Deep Space Aurora Hero -->
+    <div class="aurora-hero">
+        <div class="aurora-bg"></div>
+        <div class="stars"></div>
+        <div class="sparkles-bg"></div>
         <div class="container hero-inner">
-            <div class="hero-tag"><i class="fas fa-radar"></i> Diagnostic Hub · 2026</div>
-            <h1 class="hero-title">KATCH <em>진단테스트</em></h1>
-            <p class="hero-sub">데이터로 입시 전략의 기준을 세우다.<br>대치동의 압도적 성과를 정밀 진단으로 증명합니다.</p>
-            <div class="hero-stats">
-                <div class="h-stat">
-                    <div class="h-stat-val"><span class="accent" id="cnt-applicants">0</span>명+</div>
-                    <div class="h-stat-label">누적 응시자</div>
+            <div><div class="ah-tag"><i class="fas fa-satellite-dish"></i> Deep Diagnostic Core</div></div>
+            <h1 class="ah-title">KATCH 진단테스트<div class="sparkle-icon s1"></div><div class="sparkle-icon s2"></div></h1>
+            <p class="ah-sub" style="margin-bottom: 40px;">
+                20년간 축적된 입시 데이터로 완성한<br>
+                KATCH 학습 진단 시스템!
+            </p>
+            
+            <div style="display:flex; justify-content:center; gap:16px; margin-bottom:80px;">
+                <a href="#" class="btn-hero-outline">지금 바로 접수하기 <i class="fas fa-magic"></i></a>
+                <a href="#" class="btn-hero-solid">시험보러 가기 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="ah-stats">
+                <div class="ahs-item">
+                    <div class="ahs-val counter" data-target="20" data-unit="년+">0<span class="unit" style="color:#fff;">년+</span></div>
+                    <div class="ahs-label">대치동 교육 노하우</div>
                 </div>
-                <div class="h-stat">
-                    <div class="h-stat-val"><span class="accent" id="cnt-improve">0</span>점</div>
-                    <div class="h-stat-label">평균 성적 향상</div>
+                <div class="ahs-item">
+                    <div class="ahs-val counter" data-target="20000" data-unit="건+">0<span class="unit" style="color:#fff;">건+</span></div>
+                    <div class="ahs-label">누적 성적 분석 데이터</div>
                 </div>
-                <div class="h-stat">
-                    <div class="h-stat-val"><span class="accent" id="cnt-grade1">0</span>%</div>
-                    <div class="h-stat-label">1등급 달성률</div>
+                <div class="ahs-item">
+                    <div class="ahs-val counter" data-target="1000" data-unit="명+">0<span class="unit" style="color:#fff;">명+</span></div>
+                    <div class="ahs-label">특목고 합격생 배출</div>
+                </div>
+                <div class="ahs-item">
+                    <div class="ahs-val counter" data-target="95" data-unit="%">0<span class="unit" style="color:#fff;">%</span></div>
+                    <div class="ahs-label">실제 합격생 만족도</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container" style="padding-bottom:60px;">
-
-        <!-- Process Bar -->
-        <div class="process-bar" style="margin-bottom: 40px;">
-            <div class="proc-step">
-                <div class="proc-icon done"><i class="fas fa-user-check"></i></div>
-                <div class="proc-text"><strong>STEP 1. 회원가입</strong><span>학생 정보 입력</span></div>
+    <!-- Progress Steps Container -->
+    <div class="container step-container">
+        <div class="proc-bar">
+            <div class="proc-step done">
+                <div class="proc-icon-wrap"><div class="proc-icon"><i class="fas fa-user-check"></i></div></div>
+                <div class="proc-title">STEP 1. 회원가입</div>
+                <div class="proc-desc">학생 정보 입력</div>
             </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="proc-step">
-                <div class="proc-icon current"><i class="fas fa-clipboard-list"></i></div>
-                <div class="proc-text"><strong>STEP 2. 시험 신청</strong><span>목적/학년 맞춤 선택</span></div>
+            <div class="proc-arrow"><i class="fas fa-angle-right"></i></div>
+            <div class="proc-step active">
+                <div class="proc-icon-wrap"><div class="proc-icon"><i class="fas fa-clipboard-list"></i></div></div>
+                <div class="proc-title">STEP 2. 시험 신청</div>
+                <div class="proc-desc">목적/학년 맞춤 선택</div>
             </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="proc-arrow"><i class="fas fa-angle-right"></i></div>
             <div class="proc-step">
-                <div class="proc-icon"><i class="fas fa-laptop-code"></i></div>
-                <div class="proc-text"><strong>STEP 3. 시험 응시</strong><span>온라인 실전 시험</span></div>
+                <div class="proc-icon-wrap"><div class="proc-icon"><i class="fas fa-laptop-code"></i></div></div>
+                <div class="proc-title">STEP 3. 시험 응시</div>
+                <div class="proc-desc">온라인 실전 시험</div>
             </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="proc-arrow"><i class="fas fa-angle-right"></i></div>
             <div class="proc-step">
-                <div class="proc-icon"><i class="fas fa-search-plus"></i></div>
-                <div class="proc-text"><strong>STEP 4. 약점 진단</strong><span>영역별 정밀 성적표</span></div>
+                <div class="proc-icon-wrap"><div class="proc-icon"><i class="fas fa-search-plus"></i></div></div>
+                <div class="proc-title">STEP 4. 약점 진단</div>
+                <div class="proc-desc">영역별 정밀 성적표</div>
             </div>
-            <div class="proc-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="proc-arrow"><i class="fas fa-angle-right"></i></div>
             <div class="proc-step">
-                <div class="proc-icon"><i class="fas fa-prescription-bottle-alt"></i></div>
-                <div class="proc-text"><strong>STEP 5. 맞춤 처방</strong><span>VOD·교재 추천</span></div>
+                <div class="proc-icon-wrap"><div class="proc-icon"><i class="fas fa-book-medical"></i></div></div>
+                <div class="proc-title">STEP 5. 맞춤 처방</div>
+                <div class="proc-desc">VOD·교재 추천</div>
             </div>
         </div>
+    </div> <!-- Close Step Container -->
 
-        <!-- Section title -->
-        <h2 style="font-size:24px; font-weight:900; color:#111; margin-bottom:6px;">📋 현재 신청 가능한 시험</h2>
-        <p style="font-size:15px; color:#888; margin-bottom:25px;">본인의 학년과 목적에 맞는 시험을 선택하여 신청하세요.</p>
+    <!-- ===== NEW EXAM APPLICATION SECTION ===== -->
+    <div class="exam-section">
+        <div class="container">
+            <div class="exam-section-header">
+                <div class="exam-section-tag"><i class="fas fa-star"></i> KATCH 진단 시험 목록</div>
+                <h2 class="exam-section-title">현재 신청 가능한 진단 시험</h2>
+                <p class="exam-section-sub">특목고 유형 완벽 반영 · 나에게 맞는 학교를 찾는 가장 정확한 방법</p>
+            </div>
 
-        <!-- Main Exam Cards -->
-        <div class="exam-grid-main">
+            <div class="exam-cards">
 
-            <!-- Card 1: Open -->
-            <div class="exam-card open">
-                <div class="ec-head">
-                    <div class="ec-status-pill pill-open"><i class="fas fa-check-circle"></i> 접수 중</div>
-                    <div class="ec-icon"><i class="fas fa-school"></i></div>
-                    <div class="ec-title">예비고1<br>특목고 배치고사</div>
-                    <div class="ec-slogan">"대원외고 최종 평가!"</div>
-                    <div class="ec-deadline" style="color:#f57c00;"><i class="far fa-calendar-alt"></i> 2026.03.01 ~ <strong>03.15</strong></div>
-                </div>
-                <div class="ec-body">
-                    <div class="countdown-box">
-                        <i class="fas fa-fire-alt"></i> 신청 마감까지
-                        <span class="countdown-num" id="deadline-1">D-3</span>
+                <!-- CARD 1: 특목고 배치고사 -->
+                <div class="ec ec-purple active-exam" style="cursor:pointer;" onclick="switchExamGroup(1, '제1회 KNS 특목고 배치고사', this, '#a855f7')">
+                    <span class="ec-badge ec-badge-purple"><span class="dot"></span> 접수 진행 중</span>
+                    <div class="ec-icon"><img src="images/icon_school.png" alt="school" style="width:42px;opacity:0.9;" onerror="this.outerHTML='<i class=\'fas fa-school\'></i>'"></div>
+                    
+                    <div class="ec-exam-name">제1회 KNS<br>특목고 배치고사</div>
+                    <div class="ec-exam-desc">특목고 유형 완벽 반영. 데이터로 특목고 지원 전략의 기준을 세우다!</div>
+
+                    <div class="ec-pills">
+                        <span class="ec-pill">외고·자사고 대상</span>
+                        <span class="ec-pill">전국단위 자사고</span>
+                        <span class="ec-pill">상위권 중3</span>
                     </div>
-                    <p class="ec-desc">특목/자사고 합격은 결국 고난도 영어에서 결정됩니다. KATCH의 빅데이터로 출제경향을 완벽 복제하여 지원 학교와의 궁합 및 내신 적응력을 가장 정확하게 진단해 드립니다.</p>
-                    <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#2196F3;"></i> 목표: 특목고 지원 전 최종 점검 및 전국 단위 위치 파악</li>
-                        <li><i class="fas fa-list-ol" style="color:#2196F3;"></i> 구성: 공통(필수) + 학교별 선택 문항 (대원외고/하나고)</li>
-                        <li><i class="far fa-clock" style="color:#2196F3;"></i> 소요시간: 80분 · 온라인 CBT</li>
-                        <li><i class="fas fa-coins" style="color:#f57c00;"></i> 응시 시 <strong>+50 포인트</strong> 자동 적립</li>
-                    </ul>
-                    <button class="sample-toggle" onclick="window.location.href='level_test_exam.html'"><i class="fas fa-pen-nib"></i> 사전테스트 해보기 <i class="fas fa-chevron-right" style="font-size:11px; margin-left:4px;"></i></button>
-                    <a href="#" class="ec-cta cta-open" onclick="openRegModal('예비고1 특목고 배치고사', 'open'); return false;">시험 신청하기 →</a>
-                </div>
-            </div>
 
-            <!-- Card 2: Available -->
-            <div class="exam-card available">
-                <div class="ec-head">
-                    <div class="ec-status-pill pill-avail"><i class="fas fa-bolt"></i> 상시 응시 가능</div>
-                    <div class="ec-icon"><i class="fas fa-fire"></i></div>
-                    <div class="ec-title">예비중3<br>Real 특목 모의고사</div>
-                    <div class="ec-slogan">"리얼한 실전 감각!"</div>
-                    <div class="ec-deadline" style="color:#9C27B0;"><i class="far fa-calendar-alt"></i> 상시 개방 · 언제든 응시</div>
-                </div>
-                <div class="ec-body">
-                    <p class="ec-desc" style="margin-top:10px;">학교별 유형과 킬러 문항을 100% 반영하여 특목 입시의 방향성을 제시하는 실전 심화 테스트. 모의 지원을 통해 합격 가능성을 타진해 보세요.</p>
-                    <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#9C27B0;"></i> 목표: 실전 모의고사 및 심화 사고력 측정</li>
-                        <li><i class="fas fa-list-ol" style="color:#9C27B0;"></i> 구성: 대원외고/하나고 기출 유형 34~40문항</li>
-                        <li><i class="far fa-clock" style="color:#9C27B0;"></i> 소요시간: 80분 · 온라인 CBT</li>
-                        <li><i class="fas fa-coins" style="color:#f57c00;"></i> 응시 시 <strong>+50 포인트</strong> 자동 적립</li>
-                    </ul>
-                    <button class="sample-toggle" onclick="window.location.href='level_test_exam.html'"><i class="fas fa-pen-nib"></i> 사전테스트 해보기 <i class="fas fa-chevron-right" style="font-size:11px; margin-left:4px;"></i></button>
-                    <a href="#" class="ec-cta cta-avail" onclick="openRegModal('예비중3 Real 특목 모의고사', 'avail'); return false;">바로 응시하기 →</a>
-                </div>
-            </div>
+                    <div class="ec-details">
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-calendar-alt"></i> 시험일정</span>
+                            <span class="ec-dv">2025.11.20(목)~11.23(일)</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-clock"></i> 응시시간</span>
+                            <span class="ec-dv">오전 10시~오후 11시 (1시간 간격)</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-file-alt"></i> 총 문항</span>
+                            <span class="ec-dv">62문항 / 80분</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-layer-group"></i> 구성</span>
+                            <span class="ec-dv">기본형 필수 + 학교유형 선택</span>
+                        </div>
+                    </div>
 
-            <!-- Card 3: Closed -->
-            <div class="exam-card closed">
-                <div class="ec-head">
-                    <div class="ec-status-pill pill-closed"><i class="fas fa-lock"></i> 기간 만료</div>
-                    <div class="ec-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="ec-title">예비중1<br>Hello 내신 시험</div>
-                    <div class="ec-slogan">"안녕 내신, 안녕 100점"</div>
-                    <div class="ec-deadline" style="color:#aaa; text-decoration:line-through;"><i class="far fa-calendar-alt"></i> 2026.02.01 ~ 02.28</div>
-                </div>
-                <div class="ec-body">
-                    <p class="ec-desc">강남권 23개교 기출 데이터를 분석해 내신 적응력을 높이고 서술형 감점을 완벽 차단합니다. 첫 내신 지필고사의 완벽한 시뮬레이션입니다.</p>
-                    <ul class="ec-features">
-                        <li><i class="fas fa-bullseye" style="color:#aaa;"></i> 목표: 중등 첫 지필고사 완벽 대비 및 취약 영역 파악</li>
-                        <li><i class="fas fa-list-ol" style="color:#aaa;"></i> 구성: 공통 + 강남권 기출 변형 총 50문항</li>
-                        <li><i class="far fa-clock" style="color:#aaa;"></i> 소요시간: 60분</li>
-                    </ul>
-                    <div class="ec-cta cta-closed">접수 마감되었습니다</div>
-                </div>
-            </div>
-        </div>
+                    <div class="ec-types">
+                        <div class="ec-types-label">필수 응시 권장</div>
+                        <div class="ec-types-grid">
+                            <span class="ec-type-tag required">기본형 시험</span>
+                        </div>
+                        <div class="ec-types-label" style="margin-top:18px;">선택 응시 권장</div>
+                        <div class="ec-types-grid">
+                            <span class="ec-type-tag optional">대원외고 유형</span>
+                            <span class="ec-type-tag optional">대일외고 유형</span>
+                            <span class="ec-type-tag optional">한영외고 유형</span>
+                            <span class="ec-type-tag optional">외대부고 유형</span>
+                        </div>
+                        <div class="ec-types-desc">최소 1세트부터 최대 5세트까지 자유롭게 선택 응시 가능</div>
+                    </div>
 
-        <!-- Upcoming section -->
-        <h2 style="font-size:22px; font-weight:900; color:#111; text-align:center; margin-bottom:6px;">📅 2026 예정 진단 평가</h2>
-        <p style="font-size:15px; color:#888; text-align:center; margin-bottom:25px;">예비 알림 신청을 통해 오픈 소식을 가장 먼저 받아보세요.</p>
-        <div class="upcoming-grid">
-            <div class="upcoming-card">
-                <div class="uc-head">
-                    <div class="uc-month-tag" style="background:#e0f2f1; color:#00796b;">5월 오픈 예정</div>
-                    <h3>중2 수준별 수능형 모의고사</h3>
-                    <div class="uc-date"><i class="far fa-clock"></i> 2026.05 확정</div>
+                    <div class="ec-bottom">
+                        <div class="ec-price-wrap">
+                            <span class="ec-price-label">응시료 (1세트당)</span>
+                            <span class="ec-price">29,000<small>원</small></span>
+                        </div>
+                        <a href="#" class="ec-btn"><i class="fas fa-pen" style="margin-right:8px;font-size:14px;"></i>지금 응시 신청하기</a>
+                    </div>
                 </div>
-                <div class="uc-body">
-                    <p class="uc-desc">중학교 2학년, 본격적인 입시 레이스를 위해 수능형 문항에 대한 노출과 객관적인 자신의 위치를 파악하는 실전 테스트입니다.</p>
-                    <button class="btn-notify" id="notify-btn-1" onclick="setNotify(1)"><i class="far fa-bell"></i> 오픈 알림 신청하기</button>
+
+                <!-- CARD 2: 예비중3 Real 특목 -->
+                <div class="ec ec-cyan" style="cursor:pointer;" onclick="switchExamGroup(2, '예비중3 Real 특목 모의고사', this, '#0bd4ff')">
+                    <span class="ec-badge ec-badge-cyan"><span class="dot"></span> 상시 응시 개방</span>
+                    <div class="ec-icon"><img src="images/icon_fire.png" alt="fire" style="width:36px;opacity:0.9;" onerror="this.outerHTML='<i class=\'fas fa-fire-alt\'></i>'"></div>
+                    
+                    <div class="ec-exam-name">예비중3<br>Real 특목 모의고사</div>
+                    <div class="ec-exam-desc">학교별 킬러 문형 100% 반영. 실제 합격 가능성을 가장 정확하게 타진해 보세요.</div>
+
+                    <div class="ec-pills">
+                        <span class="ec-pill">예비중3 대상</span>
+                        <span class="ec-pill">특목고 지망생</span>
+                        <span class="ec-pill">상시 응시</span>
+                    </div>
+
+                    <div class="ec-details">
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-calendar-check"></i> 응시기간</span>
+                            <span class="ec-dv">상시 (연중 개방)</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-file-alt"></i> 총 문항</span>
+                            <span class="ec-dv">62문항 / 80분</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-sitemap"></i> 문항 구성</span>
+                            <span class="ec-dv">문법 15 · 어휘 15 · 독해 32</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-coins"></i> 보상</span>
+                            <span class="ec-dv highlight-cyan">+50 P 지급</span>
+                        </div>
+                    </div>
+
+                    <div class="ec-types">
+                        <div class="ec-types-label">포함 유형</div>
+                        <div class="ec-types-grid">
+                            <span class="ec-type-tag required">기본형</span>
+                            <span class="ec-type-tag optional-cyan">대원외고</span>
+                            <span class="ec-type-tag optional-cyan">대일외고</span>
+                            <span class="ec-type-tag optional-cyan">한영외고</span>
+                            <span class="ec-type-tag optional-cyan">외대부고</span>
+                        </div>
+                    </div>
+
+                    <div class="ec-bottom">
+                        <div class="ec-price-wrap">
+                            <span class="ec-price-label">응시료</span>
+                            <span class="ec-price" style="color:#67e8f9;display:flex;align-items:baseline;">무료<small style="margin-left:6px;opacity:0.7;">(회원 한정)</small></span>
+                        </div>
+                        <a href="#" class="ec-btn">바로 응시창 이동 <i class="fas fa-arrow-right" style="margin-left:8px;font-size:14px;"></i></a>
+                    </div>
                 </div>
-            </div>
-            <div class="upcoming-card">
-                <div class="uc-head">
-                    <div class="uc-month-tag" style="background:#fce4ec; color:#c2185b;">8월 대규모 업데이트</div>
-                    <h3>하반기 신규 정밀 진단 시스템</h3>
-                    <div class="uc-date"><i class="far fa-clock"></i> 2026.08 목표 수립 중</div>
+
+                <!-- CARD 3: 예비중1 내신 -->
+                <div class="ec ec-grey" style="cursor:pointer;" onclick="switchExamGroup(3, '예비중1 Hello 내신 시험', this, '#fb7185')">
+                    <span class="ec-badge ec-badge-grey"><i class="fas fa-lock" style="font-size:10px;"></i> 기간 종료</span>
+                    <div class="ec-icon"><i class="fas fa-book-open"></i></div>
+                    
+                    <div class="ec-exam-name">예비중1<br>Hello 내신 시험</div>
+                    <div class="ec-exam-desc">강남권 기출분석. 첫 지필고사의 완벽한 시뮬레이션으로 서술형 감점을 차단합니다.</div>
+
+                    <div class="ec-pills">
+                        <span class="ec-pill">예비중1 대상</span>
+                        <span class="ec-pill">내신 대비</span>
+                        <span class="ec-pill">강남권 기출</span>
+                    </div>
+
+                    <div class="ec-details">
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-calendar-times"></i> 상태</span>
+                            <span class="ec-dv" style="color:#aaa;">응시 마감</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-file-alt"></i> 총 문항</span>
+                            <span class="ec-dv">50문항 / 60분</span>
+                        </div>
+                        <div class="ec-detail-row">
+                            <span class="ec-dl"><i class="fas fa-crosshairs"></i> 핵심 목표</span>
+                            <span class="ec-dv">내신 취약점 방어</span>
+                        </div>
+                    </div>
+                    
+                    <div class="ec-types"></div>
+
+                    <div class="ec-bottom">
+                        <div class="ec-price-wrap">
+                            <span class="ec-price-label">응시료</span>
+                            <span class="ec-price" style="font-size:18px;color:#666;">마감됨</span>
+                        </div>
+                        <a href="#" class="ec-btn">마감된 시험입니다</a>
+                    </div>
                 </div>
-                <div class="uc-body">
-                    <p class="uc-desc">KATCH 연구소가 개발 중인 새로운 형태의 진단 평가. 기존의 한계를 뛰어넘는 다면적 문해력 측정 시스템이 찾아옵니다.</p>
-                    <button class="btn-notify" id="notify-btn-2" onclick="setNotify(2)" style="border-color:#E91E63; color:#E91E63;"><i class="far fa-bell"></i> 알림 신청하기</button>
-                </div>
-            </div>
+
+            </div><!-- /exam-cards -->
         </div>
     </div>
 
-    <!-- Registration Modal -->
-    <div class="reg-modal-overlay" id="regModal">
-        <div class="reg-modal">
-            <div class="rm-header">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h2 id="rm-title">시험 신청</h2>
-                    <button onclick="closeRegModal()" style="background:none; border:none; color:rgba(255,255,255,0.7); font-size:22px; cursor:pointer;">&times;</button>
-                </div>
-                <div class="rm-steps">
-                    <div class="rm-step-dot active" id="dot-1"></div>
-                    <div class="rm-step-dot" id="dot-2"></div>
-                    <div class="rm-step-dot" id="dot-3"></div>
-                </div>
+    <!-- ===== EXAM STRUCTURE TABS ===== -->
+    <div class="exam-struct-sec" id="exam-struct-anchor">
+        <div class="container">
+            <div class="exam-section-header">
+                <div class="exam-section-tag"><i class="fas fa-th-list"></i> 시험 구성</div>
+                <h2 class="exam-section-title" id="struct-dyn-title">유형별 시험 구성표</h2>
+                <p class="exam-section-sub">단순한 점수가 아닌, 영어 실력의 방향 설정<br>모든 학생에게 반드시 필요한 핵심 진단</p>
             </div>
-            <div class="rm-body">
-                <!-- Step 1: Student Confirm -->
-                <div class="step-page active" id="step-1">
-                    <div class="rm-step-title">학생 정보 확인</div>
-                    <div class="rm-step-sub">아래 정보가 맞는지 확인해주세요.</div>
-                    <div class="info-row"><span class="info-label">이름</span><span class="info-val">이준호</span></div>
-                    <div class="info-row"><span class="info-label">학년</span><span class="info-val">예비 고1</span></div>
-                    <div class="info-row"><span class="info-label">소속 학원</span><span class="info-val">KNS 대치본원</span></div>
-                    <div class="info-row"><span class="info-label">연락처</span><span class="info-val">010-****-2345</span></div>
-                </div>
-                <!-- Step 2: Exam Confirm -->
-                <div class="step-page" id="step-2">
-                    <div class="rm-step-title">시험 선택 확인</div>
-                    <div class="rm-step-sub">신청하실 시험 정보를 확인하세요.</div>
-                    <div class="info-row"><span class="info-label">시험명</span><span class="info-val" id="rm-exam-name"></span></div>
-                    <div class="info-row"><span class="info-label">신청일</span><span class="info-val">2026.03.12</span></div>
-                    <div class="info-row"><span class="info-label">응시 형태</span><span class="info-val">온라인 CBT</span></div>
-                    <div class="info-row"><span class="info-label">적립 예정</span><span class="info-val" style="color:#f57c00; font-weight:800;">+50 포인트</span></div>
-                    <div class="form-group" style="margin-top:20px;">
-                        <label>희망 응시 날짜 선택</label>
-                        <select><option>2026.03.13 (목) 오후 6시</option><option>2026.03.14 (금) 오후 7시</option><option>2026.03.15 (토) 오전 10시</option></select>
+            
+            <!-- Group 1 (특목고 배치고사) -->
+            <div id="struct-group-1" class="struct-group active">
+                <div class="sg1-container">
+                    <div class="sg1-tabs">
+                        <div class="sg1-tab active" data-target="sg1-basic" onclick="sg1SwitchTab('sg1-basic')">기본형</div>
+                        <div class="sg1-tab" data-target="sg1-daewon" onclick="sg1SwitchTab('sg1-daewon')">대원외고</div>
+                        <div class="sg1-tab" data-target="sg1-daeil" onclick="sg1SwitchTab('sg1-daeil')">대일외고</div>
+                        <div class="sg1-tab" data-target="sg1-hanyang" onclick="sg1SwitchTab('sg1-hanyang')">한영외고</div>
+                        <div class="sg1-tab" data-target="sg1-hankuk" onclick="sg1SwitchTab('sg1-hankuk')">외대부고</div>
                     </div>
+
+                    <!-- Panel: 기본형 -->
+                    <div id="sg1-basic" class="sg1-panel active">
+                        <div class="sg1-title"><span class="hi-red">모든 학생에게 반드시 필요한 핵심 진단 :</span> 단순한 점수가 아닌, 영어 실력의 방향 설정</div>
+                        <div class="sg1-desc">
+                            특목고 배치고사의 기본형 시험은 문법·독해·어휘 영역을 학년별 난이도별로 세분화하여 구성된 핵심 평가입니다. 단순한 점수가 아닌, 학생이 <strong>어떤 영역을 어느 수준까지 학습했는지</strong>를 보여주는 정확한 실력 지표를 나타냅니다.<br><br>
+                            <strong>외고·자사고 지원 여부와 상관없이,</strong> 현재 영어 학습이 제대로 가고 있는지 점검할 수 있는 유일한 기준 시험이므로 <strong>모든 학생에게 필수 응시를 권장</strong>합니다.
+                        </div>
+
+                        <div class="sg1-flow">
+                            <div class="sg1-circle"><div class="sg1-circle-t1">교과과정</div><div class="sg1-circle-t2">(학교별내신)</div></div>
+                            <div class="sg1-plus">+</div>
+                            <div class="sg1-circle"><div class="sg1-circle-t1">수능형</div><div class="sg1-circle-t2">(기본/심화)</div></div>
+                            <div class="sg1-plus">+</div>
+                            <div class="sg1-circle"><div class="sg1-circle-t1">TEPS형</div><div class="sg1-circle-t2">문법/어휘</div></div>
+                            <div class="sg1-plus">+</div>
+                            <div class="sg1-circle"><div class="sg1-circle-t1">GRE유형</div><div class="sg1-circle-t2">(장문독해)</div></div>
+                        </div>
+
+                        <div class="sg1-stats-row">
+                            <div class="sg1-stats-left">
+                                <div class="sg1-s-item">총 문항수 : 62문항</div>
+                                <div class="sg1-s-item">시험시간 : 80분</div>
+                            </div>
+                            <div class="sg1-stats-right">
+                                <div class="sg1-sr-grid">
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head blue">문법</div><div class="sg1-sr-val">15문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head purple">어휘</div><div class="sg1-sr-val">15문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head pink">독해</div><div class="sg1-sr-val">32문항</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="sg1-table">
+                            <thead>
+                                <tr>
+                                    <th class="th-side"></th>
+                                    <th>문법(어법)</th>
+                                    <th>어휘</th>
+                                    <th>독해</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr-red">
+                                    <td class="th-side">평가내용</td>
+                                    <td>개념을 넘은 '활용력' 중심 평가</td>
+                                    <td>단어 암기를 넘어 '언어 감각'을 평가</td>
+                                    <td>글의 구조와 논리를 파악하는<br>'사고형 독해력'을 평가</td>
+                                </tr>
+                                <tr class="tr-sub">
+                                    <td class="th-side"></td>
+                                    <td>수능/TEPS/학교 내신 혼합형 종합 문제력<br>문장 개념 이해 → 문맥 적용 → 논리적 판단까지<br>단계적으로 평가할 수 있도록 설계</td>
+                                    <td>표제어/유의어/반의어의 유의어뿐 아니라, 다의어,<br>패러프레이징까지 광범위한 평가를 동시 진행.<br>학생의 어위 형성 다층적/다면적 이해도를<br>종합적으로 평가할 수 있도록 설계</td>
+                                    <td>
+                                        <ul>
+                                            <li>내용 일치·지칭 추론으로 기초 독해력 진단</li>
+                                            <li>주제·빈칸·함의 추론 등 수능형 사고력 평가</li>
+                                            <li>순서·삽입·흐름 구문 파악 논리 트릭</li>
+                                            <li>학교별 융합 출제로 응용 사고력 평가</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr class="tr-desc">
+                                    <td class="th-side">평가유형</td>
+                                    <td>
+                                        <ul>
+                                            <li>빈칸 넣기</li>
+                                            <li>틀린 곳 고치기</li>
+                                            <li>선택형</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>헷갈리는 어휘</li>
+                                            <li>유/반의어</li>
+                                            <li>문맥 적용(Analogy)</li>
+                                            <li>문맥 타당성</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>대의파악</li>
+                                            <li>순서, 삽입, 증명</li>
+                                            <li>세부내용 추론</li>
+                                            <li>학교 등급형</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Panel: 대원외고 -->
+                    <div id="sg1-daewon" class="sg1-panel">
+                        <div class="sg1-title">글 전체의 논리와 의미를 완전히 이해하는 능력이 핵심</div>
+                        <div class="sg1-desc">
+                            대원외고 영어 시험은 수능형 문항 구조로 출제됩니다. 또한 단순한 문장 직독 직해를 넘어, 글 전체의 논리와 의미를 완전히 파악하는 능력이 핵심입니다.<br>
+                            특히 서술형 문항에서 높은 변별력이 나타나므로 단순한 암기나 직독직해보다는 배경지식과 사고력, 논리적 글 해석력이 요구됩니다. 이 시험은 깊이 있는 독해력과 사고력을 평가하여 대원외고의 실제 내신 평가 방식에 가장 근접한 진단을 제공합니다.
+                        </div>
+                        <div class="sg1-stats-row">
+                            <div class="sg1-stats-left">
+                                <div class="sg1-s-item">총 문항수 : 40문항<span style="font-size:12px; font-weight:normal; color:#fff;">(객관식)</span></div>
+                                <div class="sg1-s-item">시험시간 : 80분</div>
+                            </div>
+                            <div class="sg1-center-logo">
+                                <div class="sg1-logo-badge daewon">DAEWON</div>
+                            </div>
+                            <div class="sg1-stats-right">
+                                <div class="sg1-sr-grid">
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head blue">문법</div><div class="sg1-sr-val">4문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head purple">어휘</div><div class="sg1-sr-val">6문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head pink">독해</div><div class="sg1-sr-val">30문항</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: 대일외고 -->
+                    <div id="sg1-daeil" class="sg1-panel">
+                        <div class="sg1-title">수능형 문제 대한 훈련과 논리적 근거 제시 능력이 핵심</div>
+                        <div class="sg1-desc">
+                            대일외고 영어 시험은 수능유형이기 때문에 평소 내신공부보다 모의고사에서 고득점인 학생에게 유리합니다.<br>
+                            킬러문항은 주로 비판적 사고력을 요구하는 빈칸추론 문제나 문장 구조 파악을 요구하는 어법문제에서 출제되곤 합니다. 서술형 문항은 없으며, 수능기출을 기반으로 한 외부지문이 가끔 시험범위에 추가되어 단순히 해석하기보다는 내용을 깊이있게 결합하여 논리적 추론과 텍스트 내 핵심 근거를 찾아내는 능력이 중요합니다.<br><br>
+                            이 시험은 실제 대일외고 내신의 분석형 독해 스타일을 그대로 반영한 시험입니다.
+                        </div>
+                        <div class="sg1-stats-row">
+                            <div class="sg1-stats-left">
+                                <div class="sg1-s-item">총 문항수 : 40문항<span style="font-size:12px; font-weight:normal; color:#fff;">(객관식)</span></div>
+                                <div class="sg1-s-item">시험시간 : 80분</div>
+                            </div>
+                            <div class="sg1-center-logo">
+                                <div class="sg1-logo-badge daeil">DAEIL</div>
+                            </div>
+                            <div class="sg1-stats-right">
+                                <div class="sg1-sr-grid">
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head blue">문법</div><div class="sg1-sr-val">12문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head purple">어휘</div><div class="sg1-sr-val">5문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head pink">독해</div><div class="sg1-sr-val">23문항</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: 한영외고 -->
+                    <div id="sg1-hanyang" class="sg1-panel">
+                        <div class="sg1-title">장문 독해와 추론 중심의 고난도 평가</div>
+                        <div class="sg1-desc">
+                            한영외고 영어 시험은 긴 지문과 높은 난이도가 특징입니다. 기본기와 암기력이 모두 중요하며, 외부 지문을 활용한 문항이 자주 등장해 학생들이 실제 시험장에서 어렵게 느끼는 경우가 많습니다.<br>
+                            서술형은 없지만, 단순 암기보다 내용 이해와 논리적 추론 능력을 평가합니다. 외부 지문 대응력이 점수 차이를 만드는 핵심 포인트이며, 장문 독해 형태로 출제되어 어휘력과 종합 독해력을 고루 요구합니다.<br><br>
+                            이 시험은 실전 내신 수준 이상의 난이도로, 한영외고가 요구하는 깊이 있는 영어 사고력을 진단할 수 있는 시험입니다.
+                        </div>
+                        <div class="sg1-stats-row">
+                            <div class="sg1-stats-left">
+                                <div class="sg1-s-item">총 문항수 : 34문항<span style="font-size:12px; font-weight:normal; color:#fff;">(객관식)</span></div>
+                                <div class="sg1-s-item">시험시간 : 80분</div>
+                            </div>
+                            <div class="sg1-center-logo">
+                                <div class="sg1-logo-badge hanyang">HANYANG</div>
+                            </div>
+                            <div class="sg1-stats-right">
+                                <div class="sg1-sr-grid">
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head blue">문법</div><div class="sg1-sr-val">5문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head purple">어휘</div><div class="sg1-sr-val">8문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head pink">독해</div><div class="sg1-sr-val">21문항</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: 외대부고 -->
+                    <div id="sg1-hankuk" class="sg1-panel">
+                        <div class="sg1-title">어휘·비판적 사고 중심의 고난도 인문학형 평가</div>
+                        <div class="sg1-desc">
+                            외대부고 영어 시험은 어휘 비중이 높고 인문학적 텍스트 중심으로 출제됩니다. 단순 독해력보다 비판적 사고력과 논리적 분석력을 요구하며, 문법 영역에서는 문법적 표현 기법과 함축적 의미를 묻는 문제도 등장합니다.<br>
+                            토플/텝스 수준 이상의 고난도 논리력과 독해력이 필요하며, 때로는 영시(English poetry) 등 문학 작품이 출제 범위에 포함되기도 합니다. 이 시험은 외대부고 유형에 맞춰 언어 감각과 사고 깊이를 함께 평가하는 시험입니다.
+                        </div>
+                        <div class="sg1-stats-row">
+                            <div class="sg1-stats-left">
+                                <div class="sg1-s-item">총 문항수 : 34문항<span style="font-size:12px; font-weight:normal; color:#fff;">(객관식)</span></div>
+                                <div class="sg1-s-item">시험시간 : 80분</div>
+                            </div>
+                            <div class="sg1-center-logo">
+                                <div class="sg1-logo-badge hankuk">HANKUK</div>
+                            </div>
+                            <div class="sg1-stats-right">
+                                <div class="sg1-sr-grid">
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head blue">문법</div><div class="sg1-sr-val">4문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head purple">어휘</div><div class="sg1-sr-val">13문항</div></div>
+                                    <div class="sg1-sr-col"><div class="sg1-sr-head pink">독해</div><div class="sg1-sr-val">17문항</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function sg1SwitchTab(targetId) {
+                            const group = document.getElementById('struct-group-1');
+                            group.querySelectorAll('.sg1-tab').forEach(t => t.classList.remove('active'));
+                            group.querySelectorAll('.sg1-panel').forEach(p => p.classList.remove('active'));
+                            
+                            const tab = group.querySelector(`.sg1-tab[data-target="${targetId}"]`);
+                            const panel = document.getElementById(targetId);
+                            
+                            if(tab) tab.classList.add('active');
+                            if(panel) panel.classList.add('active');
+                        }
+                    </script>
                 </div>
-                <!-- Step 3: Success -->
-                <div class="step-page" id="step-3">
-                    <div class="success-anim">
-                        <div class="success-emoji">🎉</div>
-                        <div class="success-title">신청 완료!</div>
-                        <div class="success-sub">
-                            <strong id="rm-success-exam"></strong> 시험 신청이 완료되었습니다.<br>
-                            응시 전날 카카오톡으로 안내 문자를 보내드립니다.<br><br>
-                            <span style="color:#f57c00; font-weight:700;">🪙 +50 포인트 자동 적립 예정</span>
+            </div> <!-- /struct-group-1 -->
+
+            <!-- Group 2 (예비중3 Real 특목 모의고사) -->
+            <div id="struct-group-2" class="struct-group" style="display:none;">
+                <div class="sg2-container">
+                    <div class="sg2-header-desc">
+                        본 시험은 4대 외고·전사고 중 희망하는 학교를 선택하여,<br>
+                        학교의 내신 유형을 실전처럼 경험하는 <span style="color:#0bd4ff; font-weight:bold;">[학교별 맞춤형 실전 평가]</span>입니다.
+                    </div>
+                    
+                    <div class="sg2-grid">
+                        <!-- Card 1 -->
+                        <div class="sg2-card">
+                            <div class="sg2-c-title">2026학년도 KNS 진단 테스트 Real 특목</div>
+                            <div class="sg2-c-sch">대원외고</div>
+                            <div class="sg2-ribbon daewon">논리적 추론 및 구조 분석</div>
+                            <div class="sg2-img-ph" style="background: url('images/paper_daewon.png') no-repeat center top/cover; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.5);"></div>
+                            <div class="sg2-logo" style="border-color:#8b5cf6; color:#8b5cf6;">대원</div>
+                            <div class="sg2-c-desc">단순 해석을 넘어 글 전체의 맥락과 숨은 의도를 파악하는 고난도 추론형 문항</div>
+                            <div class="sg2-c-foot" style="color:#ec4899;">40문항 / 80분</div>
+                        </div>
+                        
+                        <!-- Card 2 -->
+                        <div class="sg2-card">
+                            <div class="sg2-c-title">2026학년도 KNS 진단 테스트 Real 특목</div>
+                            <div class="sg2-c-sch">대일외고</div>
+                            <div class="sg2-ribbon daeil">수능형 킬러문법 논리추론</div>
+                            <div class="sg2-img-ph" style="background: url('images/paper_daeil.png') no-repeat center top/cover; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.5);"></div>
+                            <div class="sg2-logo" style="border-color:#6366f1; color:#6366f1;">대일</div>
+                            <div class="sg2-c-desc">최상위권 변별력의 핵심! 사소한 어법 오류와 디테일을 찾아내는 정밀 분석 문항</div>
+                            <div class="sg2-c-foot" style="color:#f97316;">40문항 / 80분</div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="sg2-card">
+                            <div class="sg2-c-title">2026학년도 KNS 진단 테스트 Real 특목</div>
+                            <div class="sg2-c-sch">한영외고</div>
+                            <div class="sg2-ribbon hanyang">장문독해 종합적사고</div>
+                            <div class="sg2-img-ph" style="background: url('images/paper_hanyoung.png') no-repeat center top/cover; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.5);"></div>
+                            <div class="sg2-logo" style="border-color:#a855f7; color:#a855f7;">한영</div>
+                            <div class="sg2-c-desc">압도적인 지문 길이! 문맥 속에서 어휘의 다양한 쓰임을 파악하는 실전형 독해</div>
+                            <div class="sg2-c-foot" style="color:#14b8a6;">34문항 / 80분</div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="sg2-card">
+                            <div class="sg2-c-title">2026학년도 KNS 진단 테스트 Real 특목</div>
+                            <div class="sg2-c-sch">외대부고</div>
+                            <div class="sg2-ribbon hankuk">TEPS형 인문학 비판적사고</div>
+                            <div class="sg2-img-ph" style="background: url('images/paper_hankuk.png') no-repeat center top/cover; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.5);"></div>
+                            <div class="sg2-logo" style="border-color:#7c3aed; color:#7c3aed;">외대</div>
+                            <div class="sg2-c-desc">고난도 어휘와 인문학적 소양을 요구하는 텝스(TEPS) 유형의 심화 사고력 문항</div>
+                            <div class="sg2-c-foot" style="color:#3b82f6;">34문항 / 80분</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="rm-footer">
-                <button class="btn-rm-cancel" id="rm-cancel-btn" onclick="closeRegModal()">취소</button>
-                <button class="btn-rm-next" id="rm-next-btn" onclick="nextStep()">다음 단계 →</button>
-                <button class="btn-rm-confirm" id="rm-confirm-btn" onclick="confirmReg()" style="display:none;">신청 확정하기 🎯</button>
-                <button class="btn-rm-next" id="rm-done-btn" onclick="closeRegModal()" style="display:none;">닫기</button>
-            </div>
+            </div> <!-- /struct-group-2 -->
+
+            <!-- Group 3 (예비중1 Hello 내신) -->
+            <div id="struct-group-3" class="struct-group" style="display:none;">
+                <div class="sg3-container">
+                    <div class="sg3-header-desc">
+                        빈틈없는 23개교 적중 문항, 60분의 실전 시뮬레이션,<br>
+                        각 학교의 내신을 실전처럼 경험하는 <span style="color:#fb7185; font-weight:bold;">[학교별 맞춤형 실전 평가]</span>입니다.
+                    </div>
+                    
+                    <div class="sg3-main-flex">
+                        <div class="sg3-left">
+                            <div style="border-radius:12px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"><img src="images/paper_hello.png" alt="공통영역 기출" style="width:100%; display:block;"></div>
+                        </div>
+                        
+                        <div class="sg3-right">
+                            <div class="sg3-r-box pink">
+                                <div class="sg3-box-title">공통영역</div>
+                                <div class="sg3-box-desc">
+                                    <span style="color:#fcd34d; font-weight:bold;">전국 공통 기준</span>으로 중등 필수 어휘·문법·독해를 평가하여, 학교 성적에 가려져 있던 나의 진짜 영어 실력이 <span style="color:#fcd34d; font-weight:bold;">전국에서 어느 위치</span>에 있는지 <span style="color:#fff; font-weight:bold;">명확하고 객관적으로 확인</span>할 수 있습니다.
+                                </div>
+                            </div>
+                            <div class="sg3-r-box yellow">
+                                <div class="sg3-box-title">학교별 내신</div>
+                                <div class="sg3-box-desc">
+                                    내가 배정받은 학교의 진짜 기출 문제를 분석한 변형 문항과 <span style="color:#fde047; font-weight:bold;">고난도 서술형</span>으로, 그 <span style="color:#fde047; font-weight:bold;">학교만의 출제 스타일과 까다로운 난이도를 미리 경험</span>하고 첫 내신 시험부터 <span style="color:#fff; font-weight:bold;">확실한 우위를 점할 수 있는 실전 감각</span>을 완벽하게 키웁니다.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sg3-schools">
+                        <div class="sg3-schools-title">지원 학교 리스트 (23개교)</div>
+                        <div class="sg3-school-grid">
+                            <div class="sg3-sch-badge" style="border-color:#e11d48; color:#e11d48;">개원</div>
+                            <div class="sg3-sch-badge" style="border-color:#3b82f6; color:#3b82f6;">개포</div>
+                            <div class="sg3-sch-badge" style="border-color:#2563eb; color:#2563eb;">구룡</div>
+                            <div class="sg3-sch-badge" style="border-color:#ca8a04; color:#ca8a04;">단대</div>
+                            <div class="sg3-sch-badge" style="border-color:#16a34a; color:#16a34a;">대명</div>
+                            <div class="sg3-sch-badge" style="border-color:#1d4ed8; color:#1d4ed8;">대왕</div>
+                            <div class="sg3-sch-badge" style="border-color:#22c55e; color:#ccc;">대원</div>
+                            <div class="sg3-sch-badge" style="border-color:#0ea5e9; color:#0ea5e9;">대청</div>
+                            <div class="sg3-sch-badge" style="border-color:#10b981; color:#10b981;">대치</div>
+                            <div class="sg3-sch-badge" style="border-color:#84cc16; color:#84cc16;">도곡</div>
+                            <div class="sg3-sch-badge" style="border-color:#15803d; color:#15803d;">봉은</div>
+                            <div class="sg3-sch-badge" style="border-color:#10b981; color:#10b981;">숙명</div>
+                            <div class="sg3-sch-badge" style="border-color:#3b82f6; color:#3b82f6;">신천</div>
+                            <div class="sg3-sch-badge" style="border-color:#6366f1; color:#6366f1;">언주</div>
+                            <div class="sg3-sch-badge" style="border-color:#f59e0b; color:#f59e0b;">역삼</div>
+                        </div>
+                        <div class="sg3-school-names">
+                            개원중, 개포중, 구룡중, 단대부중, 대명중, 대왕중, 대원국제중, 대청중, 대치중, 도곡중, 봉은중, 숙명여중,<br>
+                            신천중, 언주중, 역삼중, 은성중, 잠신중, 잠실중, 정신여중, 중동중, 진선여중, 해누리중, 휘문중
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /struct-group-3 -->
+
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer style="background:#f0f2f5; padding:40px 0; border-top:1px solid #ddd;">
-        <div class="container text-center text-gray" style="font-size:14px;">
-            <strong>주식회사 케이엔에스북스</strong> | 대표이사 김치삼 | 사업자번호 777-81-03746<br>
-            서울특별시 강남구 역삼로78길 21, 칼텍빌딩 3층(대치동) | e-mail: denglemaster@gmail.com<br><br>
-            © 2026 KATCH. All rights reserved.
+    <script>
+    function switchTab(id, btn) {
+        const group = btn.closest('.struct-group');
+        group.querySelectorAll('.struct-panel').forEach(p => p.classList.remove('active'));
+        group.querySelectorAll('.struct-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-'+id).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function switchExamGroup(groupId, examTitle, elem, colorCode = '#0bd4ff') {
+        // Highlight active card
+        document.querySelectorAll('.ec').forEach(c => {
+            c.style.borderColor = 'rgba(255,255,255,0.08)';
+            c.style.boxShadow = 'none';
+        });
+        if(elem) {
+            elem.style.borderColor = colorCode;
+            elem.style.boxShadow = `0 0 30px ${colorCode}40`;
+        }
+
+        // Show corresponding group
+        document.querySelectorAll('.struct-group').forEach(g => {
+            g.style.display = 'none';
+            g.classList.remove('active');
+        });
+        
+        const targetGroup = document.getElementById('struct-group-' + groupId);
+        if(targetGroup) {
+            targetGroup.style.display = 'block';
+            targetGroup.classList.add('active');
+        }
+        
+        // Update Title
+        document.getElementById('struct-dyn-title').innerHTML = `<span style="color:${colorCode}; font-size:20px; display:block; margin-bottom:12px; font-weight:800;">[ ${examTitle} ]</span>유형별 시험 구성표`;
+        
+        // Smooth scroll to the section
+        document.getElementById('exam-struct-anchor').scrollIntoView({behavior:'smooth'});
+    }
+    </script>
+
+    <!-- KNS R&D Evaluation System (New Design) -->
+    <div class="kns-rd-sec">
+        <div class="container">
+            
+            <div class="krd-box">
+                <div class="krd-title-bar">
+                    <span class="num">1.</span> 20년 이상 대치동 최상위권 학생들의 영어와 특목고 입시를 책임져온 노하우
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">극상위 학생 데이터</div>
+                    <div class="krd-grid-desc">대치동 KNS의 진학 배치 노하우</div>
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">특목고·자사고 합격생 다수 배출</div>
+                    <div class="krd-grid-desc">최상위 학생 추적 관찰</div>
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">특목고·자사고 내신 연구팀</div>
+                    <div class="krd-grid-desc">적중률 높은 학교별 맞춤 콘텐츠</div>
+                </div>
+            </div>
+
+            <div class="krd-box">
+                <div class="krd-title-bar">
+                    <span class="num">2.</span> KNS R&D : 데이터 기반의 문항 설계
+                </div>
+                <ul class="krd-list">
+                    <li>대치동 극상위권 학생들의 짧게는 1년에서 5년의 성적추이에 기반한 문항설계</li>
+                    <li>각 학교별 2025년도 중간고사, 기말고사 및 지난 3년간의 학교별 최신 경향 반영</li>
+                </ul>
+                <div style="text-align:center; margin-top:20px;">
+                    <!-- Placeholder for the chart image shown in the screenshot -->
+                    <img src="images/chart_placeholder.png" alt="Data Chart" style="max-width:100%; border-radius:8px; border:1px solid #eee;" onerror="this.style.display='none'">
+                </div>
+            </div>
+
+            <div class="krd-box">
+                <div class="krd-title-bar">
+                    <span class="num">3.</span> 국내외 언어학 박사, 통계학 박사, 최고 IT 전문가 집단과 함께 만든 평가 시스템
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">미국 텍사스 주립대 언어학 박사</div>
+                    <div class="krd-grid-desc">토플, 텝스, 수능, SAT 등 시험별 문항 상관도 분석</div>
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">입시 통계학 박사</div>
+                    <div class="krd-grid-desc">KNS 평가에 따른 학생 유형 구분</div>
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">데이터 분석 전문가</div>
+                    <div class="krd-grid-desc">학생 그룹별 학습 방향 및 솔루션 제공</div>
+                </div>
+                <div class="krd-grid-2">
+                    <div class="krd-grid-label">국내 최고 IT 전문 교육기관 기술책임자</div>
+                    <div class="krd-grid-desc">문제별 난이도와 표준편차 상관관계 분석</div>
+                </div>
+            </div>
+
+            <!-- Analysis Result Cards -->
+            <div class="result-cards">
+                <div class="rc-item">
+                    <div class="rc-title">전체 응시자 중 나의 위치</div>
+                    <div class="rc-desc">전국 단위 백분위/등급으로 현재 실력을 수치화해 보여줍니다. 단순 점수가 아니라 <strong>동년·동레벨 비교</strong>로 <strong>"지금 내 좌표"</strong>를 정확히 확인합니다.</div>
+                </div>
+                <div class="rc-item">
+                    <div class="rc-title">학교별 지원자 중 나의 위치</div>
+                    <div class="rc-desc">대원·대일·외대부·한영 등 <strong>학교 유형별 상·중·하 분포에서 내 위치를 표시</strong>합니다. 각 학교 지원군과 비교해 나의 위치를 가늠합니다.</div>
+                </div>
+                <div class="rc-item">
+                    <div class="rc-title">강점·약점 완벽 분석</div>
+                    <div class="rc-desc">문법·독해·어휘·논리 영역을 세분화해 <strong>강/약점 히트맵과 우선 보완 리스트로 제공</strong>합니다. 고득점에 직결되는 <strong>상위 배점 문항 중심</strong>의 개선 가이드까지 제시합니다.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Dark Futuristic Footer -->
+    <footer class="dark-footer">
+        <div class="container">
+            <div class="df-top">
+                <div class="df-logo" style="font-family:'Montserrat', sans-serif; font-size:24px; font-weight:900; color:#fff;">
+                    KATCH<span style="color:#E91E63;">.</span>
+                </div>
+                <div class="df-links">
+                    <a href="#">이용약관</a>
+                    <a href="#">개인정보처리방침</a>
+                    <a href="#">고객센터</a>
+                    <a href="#">KNS 프리미엄 가맹안내</a>
+                </div>
+            </div>
+            <div style="line-height:1.7;">
+                <strong>주식회사 케이엔에스북스</strong> | 대표이사 김치삼 | 사업자번호 777-81-03746<br>
+                서울특별시 강남구 역삼로78길 21, 칼텍빌딩 3층(대치동) | 고객센터 : 1588-0000 | e-mail: denglemaster@gmail.com<br><br>
+                © 2026 KATCH Edu. All rights reserved.
+            </div>
         </div>
     </footer>
+    <style>
+        .ahs-val.counter { transition: color 0.3s; color: #00d4ff; text-shadow: 0 0 20px rgba(0,212,255,0.3); }
+    </style>
 
     <script>
-        // Counter animation
-        function animateCounter(id, target, duration) {
-            let start = 0;
-            const el = document.getElementById(id);
-            const step = target / (duration / 16);
-            const timer = setInterval(() => {
-                start += step;
-                if (start >= target) { el.textContent = target.toLocaleString(); clearInterval(timer); }
-                else el.textContent = Math.floor(start).toLocaleString();
-            }, 16);
-        }
-        window.addEventListener('load', () => {
-            animateCounter('cnt-applicants', 4500, 2000);
-            animateCounter('cnt-improve', 22, 1500);
-            animateCounter('cnt-grade1', 87, 1800);
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+        const counters = document.querySelectorAll('.counter');
+        const speed = 40; // 숫자가 올라가는 속도 조절 (작을수록 엄청 빠름)
 
-        // Sample toggle
-        function toggleSample(n) {
-            const el = document.getElementById('sample-' + n);
-            const chev = document.getElementById('chev-' + n);
-            el.classList.toggle('show');
-            chev.className = el.classList.contains('show') ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
-        }
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const unit = counter.getAttribute('data-unit');
+                let count = 0;
+                
+                // 목표 숫자에 따라 증가폭 자동 계산
+                const updateCount = () => {
+                    const inc = target / speed;
+                    count += inc;
+                    if (count < target) {
+                        // 2만건 같은 경우 만 단위 포맷팅
+                        let displayVal = Math.ceil(count);
+                        if (target === 20000 && displayVal > 10000) {
+                            displayVal = (displayVal / 10000).toFixed(1).replace('.0', '') + '만';
+                        }
+                        
+                        counter.innerHTML = displayVal + `<span class="unit" style="color:#fff;font-size:24px;">${unit}</span>`;
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        // 최종 값 도달
+                        let finalDisplay = target;
+                        if (target === 20000) finalDisplay = '2만';
+                        counter.innerHTML = finalDisplay + `<span class="unit" style="color:#fff;font-size:24px;">${unit}</span>`;
+                        counter.style.color = '#00d4ff'; // 완료 후 시안색 강조 유지
+                    }
+                };
+                
+                // 0으로 초기화 후 시작
+                counter.innerHTML = `0<span class="unit" style="color:#fff;font-size:24px;">${unit}</span>`;
+                updateCount();
+            });
+        };
 
-        // Registration Modal
-        let currentStep = 1;
-        let selectedExam = '';
+        // 스크롤 시 해당 섹션이 보일 때 한 번만 실행
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target); // 한 번만 실행되도록 해제
+                }
+            });
+        }, { threshold: 0.5 }); // 50% 정도 보일 때 시작
 
-        function openRegModal(examName, type) {
-            selectedExam = examName;
-            document.getElementById('rm-title').textContent = '시험 신청 — ' + examName;
-            document.getElementById('rm-exam-name').textContent = examName;
-            document.getElementById('rm-success-exam').textContent = examName;
-            currentStep = 1;
-            updateStep();
-            document.getElementById('regModal').classList.add('active');
-        }
-        function closeRegModal() {
-            document.getElementById('regModal').classList.remove('active');
-        }
-        function nextStep() {
-            if (currentStep < 3) { currentStep++; updateStep(); }
-        }
-        function confirmReg() {
-            currentStep = 3; updateStep();
-        }
-        function updateStep() {
-            // Show/hide pages
-            document.querySelectorAll('.step-page').forEach((p, i) => p.classList.toggle('active', i + 1 === currentStep));
-            // Dots
-            document.querySelectorAll('.rm-step-dot').forEach((d, i) => d.classList.toggle('active', i + 1 <= currentStep));
-            // Buttons
-            const isLast = currentStep === 3;
-            const isPreLast = currentStep === 2;
-            document.getElementById('rm-cancel-btn').style.display = isLast ? 'none' : '';
-            document.getElementById('rm-next-btn').style.display = (currentStep === 1) ? '' : 'none';
-            document.getElementById('rm-confirm-btn').style.display = isPreLast ? '' : 'none';
-            document.getElementById('rm-done-btn').style.display = isLast ? '' : 'none';
-        }
-
-        // Close modal on outside click
-        document.getElementById('regModal').addEventListener('click', function(e) {
-            if (e.target === this) closeRegModal();
-        });
-
-        // Notify buttons
-        function setNotify(n) {
-            const btn = document.getElementById('notify-btn-' + n);
-            btn.classList.add('notified');
-            btn.innerHTML = '<i class="fas fa-bell"></i> 알림 신청 완료!';
-            btn.disabled = true;
-        }
+        const statsSec = document.querySelector('.ah-stats');
+        if(statsSec) observer.observe(statsSec);
+    });
     </script>
 </body>
 </html>

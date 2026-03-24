@@ -15,7 +15,7 @@
         body { background-color: #f4f6f9; }
         
         /* Layout */
-        .report-page-container { max-width: 900px; margin: 40px auto; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden; }
+        .report-page-container { max-width: 1100px; margin: 40px auto; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden; }
         .report-header { background: #111; color: white; padding: 40px; text-align: center; position: relative; }
         .report-header::after { content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); border-width: 20px 20px 0; border-style: solid; border-color: #111 transparent transparent transparent; }
         
@@ -68,14 +68,41 @@
 <body>
 
     <!-- Main Navigation -->
-    <header class="bg-white" style="border-bottom: 1px solid #eee; padding: 15px 0;">
-        <div class="container main-gnb" style="display:flex; justify-content:space-between; align-items:center;">
+    <!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
+        <div class="container flex-between align-center">
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+            </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
             <div class="logo">
-                <a href="/" style="text-decoration:none;">
-                    <h1 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:24px; color:#111; margin:0; letter-spacing:-1px;">KATCH<span style="color:#E91E63;">.</span></h1>
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
                 </a>
             </div>
-            <a href="dashboard_online.html" class="btn-outline-gray btn-sm">온라인 대시보드로 가기</a>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="level_test.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
         </div>
     </header>
 
@@ -84,24 +111,38 @@
         <!-- Module 1: Report Title & Student Info -->
         <div class="report-header">
             <div class="exam-title">2026 예비고1 하나고 배치고사 (영어역량)</div>
-            <div class="student-title">김유진 학생 성적 분석 리포트</div>
+            <div class="student-title">이재은 학생 성적 분석 리포트</div>
             <div style="font-size:14px; opacity:0.8;">응시일자: 2026.03.10 | 기준학기: 예비중3</div>
         </div>
 
         <!-- Module 2: Basic View (Free) - Overall Score -->
         <div class="report-module">
             <h2 class="module-title"><i class="fas fa-chart-pie"></i> 종합 점수 및 백분위 (Basic View)</h2>
-            <div class="score-summary-grid">
-                <div style="text-align:center;">
+            <div class="score-summary-grid" style="grid-template-columns: 1fr 2fr; gap: 30px;">
+                <div style="text-align:center; padding-top:20px;">
                     <div class="score-circle mb-15">
                         <div class="score">84</div>
                         <div class="total">/ 100점</div>
                     </div>
-                    <div style="font-size:16px; font-weight:bold; color:#333;">김유진 학생의 현재 점수</div>
+                    <div style="font-size:16px; font-weight:bold; color:#333;">이재은 학생의 현재 점수</div>
                     <div style="font-size:13px; color:#888; margin-top:5px;">전체 응시생 평균: 68.4점</div>
                 </div>
-                <div>
-                    <canvas id="radarChart" style="background:#fafafa; border-radius:12px; padding:15px; border:1px solid #eee; width:100%; height:200px;"></canvas>
+                <div class="mbti-container" style="background:#fff; border:1px solid #e8eaf0; border-radius:12px; padding:30px; text-align:center;">
+                    <h4 style="margin:0 0 15px 0; font-size:16px; color:#111; padding-bottom:15px; border-bottom:1px solid #eee;">
+                        <span><i class="fas fa-brain text-pink"></i> KATCH 학습 MBTI 진단</span>
+                    </h4>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:30px;">
+                        <div style="position:relative; width:220px; height:220px; flex-shrink:0;">
+                            <canvas id="mbtiRadarChart"></canvas>
+                        </div>
+                        <div style="text-align:left;">
+                            <div style="font-size:11px; font-weight:bold; color:#1976d2; margin-bottom:2px;">당신의 진단 유형</div>
+                            <div style="font-size:18px; font-weight:900; color:#111; margin-bottom:5px;">👑 절대 에이스</div>
+                            <div style="font-size:12px; color:#555; line-height:1.4; word-break:keep-all;">
+                                "서술형 아웃풋은 물론, 최상위권 변별의 핵심인 SC(논리) 영역까지 완벽한 0.1% 최고 완성체입니다."
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,9 +177,9 @@
                             <p>가정법 과거완료와 도치 구문이 결합된 고난이도 문항에서 연속적인 오답이 발생했습니다. 구조가 복잡해지면 문장의 본동사를 찾는 속도가 현저히 떨어집니다.</p>
                         </div>
                         <div class="d-prescription">
-                            <h5><i class="fas fa-capsules"></i> KATCH 학습 처방 (수단비 매칭)</h5>
+                            <h5><i class="fas fa-capsules"></i> KATCH 학습 처방 (수능 앤솔로지 매칭)</h5>
                             <p><strong>[강의 추천]</strong> 고등 어법 에센셜 2강 (가정법/도치 심화)<br>
-                               <strong>[교재 연계]</strong> 수단비 고등 어법 실전 모의고사 1권 3과 집중 요망. <a href="store_vod.html" style="color:#1976d2; font-weight:bold;">장바구니 담기 &rarr;</a>
+                               <strong>[교재 연계]</strong> 수능 앤솔로지 고등 어법 실전 모의고사 1권 3과 집중 요망. <a href="store_vod.html" style="color:#1976d2; font-weight:bold;">장바구니 담기 &rarr;</a>
                             </p>
                         </div>
                     </div>
@@ -204,9 +245,9 @@
                             <p>대의 파악은 완벽하나, 추상적인 개념(철학, 진화생물학 등)이 등장하는 글 지문에서 핵심 키워드의 패러프레이징을 놓치는 경향이 있습니다.</p>
                         </div>
                         <div class="d-prescription">
-                            <h5><i class="fas fa-capsules"></i> KATCH 학습 처방 (수단비 매칭)</h5>
+                            <h5><i class="fas fa-capsules"></i> KATCH 학습 처방 (수능 앤솔로지 매칭)</h5>
                             <p><strong>[강의 추천]</strong> 특목고 대비 고난도 빈칸추론 100제 해설 특강<br>
-                               <strong>[교재 연계]</strong> 수단비 앤솔로지 Vol.2 (실전 모의고사). <a href="store_vod.html" style="color:#1976d2; font-weight:bold;">장바구니 담기 &rarr;</a>
+                               <strong>[교재 연계]</strong> 수능 앤솔로지 Vol.2 (실전 모의고사). <a href="store_vod.html" style="color:#1976d2; font-weight:bold;">장바구니 담기 &rarr;</a>
                             </p>
                         </div>
                     </div>
@@ -307,14 +348,14 @@
         <div class="premium-section mt-40" id="premiumSection" style="margin-top: 40px; border-top: 10px solid #111; margin-bottom: 20px;">
             
             <div class="report-module pb-0" style="padding-bottom: 0;">
-                <h2 class="module-title" style="color: #111;"><i class="fas fa-crown text-gold"></i> KATCH 원장의 종합 총평 및 솔루션 (Premium)</h2>
+                <h2 class="module-title" style="color: #111;"><i class="fas fa-crown text-gold"></i> KATCH 김치삼 원장의 종합 총평 및 솔루션 (Premium)</h2>
             </div>
             
             <!-- Lock Overlay -->
             <div class="premium-overlay" id="lockOverlay" style="border-radius: 12px; margin: 0 40px 40px;">
                 <i class="fas fa-lock" style="font-size:48px; color:#111; margin-bottom:20px; text-shadow:0 4px 10px rgba(0,0,0,0.1);"></i>
                 <h3>진짜 '전문가'의 통찰력을 확인하세요!</h3>
-                <p>단순한 점수 나열을 넘어, KATCH 원장단의 수년간 축적된 대치동 합격 데이터를 바탕으로 한<br><strong>우리 아이만의 가장 빠르고 확고한 성적 향상 솔루션</strong>을 제시해 드립니다.</p>
+                <p>단순한 점수 나열을 넘어, KATCH 김치삼 원장단의 수년간 축적된 대치동 합격 데이터를 바탕으로 한<br><strong>우리 아이만의 가장 빠르고 확고한 성적 향상 솔루션</strong>을 제시해 드립니다.</p>
                 <button class="btn-unlock" onclick="unlockPremium()">
                     <i class="fas fa-coins text-white"></i> 500 P 로 총평 열람하기
                 </button>
@@ -330,11 +371,11 @@
                         <img src="https://via.placeholder.com/80x80/111111/ffffff?text=K" alt="KATCH Director" style="width:100%; height:100%; object-fit: cover;">
                     </div>
                     <div>
-                        <h4 style="font-size: 18px; font-weight: 900; color: #111; margin-bottom: 5px;">KATCH 입시전략연구팀</h4>
+                        <h4 style="font-size: 18px; font-weight: 900; color: #111; margin-bottom: 5px;">KATCH 김치삼 원장</h4>
                         <p style="font-size: 15px; color: #444; line-height: 1.7;">
-                            김유진 학생은 어휘력과 대의 파악 능력은 이미 상위 5% 수준에 도달해 있습니다. 문제는 '구문 복잡도가 높아질 때의 논리 붕괴'입니다. <br><br>
+                            이재은 학생은 어휘력과 대의 파악 능력은 이미 상위 5% 수준에 도달해 있습니다. 문제는 '구문 복잡도가 높아질 때의 논리 붕괴'입니다. <br><br>
                             가정법/도치가 포함된 수능형 킬러 지문(1등급 결정 문항)에서 유독 오답률이 높습니다. 이는 단순 단어 조합으로 의미를 유추하는 타성 때문입니다. <strong>현 시점에서는 무리한 단어 암기보다, 문장 구조를 정확히 끊어보는 '구문 독해 특훈'이 점수 향상의 가장 빠른 지름길입니다.</strong><br><br>
-                            이번 겨울방학 동안 추천해 드린 <code>수단비 고등 어법</code>과 <code>특목고 빈칸추론 100제</code>를 연계하여 수강하신다면, 다음 2차 배치고사에서는 안정적인 1등급(92점 이상) 진입을 확신합니다.
+                            이번 겨울방학 동안 추천해 드린 <code>수능 앤솔로지 고등 어법</code>과 <code>특목고 빈칸추론 100제</code>를 연계하여 수강하신다면, 다음 2차 배치고사에서는 안정적인 1등급(92점 이상) 진입을 확신합니다.
                         </p>
                     </div>
                 </div>
@@ -351,25 +392,17 @@
     <!-- Chart Configuration -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctx, {
+            // MBTI Radar Chart (New)
+            const mbtiCtx = document.getElementById('mbtiRadarChart').getContext('2d');
+            new Chart(mbtiCtx, {
                 type: 'radar',
                 data: {
-                    labels: ['어휘 (20)', '문법 (36)', '세부내용(14)', '논리추론(18)', '대조파악(12)'],
+                    labels: ['문법(G)', '어휘(V)', '독해(R)', '서술(W)', '논리(SC)'],
                     datasets: [{
-                        label: '김유진 학생',
-                        data: [19, 26, 14, 13, 12],
+                        data: [88, 92, 95, 85, 90],
                         backgroundColor: 'rgba(233, 30, 99, 0.2)',
                         borderColor: '#E91E63',
                         pointBackgroundColor: '#E91E63',
-                        pointBorderColor: '#fff',
-                        borderWidth: 2
-                    }, {
-                        label: '전체 평균',
-                        data: [14.2, 21.5, 10.1, 12.0, 10.6],
-                        backgroundColor: 'rgba(158, 158, 158, 0.2)',
-                        borderColor: '#9E9E9E',
-                        pointBackgroundColor: '#9E9E9E',
                         pointBorderColor: '#fff',
                         borderWidth: 2
                     }]
@@ -377,8 +410,14 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scale: {
-                        ticks: { beginAtZero: true, max: 20 }
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { display: false, stepSize: 20 },
+                            pointLabels: { font: { size: 11, weight: 'bold' }, color: '#111' }
+                        }
                     }
                 }
             });
@@ -386,10 +425,10 @@
 
         // Unlock Logic
         function unlockPremium() {
-            if(confirm("500P를 사용하여 KATCH 원장의 종합 총평을 열람하시겠습니까?")) {
+            if(confirm("500P를 사용하여 KATCH 김치삼 원장의 종합 총평을 열람하시겠습니까?")) {
                 document.getElementById('lockOverlay').style.display = 'none';
                 document.getElementById('premiumContent').classList.remove('detail-blur');
-                alert("결제가 완료되었습니다. 원장의 총평 열람이 가능합니다.");
+                alert("결제가 완료되었습니다. 김치삼 김치삼 원장님의 총평 열람이 가능합니다.");
             }
         }
     </script>

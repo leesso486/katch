@@ -2,104 +2,203 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KATCH - VOD 인강</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #f5f7f9; }
+        body { background-color: #f8f9fc; font-family: 'Pretendard', sans-serif;}
         
-        /* VOD Hero */
+        /* VOD Hero - Cute & Bouncy */
         .vod-hero {
-            background: linear-gradient(135deg, #0d121a, #1a2639);
-            color: white; padding: 60px 0; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1); /* Soft pink/peach */
+            padding: 80px 0; position: relative; overflow: hidden;
+            border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+            margin-bottom: 50px; box-shadow: 0 15px 35px rgba(233,30,99,0.05);
         }
-        .vod-hero::after {
-            content: ''; position: absolute; right: -5%; top: -20%;
-            width: 500px; height: 500px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(233,30,99,0.15) 0%, transparent 70%);
-        }
-        .hero-layout { display: flex; gap: 40px; align-items: center; position: relative; z-index: 2; }
-        .hero-text { flex: 1; }
-        .hero-tag { background: #E91E63; color: white; display: inline-block; padding: 6px 14px; border-radius: 4px; font-size: 13px; font-weight: 800; margin-bottom: 20px; letter-spacing: 1px; }
-        .hero-title { font-size: 44px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; font-family: 'Noto Serif KR', serif; }
-        .hero-desc { font-size: 16px; color: #aab4c3; line-height: 1.6; margin-bottom: 30px; }
         
-        .hero-player { width: 560px; height: 320px; background: #000; border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); }
-        .hero-player img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.3s; }
-        .hero-player:hover img { opacity: 0.5; transform: scale(1.05); }
-        .play-btn-huge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: rgba(233,30,99,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; margin-left: 5px; cursor: pointer; transition: 0.3s; outline: 6px solid rgba(233,30,99,0.3); }
-        .hero-player:hover .play-btn-huge { background: #E91E63; outline: 10px solid rgba(233,30,99,0.4); }
+        /* Playful floating background shapes */
+        .vod-hero::before { 
+            content: ''; position: absolute; left: 5%; top: -10%; width: 300px; height: 300px; 
+            background: linear-gradient(135deg, #ffd180, #ff9800); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+            filter: blur(40px); opacity: 0.3; animation: morph 8s ease-in-out infinite alternate;
+        }
+        .vod-hero::after { 
+            content: ''; position: absolute; right: 5%; bottom: -10%; width: 350px; height: 350px; 
+            background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+            filter: blur(50px); opacity: 0.2; animation: morph 10s ease-in-out infinite alternate-reverse;
+        }
 
-        /* Section */
-        .v-sec { padding: 60px 0; }
-        .v-sec-title { font-size: 24px; font-weight: 900; color: #111; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
-        .v-sec-title i { color: #E91E63; }
+        @keyframes morph { 0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(10deg); } }
 
-        /* Course List Horizontal */
-        .course-list { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; }
-        .course-card { min-width: 300px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: 0.3s; border: 1px solid #ebeeef; }
-        .course-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        .c-thumb { height: 170px; background: #222; position: relative; overflow: hidden; }
-        .c-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s; }
-        .course-card:hover .c-thumb img { transform: scale(1.05); opacity: 0.6; }
-        .c-time { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; font-size: 12px; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
-        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; opacity: 0; transition: 0.3s; }
+        .hero-layout { display: flex; gap: 60px; align-items: center; position: relative; z-index: 2; }
+        .hero-text { flex: 1; text-align: left; }
+        
+        .hero-tag { 
+            background: white; color: #E91E63; display: inline-flex; align-items: center; padding: 10px 22px; 
+            border-radius: 30px; font-size: 15px; font-weight: 900; margin-bottom: 25px; 
+            box-shadow: 0 8px 20px rgba(233,30,99,0.15); border: 2px solid #ffebee;
+            animation: bounce-soft 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+        .hero-title { font-size: 48px; font-weight: 900; line-height: 1.35; margin-bottom: 20px; letter-spacing: -2px; color: #2C3E50; text-shadow: 2px 2px 0px white, 4px 4px 0px rgba(233,30,99,0.1); }
+        .hero-title span { color: #E91E63; position: relative; display: inline-block; }
+        .hero-title span::after { content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 14px; background: rgba(255,193,7,0.4); z-index: -1; transform: rotate(-1deg); }
+        
+        .hero-desc { font-size: 17.5px; color: #546E7A; line-height: 1.6; margin-bottom: 40px; font-weight: 600; }
+        
+        /* 3D Bouncy Button */
+        .btn-play-rounded {
+            padding: 18px 40px; font-size: 18px; border-radius: 50px; border: none; 
+            background: linear-gradient(180deg, #ff4081, #E91E63); color: white; font-weight: 900; 
+            cursor: pointer; box-shadow: 0 8px 0 #c2185b, 0 15px 25px rgba(233,30,99,0.3); 
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-flex; align-items: center; gap: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn-play-rounded:active { transform: translateY(8px); box-shadow: 0 0 0 #c2185b, 0 5px 10px rgba(233,30,99,0.3); }
+        .btn-play-rounded:hover { filter: brightness(1.1); }
+
+        /* Floating 3D Player */
+        .hero-player { 
+            width: 550px; height: 320px; background: white; border-radius: 35px; position: relative; 
+            padding: 12px; box-shadow: 0 25px 50px rgba(0,0,0,0.1), 0 0 0 8px rgba(255,255,255,0.6); 
+            transform: rotate(2deg); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float-player 6s ease-in-out infinite;
+        }
+        @keyframes float-player { 0%, 100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(-15px) rotate(-1deg); } }
+        
+        .hero-player-inner {
+            width: 100%; height: 100%; border-radius: 25px; overflow: hidden; position: relative; background: #000;
+        }
+        .hero-player-inner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.4s; }
+        .hero-player:hover .hero-player-inner img { opacity: 0.7; transform: scale(1.05); }
+        
+        /* Pulse Animation Play Button */
+        @keyframes pulse-play-cute { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.8); } 70% { box-shadow: 0 0 0 25px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
+        .play-btn-huge { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 90px; height: 90px; background: #E91E63; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; color: white; padding-left: 8px; cursor: pointer; transition: 0.3s; 
+            animation: pulse-play-cute 2s infinite; border: 6px solid white; box-shadow: 0 10px 25px rgba(233,30,99,0.4);
+        }
+        .hero-player:hover .play-btn-huge { transform: translate(-50%, -50%) scale(1.15); background: #FFD700; color: #111; animation: none; border-color: white; box-shadow: 0 15px 35px rgba(255,193,7,0.5); }
+        
+        /* Playful Floating Icons */
+        .deco-icon { position: absolute; font-size: 40px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); z-index: 3; }
+        .di-1 { top: -20px; left: -20px; animation: bounce-soft 4s ease-in-out infinite 1s; }
+        .di-2 { bottom: -30px; right: 20px; animation: bounce-soft 5s ease-in-out infinite 2s; font-size: 50px; }
+        .di-3 { top: 40px; right: -40px; animation: bounce-soft 3.5s ease-in-out infinite 0.5s; font-size: 45px; }
+
+
+        /* Section Titles */
+        .v-sec-title { font-size: 26px; font-weight: 900; color: #111; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; letter-spacing: -1px; }
+        .v-sec-title .icon-box { background: #E91E63; color: white; width: 44px; height: 44px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 6px 15px rgba(233,30,99,0.3); }
+        .v-sec-title .icon-box.yellow { background: linear-gradient(135deg, #FFC107, #FF9800); color: #fff; box-shadow: 0 6px 15px rgba(255,193,7,0.3); }
+        .v-sec-title .icon-box.green { background: linear-gradient(135deg, #4CAF50, #00C853); box-shadow: 0 6px 15px rgba(76,175,80,0.3); }
+
+        /* Course List Horizontal - Playful & Bouncy */
+        .course-list { display: flex; gap: 24px; overflow-x: auto; padding: 15px 15px 40px; margin: -15px -15px 0; scroll-snap-type: x mandatory; }
+        .course-list::-webkit-scrollbar { height: 10px; } .course-list::-webkit-scrollbar-thumb { background: #cfd8dc; border-radius: 10px; }
+        .course-list::-webkit-scrollbar-thumb:hover { background: #b0bec5; }
+        
+        .course-card { 
+            min-width: 330px; background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.06); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid #eef0f5; scroll-snap-align: start; position: relative; display: flex; flex-direction: column; cursor: pointer;
+        }
+        .course-card:hover { transform: translateY(-12px); box-shadow: 0 20px 45px rgba(26,38,57,0.12); border-color: #c5cae9; }
+        
+        .c-thumb { height: 180px; background: #eaebed; position: relative; overflow: hidden; margin: 12px 12px 0; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .c-thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .course-card:hover .c-thumb img { transform: scale(1.08); filter: brightness(0.75); }
+        
+        .c-time { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.65); color: white; font-size: 13px; padding: 6px 14px; border-radius: 20px; font-weight: 800; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); }
+        
+        .play-overlay { position: absolute; inset:0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.4s ease; background: rgba(26,38,57,0.4); }
+        .play-overlay i { font-size: 60px; color: white; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4)); transform: scale(0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .course-card:hover .play-overlay { opacity: 1; }
-        .c-info { padding: 20px; }
-        .c-target { font-size: 12px; font-weight: 800; color: #5c6bc0; margin-bottom: 8px; }
-        .c-title { font-size: 16px; font-weight: 800; color: #222; margin-bottom: 12px; line-height: 1.4; height: 44px; overflow: hidden; }
-        .c-inst { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #666; font-weight: 600; border-top: 1px solid #f0f0f0; padding-top: 15px; }
-        .c-inst img { width: 24px; height: 24px; border-radius: 50%; background: #ddd; object-fit: cover; }
-        .c-price { margin-left: auto; font-size: 14px; font-weight: 900; color: #E91E63; }
-        .c-price.free { color: #1f7842; }
+        .course-card:hover .play-overlay i { transform: scale(1); }
+        
+        .c-info { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+        .c-target { display: inline-block; font-size: 11px; font-weight: 900; color: #3949ab; margin-bottom: 12px; background: #e8eaf6; padding: 6px 14px; border-radius: 20px; width: fit-content; text-transform: uppercase; letter-spacing: 0.5px; }
+        .c-title { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 15px; line-height: 1.45; height: 50px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        
+        .c-inst { display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #555; font-weight: 700; border-top: 1px dashed #e0e4e8; padding-top: 18px; margin-top: auto; }
+        .c-inst-prof { display: flex; align-items: center; gap: 8px; }
+        .c-inst-prof img { width: 32px; height: 32px; border-radius: 50%; background: #ddd; object-fit: cover; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .c-price { background: #fffaf0; color: #FF9800; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 900; border: 1px solid #ffe0b2; }
+        .c-price.free { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); color: #2e7d32; border-color: #a5d6a7; box-shadow: 0 4px 10px rgba(76,175,80,0.15); }
 
-        /* Progress Card */
-        .my-progress-card { background: white; border-radius: 12px; padding: 25px; display: flex; gap: 25px; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #ebeeef; margin-bottom: 40px; }
-        .mp-thumb { width: 160px; height: 100px; background: #eee; border-radius: 8px; position: relative; overflow: hidden; flex-shrink: 0; }
-        .mp-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        /* My Progress Card - Soft & Interactive Widget Style */
+        .my-progress-card { 
+            background: linear-gradient(135deg, #ffffff, #fdfbfd); border-radius: 30px; padding: 30px; display: flex; gap: 35px; align-items: center; 
+            box-shadow: 0 15px 45px rgba(0,0,0,0.06); border: 2px solid #f8bbd0; margin-bottom: 50px; transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .my-progress-card::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 8px; background: linear-gradient(180deg, #ff4081, #E91E63); }
+        .my-progress-card:hover { transform: translateY(-5px); box-shadow: 0 25px 50px rgba(233,30,99,0.15); border-color: #f48fb1; }
+        
+        .mp-thumb { width: 220px; height: 140px; background: #eee; border-radius: 20px; position: relative; overflow: hidden; flex-shrink: 0; box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .mp-thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .my-progress-card:hover .mp-thumb img { transform: scale(1.05); }
+        
+        .c-time-prog { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; font-size: 12px; padding: 4px 10px; border-radius: 12px; font-weight: 800; backdrop-filter: blur(4px); }
+        
         .mp-info { flex: 1; }
-        .mp-title { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 10px; }
-        .mp-d { font-size: 13px; color: #666; margin-bottom: 15px; }
-        .mp-bar-bg { width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
-        .mp-bar-fill { height: 100%; background: #E91E63; width: 45%; border-radius: 3px; }
-        .mp-percent { font-size: 12px; font-weight: 800; color: #E91E63; }
-        .mp-btn { background: #1a2639; color: white; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 800; text-decoration: none; transition: 0.2s; }
-        .mp-btn:hover { background: #E91E63; }
+        .mp-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
+        .mp-title { font-size: 22px; font-weight: 900; color: #111; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .mp-d { font-size: 14px; color: #777; font-weight: 600; margin-bottom: 25px; display: flex; align-items: center; gap: 8px; }
+        
+        .mp-progress-container { display: flex; align-items: center; gap: 15px; }
+        .mp-bar-bg { flex: 1; height: 14px; background: #f0f2f5; border-radius: 20px; overflow: hidden; position: relative; box-shadow: inset 0 2px 6px rgba(0,0,0,0.08); }
+        .mp-bar-fill { height: 100%; background: linear-gradient(90deg, #ff4081, #E91E63); width: 45%; border-radius: 20px; position: relative; }
+        .mp-bar-fill::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.2); animation: shine 1.5s infinite linear; }
+        @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .mp-percent { font-size: 18px; font-weight: 900; color: #E91E63; width: 55px; text-align: right; }
+        
+        .mp-btn { 
+            background: #1a2639; color: white; padding: 16px 36px; border-radius: 30px; font-size: 16px; font-weight: 800; text-decoration: none; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 8px 25px rgba(26,38,57,0.25);
+        }
+        .mp-btn:hover { background: #E91E63; box-shadow: 0 12px 30px rgba(233,30,99,0.4); transform: translateY(-4px); }
+        .mp-btn i { font-size: 20px; }
 
     </style>
 </head>
 <body>
     <!-- Top Header & GNB -->
-    <div class="header-top-bar">
+        <!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
-            <div class="target-switch">
-                <a href="dashboard_online.html" class="active">학생·학부모</a>
-                <a href="problem_bank.html">가맹 원장·강사</a>
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
-            <div>
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
                 <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
             </div>
         </div>
     </div>
-    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
-        <div class="container main-gnb">
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
             <div class="logo">
-                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
             </div>
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
                 <a href="problem_bank.html">문제은행</a>
-                <!-- Updated Nav -->
-                <a href="vod_class.html" class="active">VOD 인강</a>
-                <a href="store_vod.html">교재 스토어</a>
-                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
-            <div class="header-utils">
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
                 <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
                 <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
             </div>
@@ -110,54 +209,58 @@
     <div class="vod-hero">
         <div class="container hero-layout">
             <div class="hero-text">
-                <div class="hero-tag">🔥 대표 강좌 무료 공개</div>
-                <h2 class="hero-title">고 3월 모의고사 대비<br>단기 특강 집중 분석</h2>
-                <p class="hero-desc">대치동 최상위권을 위한 강동진 원장의 특강. 평가원 기출의 비밀과 안정적인 1등급을 위한 독해 기술을 단 3강으로 정리합니다.</p>
-                <a href="#" class="btn-primary" style="padding: 14px 30px; font-size:16px;"><i class="fas fa-play"></i> 맛보기 영상 재생</a>
+                <div class="hero-tag">🔥 이달의 무료 공개 특강</div>
+                <h2 class="hero-title">고 3월 모의고사 대비<br><span>단기 집중 분석</span></h2>
+                <p class="hero-desc">대치동 최상위권을 위한 강동진 원장의 진짜 특강!<br>평가원 기출의 비밀과 안정적인 1등급 독해 기술을 단 3강으로 완성하세요.</p>
+                <button class="btn-play-rounded"><i class="fas fa-play"></i> 맛보기 영상 재생</button>
             </div>
             <div class="hero-player">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Lecture Cover">
-                <div class="play-btn-huge"><i class="fas fa-play"></i></div>
+                <div class="deco-icon di-1">✨</div>
+                <div class="deco-icon di-2">🎯</div>
+                <div class="deco-icon di-3">💡</div>
+                <div class="hero-player-inner">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Lecture Cover">
+                    <div class="play-btn-huge"><i class="fas fa-play"></i></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container" style="padding: 50px 0;">
+    <div class="container" style="padding: 10px 0 60px;">
         
         <!-- My Progress (Status) -->
-        <h3 class="v-sec-title"><i class="fas fa-forward"></i> 최근 이어보기</h3>
+        <h3 class="v-sec-title"><div class="icon-box"><i class="fas fa-forward"></i></div> 최근 이어보기</h3>
         <div class="my-progress-card">
             <div class="mp-thumb">
                 <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="진행중인 강좌">
-                <div class="c-time">32:15 남음</div>
+                <div class="c-time-prog">32:15 남음</div>
             </div>
             <div class="mp-info">
                 <div class="mp-title">수능 어법 10년 기출 전격 분석 - 2강. 관계사의 이해</div>
-                <div class="mp-d">김태형 강사님 · 마지막 수강일: 2026.03.18</div>
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div style="flex:1; margin-right:20px;">
-                        <div class="mp-bar-bg"><div class="mp-bar-fill"></div></div>
-                        <div class="mp-percent">45% 수강 완료</div>
-                    </div>
+                <div class="mp-d"><img src="https://randomuser.me/api/portraits/men/55.jpg" style="width:20px;height:20px;border-radius:50%"> 김태형 강사님 · 마지막 수강일: 2026.03.18</div>
+                <div class="mp-progress-container">
+                    <div class="mp-bar-bg"><div class="mp-bar-fill"></div></div>
+                    <div class="mp-percent">45%</div>
                 </div>
             </div>
-            <a href="#" class="mp-btn"><i class="fas fa-play"></i> 바로 재생</a>
+            <a href="#" class="mp-btn"><i class="fas fa-play"></i> 이어서 재생</a>
         </div>
 
         <!-- Curated Courses -->
-        <h3 class="v-sec-title mt-40"><i class="fas fa-star text-orange"></i> KATCH 프리미엄 앤솔로지 특강</h3>
+        <h3 class="v-sec-title mt-40"><div class="icon-box yellow"><i class="fas fa-star"></i></div> KATCH 프리미엄 앤솔로지 특강</h3>
         <div class="course-list">
             <div class="course-card">
                 <div class="c-thumb">
                     <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
                     <div class="c-time">총 12강</div>
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
                 <div class="c-info">
                     <div class="c-target">앤솔로지 LEVEL 4</div>
                     <h4 class="c-title">고1 6월 모평 전범위 집중 분석 및 변형 문제 대비</h4>
                     <div class="c-inst">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg"> 최성훈 <span class="c-price">350 P</span>
+                        <div class="c-inst-prof"><img src="https://randomuser.me/api/portraits/men/32.jpg"> 최성훈 선생님</div>
+                        <span class="c-price">350 P</span>
                     </div>
                 </div>
             </div>
@@ -165,13 +268,14 @@
                 <div class="c-thumb">
                     <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
                     <div class="c-time">총 8강</div>
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
                 <div class="c-info">
                     <div class="c-target">앤솔로지 LEVEL 3</div>
                     <h4 class="c-title">유추와 수사법: 수능 영어 고난도 추론의 정석</h4>
                     <div class="c-inst">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg"> 이수아 <span class="c-price">300 P</span>
+                        <div class="c-inst-prof"><img src="https://randomuser.me/api/portraits/women/44.jpg"> 이수아 선생님</div>
+                        <span class="c-price">300 P</span>
                     </div>
                 </div>
             </div>
@@ -179,59 +283,68 @@
                 <div class="c-thumb">
                     <img src="https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
                     <div class="c-time">총 16강</div>
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
                 <div class="c-info">
-                    <div class="c-target">수단비 필수편 연계</div>
+                    <div class="c-target">앤솔로지 필수편 연계</div>
                     <h4 class="c-title">중학 어휘의 완성: 고1 첫 모의고사 1등급 브릿지</h4>
                     <div class="c-inst">
-                        <img src="https://randomuser.me/api/portraits/men/55.jpg"> 강석호 <span class="c-price">400 P</span>
+                        <div class="c-inst-prof"><img src="https://randomuser.me/api/portraits/men/55.jpg"> 강석호 선생님</div>
+                        <span class="c-price">400 P</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Free Lectures Section -->
-        <h3 class="v-sec-title mt-60"><i class="fas fa-gift text-green"></i> 모두를 위한 무료 공개 특강</h3>
-        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
+        <h3 class="v-sec-title mt-60"><div class="icon-box green"><i class="fas fa-gift"></i></div> 모두를 위한 꿀팁 유튜브 특강</h3>
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;">
             <div class="course-card">
                 <div class="c-thumb" style="height:140px;">
                     <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
-                <div class="c-info" style="padding:15px;">
-                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">[강동진 원장] 고 3월 모의고사 대비 단기 특강</h4>
-                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 1,420 <span class="c-price free">FREE</span></div>
+                <div class="c-info" style="padding:18px;">
+                    <h4 class="c-title" style="font-size:16px; height:auto; margin-bottom:12px;">[강동진 원장] 고 3월 모의고사 대비 단기 특강</h4>
+                    <div class="c-inst" style="border:none; padding-top:0;">
+                        <span><i class="fas fa-eye text-gray"></i> 1,420</span> <span class="c-price free">FREE</span>
+                    </div>
                 </div>
             </div>
             <div class="course-card">
                 <div class="c-thumb" style="height:140px;">
                     <img src="https://images.unsplash.com/photo-1427504494785-319ce8372605?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
-                <div class="c-info" style="padding:15px;">
-                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">수능 어법 10년 기출 전격 분석 1부</h4>
-                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 982 <span class="c-price free">FREE</span></div>
+                <div class="c-info" style="padding:18px;">
+                    <h4 class="c-title" style="font-size:16px; height:auto; margin-bottom:12px;">수능 어법 10년 기출 전격 분석 1부 무료 공개</h4>
+                    <div class="c-inst" style="border:none; padding-top:0;">
+                        <span><i class="fas fa-eye text-gray"></i> 982</span> <span class="c-price free">FREE</span>
+                    </div>
                 </div>
             </div>
             <div class="course-card">
                 <div class="c-thumb" style="height:140px;">
                     <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
-                <div class="c-info" style="padding:15px;">
-                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">중등 3학년 고교학점제 전면 대응 전략 설명회</h4>
-                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 2,150 <span class="c-price free">FREE</span></div>
+                <div class="c-info" style="padding:18px;">
+                    <h4 class="c-title" style="font-size:16px; height:auto; margin-bottom:12px;">중등 3학년 고교학점제 전면 대응 전략 설명회</h4>
+                    <div class="c-inst" style="border:none; padding-top:0;">
+                        <span><i class="fas fa-eye text-gray"></i> 2,150</span> <span class="c-price free">FREE</span>
+                    </div>
                 </div>
             </div>
             <div class="course-card">
                 <div class="c-thumb" style="height:140px;">
                     <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
-                    <div class="play-overlay"><i class="far fa-play-circle"></i></div>
+                    <div class="play-overlay"><i class="fas fa-play"></i></div>
                 </div>
-                <div class="c-info" style="padding:15px;">
-                    <h4 class="c-title" style="font-size:15px; height:auto; margin-bottom:8px;">수성구 1타 강사의 내신 1등급 직결 문법 짚어보기</h4>
-                    <div class="c-inst"><i class="fas fa-eye text-gray"></i> 4,500 <span class="c-price free">FREE</span></div>
+                <div class="c-info" style="padding:18px;">
+                    <h4 class="c-title" style="font-size:16px; height:auto; margin-bottom:12px;">수성구 1타 강사의 내신 1등급 직결 문법 짚어보기</h4>
+                    <div class="c-inst" style="border:none; padding-top:0;">
+                        <span><i class="fas fa-eye text-gray"></i> 4,500</span> <span class="c-price free">FREE</span>
+                    </div>
                 </div>
             </div>
         </div>

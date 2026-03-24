@@ -41,9 +41,7 @@
         .main-gnb { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; }
         .main-gnb .logo h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 28px; color: #111; margin: 0; letter-spacing: -1px; }
         .main-gnb .logo .dot { color: #E91E63; }
-        .gnb-links { display: flex; gap: 30px; font-size: 16px; font-weight: 700; }
-        .gnb-links a { color: #333; text-decoration: none; transition: 0.2s; }
-        .gnb-links a:hover { color: #E91E63; }
+        
         .header-utils { display: flex; gap: 15px; align-items: center; font-size: 20px; color: #333; }
         
         /* 2. Hero Rolling Banner (B2C Bright & Premium) */
@@ -130,32 +128,37 @@
 <body>
 
     <!-- 1. Top Header -->
-    <div class="header-top-bar">
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
-            <div class="target-switch">
-                <a href="dashboard_online.html" class="active">학생·학부모</a>
-                <a href="problem_bank.html">가맹 원장·강사</a>
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
-            <div>
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" class="mr-15" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
                 <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
             </div>
         </div>
     </div>
-    <header class="bg-white" style="border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 90;">
-        <div class="container main-gnb">
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
             <div class="logo">
-                <a href="/" style="text-decoration:none;"><h1>KATCH<span style="color:#E91E63; font-weight:900;">.</span></h1></a>
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
             </div>
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
                 <a href="problem_bank.html">문제은행</a>
-                <a href="vod_class.html">VOD 인강</a>
-                <a href="store_vod.html">교재 스토어</a>
-                <a href="lounge.html" class="text-orange"><i class="fas fa-crown"></i> VIP 라운지</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
             </nav>
-            <div class="header-utils">
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
                 <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
                 <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
             </div>
@@ -325,7 +328,7 @@
                  <div class="p-card">
                     <div class="p-thumb"><span class="p-badge">HOT</span> <i class="fas fa-play-circle" style="color:#d32f2f;"></i></div>
                     <div class="p-info">
-                        <div class="p-title">[VOD] 수단비 초등 고학년 어법 총정리 핵심 마스터 패키지</div>
+                        <div class="p-title">[VOD] 앤솔로지 초등 고학년 어법 총정리 핵심 마스터 패키지</div>
                         <div class="p-price">89,000원 <button class="btn-cart"><i class="fas fa-shopping-cart"></i></button></div>
                     </div>
                 </div>
@@ -373,7 +376,7 @@
                 <div class="sys-step">
                     <div class="sys-icon"><i class="fas fa-box-open text-gradient-blue"></i></div>
                     <h4>STEP 3. 1:1 맞춤형 처방</h4>
-                    <p>오답 패턴에 맞는 인강(VOD)과<br>시크릿 교재(수단비)를 자동 매칭하여 집중 학습</p>
+                    <p>오답 패턴에 맞는 인강(VOD)과<br>시크릿 교재(앤솔로지)를 자동 매칭하여 집중 학습</p>
                 </div>
             </div>
         </div>
@@ -406,7 +409,7 @@
                     <ul class="b-list">
                         <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 초6 진단 4등급 → 중1 KATCH 후 수능 1등급 달성 비결!</a> <span class="text-xs text-gray">N</span></li>
                         <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> KATCH 데이터 컨설팅으로 외대부고 당당히 합격!</a> <span class="text-xs text-gray">2h</span></li>
-                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 수단비 VOD 인강 + 오답노트 기능 2개월 200% 활용기</a> <span class="text-xs text-gray">1d</span></li>
+                        <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> 앤솔로지 VOD 인강 + 오답노트 기능 2개월 200% 활용기</a> <span class="text-xs text-gray">1d</span></li>
                         <li><a href="lounge.html"><span class="b-tag" style="background:#fce4ec; color:#e91e63;">후기</span> [컨설팅 만족도 1위] 김태희 수석 컨설턴트 찐 후기 모음</a> <span class="text-xs text-gray">2d</span></li>
                     </ul>
                 </div>
@@ -493,7 +496,7 @@
                     <div style="width:70px; height:70px; background:#e8eaf6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; margin:0 auto 20px;"><i class="fas fa-prescription-bottle-alt" style="color:#3f51b5;"></i></div>
                     <div style="position:absolute; top:25px; right:25px; font-size:64px; font-weight:900; color:#e8eaf6; line-height:1;">02</div>
                     <h3 style="font-size:22px; font-weight:900; margin-bottom:12px;">맞춤 처방</h3>
-                    <p style="font-size:15px; color:#666; line-height:1.7;">AI 분석이 취약 영역을 진단하고, 수단비 VOD · 앤솔로지 · GVR 과제 중 최적의 처방을 자동으로 추천합니다.</p>
+                    <p style="font-size:15px; color:#666; line-height:1.7;">AI 분석이 취약 영역을 진단하고, 앤솔로지 VOD · 앤솔로지 · GVR 과제 중 최적의 처방을 자동으로 추천합니다.</p>
                     <a href="store_vod.html" style="display:inline-block; margin-top:20px; background:#3f51b5; color:white; padding:10px 22px; border-radius:8px; font-weight:800; text-decoration:none; font-size:14px;">교재 스토어 →</a>
                 </div>
                 <div style="background:white; border-radius:20px; padding:35px 30px; box-shadow:0 8px 30px rgba(0,0,0,0.07); text-align:center; position:relative; border-top:4px solid #4CAF50;">

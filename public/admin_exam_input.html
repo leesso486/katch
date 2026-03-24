@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 시험문제(세트) 입력기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .test-meta-box { background: white; padding: 25px; border-radius: 12px; border: 1px solid #e0e4e8; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .q-block { background: white; padding: 25px; border-radius: 12px; border: 2px solid #e0e4e8; margin-bottom: 20px; position: relative; transition: 0.3s; }
+        .q-block:focus-within { border-color: var(--navy); box-shadow: 0 4px 20px rgba(26,35,126,0.1); }
+        .q-number { position: absolute; top: -15px; left: 20px; background: var(--navy); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 900; font-size: 16px; box-shadow: 0 4px 10px rgba(26,35,126,0.3); }
+        .q-remove-btn { position: absolute; top: 15px; right: 20px; color: #f44336; background: none; border: none; font-size: 14px; cursor: pointer; font-weight: bold; }
+        .q-remove-btn:hover { text-decoration: underline; }
+        
+        .type-selector { display: flex; gap: 10px; background: #f5f6f8; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+        .type-selector label { font-size: 14px; font-weight: bold; color: #444; cursor: pointer; display: flex; align-items: center; gap: 5px;}
+        .type-selector input[type="radio"] { accent-color: var(--navy); transform: scale(1.2); }
+        
+        .sub-q-block { background: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 8px; margin-top: 15px; position: relative; }
+        
+        #add-test-q-btn { width: 100%; padding: 20px; background: transparent; border: 2px dashed #999; color: #666; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+        #add-test-q-btn:hover { background: #f5f9ff; border-color: var(--navy); color: var(--navy); }
+    </style>
+</head>
+<body class="bg-gray">
+    <!-- Admin Top Bar -->
+    <!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
+        <div class="container flex-between align-center">
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+            </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="level_test.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <ul class="admin-nav">
+                <li><a href="dashboard_gvr.html"><i class="fas fa-home"></i> 대시보드</a></li>
+                <li><a href="admin_input.html"><i class="fas fa-pencil-alt"></i> 문제은행 입력기</a></li>
+                <li class="active"><a href="admin_exam_input.html"><i class="fas fa-file-signature"></i> 시험문제 입력기</a></li>
+                <li><a href="problem_bank.html"><i class="fas fa-folder-open"></i> 시험지(세트) 빌더</a></li>
+                <li><a href="dashboard_gvr.html"><i class="fas fa-users"></i> 학생·성적 관리</a></li>
+                <li><a href="admin_report_template.html"><i class="fas fa-file-invoice"></i> 성적표 템플릿 관리</a></li>
+                <li><a href="dashboard_gvr.html"><i class="fas fa-chart-pie"></i> 통계 및 로그 조회</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-page-header flex-between">
+                <h2>새 시험(모의고사) 세트 생성</h2>
+                <div class="actions">
+                    <button class="btn-primary" style="background:#E91E63; border-color:#E91E63;" onclick="saveExam()"><i class="fas fa-cloud-upload-alt"></i> 전체 시험지 발행</button>
+                </div>
+            </div>
+
+            <!-- Test Meta -->
+            <div class="test-meta-box">
+                <h3 class="form-title mb-15">1. 시험지 기본 정보</h3>
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>시험지 제목 <span style="font-size:12px; font-weight:normal; color:#E91E63; margin-left:10px;"><i class="fas fa-info-circle"></i> 통합 네이밍 규칙에 따라 GVR-숫자 형식을 권장합니다.</span></label>
+                        <div style="display:flex; gap:10px;">
+                            <select class="form-control" style="width:120px; font-weight:bold; background:#e8eaf6; color:#3f51b5; border:1px solid #c5cae9;" id="exam-prefix">
+                                <option value="GVR-">GVR-</option>
+                                <option value="MT-">MT-</option>
+                                <option value="SC-">SC-</option>
+                                <option value="AT-">AT-</option>
+                                <option value="">직접입력</option>
+                            </select>
+                            <input type="text" class="form-control" id="exam-title-input" placeholder="예: 01회차 프리테스트" style="flex:1;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>대상 학년</label>
+                        <select class="form-control">
+                            <option>예비중1 / 중1</option>
+                            <option>중2</option>
+                            <option>중3</option>
+                            <option selected>고등 (수능)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>시험 시간 (분)</label>
+                        <input type="number" class="form-control" value="60">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Assistant Range Assignment -->
+            <div class="test-meta-box" style="background: #fff9e6; border: 1px solid #ffe0b2;">
+                <div class="flex-between align-center mb-15">
+                    <h3 class="form-title mb-0" style="color:#e65100;"><i class="fas fa-users-cog"></i> 2. 과제 구간 및 파트 할당 (조교용 편의 기능)</h3>
+                    <button class="btn-sm" style="background:white; border:1px solid #ffb74d; color:#e65100;" onclick="addRangeAssignment()"><i class="fas fa-plus"></i> 할당 구간 추가</button>
+                </div>
+                <p style="font-size:13px; color:#555; margin-bottom:15px;">단일 시험지 내에서 과목(파트)별로 담당 강사를 분리 지정할 수 있습니다. (예: 1~10번 독해는 A강사, 11~15번 문법은 B강사)</p>
+                <div id="range-assignment-container">
+                    <div class="range-row flex-between align-center mb-10" style="background:white; padding:15px; border-radius:8px; border:1px dashed #ffcc80;">
+                        <div style="display:flex; align-items:center; gap:15px; flex:1;">
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <input type="number" class="form-control" style="width:70px; text-align:center;" value="1" min="1"> 번 ~
+                                <input type="number" class="form-control" style="width:70px; text-align:center;" value="20" min="1"> 번
+                            </div>
+                            <select class="form-control" style="width:120px;">
+                                <option value="RC" selected>독해 (RC)</option>
+                                <option value="GR">문법 (GR)</option>
+                                <option value="VO">어휘 (VO)</option>
+                                <option value="SC">논리 (SC)</option>
+                            </select>
+                            <select class="form-control" style="width:150px;">
+                                <option>담당 강사 선택</option>
+                                <option selected>박진규 (대표강사)</option>
+                                <option>이수아 (문법전담)</option>
+                                <option>박준형 (조교)</option>
+                            </select>
+                        </div>
+                        <button class="btn-sm btn-outline-gray" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="exam-questions-container">
+                <!-- Javascript will inject question blocks here -->
+            </div>
+
+            <button id="add-test-q-btn" onclick="addExamQuestion()"><i class="fas fa-plus"></i> 새 문항 추가하기</button>
+
+            <!-- Modals -->
+            <div id="admin-modal" class="modal-overlay" style="display: none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; justify-content:center; align-items:center;">
+                <div style="background:white; padding:40px; border-radius:12px; text-align:center; width:350px;">
+                    <i class="fas fa-check-circle text-green" style="font-size:40px; margin-bottom:15px;"></i>
+                    <h3 style="font-size:20px; font-weight:bold; margin-bottom:10px;">발행 완료</h3>
+                    <p style="color:#666; margin-bottom:20px;">시험지가 성공적으로<br>시스템에 반영되었습니다.</p>
+                    <button class="btn-primary" onclick="document.getElementById('admin-modal').style.display='none'" style="width:100%;">확인</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        let examQCount = 0;
+
+        function addExamQuestion() {
+            examQCount++;
+            const container = document.getElementById('exam-questions-container');
+            const block = document.createElement('div');
+            block.className = 'q-block mt-20';
+            block.id = `exam-q-${examQCount}`;
+            
+            block.innerHTML = `
+                <div class="q-number">Q${examQCount}</div>
+                <button class="q-remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i> 문항 삭제</button>
+                
+                <div class="type-selector">
+                    <span style="font-size:14px; color:#666; margin-right:15px; align-self:center;">문항 형태:</span>
+                    <label><input type="radio" name="eq_type_${examQCount}" value="single" checked onclick="toggleExamQType(${examQCount})"> 객관식 (단일)</label>
+                    <label><input type="radio" name="eq_type_${examQCount}" value="essay" onclick="toggleExamQType(${examQCount})"> 서술형 (단일)</label>
+                    <label><input type="radio" name="eq_type_${examQCount}" value="multi" onclick="toggleExamQType(${examQCount})"> 다문항 (1지문 n문항)</label>
+                </div>
+
+                <div class="form-group mb-15">
+                    <label>지문 (Passage) - <i>선택사항</i></label>
+                    <textarea class="form-control" rows="4" placeholder="문항에 필요한 지문을 입력하세요"></textarea>
+                </div>
+
+                <!-- Single / Essay Mode Container -->
+                <div id="eq-single-container-${examQCount}">
+                    <div class="form-group mb-15">
+                        <label>발문 (Question Text)</label>
+                        <input type="text" class="form-control" placeholder="질문을 입력하세요">
+                    </div>
+                    
+                    <div id="eq-mc-options-${examQCount}" class="choices-container">
+                        <div class="choice-row"><span class="choice-num">①</span><input type="text" class="form-control" placeholder="선지 1"><input type="radio" name="eq_ans_${examQCount}" value="1"></div>
+                        <div class="choice-row"><span class="choice-num">②</span><input type="text" class="form-control" placeholder="선지 2"><input type="radio" name="eq_ans_${examQCount}" value="2"></div>
+                        <div class="choice-row"><span class="choice-num">③</span><input type="text" class="form-control" placeholder="선지 3"><input type="radio" name="eq_ans_${examQCount}" value="3" checked></div>
+                        <div class="choice-row"><span class="choice-num">④</span><input type="text" class="form-control" placeholder="선지 4"><input type="radio" name="eq_ans_${examQCount}" value="4"></div>
+                        <div class="choice-row"><span class="choice-num">⑤</span><input type="text" class="form-control" placeholder="선지 5"><input type="radio" name="eq_ans_${examQCount}" value="5"></div>
+                    </div>
+
+                    <div id="eq-essay-options-${examQCount}" class="essay-container" style="display:none; background:#fff9e6; padding:15px; border-radius:8px; border:1px solid #ffe0b2;">
+                        <div class="form-group mb-10">
+                            <label style="color:var(--navy);"><i class="fas fa-key"></i> 핵심 채점 키워드</label>
+                            <input type="text" class="form-control" placeholder="예: 상호 이타주의">
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="text-orange"><i class="fas fa-check-double"></i> 강사의 모범 답안</label>
+                            <textarea class="form-control" rows="2" placeholder="모범 답안 작성"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multi Mode Container -->
+                <div id="eq-multi-container-${examQCount}" style="display:none; border-top:2px dashed #eee; padding-top:15px;">
+                    <button class="btn-sm btn-outline-gray mb-15" onclick="addExamSubQ(${examQCount})"><i class="fas fa-plus"></i> 하위 문항 추가하기</button>
+                    <div id="eq-sub-qs-${examQCount}">
+                        <!-- Sub questions will be added here -->
+                    </div>
+                </div>
+            `;
+            container.appendChild(block);
+
+            // Add at least one sub-q for multi-mode invisibly
+            addExamSubQ(examQCount, true);
+        }
+
+        function toggleExamQType(qId) {
+            const type = document.querySelector(`input[name="eq_type_${qId}"]:checked`).value;
+            const singleContainer = document.getElementById(`eq-single-container-${qId}`);
+            const multiContainer = document.getElementById(`eq-multi-container-${qId}`);
+            const mcOptions = document.getElementById(`eq-mc-options-${qId}`);
+            const essayOptions = document.getElementById(`eq-essay-options-${qId}`);
+
+            if (type === 'multi') {
+                singleContainer.style.display = 'none';
+                multiContainer.style.display = 'block';
+            } else {
+                singleContainer.style.display = 'block';
+                multiContainer.style.display = 'none';
+                if (type === 'essay') {
+                    mcOptions.style.display = 'none';
+                    essayOptions.style.display = 'block';
+                } else {
+                    mcOptions.style.display = 'block';
+                    essayOptions.style.display = 'none';
+                }
+            }
+        }
+
+        function addExamSubQ(qId, isInitial = false) {
+            const container = document.getElementById(`eq-sub-qs-${qId}`);
+            const subCount = container.children.length + 1;
+            const subId = `${qId}_${subCount}`;
+
+            const subBlock = document.createElement('div');
+            subBlock.className = 'sub-q-block';
+            subBlock.innerHTML = `
+                <button onclick="this.parentElement.remove()" class="btn-sm btn-outline-gray" style="position:absolute; top:15px; right:15px;"><i class="fas fa-times"></i> 삭제</button>
+                <div class="form-group mb-10">
+                    <label>하위 문항 ${subCount} 발문</label>
+                    <input type="text" class="form-control" placeholder="하위 질문을 입력하세요">
+                </div>
+                
+                <div class="radio-group mb-15" style="background:#e8eaf6; padding:10px; border-radius:6px;">
+                    <label style="font-size:13px; font-weight:bold; margin-right:10px;">문항 형태</label>
+                    <label><input type="radio" name="eq_sub_type_${subId}" value="mc" checked onclick="toggleExamSubQType('${subId}')"> 객관식</label>
+                    <label><input type="radio" name="eq_sub_type_${subId}" value="essay" onclick="toggleExamSubQType('${subId}')"> 서술형</label>
+                </div>
+
+                <div id="eq-sub-mc-${subId}" class="choices-container">
+                    <div class="choice-row"><span class="choice-num">①</span><input type="text" class="form-control" placeholder="선지 1"><input type="radio" name="eq_sub_ans_${subId}" value="1"></div>
+                    <div class="choice-row"><span class="choice-num">②</span><input type="text" class="form-control" placeholder="선지 2"><input type="radio" name="eq_sub_ans_${subId}" value="2"></div>
+                    <div class="choice-row"><span class="choice-num">③</span><input type="text" class="form-control" placeholder="선지 3"><input type="radio" name="eq_sub_ans_${subId}" value="3" checked></div>
+                    <div class="choice-row"><span class="choice-num">④</span><input type="text" class="form-control" placeholder="선지 4"><input type="radio" name="eq_sub_ans_${subId}" value="4"></div>
+                    <div class="choice-row"><span class="choice-num">⑤</span><input type="text" class="form-control" placeholder="선지 5"><input type="radio" name="eq_sub_ans_${subId}" value="5"></div>
+                </div>
+
+                <div id="eq-sub-essay-${subId}" class="essay-container" style="display:none; background:#fff; padding:15px; border-radius:8px; border:1px solid #ddd;">
+                    <div class="form-group mb-10">
+                        <label style="color:var(--navy);"><i class="fas fa-key"></i> 핵심 채점 키워드</label>
+                        <input type="text" class="form-control" placeholder="예: 상호 이타주의">
+                    </div>
+                    <div class="form-group mb-0">
+                        <label class="text-orange"><i class="fas fa-check-double"></i> 강사의 모범 답안</label>
+                        <textarea class="form-control" rows="2" placeholder="모범 답안 작성"></textarea>
+                    </div>
+                </div>
+            `;
+            container.appendChild(subBlock);
+        }
+
+        function toggleExamSubQType(subId) {
+            const type = document.querySelector(`input[name="eq_sub_type_${subId}"]:checked`).value;
+            const mcOptions = document.getElementById(`eq-sub-mc-${subId}`);
+            const essayOptions = document.getElementById(`eq-sub-essay-${subId}`);
+            
+            if (type === 'essay') {
+                mcOptions.style.display = 'none';
+                essayOptions.style.display = 'block';
+            } else {
+                mcOptions.style.display = 'block';
+                essayOptions.style.display = 'none';
+            }
+        }
+
+        function saveExam() {
+            if(examQCount === 0) {
+                alert("최소 1개 이상의 문항을 추가해야 합니다.");
+                return;
+            }
+            const prefix = document.getElementById('exam-prefix').value;
+            const title = document.getElementById('exam-title-input').value;
+            const fullTitle = prefix + title;
+            console.log("Saving exam title:", fullTitle);
+            
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+        
+        function addRangeAssignment() {
+            const container = document.getElementById('range-assignment-container');
+            const row = document.createElement('div');
+            row.className = 'range-row flex-between align-center mb-10';
+            row.style = 'background:white; padding:15px; border-radius:8px; border:1px dashed #ffcc80;';
+            row.innerHTML = `
+                <div style="display:flex; align-items:center; gap:15px; flex:1;">
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <input type="number" class="form-control" style="width:70px; text-align:center;" min="1" placeholder="시작"> 번 ~
+                        <input type="number" class="form-control" style="width:70px; text-align:center;" min="1" placeholder="끝"> 번
+                    </div>
+                    <select class="form-control" style="width:120px;">
+                        <option value="RC">독해 (RC)</option>
+                        <option value="GR" selected>문법 (GR)</option>
+                        <option value="VO">어휘 (VO)</option>
+                        <option value="SC">논리 (SC)</option>
+                    </select>
+                    <select class="form-control" style="width:150px;">
+                        <option>담당 강사 선택</option>
+                        <option>박진규 (대표강사)</option>
+                        <option selected>이수아 (문법전담)</option>
+                        <option>박준형 (조교)</option>
+                    </select>
+                </div>
+                <button class="btn-sm btn-outline-gray" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(row);
+        }
+
+        // Initialize with default 1 question
+        window.onload = () => {
+            addExamQuestion();
+        };
+    </script>
+</body>
+</html>

@@ -3,156 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KATCH - Premium OMR</title>
+<title>KATCH OMR</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Pretendard',sans-serif;background:#f5f7f9;color:#111;line-height:1.5}
+body{font-family:'Pretendard',sans-serif;background:#f0f2f7;color:#111}
 a{text-decoration:none;color:inherit}
-button{cursor:pointer;font-family:inherit;outline:none}
-:root{--nv:#1a2639;--pk:#E91E63;--gd:#D4AF37;--or:#e65100;--id:#303f9f}
-
-/* HEADER */
-.hd{background:#fff;padding:0 30px;height:64px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;box-shadow:0 4px 20px rgba(0,0,0,.04)}
-.logo{font-family:'Noto Serif KR', serif;font-weight:900;font-size:24px;color:var(--nv);letter-spacing:-1px}.logo span{color:var(--pk)}
-.hdr{display:flex;align-items:center;gap:12px}
-.fc{background:#fffaf0;color:var(--or);border:1px solid #ffe0b2;padding:6px 16px;border-radius:30px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:6px}
-.tmr{background:#111;color:#fff;border:none;padding:8px 20px;border-radius:30px;font-weight:800;font-size:16px;font-family:monospace;display:flex;align-items:center;gap:8px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
-.tmr.w{background:#d32f2f;animation:bl 1s infinite}
+button{cursor:pointer;font-family:inherit}
+:root{--nv:#1A237E;--pk:#E91E63;--gd:#FFD54F;--or:#F57C00;--id:#5C6BC0}
+.hd{background:#fff;border-bottom:1px solid #e0e4e8;padding:0 24px;height:58px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.logo{font-weight:900;font-size:20px;color:var(--nv)}.logo span{color:var(--pk)}
+.hdr{display:flex;align-items:center;gap:10px}
+.fc{background:#fff3e0;color:var(--or);border:none;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px}
+.tmr{background:linear-gradient(135deg,var(--nv),#3949AB);color:#fff;border:none;padding:7px 16px;border-radius:25px;font-weight:900;font-size:15px;font-family:monospace;display:flex;align-items:center;gap:7px}
+.tmr.w{background:linear-gradient(135deg,#e53935,#c62828);animation:bl 1s infinite}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:.7}}
-.bhs{background:var(--nv);color:#fff;border:none;padding:9px 24px;border-radius:30px;font-weight:800;font-size:15px;transition:0.2s}
-.bhs:hover{background:#111;transform:translateY(-1px)}
-
-/* TABS */
-.tabs{background:#fff;display:flex;justify-content:center;padding:15px 0;border-bottom:1px solid #eaeaea;gap:10px}
-.tt{padding:12px 24px;font-size:15px;font-weight:800;border:none;background:#f0f2f5;color:#666;border-radius:30px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px}
-.tt:hover{background:#e2e6eb;color:#111}
-.tt.on{background:var(--nv);color:#fff;box-shadow:0 6px 15px rgba(26,38,57,.2)}
-.tbg{display:inline-block;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:900;background:rgba(255,255,255,0.2)}
-.tt.on .tbg{color:#fff}
-.tt:not(.on) .tbg{background:#ddd;color:#555}
-
-/* TOP BANNER */
-.ib{background:var(--nv);color:#fff;padding:25px 30px;border-bottom:3px solid var(--gd)}
-.ii{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
-.itl{font-size:24px;font-weight:900;margin-bottom:6px;letter-spacing:-1px}
-.imt{font-size:14px;color:#aab4c3;font-weight:500}
-.isr{display:flex;gap:15px}
-.ibs{text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:12px 24px;border-radius:12px;min-width:80px}
-.ibs .n{font-size:24px;font-weight:900;margin-bottom:2px}.ibs .l{font-size:12px;color:#aab4c3;font-weight:600}
-
-/* PROGRESS BAR */
-.pb{background:#eaeaea;height:6px}
-.pf{height:100%;background:linear-gradient(90deg,var(--gd),#ffb74d);width:0%;transition:width .5s cubic-bezier(0.4, 0, 0.2, 1);border-radius:0 4px 4px 0}
-
-/* MAIN STRUCTURE */
-.mw{max-width:1200px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:1fr 300px;gap:25px;align-items:start}
-@media(max-width:900px){.mw{grid-template-columns:1fr}}
-
-/* SECTIONS */
-.scard{background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.04);border:1px solid #eaeaea;margin-bottom:25px;overflow:hidden}
-.shed{padding:18px 25px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #f0f0f0;background:#fafbff}
-.sbd{font-size:13px;font-weight:900;padding:6px 16px;border-radius:20px;letter-spacing:1px}
+.bhs{background:var(--nv);color:#fff;border:none;padding:8px 20px;border-radius:20px;font-weight:900;font-size:14px}
+.tabs{background:#fff;border-bottom:2px solid #e0e4e8;display:flex;justify-content:center}
+.tt{padding:13px 42px;font-size:15px;font-weight:800;border:none;background:none;color:#aaa;border-bottom:3px solid transparent;cursor:pointer}
+.tt.on{color:var(--nv);border-bottom-color:var(--nv);background:#f8f9ff}
+.tbg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin-left:7px;font-weight:900}
+.tgvr{background:#e3f2fd;color:#0d47a1}.tmt{background:#fce4ec;color:#880e4f}.tsc{background:#e8eaf6;color:#1a237e}
+.ib{background:linear-gradient(135deg,#0d1b5e,var(--nv) 60%,#3949AB);color:#fff;padding:16px 24px}
+.ii{max-width:1220px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.itl{font-size:19px;font-weight:900;margin-bottom:3px}
+.imt{font-size:12px;opacity:.8}
+.isr{display:flex;gap:12px}
+.ibs{text-align:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:9px 16px;border-radius:10px;min-width:68px}
+.ibs .n{font-size:20px;font-weight:900}.ibs .l{font-size:11px;opacity:.8}
+.pb{background:rgba(255,255,255,.15);height:5px}
+.pf{height:100%;background:linear-gradient(90deg,var(--gd),var(--pk));width:0%;transition:width .4s;border-radius:0 4px 4px 0}
+.mw{max-width:1220px;margin:22px auto;padding:0 20px;display:grid;grid-template-columns:1fr 278px;gap:18px;align-items:start}
+@media(max-width:880px){.mw{grid-template-columns:1fr}}
+.scard{background:#fff;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid #e0e4e8;margin-bottom:18px;overflow:hidden}
+.shed{padding:13px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f0f0f0;background:#fafbff}
+.sbd{font-size:12px;font-weight:900;padding:5px 13px;border-radius:20px;letter-spacing:1px}
 .glc{background:#e3f2fd;color:#0d47a1}.ggr{background:#f3e5f5;color:#6a1b9a}.gvo{background:#e8f5e9;color:#1b5e20}.grc{background:#fff3e0;color:#e65100}.gmt{background:#fce4ec;color:#880e4f}.gsc{background:#e8eaf6;color:#1a237e}
-.stl{font-size:16px;font-weight:900;color:#111}
-.ssu{font-size:12px;color:#888;margin-left:auto;font-weight:600}
-.bfd{background:#f0f2f5;border:none;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;color:#555;transition:0.2s}
-.bfd:hover{background:#e2e6eb;color:#111}
-.sbdy{padding:10px 25px 25px;overflow:hidden;max-height:9999px;transition:max-height .4s}
-.sbdy.fd{max-height:0!important;padding:0 25px}
-
+.stl{font-size:15px;font-weight:800;color:#111}
+.ssu{font-size:11px;color:#888;margin-left:auto}
+.bfd{background:#fff;border:1px solid #ddd;padding:5px 13px;border-radius:20px;font-size:12px;font-weight:700;color:#555}
+.sbdy{padding:6px 20px;overflow:hidden;max-height:9999px;transition:max-height .4s}
+.sbdy.fd{max-height:0!important;padding:0 20px}
 /* ROWS */
-.qrow{display:flex;align-items:center;min-height:76px;border-bottom:1px dashed #f0f0f0;padding:12px 0;transition:all .2s;border-radius:8px;margin-bottom:4px}
-.qrow:last-child{border-bottom:none;margin-bottom:0}
-.qrow:hover{background:#fdfdfd;box-shadow:0 2px 10px rgba(0,0,0,0.02);transform:translateX(5px)}
-.qrow.fbg{background:#fffaf0;border-color:#ffe0b2}
-.qnum{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#888;flex-shrink:0;margin-right:20px;background:#f0f2f5;transition:all .3s}
-.qnum.qa{background:var(--nv);color:#fff;box-shadow:0 4px 10px rgba(26,38,57,0.2)}.qnum.qf{background:var(--or);color:#fff;box-shadow:0 4px 10px rgba(230,81,0,0.2)}
-
+.qrow{display:flex;align-items:center;min-height:60px;border-bottom:1px solid #f5f5f5;padding:5px 0;transition:background .15s}
+.qrow:last-child{border-bottom:none}
+.qrow:hover{background:#fafcff}
+.qrow.fbg{background:#fffde7}
+.qnum{width:33px;height:33px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;margin-right:16px;background:#bdbdbd;transition:background .2s}
+.qnum.qa{background:var(--nv)}.qnum.qf{background:var(--or)}
 /* OVALS */
-.chs{display:flex;gap:12px;align-items:center}
-.ow{display:flex;flex-direction:column;align-items:center;gap:6px}
-.olb{font-size:11px;font-weight:800;color:#aaa}
-.oval{width:32px;height:42px;border-radius:16px;border:2px solid #e0e4e8;background:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 4px rgba(0,0,0,0.02)}
-.oval:hover{border-color:#b0bec5;background:#f8f9fa;transform:translateY(-2px)}
-.oval.mk{background:var(--nv)!important;border-color:var(--nv)!important;box-shadow:0 6px 12px rgba(26,38,57,.3);transform:translateY(-2px)}
-.oval.omt{width:34px;height:46px;border-radius:17px}
-.oval.omt.mk{background:#880e4f!important;border-color:#880e4f!important;box-shadow:0 6px 12px rgba(136,14,79,.3)}
-.oval.osc{width:34px;height:40px;border-radius:20px}
-.oval.osc.mk{background:var(--id)!important;border-color:var(--id)!important;box-shadow:0 6px 12px rgba(48,63,159,.3)}
-
+.chs{display:flex;gap:9px;align-items:center}
+.ow{display:flex;flex-direction:column;align-items:center;gap:3px}
+.olb{font-size:10px;font-weight:800;color:#aaa}
+.oval{width:28px;height:48px;border-radius:14px;border:2px solid #d0d0d0;background:#fff;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;user-select:none}
+.oval:hover{border-color:#90a4ae;background:#f0f4ff;transform:scaleY(1.06)}
+.oval.mk{background:var(--nv)!important;border-color:var(--nv)!important;color:#fff!important;box-shadow:0 4px 10px rgba(26,35,126,.35);transform:scaleY(1.08)}
+.oval.omt{width:30px;height:52px;border-radius:15px}
+.oval.omt.mk{background:#880e4f!important;border-color:#880e4f!important}
+.oval.osc{width:30px;height:46px;border-radius:15px}
+.oval.osc.mk{background:var(--id)!important;border-color:var(--id)!important}
 /* ESSAY */
-.qrow.es{min-height:100px;align-items:flex-start;padding:20px 0}
-.etag{font-size:12px;font-weight:900;color:var(--id);background:#e8eaf6;padding:6px 14px;border-radius:8px;margin-right:15px;flex-shrink:0;align-self:flex-start;margin-top:2px}
+.qrow.es{min-height:80px;align-items:flex-start;padding:10px 0}
+.etag{font-size:11px;font-weight:900;color:#fff;background:var(--id);padding:4px 10px;border-radius:5px;margin-right:10px;flex-shrink:0;align-self:center;white-space:nowrap}
 .ew{flex:1}
-.eta{width:100%;padding:14px 18px;border:2px solid #eaeaea;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:15px;resize:vertical;min-height:64px;line-height:1.6;color:#111;background:#fff;transition:all .3s}
-.eta:focus{outline:none;border-color:var(--nv);box-shadow:0 4px 15px rgba(26,38,57,0.1)}
-.eta::placeholder{color:#ccc}
-
+.eta{width:100%;padding:10px 13px;border:2px solid #e0e0e0;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:14px;resize:vertical;min-height:54px;line-height:1.5;color:#111;background:#fff;transition:border-color .2s}
+.eta:focus{outline:none;border-color:var(--id);box-shadow:0 0 0 3px rgba(92,107,192,.12)}
+.eta::placeholder{color:#bbb}
 /* CONTROLS */
 .sp{flex:1}
-.flgb{background:none;border:none;font-size:18px;color:#cfd8dc;padding:6px 10px;border-radius:8px;transition:.2s;line-height:1;margin-left:15px}
+.flgb{background:none;border:none;font-size:16px;color:#ddd;padding:4px 8px;border-radius:6px;transition:.2s;line-height:1}
 .flgb:hover{color:var(--or);background:#fff3e0}
 .flgb.on{color:var(--or)}
-.adot{width:10px;height:10px;border-radius:50%;background:#4CAF50;margin-left:12px;opacity:0;transition:opacity .3s;box-shadow:0 0 8px rgba(76,175,80,0.4)}
+.adot{width:8px;height:8px;border-radius:50%;background:#4CAF50;margin-left:8px;opacity:0;transition:opacity .2s}
 .qrow.ok .adot{opacity:1}
-
 /* SIDEBAR */
-.si{position:sticky;top:85px}
-.sic{background:#fff;border-radius:16px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.04);border:1px solid #eaeaea;margin-bottom:20px}
-.sit{font-size:16px;font-weight:900;color:#111;margin-bottom:18px;display:flex;align-items:center;gap:8px;letter-spacing:-0.5px}
-.cps{display:flex;gap:10px;margin-bottom:15px}
-.cp{flex:1;text-align:center;padding:12px 5px;border-radius:12px;border:1px solid #e0e4e8;background:#fafbff}
-.cp .cn{font-size:24px;font-weight:900;margin-bottom:4px;font-family:monospace}.cp .cl{font-size:12px;color:#777;font-weight:700}
-.cpa{background:#e8eaf6;border-color:#c5cae9}.cpa .cn{color:var(--nv)}
-.cpr .cn{color:#999}
-.cpf{background:#fffaf0;border-color:#ffe0b2}.cpf .cn{color:var(--or)}
-.mmap{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.mc{height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;cursor:pointer;border:1px solid #e0e4e8;color:#aaa;background:#f9fafc;transition:all .2s}
-.mc:hover{background:#e8eaf6;color:var(--nv);border-color:#c5cae9}
-.mc.ma{background:var(--nv);color:#fff;border-color:var(--nv);box-shadow:0 4px 10px rgba(26,38,57,0.2)}
-.mc.mf{background:var(--or);color:#fff;border-color:var(--or);box-shadow:0 4px 10px rgba(230,81,0,0.2)}
+.si{position:sticky;top:70px}
+.sic{background:#fff;border-radius:14px;padding:19px;box-shadow:0 4px 18px rgba(0,0,0,.05);border:1px solid #e0e4e8;margin-bottom:15px}
+.sit{font-size:14px;font-weight:900;color:#111;margin-bottom:13px;display:flex;align-items:center;gap:7px}
+.cps{display:flex;gap:8px;margin-bottom:13px}
+.cp{flex:1;text-align:center;padding:9px 5px;border-radius:10px;border:1px solid #e0e0e0}
+.cp .cn{font-size:21px;font-weight:900}.cp .cl{font-size:10px;color:#888;font-weight:700}
+.cpa{background:#e8eaf6;border-color:#90caf9}.cpa .cn{color:var(--nv)}
+.cpr .cn{color:#bbb}
+.cpf{background:#fff3e0;border-color:#ffe0b2}.cpf .cn{color:var(--or)}
+.mmap{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.mc{height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #e0e0e0;color:#aaa;background:#fff;transition:.15s}
+.mc:hover{background:#e8eaf6;color:var(--nv)}
+.mc.ma{background:var(--nv);color:#fff;border-color:var(--nv)}
+.mc.mf{background:#fff3e0;color:var(--or);border-color:#ffe0b2}
 .mc.me{background:#e8eaf6;color:var(--id);border-color:#c5cae9}
-.bsub{width:100%;padding:18px;border:none;background:var(--nv);color:#D4AF37;border-radius:14px;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 25px rgba(26,38,57,.3);transition:.3s;border:2px solid var(--gd)}
-.bsub:hover{background:var(--gd);color:var(--nv);border-color:var(--nv);transform:translateY(-2px)}
-
+.bsub{width:100%;padding:15px;border:none;background:linear-gradient(135deg,var(--pk),#C21045);color:#fff;border-radius:12px;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 18px rgba(233,30,99,.3);transition:.2s}
+.bsub:hover{transform:translateY(-2px)}
 /* MODAL */
-.modov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.modov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
 .modov.sh{display:flex}
-.modb{background:#fff;border-radius:24px;padding:50px 40px;text-align:center;max-width:440px;width:90%;animation:popin .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);box-shadow:0 20px 60px rgba(0,0,0,0.2)}
-@keyframes popin{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-.modb h3{font-size:26px;font-weight:900;margin-bottom:15px;color:#111}
-.modb p{font-size:16px;color:#666;line-height:1.6;margin-bottom:30px}
-.mbtns{display:flex;gap:12px}
-.mbtns button{flex:1;padding:16px;border-radius:12px;font-size:16px;font-weight:800;border:none;transition:0.2s}
-.bno{background:#f0f2f5;color:#555}.bno:hover{background:#e2e6eb}
-.byes{background:var(--pk);color:#fff;box-shadow:0 6px 15px rgba(233,30,99,0.3)}.byes:hover{background:#d81b60;transform:translateY(-2px)}
-.bgo{display:block;padding:16px;border-radius:12px;font-weight:900;font-size:16px;text-align:center;margin-top:10px;transition:0.2s;text-decoration:none}
-.bgo.pk{background:var(--pk);color:#fff;box-shadow:0 6px 15px rgba(233,30,99,0.3)}.bgo.pk:hover{background:#d81b60;transform:translateY(-2px)}
-.bgo.gy{background:#f0f2f5;color:#555}.bgo.gy:hover{background:#e2e6eb}
+.modb{background:#fff;border-radius:20px;padding:42px 38px;text-align:center;max-width:430px;width:90%;animation:popin .3s ease}
+@keyframes popin{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.modb h3{font-size:23px;font-weight:900;margin-bottom:11px}
+.modb p{font-size:15px;color:#555;line-height:1.6;margin-bottom:24px}
+.mbtns{display:flex;gap:10px}
+.mbtns button{flex:1;padding:13px;border-radius:10px;font-size:15px;font-weight:700;border:none}
+.bno{background:#f0f0f0;color:#555}.byes{background:var(--pk);color:#fff}
+.bgo{display:block;padding:13px;border-radius:10px;font-weight:900;font-size:15px;text-align:center;margin-top:8px}
 </style>
 </head>
 <body>
-<header class="hd">
-<a href="my_learning.html" class="logo">KATCH<span>.</span></a>
-<div class="hdr">
-<div class="fc"><i class="fas fa-flag"></i>&nbsp;<span id="FLT">0</span></div>
-<div class="tmr" id="TMER"><i class="fas fa-clock"></i>&nbsp;<span id="TDS">50:00</span></div>
-<button class="bhs" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;제출</button>
-</div>
-</header>
+<!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
+        <div class="container flex-between align-center">
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+            </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="level_test.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+    </header>
 <div class="tabs">
-<button class="tt on" id="tab-GVR" onclick="SW('GVR')">GVR <span class="tbg tgvr">a~d &middot; 4지</span></button>
-<button class="tt" id="tab-MT" onclick="SW('MT')">MT / Mini Test <span class="tbg tmt">&#9312;~&#9316; &middot; 5지</span></button>
-<button class="tt" id="tab-SC" onclick="SW('SC')">SC / Sentence Completion <span class="tbg tsc">A~F &middot; 6지</span></button>
+<button class="tt on" id="tab-GVR" onclick="SW('GVR')">GVR 과제 <span class="tbg tgvr">a~d &middot; 4지</span></button>
+<button class="tt"    id="tab-MT"  onclick="SW('MT')">미니테스트 (MT) <span class="tbg tmt">&#9312;~&#9316; &middot; 5지</span></button>
+<button class="tt"    id="tab-SC"  onclick="SW('SC')">Sentence Completion (SC) <span class="tbg tsc">A~F &middot; 6지</span></button>
 </div>
 <div class="ib">
 <div class="ii">
-<div><div class="itl" id="TTLB">GVR AT 6회차 &mdash; OMR 마킹 시트</div><div class="imt">응시일: 2026.03.12 | 제출기한: 2026.03.13 23:59</div></div>
+<div><div class="itl" id="TTLB">GVR AT 6회차 &mdash; OMR 마킹 시트</div><div class="imt">응시일: 2026.03.12 | 제출&#44592;&#54620;: 2026.03.13 23:59</div></div>
 <div class="isr">
 <div class="ibs"><div class="n" id="SA">0</div><div class="l">응답</div></div>
-<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">미응답</div></div>
+<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">&#48120;응답</div></div>
 <div class="ibs"><div class="n" id="STOT" style="color:var(--gd)">40</div><div class="l">총 문항</div></div>
 </div>
 </div>
@@ -165,7 +169,7 @@ button{cursor:pointer;font-family:inherit;outline:none}
 <div class="sit"><i class="fas fa-chart-pie" style="color:var(--nv)"></i>&nbsp;진행 현황</div>
 <div class="cps">
 <div class="cp cpa"><div class="cn" id="SBA">0</div><div class="cl">응답</div></div>
-<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">미응답</div></div>
+<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">&#48120;응답</div></div>
 <div class="cp cpf"><div class="cn" id="SBF">0</div><div class="cl">플래그</div></div>
 </div>
 </div>
@@ -173,31 +177,31 @@ button{cursor:pointer;font-family:inherit;outline:none}
 <div class="sit"><i class="fas fa-map" style="color:var(--nv)"></i>&nbsp;내비게이터</div>
 <div class="mmap" id="MMAP"></div>
 </div>
-<button class="bsub" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;최종 제출하기</button>
+<button class="bsub" onclick="openC()"><i class="fas fa-paper-plane"></i>&nbsp;최종 제출</button>
 </aside>
 </div>
 <div class="modov" id="CMOD">
 <div class="modb">
-<div style="font-size:56px;margin-bottom:15px;text-shadow:0 4px 10px rgba(0,0,0,0.1)">📋</div>
-<h3>답안을 제출하시겠습니까?</h3>
-<p>제출 후에는 기입 내용 수정이 불가합니다.<br>미응답 <strong id="UACNT" style="color:var(--pk)">0</strong>개 &middot; 플래그 <strong id="FACNT" style="color:var(--or)">0</strong>개</p>
+<div style="font-size:50px;margin-bottom:13px">&#128221;</div>
+<h3>&#46813;&#50504;&#51012; 제출&#54616;&#49884;&#44192;&#49845;&#45768;&#44992;?</h3>
+<p>제출 &#54980;&#50640;&#45716; &#49688;&#51221;&#51060; &#48520;&#44032;&#54633;&#45768;&#45796;.<br>&#48120;응답 <strong id="UACNT" style="color:var(--pk)">0</strong>&#44060; &middot; 플래그 <strong id="FACNT" style="color:var(--or)">0</strong>&#44060;</p>
 <div class="mbtns">
 <button class="bno" onclick="closeC()">다시 확인</button>
-<button class="byes" onclick="doSub()">최종 제출</button>
+<button class="byes" onclick="doSub()">제출</button>
 </div>
 </div>
 </div>
 <div class="modov" id="SMOD">
 <div class="modb">
-<div style="font-size:56px;margin-bottom:15px;text-shadow:0 4px 10px rgba(0,0,0,0.1)">🎉</div>
-<h3>제출 완료!</h3>
-<p>답안이 성공적으로 제출되었습니다.<br>채점 결과와 분석 리포트가 곧 제공됩니다.</p>
-<a href="incorrect_note.html" class="bgo pk">오답노트 바로 보기</a>
-<a href="dashboard_online.html" class="bgo gy">대시보드로</a>
+<div style="font-size:50px;margin-bottom:13px">&#127881;</div>
+<h3>제출 &#50756;&#47308;!</h3>
+<p>&#46813;&#50504;&#51060; 제출&#46104;&#50632;&#49845;&#45768;&#45796;.<br>채점이 완료되면 알림을 보내드립니다.</p>
+<a href="review_wrong.html" class="bgo" style="background:var(--nv);color:#fff">오답노트 바로 보기</a>
+<a href="my_learning.html"  class="bgo" style="background:#f0f0f0;color:#555">대시보드로</a>
 </div>
 </div>
 <script>
-var CF={GVR:{title:'GVR AT 6\ud68c\ucc28 \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:40,mod:'',secs:[{id:'lc',bg:'glc',lb:'LC',nm:'Listening Comprehension',f:1,t:10,ch:['a','b','c','d']},{id:'gr',bg:'ggr',lb:'GR',nm:'Grammar',f:11,t:20,ch:['a','b','c','d']},{id:'vo',bg:'gvo',lb:'VO',nm:'Vocabulary',f:21,t:30,ch:['a','b','c','d']},{id:'rc',bg:'grc',lb:'RC',nm:'Reading Comprehension',f:31,t:40,ch:['a','b','c','d'],ef:37}]},MT:{title:'MT / Mini Test \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:45,mod:'omt',secs:[{id:'mt',bg:'gmt',lb:'MT',nm:'MT / Mini Test \uc804\uccb4 \ubb38\ud56d',f:1,t:45,ch:['\u2460','\u2461','\u2462','\u2463','\u2464'],ef:43}]},SC:{title:'SC / Sentence Completion \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:40,mod:'osc',secs:[{id:'sc',bg:'gsc',lb:'SC',nm:'SC / Sentence Completion \uc804\uccb4 \ubb38\ud56d',f:1,t:40,ch:['A','B','C','D','E','F'],ef:38}]}};
+var CF={GVR:{title:'GVR AT 6\ud68c\ucc28 \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:40,mod:'',secs:[{id:'lc',bg:'glc',lb:'LC',nm:'Listening Comprehension',f:1,t:10,ch:['a','b','c','d']},{id:'gr',bg:'ggr',lb:'GR',nm:'Grammar',f:11,t:20,ch:['a','b','c','d']},{id:'vo',bg:'gvo',lb:'VO',nm:'Vocabulary',f:21,t:30,ch:['a','b','c','d']},{id:'rc',bg:'grc',lb:'RC',nm:'Reading Comprehension',f:31,t:40,ch:['a','b','c','d'],ef:37}]},MT:{title:'\ubbf8\ub2c8\ud14c\uc2a4\ud2b8 (MT) \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:45,mod:'omt',secs:[{id:'mt',bg:'gmt',lb:'MT',nm:'\ubbf8\ub2c8\ud14c\uc2a4\ud2b8 (MT) \uc804\uccb4 \ubb38\ud56d',f:1,t:45,ch:['\u2460','\u2461','\u2462','\u2463','\u2464'],ef:43}]},SC:{title:'Sentence Completion (SC) \u2014 OMR \ub9c8\ud0b9 \uc2dc\ud2b8',tot:40,mod:'osc',secs:[{id:'sc',bg:'gsc',lb:'SC',nm:'Sentence Completion (SC) \uc804\uccb4 \ubb38\ud56d',f:1,t:40,ch:['A','B','C','D','E','F'],ef:38}]}};
 var TYP='GVR',ST={};
 function gs(q){if(!ST[q])ST[q]={a:null,e:'',fl:false};return ST[q];}
 function SW(t){TYP=t;ST={};['GVR','MT','SC'].forEach(function(x){document.getElementById('tab-'+x).classList.toggle('on',x===t);});document.getElementById('TTLB').textContent=CF[t].title;BLD();STAT();}

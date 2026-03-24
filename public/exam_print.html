@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 오프라인 시험지(오답노트) 출력</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <style>
+        /* Base Print Typography mimicking CSAT (수능형 바탕체 폰트 권장, 여기서는 웹폰트로 대체) */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap');
+        
+        :root {
+            --font-main: 'Noto Serif KR', 'Batang', '바탕', 'Pretendard', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            background: #525659; /* PDF viewer typical background */
+            color: #000;
+        }
+
+        /* A4 Size Print Layout */
+        @page {
+            size: A4 portrait;
+            margin: 15mm;
+        }
+
+        .paper-container {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            margin: 20px auto;
+            padding: 15mm;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .paper-container { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; }
+            .no-print { display: none !important; }
+        }
+
+        /* Print Controls (Only visible on screen) */
+        .print-controls {
+            text-align: center;
+            padding: 15px;
+            background: #20232a;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+        }
+        .btn-print {
+            background: #E91E63;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-print:hover { background: #d81b60; }
+
+        /* Header Styles */
+        .paper-header {
+            margin-bottom: 20px;
+        }
+        .org-name {
+            text-align: right;
+            font-size: 11pt;
+            font-weight: 900;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+        .title-box {
+            border: 2px solid #000;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .title-box h1 {
+            font-size: 18pt;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #000;
+            text-align: center;
+            font-size: 11pt;
+            font-weight: 700;
+        }
+        .info-table th, .info-table td {
+            border: 1px solid #000;
+            padding: 8px 5px;
+        }
+        .info-table th { background: #f2f2f2; }
+
+        /* 2-Column Layout */
+        .columns-container {
+            column-count: 2;
+            column-gap: 12mm;
+            column-rule: 1px solid #000;
+            text-align: justify;
+            font-size: 10.5pt;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Question Blocks */
+        .question-group-title {
+            font-weight: 900;
+            font-size: 11pt;
+            margin: 15px 0 10px 0;
+            break-after: avoid;
+        }
+        
+        .question-block {
+            break-inside: avoid;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .q-meta {
+            margin-bottom: 5px;
+        }
+        .q-num {
+            font-weight: 900;
+            font-size: 11pt;
+        }
+        .q-type {
+            font-size: 9pt;
+            color: #555;
+            margin-left: 5px;
+        }
+        .q-er {
+            float: right;
+            color: red;
+            font-weight: 900;
+            font-size: 10pt;
+        }
+        .q-text {
+            margin-bottom: 10px;
+        }
+        .q-passage {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+        .q-choices {
+            margin-left: 5px;
+        }
+        .q-choice {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* Fill in the blank underline */
+        .blank {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            width: 40px;
+            margin: 0 5px;
+        }
+        .blank-long {
+            width: 80px;
+        }
+
+        /* Answer Key Table */
+        .answer-key-wrapper {
+            break-inside: avoid;
+            margin-top: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .answer-key {
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 10pt;
+            font-weight: bold;
+            font-family: 'Pretendard', sans-serif;
+            border: 2px solid #000;
+        }
+        .answer-key th, .answer-key td {
+            border: 1px solid #000;
+            padding: 6px 12px;
+        }
+        .answer-key-title {
+            background: #e8e8e8;
+            padding: 5px;
+        }
+        .ak-header th {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-controls no-print">
+        <span><i class="fas fa-print"></i> KATCH 수능형/내신형 시험지 출력 시스템</span>
+        <select style="padding:8px; border-radius:4px; font-family:var(--font-main);">
+            <option>옵션: 정답률(ER) 표시 포함</option>
+            <option>옵션: 학생용 (정답률 미표시)</option>
+        </select>
+        <button class="btn-print" onclick="window.print()">시험지 인쇄하기</button>
+        <a href="problem_bank.html" style="color:white; text-decoration:underline; font-size:14px; margin-left:15px;">돌아가기</a>
+    </div>
+
+    <!-- Page 1 (Front Side) -->
+    <div class="paper-container">
+        
+        <div class="paper-header">
+            <div class="org-name">[KNS 온라인사업부]</div>
+            <div class="title-box">
+                <h1>2026 KNS 외고전사고 GVR67 AT1 오답문항</h1>
+            </div>
+            <table class="info-table">
+                <tr>
+                    <th style="width:10%;">반</th>
+                    <td style="width:30%;">외고전사고</td>
+                    <th style="width:10%;">이름</th>
+                    <td style="width:20%;">김은영</td>
+                    <th style="width:15%;">수험번호</th>
+                    <td style="width:15%;">JTR4648</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="columns-container">
+            
+            <div class="question-group-title">[Questions 1~40] Choose the best answer for the blank.</div>
+
+            <!-- Question 1 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[GR-16]</span>
+                    <span class="q-type">(기본형식 > 3형식)</span>
+                    <span class="q-er">ER: 59%</span>
+                </div>
+                <div class="q-text">
+                    A: How did you get a hold of this information?<br>
+                    B: <span class="blank blank-long"></span> when she sent it.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) I copied Leanne on the email</span>
+                    <span class="q-choice">(b) Leanne emailed a copy me</span>
+                    <span class="q-choice">(c) The email was copied me and Leanne</span>
+                    <span class="q-choice">(d) Leanne copied me on the email</span>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[GR-28]</span>
+                    <span class="q-type">(형용사절 > 유사관계대명사)</span>
+                    <span class="q-er">ER: 14%</span>
+                </div>
+                <div class="q-text">
+                    Legislators may further cut teacher pay, <span class="blank blank-long"></span> many educators will be forced to take a second job.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) in which case</span>
+                    <span class="q-choice">(b) which in case</span>
+                    <span class="q-choice">(c) in case of</span>
+                    <span class="q-choice">(d) of which case</span>
+                </div>
+            </div>
+
+            <div class="question-group-title">[Questions 41~50] Identify the error.</div>
+
+            <!-- Question 3 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[GR-42]</span>
+                    <span class="q-type">(시제 > 완료)</span>
+                    <span class="q-er">ER: 55%</span>
+                </div>
+                <div class="q-text">
+                    (a) A: Have you found that the book of mine that you lost? (b) B: Yes, I've found it behind the washing machine last night. (c) A: How on earth did it get back there? (d) B: I must have been reading it while waiting for the laundry.
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[GR-47]</span>
+                    <span class="q-type">(분사 > 분사)</span>
+                    <span class="q-er">ER: 17%</span>
+                </div>
+                <div class="q-text">
+                    (a) Modern communities are constructed with one very glaring deficit, accorded by some activists. (b) Our most popular social meeting spaces, they say, all emphasize one thing: consumerism. (c) We congregate in coffee shops, at bars, and in shopping malls, all of which emphasize, and typically require, the purchase of goods and services. (d) These activists would have us create new spaces where socialization can occur outside the influence of capitalism.
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[GR-50]</span>
+                    <span class="q-type">(어순 > 도치의 어순)</span>
+                    <span class="q-er">ER: 31%</span>
+                </div>
+                <div class="q-text">
+                    (a) We often think of the Arctic as a relatively desolate region, supporting little life. (b) But some is the fact that 21,000 species of animals, plants, funguses, and microbes call the Arctic home. (c) And all of them are directly threatened by the environmental changes unfolding as a result of global warming. (d) Without urgent action on the part of humans, the biodiversity of an entire eco-zone may be all but annihilated.
+                </div>
+            </div>
+            
+            <div class="question-group-title">[Questions 1~50] Choose the best answer.</div>
+
+            <!-- Question 6 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[VO-26]</span>
+                    <span class="q-er">ER: 54%</span>
+                </div>
+                <div class="q-text">
+                    Driving in icy conditions is dangerous, as tires may <span class="blank blank-long"></span> when brakes are applied.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) slip</span>
+                    <span class="q-choice">(b) trip</span>
+                    <span class="q-choice">(c) rub</span>
+                    <span class="q-choice">(d) skid</span>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[VO-38]</span>
+                    <span class="q-er">ER: 21%</span>
+                </div>
+                <div class="q-text">
+                    Although the <span class="blank blank-long"></span> punishment for littering is a $500 fine, most violators are assessed less than $100.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) redundant</span>
+                    <span class="q-choice">(b) sufficient</span>
+                    <span class="q-choice">(c) excessive</span>
+                    <span class="q-choice">(d) maximum</span>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[VO-44]</span>
+                    <span class="q-er">ER: 43%</span>
+                </div>
+                <div class="q-text">
+                    SymTech's tagging system is guaranteed to <span class="blank blank-long"></span> seamlessly with whatever ad server you currently use.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) integrate</span>
+                    <span class="q-choice">(b) attune</span>
+                    <span class="q-choice">(c) embody</span>
+                    <span class="q-choice">(d) mingle</span>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[VO-46]</span>
+                    <span class="q-er">ER: 21%</span>
+                </div>
+                <div class="q-text">
+                    Many of Dickens' longer works were published in <span class="blank blank-long"></span> form, meted out in weekly installments.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) lenient</span>
+                    <span class="q-choice">(b) serial</span>
+                    <span class="q-choice">(c) buoyant</span>
+                    <span class="q-choice">(d) foregone</span>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[RC-6]</span>
+                    <span class="q-type">(빈칸추론)</span>
+                    <span class="q-er">ER: 14%</span>
+                </div>
+                <div class="q-text">
+                    Unfortunately, the works of writing Women have been slighted in much of the anthologizing of 20th-century Chinese literature, both in China and elsewhere. Yet, more recently, the peremptory nature of their omission has come under scrutiny. Archival research is uncovering the breadth of women-authored literature produced in China throughout the century. It was an era when, as educational prospects for women improved, and literary positions started to open for women, many women Writers, whose Work was subsequently marginalized, <span class="blank blank-long"></span>.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) traveled abroad to promote their famous Works</span>
+                    <span class="q-choice">(b) began to transmit the skills they had learned to others</span>
+                    <span class="q-choice">(c) fought back against those who excluded them</span>
+                    <span class="q-choice">(d) found opportunities to engage in literary production</span>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-block">
+                <div class="q-meta">
+                    <span class="q-num">[RC-9]</span>
+                    <span class="q-type">(빈칸추론)</span>
+                    <span class="q-er">ER: 48%</span>
+                </div>
+                <div class="q-text">
+                    By February of 1864, the tide had already turned in the Union's favor in the U.S. Civil War. Yet it was during this month that the Northern forces fought what, in terms of percentages, became one of their bloodiest encounters. At the Battle of Olustee in northern Florida, 5,500 Union soldiers engaged 5,000 Confederates as the former pushed towards Tallahassee. Once the fighting was done, 203 Union troops lay dead, with 1,152 wounded and another 506 missing. Considering the casualty rate of 265 per 1,000 men, <span class="blank blank-long"></span>.
+                </div>
+                <div class="q-choices">
+                    <span class="q-choice">(a) the number of wounded was higher than usual</span>
+                    <span class="q-choice">(b) reinforcements were quickly sent in to continue the fight</span>
+                    <span class="q-choice">(c) both sides retreated from the battle with heavy losses</span>
+                    <span class="q-choice">(d) Olustee went down as one of the worst Union defeats</span>
+                </div>
+            </div>
+
+        </div> <!-- End of columns -->
+
+        <!-- Answer Key at bottom right -->
+        <div class="answer-key-wrapper">
+            <table class="answer-key">
+                <tr>
+                    <td colspan="6" class="answer-key-title">&lt; 정 답 표 &gt;</td>
+                </tr>
+                <tr class="ak-header">
+                    <th>GR-16</th>
+                    <th>GR-28</th>
+                    <th>GR-42</th>
+                    <th>GR-47</th>
+                    <th>GR-50</th>
+                    <th>VO-26</th>
+                </tr>
+                <tr>
+                    <td>d</td>
+                    <td>a</td>
+                    <td>b</td>
+                    <td>a</td>
+                    <td>b</td>
+                    <td>d</td>
+                </tr>
+                <tr class="ak-header">
+                    <th>VO-38</th>
+                    <th>VO-44</th>
+                    <th>VO-46</th>
+                    <th>RC-6</th>
+                    <th>RC-9</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>d</td>
+                    <td>a</td>
+                    <td>b</td>
+                    <td>d</td>
+                    <td>d</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

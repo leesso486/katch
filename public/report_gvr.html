@@ -2,259 +2,297 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학생 성적 및 오답 분석 대시보드</title>
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - GVR 학습 리포트</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; background: #eef2f5; color: #333; }
-        .dashboard-container { max-width: 1200px; margin: 40px auto; }
-        
-        /* Header */
-        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .dash-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 900; color: #111; }
-        .dash-title i { background: #3c82f6; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-        .student-profile { display: flex; align-items: center; gap: 10px; background: white; padding: 8px 16px; border-radius: 30px; border: 1px solid #e0e4e8; }
-        .student-profile img { width: 32px; height: 32px; border-radius: 50%; }
-        .student-info { font-size: 14px; font-weight: 800; }
-        .student-date { font-size: 12px; color: #888; font-weight: 500; }
-
-        /* Grid */
-        .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .chart-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #ebeeef; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .card-title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        .card-title i { color: #a0aec0; }
-        .chart-legend { display: flex; gap: 15px; font-size: 12px; font-weight: 700; color: #555; }
-        .legend-item { display: flex; align-items: center; gap: 5px; }
-        .legend-color { width: 10px; height: 10px; border-radius: 2px; }
-
-        /* Specific Layouts */
-        .q-rate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .q-col { display: flex; flex-direction: column; gap: 10px; }
-        .q-row { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; }
-        .q-label { width: 25px; color: #555; }
-        .q-bar-wrap { flex: 1; height: 24px; position: relative; display: flex; align-items: center; }
-        .q-bar { height: 100%; background: #3c82f6; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-size: 12px; font-weight: 800; border-radius: 0 4px 4px 0; }
-        
-        /* Quick Nav */
-        .quick-nav { margin-top: 30px; display: flex; gap: 15px; justify-content: center; }
-        .btn-nav { padding: 12px 24px; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 14px; transition: 0.2s; }
-        .btn-nav.primary { background: #1a2639; color: white; }
-        .btn-nav.primary:hover { background: #E91E63; }
-        .btn-nav.secondary { background: white; color: #555; border: 1px solid #ddd; }
-        .btn-nav.secondary:hover { background: #f0f2f5; }
-    </style>
 </head>
-<body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <div class="dash-header">
-            <div class="dash-title">
-                <i class="fas fa-chart-bar"></i> 학생 성적 및 오답 분석 대시보드 (김지민 학생)
+<body class="bg-gray">
+    <!-- Header -->
+    <!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
+        <div class="container flex-between align-center">
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
-            <div class="student-profile">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
-                <div>
-                    <div class="student-info">김지민 학생 <i class="fas fa-chevron-down text-xs" style="color:#aaa;"></i></div>
-                    <div class="student-date">2026.03.03</div>
-                </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
             </div>
-        </div>
-
-        <div class="grid-2x2">
-            
-            <!-- 1. 전체 문항 오답률 현황 (GR 영역) -->
-            <div class="chart-card">
-                <div class="card-header">
-                    <div class="card-title"><i class="fas fa-search"></i> 전체 문항 오답률 현황 (GR 영역)</div>
-                </div>
-                <div class="q-rate-grid">
-                    <!-- Col 1 -->
-                    <div class="q-col">
-                        <div style="font-size:12px; font-weight:800; text-align:center; color:#555; margin-bottom:5px;">전체 문항 오답률 현황</div>
-                        <div class="q-row"><div class="q-label">Q1</div><div class="q-bar-wrap"><div class="q-bar" style="width:29%;">29%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q2</div><div class="q-bar-wrap"><div class="q-bar" style="width:78%;">78%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q3</div><div class="q-bar-wrap"><div class="q-bar" style="width:45%;">45%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q4</div><div class="q-bar-wrap"><div class="q-bar" style="width:45%;">45%</div></div></div>
-                        <div style="font-size:10px; color:#888; text-align:center; margin-top:5px;">0&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;100<br>오답률(%)</div>
-                    </div>
-                    <!-- Col 2 -->
-                    <div class="q-col">
-                        <div style="font-size:12px; font-weight:800; text-align:center; color:#555; margin-bottom:5px;">전체 문항 오답률 현황</div>
-                        <div class="q-row"><div class="q-label">Q4</div><div class="q-bar-wrap"><div class="q-bar" style="width:45%;">45%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q5</div><div class="q-bar-wrap"><div class="q-bar" style="width:67%;">67%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q6</div><div class="q-bar-wrap"><div class="q-bar" style="width:82%;">82%</div></div></div>
-                        <div class="q-row" style="opacity:0;"><div class="q-label"></div><div class="q-bar-wrap"></div></div> <!-- spacer -->
-                        <div style="font-size:10px; color:#888; text-align:center; margin-top:5px;">0&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;100<br>오답률(%)</div>
-                    </div>
-                    <!-- Col 3 -->
-                    <div class="q-col">
-                        <div style="font-size:12px; font-weight:800; text-align:center; color:#555; margin-bottom:5px;">전체 문항 오답률 현황</div>
-                        <div class="q-row"><div class="q-label">Q7</div><div class="q-bar-wrap"><div class="q-bar" style="width:78%;">78%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q8</div><div class="q-bar-wrap"><div class="q-bar" style="width:91%;">91%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q9</div><div class="q-bar-wrap"><div class="q-bar" style="width:63%;">63%</div></div></div>
-                        <div class="q-row"><div class="q-label">Q10</div><div class="q-bar-wrap"><div class="q-bar" style="width:47%;">47%</div></div></div>
-                        <div style="font-size:10px; color:#888; text-align:center; margin-top:5px;">0&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;40&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;80&nbsp;&nbsp;&nbsp;100<br>오답률(%)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. 나의 성적 추이 (최근 5회 과제) -->
-            <div class="chart-card">
-                <div class="card-header">
-                    <div class="card-title"><i class="fas fa-chart-line"></i> 나의 성적 추이 (최근 5회 과제)</div>
-                </div>
-                <!-- Chart.js Canvas -->
-                <div style="height: 220px; width: 100%;">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            </div>
-
-            <!-- 3. 영역별 전체 평균 vs. 나의 평균 비교 -->
-            <div class="chart-card">
-                <div class="card-header">
-                    <div class="card-title"><i class="fas fa-chart-bar"></i> 영역별 전체 평균 vs. 나의 평균 비교</div>
-                </div>
-                <div style="height: 220px; width: 100%;">
-                    <canvas id="avgCompareChart"></canvas>
-                </div>
-            </div>
-
-            <!-- 4. 나의 오답 유형 vs. 전체 오답 유형 TOP 3 -->
-            <div class="chart-card">
-                <div class="card-header">
-                    <div class="card-title"><i class="fas fa-chart-bar"></i> 나의 오답 유형 vs. 전체 오답 유형 TOP 3</div>
-                </div>
-                <div style="display:flex; height:220px; gap:10px;">
-                    <!-- Subchart 1: 오답률 (%) 전체-->
-                    <div style="flex:1; position:relative;">
-                        <div style="text-align:center; font-size:12px; font-weight:800; background:#eef2f5; padding:4px; border-radius:4px; margin-bottom:10px;">**오답률 (%)</div>
-                        <canvas id="typeChart1"></canvas>
-                    </div>
-                    <!-- Subchart 2: 나의 오답률 (%) -->
-                    <div style="flex:1; position:relative;">
-                        <div style="text-align:center; font-size:12px; font-weight:800; background:#fff3e0; padding:4px; border-radius:4px; margin-bottom:10px; color:#e65100;">나의 오답률 (%)</div>
-                        <canvas id="typeChart2"></canvas>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="quick-nav">
-            <a href="dashboard_online.html" class="btn-nav secondary">대시보드 메인</a>
-            <a href="incorrect_note.html" class="btn-nav primary"><i class="fas fa-book-open"></i> 학생 오답노트 (인쇄용) 보기</a>
         </div>
     </div>
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="level_test.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+    </header>
 
+    <div class="report-container pt-40 pb-60">
+        <!-- Report Header -->
+        <div class="report-header">
+            <div class="flex-between align-end">
+                <div>
+                    <h1 class="student-name">이재은 <span class="student-id">| JTR4648</span></h1>
+                    <p class="report-subtitle">2026 KATCH 최상위 예비고1반 GVR 학습 데이터</p>
+                </div>
+                <div class="tag-badge bg-navy text-white">온라인사업부</div>
+            </div>
+        </div>
+
+        <div class="report-body mt-30">
+            <!-- Information Box -->
+            <div class="info-box-blue mb-30" style="background:#f0f4ff; border-left:4px solid var(--navy); padding:20px; border-radius:8px;">
+                <h3 style="color:var(--navy); font-size:18px; margin-bottom:10px;">GVR이란?</h3>
+                <p style="font-size:14px; color:#555; line-height:1.6;">4가지 영역(LISTENING, GRAMMAR, VOCABULARY, READING)으로 구분된 KATCH만의 최상위반 전용 교재입니다. 국내 유일 공인인증문법 시험형 (구 TEPS 시험 유형)을 통한 고난이도 문제(빈칸, 문장삽입, 추론 등)를 반복적으로 풀어보며 수능 킬러문항에 대한 내성을 기를 수 있습니다.</p>
+            </div>
+
+            <!-- Chart Section 1 -->
+            <div class="report-section mb-30">
+                <div class="section-title-bubble" style="background:var(--navy); color:white; display:inline-block; padding:8px 20px; border-radius:30px; font-weight:bold; font-size:16px; margin-bottom:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">2월 GVR68 성적 추이</div>
+                <div class="flex-row gap-20">
+                    <!-- Bar Chart -->
+                    <div class="chart-col flex-2 bg-white rounded-10 p-20 shadow-sm relative">
+                        <canvas id="gvrTrendChart" style="width:100%; height:280px;"></canvas>
+                    </div>
+
+                    <!-- Side Table -->
+                    <div class="table-col flex-1 bg-white rounded-10 p-20 shadow-sm">
+                        <div class="flex-between mb-15">
+                            <span class="badge-pill" style="background:#f1f3f5; color:#555; padding:5px 15px; border-radius:20px; font-size:12px; font-weight:bold;">영역별 평균</span>
+                            <span class="badge-pill bg-navy text-white text-xs px-15 py-5 rounded-20 font-bold">학생 평균</span>
+                        </div>
+                        <table class="report-table text-center mb-20">
+                            <tbody>
+                                <tr><th class="bg-gray-200">LC</th><td>27</td><th class="bg-gray-200">LC</th><td>28</td></tr>
+                                <tr><th class="bg-light-purple" style="background:#e8eaf6;">GR</th><td>44</td><th class="bg-light-purple" style="background:#e8eaf6;">GR</th><td>45</td></tr>
+                                <tr><th class="bg-gray-200">VO</th><td>23</td><th class="bg-gray-200">VO</th><td>23</td></tr>
+                                <tr><th class="bg-light-purple" style="background:#e8eaf6;">RC</th><td>18</td><th class="bg-light-purple" style="background:#e8eaf6;">RC</th><td>19</td></tr>
+                            </tbody>
+                        </table>
+                        <ul class="text-xs text-gray-600 line-h-16">
+                            <li>※ LC : 전체 60문항 중 30문항 학생 과제 진행 (30/60)</li>
+                            <li>※ GR : 전체 50문항 중 50문항 학생 과제 진행 (50/50)</li>
+                            <li>※ VO : 전체 50문항 중 25문항 학생 과제 진행 (25/50)</li>
+                            <li>※ RC : 전체 40문항 중 20문항 학생 과제 진행 (20/40)</li>
+                        </ul>
+                        <p class="text-xs mt-10 text-gray-500">과제 및 자기주도학습이므로 학생들의 경우 점수가 다소 높게 측정되었을 수 있습니다. 영역별 점수와 평균은 참고용으로만 활용해 주세요.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Columns Section -->
+            <div class="flex-row gap-20">
+                <!-- Top 3 Incorrect Types -->
+                <div class="flex-1 bg-white rounded-10 p-20 shadow-sm relative">
+                    <div class="section-title-bubble absolute-top" style="background:var(--navy); color:white; display:inline-block; padding:8px 20px; border-radius:30px; font-weight:bold; font-size:16px; position:absolute; top:-15px; left:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">GVR68 전체 오답률 TOP3 유형</div>
+                    <div class="pt-30">
+                        <div class="text-center mb-10 mt-10"><span class="badge-pill text-white text-xs px-15 py-5 mx-auto" style="background:var(--navy); border-radius:20px;">GR</span></div>
+                        <div class="hz-bar-group">
+                            <div class="hz-label">단어Level</div>
+                            <div class="hz-bar-wrap">
+                                <div class="hz-bar bg-cool-blue" style="width: 18%; background:#2196F3;"><span>오답률(%) 18</span></div>
+                                <span class="hz-val absolute-left">누적 오답 5건</span>
+                            </div>
+                        </div>
+                        <div class="hz-bar-group">
+                            <div class="hz-label">수일치</div>
+                            <div class="hz-bar-wrap">
+                                <div class="hz-bar bg-cool-blue" style="width: 17%; background:#2196F3;"><span>오답률(%) 17</span></div>
+                                <span class="hz-val absolute-left">누적 오답 4건</span>
+                            </div>
+                        </div>
+                        <div class="hz-bar-group">
+                            <div class="hz-label">어순</div>
+                            <div class="hz-bar-wrap">
+                                <div class="hz-bar bg-cool-blue" style="width: 9%; background:#2196F3;"><span>오답률(%) 9</span></div>
+                                <span class="hz-val absolute-left">누적 오답 2건</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-30 mb-10"><span class="badge-pill text-white text-xs px-15 py-5 mx-auto" style="background:var(--navy); border-radius:20px;">RC</span></div>
+                        <div class="hz-bar-group">
+                            <div class="hz-label">빈칸추론</div>
+                            <div class="hz-bar-wrap">
+                                <div class="hz-bar bg-light-purple" style="width: 12%; background:#E91E63;"><span>오답률(%) 12</span></div>
+                                <span class="hz-val absolute-left">누적 오답 4건</span>
+                            </div>
+                        </div>
+                        <div class="hz-bar-group">
+                            <div class="hz-label">연결사</div>
+                            <div class="hz-bar-wrap">
+                                <div class="hz-bar bg-light-purple" style="width: 29%; background:#E91E63;"><span>오답률(%) 29</span></div>
+                                <span class="hz-val absolute-left">누적 오답 9건</span>
+                            </div>
+                        </div>
+                        <div class="hz-bar-group">
+                            <div class="hz-label">주제</div>
+                            <div class="hz-bar-wrap">
+                                <div class="hz-bar bg-light-purple" style="width: 9%; background:#E91E63;"><span>오답률(%) 9</span></div>
+                                <span class="hz-val absolute-left">누적 오답 2건</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Incorrect Details Table -->
+                <div class="flex-1 bg-white rounded-10 p-20 shadow-sm relative">
+                    <div class="section-title-bubble absolute-top" style="background:var(--navy); color:white; display:inline-block; padding:8px 20px; border-radius:30px; font-weight:bold; font-size:16px; position:absolute; top:-15px; left:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생 영역별 오답 유형 데이터</div>
+                    <div class="pt-30 mt-10">
+                        <table class="detail-table text-center text-sm w-full">
+                            <thead>
+                                <tr>
+                                    <th width="10%" class="bg-navy text-white" style="background:var(--navy); color:white;">영역</th>
+                                    <th width="15%" class="bg-gray-100">순위</th>
+                                    <th width="25%" class="bg-gray-100">유형</th>
+                                    <th width="20%" class="bg-gray-100">오답률(%)</th>
+                                    <th width="30%" class="bg-gray-100">오답 상세</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="5" class="bg-light-purple font-bold" style="background:#e8eaf6;">GR</td>
+                                    <td>1</td><td>단어 Level</td><td>23%</td><td>누적 10개 오답 (총 42문제 중)</td>
+                                </tr>
+                                <tr><td>2</td><td>수일치</td><td>13%</td><td>누적 3개 오답 (총 23문제 중)</td></tr>
+                                <tr><td>3</td><td>가정법</td><td>28%</td><td>누적 2개 오답 (총 7문제 중)</td></tr>
+                                <tr><td>4</td><td>수동태</td><td>18%</td><td>누적 2개 오답 (총 11문제 중)</td></tr>
+                                <tr><td>5</td><td>시제</td><td>8%</td><td>누적 2개 오답 (총 25문제 중)</td></tr>
+                            </tbody>
+                        </table>
+
+                        <table class="detail-table text-center text-sm w-full mt-20">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" class="bg-light-purple font-bold" style="background:#e8eaf6;" width="10%">RC</td>
+                                    <td width="15%">1</td><td width="25%">빈칸추론</td><td width="20%">5%</td><td width="30%">누적 4개 오답 (총 70문제 중)</td>
+                                </tr>
+                                <tr><td>2</td><td>연결사</td><td>20%</td><td>누적 2개 오답 (총 10문제 중)</td></tr>
+                                <tr><td>3</td><td>-</td><td>-</td><td>-</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="text-xs text-right mt-15 text-gray-500">* [단어Level] 유형은 단어의 품사 관련 문제입니다.</p>
+                        <p class="text-sm text-center font-bold mt-15 bg-gray-100 p-10 rounded" style="background:#fff9e6; color:#f57c00; padding:15px; border-radius:8px; border:1px solid #ffe0b2;">이번주 VO 누적 오답률은 7%입니다. (전체 125문항 중 9문항 오답)</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- Descriptive Example Added -->
+            <div class="report-section mt-30 bg-white rounded-10 p-20 shadow-sm relative">
+                <div class="section-title-bubble absolute-top" style="background:var(--navy); color:white; display:inline-block; padding:8px 20px; border-radius:30px; font-weight:bold; font-size:16px; position:absolute; top:-15px; left:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">주요 오답 및 서술형 첨삭 예시</div>
+                <div class="pt-30 mt-10" style="overflow-x: auto;">
+                    <table style="width:100%; border-collapse:collapse; text-align:center; font-size:14px;">
+                        <thead>
+                            <tr style="background:#f8f9fa; border-bottom:2px solid #ddd;">
+                                <th style="padding:15px 10px; width:8%;">문항</th>
+                                <th style="padding:15px 10px; width:12%;">영역</th>
+                                <th style="padding:15px 10px; width:20%;">유형</th>
+                                <th style="padding:15px 10px; width:15%;">학생 답안</th>
+                                <th style="padding:15px 10px; width:15%;">정답</th>
+                                <th style="padding:15px 10px; width:10%;">결과</th>
+                                <th style="padding:15px 10px; width:20%;">오답률</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 서술형 예시 (Highlighted) -->
+                            <tr style="background:#fff9e6; border-bottom:1px dashed #ffe0b2;">
+                                <td style="padding:15px 12px; font-weight:bold;">
+                                    <span style="display:block; background:#ff9800; color:white; font-size:10px; border-radius:3px; padding:2px;">서술형</span>
+                                    21
+                                </td>
+                                <td style="font-weight:bold;">문법 (GR)</td>
+                                <td style="font-weight:bold;">조건부 영작 (도치)</td>
+                                <td colspan="4" style="text-align:left; padding:15px; background:#fffdf5;">
+                                    <div style="margin-bottom:8px;">
+                                        <span style="display:inline-block; width:60px; font-weight:bold; color:#f44336;">학생 답안:</span> 
+                                        <span style="font-family:monospace; color:#333; text-decoration:line-through;">If I had known the truth, I would tell you.</span>
+                                    </div>
+                                    <div style="margin-bottom:8px;">
+                                        <span style="display:inline-block; width:60px; font-weight:bold; color:#4CAF50;">모범 답안:</span> 
+                                        <span style="font-family:monospace; color:#111; font-weight:bold;">Had I known the truth, I would have told you.</span>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px dashed #ffe0b2;">
+                                        <span style="font-size:12px; color:#e65100; font-weight:bold;">[첨삭 포인트] 가정법 과거완료 도치 + 조동사 have p.p. 시제 불일치.</span>
+                                        <span style="background:#f44336; color:white; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:12px;">부분 점수: 2 / 5 점</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="background:#fff9e6; border-bottom:1px solid #eee;">
+                                <td style="padding:15px 12px; font-weight:bold;">
+                                    <span style="display:block; background:#ff9800; color:white; font-size:10px; border-radius:3px; padding:2px;">서술형</span>
+                                    22
+                                </td>
+                                <td style="font-weight:bold;">독해 (RC)</td>
+                                <td style="font-weight:bold;">요약문 완성</td>
+                                <td colspan="4" style="text-align:left; padding:15px; background:#fffdf5;">
+                                    <div style="margin-bottom:8px;">
+                                        <span style="display:inline-block; width:60px; font-weight:bold; color:#4CAF50;">학생 답안:</span> 
+                                        <span style="font-family:monospace; color:#333;">The theory emphasizes observation over intuition.</span>
+                                    </div>
+                                    <div style="margin-bottom:8px;">
+                                        <span style="display:inline-block; width:60px; font-weight:bold; color:#4CAF50;">모범 답안:</span> 
+                                        <span style="font-family:monospace; color:#111; font-weight:bold;">The theory emphasizes empirical observation rather than intuition.</span>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px dashed #ffe0b2;">
+                                        <span style="font-size:12px; color:#558b2f; font-weight:bold;">[첨삭 포인트] 핵심 키워드가 잘 포함됨. 'empirical' 누락 감점.</span>
+                                        <span style="background:#4CAF50; color:white; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:12px;">부분 점수: 4 / 5 점</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-40">
+            <h1 class="logo-text" style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size:32px; color:var(--navy); letter-spacing:-1px;">KATCH<span style="color:#E91E63;">.</span></h1>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Chart 2: 나의 성적 추이 (Line + Bar)
-        const ctxTrend = document.getElementById('trendChart').getContext('2d');
-        new Chart(ctxTrend, {
-            type: 'bar',
-            data: {
-                labels: ['3/2', '3/9', '3/16', '3/23', '3/30'],
-                datasets: [
-                    {
-                        type: 'line',
-                        label: '전체 평균',
-                        data: [68, 72, 65, 78, 82],
-                        borderColor: '#f59e0b',
-                        backgroundColor: '#f59e0b',
-                        borderWidth: 2,
-                        marker: { radius: 4 },
-                        tension: 0.1,
-                        yAxisID: 'y'
-                    },
-                    {
-                        type: 'bar',
-                        label: '나의 점수',
-                        data: [65, 70, 62, 75, 80],
-                        backgroundColor: '#3c82f6',
-                        barPercentage: 0.5,
-                        yAxisID: 'y'
-                    }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, font: {family:'Pretendard'} } } },
-                scales: {
-                    y: { beginAtZero: true, max: 100, title: { display: true, text: '나의 점수 (0-100)', font: {size:10} } }
-                }
-            }
-        });
-
-        // Chart 3: 영역별 전체 평균 vs 나의 평균 비교
-        const ctxAvg = document.getElementById('avgCompareChart').getContext('2d');
-        new Chart(ctxAvg, {
-            type: 'bar',
-            data: {
-                labels: ['독해력', '어휘', '문법'],
-                datasets: [
-                    {
-                        label: '전체 평균',
-                        data: [75, 80, 65],
-                        backgroundColor: '#3c82f6',
-                        barPercentage: 0.6,
-                        categoryPercentage: 0.4
-                    },
-                    {
-                        label: '나의 평균',
-                        data: [68, 75, 72],
-                        backgroundColor: '#f59e0b',
-                        barPercentage: 0.6,
-                        categoryPercentage: 0.4
-                    }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, font: {family:'Pretendard'} } },
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw}%` } }
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('gvrTrendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['LC (리스닝)', 'GR (문법)', 'VO (어휘)', 'RC (독해)'],
+                    datasets: [
+                        { label: 'AT1 테스트', data: [28, 45, 21, 18], backgroundColor: '#8cb9e8', borderRadius: 4 },
+                        { label: 'AT2 테스트', data: [27, 45, 25, 18], backgroundColor: '#95d1ab', borderRadius: 4 },
+                        { label: 'AT3 테스트', data: [29, 45, 24, 19], backgroundColor: '#dfb4ce', borderRadius: 4 },
+                        { label: 'AT4 테스트', data: [29, 43, 24, 19], backgroundColor: '#f2cd88', borderRadius: 4 },
+                        { label: 'AT6 테스트', data: [27, 46, 22, 20], backgroundColor: '#bfa7de', borderRadius: 4 }
+                    ]
                 },
-                scales: {
-                    y: { beginAtZero: true, max: 100, title: { display: true, text: '평균 점수 (%)', font: {size:10} } }
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, font: {family:'Pretendard', size:12} } } },
+                    scales: { y: { beginAtZero: true, max: 50, grid: { borderDash: [5, 5] } }, x: { grid: { display: false } } }
                 }
-            }
-        });
-
-        // Chart 4: 나의 오답 유형 vs 전체 오답 유형 TOP3 (Split into 2 subcharts for literal match to design)
-        const chart4Opts = {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display:false } },
-            scales: { y: { beginAtZero: true, max: 60, title: { display: true, text: '오답률 (%)', font: {size:10} } } }
-        };
-
-        const ctxType1 = document.getElementById('typeChart1').getContext('2d');
-        new Chart(ctxType1, {
-            type: 'bar',
-            data: {
-                labels: ['주문', '독해력', '문법'],
-                datasets: [{
-                    data: [40, 35, 15],
-                    backgroundColor: '#3c82f6',
-                    barPercentage: 0.5
-                }]
-            },
-            options: chart4Opts
-        });
-
-        const ctxType2 = document.getElementById('typeChart2').getContext('2d');
-        new Chart(ctxType2, {
-            type: 'bar',
-            data: {
-                labels: ['문법', '독해력', '논리'],
-                datasets: [{
-                    data: [30, 45, 25],
-                    backgroundColor: '#f59e0b',
-                    barPercentage: 0.5
-                }]
-            },
-            options: { ...chart4Opts, scales: { y: { beginAtZero: true, max: 60, display: true } } }
+            });
         });
     </script>
 </body>

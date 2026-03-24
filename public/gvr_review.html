@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>KATCH - 내 오답노트 다시풀기</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3f51b5; /* KATCH Blue */
+            --primary-light: #5c6bc0;
+            --primary-dark: #303f9f;
+            --secondary-color: #E91E63; /* Pink */
+            --bg-color: #f4f6f9; /* KATCH background */
+            --text-main: #333;
+            --text-muted: #666;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary-color); letter-spacing: -1px; text-decoration:none; }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .btn-close {
+            background: none; border: 1px solid #ccc; border-radius: 4px; padding: 5px 15px; font-weight: bold;cursor:pointer;
+        }
+        .btn-close:hover { background: #eee; }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Left Split: Question Viewer */
+        .question-viewer {
+            flex: 6;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .viewer-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .viewer-header h2 { margin: 0; font-size: 18px; color: var(--primary-color); }
+        .badge-wrong { background: var(--secondary-color); color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+
+        .viewer-content {
+            padding: 25px;
+            overflow-y: auto;
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.8;
+            font-family: 'Noto Serif KR', 'Batang', serif;
+        }
+
+        .q-meta { margin-bottom: 15px; font-family: 'Pretendard', sans-serif;}
+        .q-num { font-weight: bold; font-size: 20px; color: var(--primary-color); }
+        .q-type { color: var(--text-muted); font-size: 14px; margin-left: 10px; }
+
+        /* Right Split: OMR and Analysis */
+        .right-panel {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .panel-title {
+            font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
+            padding-bottom: 10px; border-bottom: 1px solid #eee;
+        }
+
+        /* OMR specific */
+        .omr-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        .omr-bubble {
+            width: 35px; height: 35px; border-radius: 50%;
+            border: 2px solid #ccc; display: flex; justify-content: center; align-items: center;
+            font-weight: bold; color: #555; cursor: pointer; transition: 0.2s;
+        }
+        .omr-bubble:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .omr-bubble.selected { border-color: var(--primary-color); background: var(--primary-color); color: white; }
+        
+        /* Previous wrong answer marker */
+        .omr-bubble.wrong-prev { position: relative; border-color: #ffcdd2; background: #ffebee; color: #d32f2f; }
+        .omr-bubble.wrong-prev::after {
+            content: "내 오답"; position: absolute; top: -20px; font-size: 11px; white-space: nowrap; color: var(--secondary-color);
+        }
+
+        .action-row { text-align: center; margin-top: 10px; }
+        .btn-grade {
+            background: var(--primary-color); color: white; border: none; padding: 12px 30px; font-size: 16px;
+            font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; width: 100%;
+        }
+        .btn-grade:hover { background: var(--primary-dark); }
+
+        /* Analysis Box */
+        .analysis-box { display: none; margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px; border: 1px solid #c8e6c9; }
+        .analysis-box.show { display: block; animation: fadeIn 0.5s; }
+        .analysis-box.incorrect { background: #ffebee; border-color: #ffcdd2; }
+        
+        .analysis-title { font-weight: bold; font-size: 16px; margin-bottom: 10px; }
+        .analysis-title.correct { color: #2e7d32; }
+        .analysis-title.incorrect { color: #c62828; }
+        
+        .detail-item { font-size: 13px; margin-bottom: 5px; color: #444; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Bottom Pagination */
+        .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .btn-nav { background: white; border: 1px solid #ccc; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-nav:hover { background: #f5f5f5; }
+        .nav-status { font-size: 14px; color: var(--text-muted); font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <!-- 1. Top Header -->
+    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
+        <div class="container flex-between align-center">
+            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
+                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+            </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
+                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
+                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
+            </div>
+        </div>
+    </div>
+    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
+        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none;">
+                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
+                        KATCH<span style="color:#E91E63;">.</span>
+                    </h1>
+                </a>
+            </div>
+            <nav class="gnb-links">
+                <a href="student_diagnostics.html">진단테스트</a>
+                <a href="level_test.html">레벨테스트</a>
+                <a href="problem_bank.html">문제은행</a>
+                <a href="store_vod.html">VOD 인강</a>
+                <a href="store_book.html">교재 스토어</a>
+                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
+            </nav>
+            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
+                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
+                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Question Viewer -->
+        <div class="question-viewer">
+            <div class="viewer-header">
+                <h2><i class="fas fa-book-open"></i> 문제 확인</h2>
+                <span class="badge-wrong" id="q-badge">정답률 48% (고난도)</span>
+            </div>
+            <div class="viewer-content text-select">
+                <div class="q-meta" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span class="q-num" style="color:var(--text-main);" id="q-num">[GR-16]</span>
+                        <span class="q-type" id="q-type">(기본형식 > 3형식)</span>
+                    </div>
+                    <span style="color:var(--secondary-color); font-weight:800; font-size:15px;" id="q-er">ER: 59%</span>
+                </div>
+                <div style="margin-bottom: 20px; font-weight:bold;" id="q-inst">
+                    Choose the best answer for the blank.
+                </div>
+                <!-- Mock Passage/Question -->
+                <div style="padding: 20px; background: #fff; border-radius: 8px; font-size:16px;" id="q-passage">
+                    <!-- content -->
+                </div>
+            </div>
+            <div class="viewer-header" style="background: white; border-top: 1px solid var(--border-color); border-bottom: none;">
+                <div class="pagination" style="width: 100%; margin: 0;">
+                    <button class="btn-nav" id="btn-prev" onclick="prevQuestion()"><i class="fas fa-chevron-left"></i> 이전 오답</button>
+                    <span class="nav-status" id="nav-status">오답 1 / 총 5문항</span>
+                    <button class="btn-nav" id="btn-next" onclick="nextQuestion()">다음 오답 <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel (OMR & Stats) -->
+        <div class="right-panel">
+            
+            <!-- Re-solve Box -->
+            <div class="panel-box text-center">
+                <div class="panel-title"><i class="fas fa-pen"></i> 정답 다시 고르기</div>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">
+                    이전에 선택했던 오답이 표시되어 있습니다. 정답을 다시 선택해 보세요.
+                </p>
+                
+                <div class="omr-row" id="omr-options">
+                   <!-- content -->
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-grade" onclick="gradeAnswer()"><i class="fas fa-check"></i> 채점하기</button>
+                </div>
+
+                <!-- Analysis/Feedback Box (Hidden initially) -->
+                <div class="analysis-box" id="feedback-box">
+                    <!-- Dynamic content injected by JS -->
+                </div>
+            </div>
+
+            <!-- Global Stats Box -->
+            <div class="panel-box">
+                <div class="panel-title"><i class="fas fa-chart-pie"></i> 문항 오답 통계</div>
+                
+                <div style="margin-bottom: 15px;">
+                    <div class="detail-item" id="stat-er"></div>
+                    <div class="detail-item" id="stat-top"></div>
+                    <div class="detail-item" id="stat-concept"></div>
+                </div>
+                
+                <div style="font-size:12px; color:#888; background:#f9f9f9; padding:10px; border-radius:6px; border:1px solid #eee;" id="stat-tip">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                num: "[GR-16]",
+                type: "(기본형식 > 3형식)",
+                er: "ER: 59%",
+                badge: "정답률 41% (고난도)",
+                inst: "Choose the best answer for the blank.",
+                passage: "A: How did you get a hold of this information?<br>B: <span style='display:inline-block; border-bottom:1px solid #111; width:80px; margin:0 5px;'></span> when she sent it.<br><br>(a) I copied Leanne on the email<br>(b) Leanne emailed a copy me<br>(c) The email was copied me and Leanne<br>(d) Leanne copied me on the email",
+                omrCount: 4,
+                prevWrong: 1,
+                correct: 4,
+                stats: {
+                    erInfo: "<strong>오답률:</strong> <span style='color:var(--secondary-color); font-weight:bold;'>59%</span> (전체 200명 중 118명 틀림)",
+                    topInfo: "<strong>가장 많이 고른 오답:</strong> 1번 (a) (전체 오답자의 65% 선택)",
+                    conceptInfo: "<strong>이 문항의 핵심 개념:</strong> 3형식 수여동사 copy 구조 이해",
+                    tipInfo: "<i class='fas fa-lightbulb' style='color:#ffb300;'></i> <b>Tip:</b> copy 동사는 'copy 대상물 on 사람' 또는 'copy 사람 on/in 대상물' 구조를 혼용하지만, 3형식 전치사 on 대상 문맥을 놓치기 쉽습니다. 정답은 4번(d)입니다."
+                },
+                feedback: {
+                    correctMsg: "'Leanne copied me on the email' (리앤이 나를 그 이메일에 참조시켰다)가 3형식으로 알맞은 구문입니다.",
+                    wrongMsg: "선택하신 답은 틀린 구문입니다. (a)는 의미상 맞지 않고, (b), (c)는 4형식/수동태 전환에서 문법적 오류가 발생합니다."
+                }
+            },
+            {
+                num: "[GR-21]",
+                type: "(시제 > 완료형)",
+                er: "ER: 72%",
+                badge: "정답률 28% (최고난도)",
+                inst: "다음 중 어법상 가장 어색한 것을 고르시오.",
+                passage: "(a) Have you found that the book of mine that you lost? <br><br>(b) Yes, I've found it behind the washing machine last night. <br><br>(c) How on earth did it get back there? <br><br>(d) I must have been reading it while waiting for the laundry.",
+                omrCount: 4,
+                prevWrong: 3,
+                correct: 2,
+                stats: {
+                    erInfo: "<strong>오답률:</strong> <span style='color:var(--secondary-color); font-weight:bold;'>72%</span> (전체 200명 중 144명 틀림)",
+                    topInfo: "<strong>가장 많이 고른 오답:</strong> 3번 (c) (전체 오답자의 40% 선택)",
+                    conceptInfo: "<strong>이 문항의 핵심 개념:</strong> 현재완료 시제와 명백한 과거 부사(last night)의 충돌 구별",
+                    tipInfo: "<i class='fas fa-lightbulb' style='color:#ffb300;'></i> <b>Tip:</b> 과거의 특정 시점을 나타내는 부사구(last night, yesterday 등)가 있는 문장에서는 현재완료 시제를 쓸 수 없습니다. 단순 과거 시제로 고쳐야 합니다."
+                },
+                feedback: {
+                    correctMsg: "정확히 맞히셨습니다. <strong>last night</strong>와 같은 과거 부사구는 현재완료(I've found)와 함께 쓰일 수 없으므로 과거동사(I found)로 고쳐야 합니다.",
+                    wrongMsg: "문법적으로 맞는 문장입니다. 시제 파트의 '현재완료의 제약' 개념을 다시 복습해 보세요!"
+                }
+            },
+            {
+                num: "[V-05]",
+                type: "(어휘 > 다의어)",
+                er: "ER: 45%",
+                badge: "정답률 55% (보통)",
+                inst: "다음 밑줄 친 부분과 문맥상 의미가 가장 가까운 것은?",
+                passage: "The committee will <u>address</u> the issue in the next meeting.<br><br>(1) write a name on an envelope<br>(2) speak directly to a person<br>(3) direct one's attention to <br>(4) deliver a formal speech",
+                omrCount: 4,
+                prevWrong: 4,
+                correct: 3,
+                stats: {
+                    erInfo: "<strong>오답률:</strong> <span style='color:var(--secondary-color); font-weight:bold;'>45%</span> (전체 200명 중 90명 틀림)",
+                    topInfo: "<strong>가장 많이 고른 오답:</strong> 4번 (전체 오답자의 35% 선택)",
+                    conceptInfo: "<strong>이 문항의 핵심 개념:</strong> address의 다의어적 쓰임 (다루다, 고심하다)",
+                    tipInfo: "<i class='fas fa-lightbulb' style='color:#ffb300;'></i> <b>Tip:</b> address는 연설하다(4)의 뜻도 있지만, 뒤에 issue나 problem이 오면 '다루다, 대처하다'는 뜻의 'deal with / direct one's attention to'로 쓰입니다."
+                },
+                feedback: {
+                    correctMsg: "정답입니다. address the issue는 '문제를 다루다'는 뜻이므로 'direct one's attention to'가 가장 가깝습니다.",
+                    wrongMsg: "주어진 문맥에서는 '연설하다' 혹은 '주소를 쓰다'의 뜻으로 쓰이지 않았습니다."
+                }
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function renderQuestion(index) {
+            const q = questions[index];
+            
+            document.getElementById('q-num').innerText = q.num;
+            document.getElementById('q-type').innerText = q.type;
+            document.getElementById('q-er').innerText = q.er;
+            document.getElementById('q-badge').innerText = q.badge;
+            document.getElementById('q-inst').innerHTML = q.inst;
+            document.getElementById('q-passage').innerHTML = q.passage;
+            
+            document.getElementById('nav-status').innerText = `오답 ${index + 1} / 총 ${questions.length}문항`;
+
+            // Setup OMR
+            let omrHtml = '';
+            for(let i=1; i<=q.omrCount; i++) {
+                let classData = 'omr-bubble';
+                if(i === q.prevWrong) classData += ' wrong-prev';
+                omrHtml += `<div class="${classData}" onclick="selectBubble(this)">${i}</div>`;
+            }
+            document.getElementById('omr-options').innerHTML = omrHtml;
+
+            // Stats
+            document.getElementById('stat-er').innerHTML = q.stats.erInfo;
+            document.getElementById('stat-top').innerHTML = q.stats.topInfo;
+            document.getElementById('stat-concept').innerHTML = q.stats.conceptInfo;
+            document.getElementById('stat-tip').innerHTML = q.stats.tipInfo;
+
+            // Reset feedback
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.className = 'analysis-box';
+            feedbackBox.innerHTML = '';
+
+            // Buttons
+            document.getElementById('btn-prev').disabled = (index === 0);
+            document.getElementById('btn-prev').style.opacity = (index === 0) ? '0.3' : '1';
+            document.getElementById('btn-next').disabled = (index === questions.length - 1);
+            document.getElementById('btn-next').style.opacity = (index === questions.length - 1) ? '0.3' : '1';
+        }
+
+        function prevQuestion() {
+            if(currentIndex > 0) {
+                currentIndex--;
+                renderQuestion(currentIndex);
+            }
+        }
+
+        function nextQuestion() {
+            if(currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion(currentIndex);
+            }
+        }
+
+        function selectBubble(el) {
+            document.querySelectorAll('#omr-options .omr-bubble').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function gradeAnswer() {
+            const selected = document.querySelector('#omr-options .omr-bubble.selected');
+            const feedbackBox = document.getElementById('feedback-box');
+            
+            if (!selected) {
+                alert("정답을 선택해주세요.");
+                return;
+            }
+
+            const val = parseInt(selected.innerText);
+            const q = questions[currentIndex];
+            
+            feedbackBox.className = 'analysis-box show';
+            
+            if (val === q.correct) {
+                feedbackBox.classList.add('correct');
+                feedbackBox.classList.remove('incorrect');
+                feedbackBox.innerHTML = `
+                    <div class="analysis-title correct"><i class="fas fa-check-circle"></i> 정답입니다!</div>
+                    <p style="font-size:13px; color:#444; margin:0; line-height:1.5;">${q.feedback.correctMsg}</p>
+                `;
+            } else {
+                feedbackBox.classList.add('incorrect');
+                feedbackBox.classList.remove('correct');
+                feedbackBox.innerHTML = `
+                    <div class="analysis-title incorrect"><i class="fas fa-times-circle"></i> 아쉽네요, 다시 오답입니다.</div>
+                    <p style="font-size:13px; color:#444; margin:0; line-height:1.5;">
+                        ${val}번은 ${q.feedback.wrongMsg}
+                    </p>
+                `;
+            }
+        }
+        
+        // Initial render
+        renderQuestion(currentIndex);
+    </script>
+</body>
+</html>
