@@ -394,7 +394,18 @@
                         order: 1
                     }]
                 },
-                options: {
+                options: { 
+                    animation: {
+                        duration: 800,
+                        delay: (context) => {
+                            let delay = 0;
+                            if (context.type === 'data' && context.mode === 'default' && !context.dropped) {
+                                delay = context.dataIndex * 150 + context.datasetIndex * 100;
+                                context.dropped = true;
+                            }
+                            return delay;
+                        }
+                    },
                     responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
                     scales: { y: { min: 0, max: 100 } }
@@ -418,7 +429,18 @@
                         borderRadius: 2
                     }]
                 },
-                options: {
+                options: { 
+                    animation: {
+                        duration: 800,
+                        delay: (context) => {
+                            let delay = 0;
+                            if (context.type === 'data' && context.mode === 'default' && !context.dropped) {
+                                delay = context.dataIndex * 150 + context.datasetIndex * 100;
+                                context.dropped = true;
+                            }
+                            return delay;
+                        }
+                    },
                     responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
                     scales: { y: { min: 0, max: 100 } }
@@ -442,7 +464,18 @@
                         borderRadius: 2
                     }]
                 },
-                options: {
+                options: { 
+                    animation: {
+                        duration: 800,
+                        delay: (context) => {
+                            let delay = 0;
+                            if (context.type === 'data' && context.mode === 'default' && !context.dropped) {
+                                delay = context.dataIndex * 150 + context.datasetIndex * 100;
+                                context.dropped = true;
+                            }
+                            return delay;
+                        }
+                    },
                     responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
                     scales: { y: { min: 0, max: 100 } }
