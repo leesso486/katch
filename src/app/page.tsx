@@ -1,6 +1,0 @@
-﻿import { redirect } from 'next/navigation';
-export const dynamic = 'force-dynamic';
-export default function Home() {
-  // Cache bust version 2
-  redirect('/index.html');
-}
