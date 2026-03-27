@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -115,30 +115,7 @@ button{cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
-    <div id="sticky-header-container" style="position: sticky; top: 0; z-index: 900; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-    <header style="background:white; border-bottom: 1px solid #eee;">
-        <div style="max-width: 1220px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 18px 24px;">
-            <div class="logo">
-                <a href="index.html" style="text-decoration:none;">
-                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
-                        KATCH<span style="color:#E91E63;">.</span>
-                    </h1>
-                </a>
-            </div>
-            <nav style="display:flex; gap:20px; font-weight:700; font-size:15px;">
-                <a href="student_diagnostics.html">진단테스트</a>
-                <a href="level_test.html">레벨테스트</a>
-                <a href="problem_bank.html">문제은행</a>
-                <a href="store_vod.html">VOD 인강</a>
-                <a href="store_book.html">교재 스토어</a>
-                <a href="lounge.html" style="color:#F57C00; display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
-            </nav>
-            <div style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
-                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
-                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
-            </div>
-        </div>
-    </header>
+
 <div class="tabs">
 <button class="tt on" id="tab-GVR" onclick="SW('GVR')">GVR</button>
 <button class="tt"    id="tab-MT"  onclick="SW('MT')">Mini Test</button>
@@ -149,7 +126,7 @@ button{cursor:pointer;font-family:inherit}
 <div><div class="itl" id="TTLB">GVR AT 6회차 &mdash; OMR 마킹 시트</div><div class="imt" style="margin-top:6px;">응시일: 2026.03.12 | 제출기한: <strong style="color:#FFD54F;font-size:14px;background:rgba(0,0,0,0.2);padding:2px 8px;border-radius:4px;">2026.03.13 23:59</strong> <span style="margin-left:15px;color:#aeb8e5;"><i class="fas fa-flag"></i> 나중에 다시 보려면 플래그를 클릭하세요.</span></div></div>
 <div class="isr">
 <div class="ibs"><div class="n" id="SA">0</div><div class="l">응답</div></div>
-<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">&#48120;응답</div></div>
+<div class="ibs"><div class="n" id="SR" style="color:var(--gd)">0</div><div class="l">미응답</div></div>
 <div class="ibs"><div class="n" id="STOT" style="color:var(--gd)">40</div><div class="l">총 문항</div></div>
 </div>
 </div>
@@ -164,7 +141,7 @@ button{cursor:pointer;font-family:inherit}
 <div class="sit"><i class="fas fa-chart-pie" style="color:var(--nv)"></i>&nbsp;진행 현황</div>
 <div class="cps">
 <div class="cp cpa"><div class="cn" id="SBA">0</div><div class="cl">응답</div></div>
-<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">&#48120;응답</div></div>
+<div class="cp cpr"><div class="cn" id="SBR">0</div><div class="cl">미응답</div></div>
 <div class="cp cpf"><div class="cn" id="SBF">0</div><div class="cl">플래그</div></div>
 <div class="cp cpq" style="border-color:#FF5722;background:#fffaf0"><div class="cn" id="SBQ" style="color:#FF5722">0</div><div class="cl" style="color:#FF5722">질문</div></div>
 </div>
@@ -177,9 +154,9 @@ button{cursor:pointer;font-family:inherit}
 </div>
 <div class="modov" id="CMOD">
 <div class="modb">
-<div style="font-size:50px;margin-bottom:13px">&#128221;</div>
-<h3>&#46813;&#50504;&#51012; 제출&#54616;&#49884;&#44192;&#49845;&#45768;&#44992;?</h3>
-<p>제출 &#54980;&#50640;&#45716; &#49688;&#51221;&#51060; &#48520;&#44032;&#54633;&#45768;&#45796;.<br>&#48120;응답 <strong id="UACNT" style="color:var(--pk)">0</strong>&#44060; &middot; 플래그 <strong id="FACNT" style="color:var(--or)">0</strong>&#44060;</p>
+<div style="font-size:50px;margin-bottom:13px">📝</div>
+<h3>답안을 제출하시겠습니까?</h3>
+<p>제출 후에는 수정이 불가합니다.<br>미응답 <strong id="UACNT" style="color:var(--pk)">0</strong>개 &middot; 플래그 <strong id="FACNT" style="color:var(--or)">0</strong>개</p>
 <div class="mbtns">
 <button class="bno" onclick="closeC()">다시 확인</button>
 <button class="byes" onclick="doSub()">제출</button>
@@ -188,9 +165,9 @@ button{cursor:pointer;font-family:inherit}
 </div>
 <div class="modov" id="SMOD">
 <div class="modb">
-<div style="font-size:50px;margin-bottom:13px">&#127881;</div>
-<h3>제출 &#50756;&#47308;!</h3>
-<p>&#46813;&#50504;&#51060; 제출&#46104;&#50632;&#49845;&#45768;&#45796;.<br>채점이 완료되면 알림을 보내드립니다.</p>
+<div style="font-size:50px;margin-bottom:13px">🎉</div>
+<h3>제출 완료!</h3>
+<p>답안이 제출되었습니다.<br>채점이 완료되면 알림을 보내드립니다.</p>
 <a href="review_wrong.html" class="bgo" style="background:var(--nv);color:#fff">오답노트 바로 보기</a>
 <a href="my_learning.html"  class="bgo" style="background:#f0f0f0;color:#555">대시보드로</a>
 </div>

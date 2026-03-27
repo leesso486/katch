@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,86 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="cart.js"></script>
     <style>
-        .vod-hero { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); color: #111; padding: 60px 0 40px; text-align: center; border-radius: 0 0 40px 40px; margin-bottom: 20px; position: relative; overflow: hidden; }
-        .vod-hero::before { content: ''; position: absolute; width: 200px; height: 200px; background: rgba(255,255,255,0.4); border-radius: 50%; top: -50px; left: 10%; filter: blur(20px); }
-        .vod-hero::after { content: ''; position: absolute; width: 300px; height: 300px; background: rgba(255,192,203,0.3); border-radius: 50%; bottom: -100px; right: 5%; filter: blur(30px); }
-        .vod-hero h2 { font-size: 34px; font-weight: 900; margin-bottom: 12px; letter-spacing: -1px; position: relative; z-index: 2; color: #1e3a8a; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .vod-hero p { font-size: 16px; color: #3b82f6; margin-bottom: 25px; font-weight: 700; position: relative; z-index: 2; }
+        .vod-hero { 
+            background: linear-gradient(135deg, #fff2f2 0%, #fce7f3 100%); 
+            color: #111; padding: 60px 0 60px; text-align: left; 
+            margin-bottom: 40px; 
+            position: relative; overflow: hidden; 
+        }
+        .vod-hero::before { content: ''; position: absolute; width: 300px; height: 300px; background: rgba(255,255,255,0.6); border-radius: 50%; top: -100px; left: -100px; filter: blur(30px); pointer-events:none;}
         
+        .hero-layout {
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+        }
+        .hero-text { flex: 1.2; position: relative; z-index: 2; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: white; color: #ff4757; font-weight: 800; font-size: 13px;
+            padding: 8px 16px; border-radius: 20px; box-shadow: 0 4px 10px rgba(255,107,107,0.15);
+            margin-bottom: 20px;
+        }
+        .hero-text h2 {
+            font-size: 42px; font-weight: 900; line-height: 1.35; color: #1e293b; margin-bottom: 20px; letter-spacing: -1.5px;
+        }
+        .hero-text h2 .highlight {
+            color: #E91E63; background: linear-gradient(to right, transparent 0%, rgba(255,192,203,0.5) 100%);
+            display: inline-block; padding: 0 10px; border-radius: 8px; font-weight: 900;
+        }
+        .hero-text p {
+            font-size: 16px; color: #64748b; line-height: 1.6; font-weight: 500; margin-bottom: 30px; max-width: 440px;
+        }
+        .btn-play-hero {
+            background: #E91E63; color: white; padding: 14px 28px; border-radius: 30px; font-size: 16px; font-weight: 800; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(233,30,99,0.3); transition: 0.3s;
+        }
+        .btn-play-hero:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(233,30,99,0.4); }
+        .hero-img {
+            flex: 1; position: relative; max-width: 600px;
+        }
+        .hero-img-inner {
+            background: white; padding: 10px 10px 20px 10px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.12); position: relative; z-index: 2;
+        }
+        .hero-img-inner img {
+            width: 100%; border-radius: 16px; display: block; height: 320px; object-fit: cover;
+        }
+        .hero-play-circle {
+            position: absolute; top: calc(50% - 5px); left: 50%; transform: translate(-50%, -50%);
+            width: 75px; height: 75px; background: #E91E63; color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 26px;
+            box-shadow: 0 0 0 12px rgba(255,255,255,0.8), 0 10px 30px rgba(233,30,99,0.4);
+            padding-left: 6px; cursor: pointer; transition: 0.3s;
+        }
+        .hero-play-circle:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 0 15px rgba(255,255,255,0.9), 0 15px 35px rgba(233,30,99,0.5); }
+        .hero-deco-1 { position: absolute; left: -30px; top: -20px; font-size: 35px; z-index: 3; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .hero-deco-2 { position: absolute; right: -25px; top: 50px; font-size: 30px; z-index: 3; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .hero-deco-3 { position: absolute; right: 20px; bottom: 0; font-size: 40px; z-index: 3; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); color: #E91E63; }
+        
+        /* Recent Watch UI */
+        .recent-section { margin-bottom: 50px; }
+        .recent-card {
+            background: white; border-radius: 20px; border: 1px solid #fbcfe8;
+            padding: 24px; display: flex; align-items: center; gap: 25px;
+            box-shadow: 0 10px 30px rgba(233,30,99,0.06); position: relative; overflow: hidden;
+        }
+        .recent-card::before {
+            content:''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: #E91E63; border-radius: 20px 0 0 20px;
+        }
+        .r-thumb {
+            width: 220px; height: 130px; border-radius: 14px; overflow: hidden; position: relative; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .r-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .r-badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; border-radius: 20px; font-size: 11px; font-weight: 800; padding: 5px 12px; backdrop-filter: blur(4px); }
+        .r-info { flex: 1; }
+        .r-title { font-size: 20px; font-weight: 900; color: #1e293b; margin-bottom: 10px; }
+        .r-author { font-size: 13px; color: #64748b; font-weight: 600; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .r-author img { width: 24px; height: 24px; border-radius: 50%; }
+        .r-progress-wrap { display: flex; align-items: center; gap: 15px; }
+        .r-progress-bar { flex: 1; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
+        .r-progress-fill { height: 100%; background: #E91E63; border-radius: 4px; box-shadow: 0 2px 5px rgba(233,30,99,0.4); }
+        .r-progress-text { font-weight: 900; color: #E91E63; font-size: 15px; }
+        .btn-continue {
+            background: #1e293b; color: white; border: none; padding: 16px 32px; border-radius: 30px; font-weight: 800; font-size: 15px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(30,41,59,0.2); display: flex; align-items: center; gap: 8px;
+        }
+        .btn-continue:hover { background: #0f172a; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(30,41,59,0.3); }
         .store-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; z-index: 2; position: relative; }
         .store-tab {
             background: white; border: none; 
@@ -79,8 +153,8 @@
     <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
             <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
-                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
-                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+                <a href="dashboard.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard.html?view=teacher" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
             <div style="display:flex; gap:20px; align-items:center;">
                 <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
@@ -101,7 +175,7 @@
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
-                <a href="problem_bank.html">문제은행</a>
+                <a href="bank.html">문제은행</a>
                 <a href="store_vod.html">VOD 인강</a>
                 <a href="store_book.html">교재 스토어</a>
                 <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
@@ -114,18 +188,46 @@
     </header>
 
     <div class="vod-hero">
-        <div class="container">
-            <h2><i class="fas fa-play-circle text-blue"></i> KATCH VOD 채널</h2>
-            <p>대치동 최상위권 명강의를 내 방에서 시청하세요! 🍿</p>
-            
-
-            <div id="point-info-box" style="background:rgba(255,255,255,0.85); backdrop-filter: blur(15px); border-radius:24px; padding:20px 30px; max-width:650px; margin:20px auto 0; display:flex; align-items:center; gap:20px; text-align:left; box-shadow: 0 15px 35px rgba(0,0,0,0.06); position: relative; z-index: 2;">
-                <div style="font-size:36px;"><i class="fas fa-gem" style="color:#ff6b6b;"></i></div>
-                <div>
-                    <h4 style="font-size:16px; font-weight:900; color:#111; margin-bottom:4px;">포인트로 VIP VOD 즉시 감상!</h4>
-                    <p style="font-size:13px; color:#666; margin:0; line-height:1.5;">획득하신 KATCH 포인트로 수능 앤솔로지 VIP 강의를 결제 후 즉시 시청할 수 있습니다.</p>
+        <div class="container hero-layout">
+            <div class="hero-text">
+                <div class="hero-badge">🍯 이달의 무료 공개 특강</div>
+                <h2>고 3월 모의고사 대비<br><span class="highlight">단기 집중 분석</span></h2>
+                <p>대치동 최상위권을 위한 강동진 원장의 진짜 특강!<br>평가원 기출의 비밀과 안정적인 1등급 독해 기술을 단 3강으로 완성하세요.</p>
+                <button class="btn-play-hero"><i class="fas fa-play"></i> 맛보기 영상 재생</button>
+            </div>
+            <div class="hero-img">
+                <div class="hero-deco-1">✨</div>
+                <div class="hero-deco-2">💡</div>
+                <div class="hero-deco-3"><i class="fas fa-bullseye"></i></div>
+                <div class="hero-img-inner">
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Video Placeholder">
+                    <div class="hero-play-circle"><i class="fas fa-play"></i></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Recent Watch -->
+    <div class="container recent-section">
+        <h3 style="font-size: 22px; font-weight: 900; color: #111; margin-bottom: 15px; display:flex; align-items:center; gap:10px;">
+            <i class="fas fa-forward" style="color: #E91E63; background: #fdf2f8; padding: 6px; border-radius: 8px; font-size: 16px;"></i> 최근 이어보기
+        </h3>
+        <div class="recent-card">
+            <div class="r-thumb">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="thumb">
+                <div class="r-badge">32:15 남음</div>
+            </div>
+            <div class="r-info">
+                <div class="r-title">수능 어법 10년 기출 전격 분석 - 2강. 관계사의 이해</div>
+                <div class="r-author">
+                    <img src="https://ui-avatars.com/api/?name=김&background=fdf2f8&color=E91E63" alt="author"> 김태형 강사님 · 마지막 수강일: 2026.03.18
+                </div>
+                <div class="r-progress-wrap">
+                    <div class="r-progress-bar"><div class="r-progress-fill" style="width: 45%;"></div></div>
+                    <div class="r-progress-text">45%</div>
+                </div>
+            </div>
+            <button class="btn-continue"><i class="fas fa-play"></i> 이어서 재생</button>
         </div>
     </div>
 

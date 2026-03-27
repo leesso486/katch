@@ -19,16 +19,19 @@
         .text-gradient {
             background: linear-gradient(135deg, #1565C0 0%, #0277BD 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .text-gradient-purple {
             background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .text-gradient-blue {
             background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -131,8 +134,8 @@
     <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
             <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
-                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
-                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+                <a href="dashboard.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard.html?view=teacher" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
             <div style="display:flex; gap:20px; align-items:center;">
                 <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
@@ -153,7 +156,7 @@
             <nav class="gnb-links">
                 <a href="student_diagnostics.html">진단테스트</a>
                 <a href="level_test.html">레벨테스트</a>
-                <a href="problem_bank.html">문제은행</a>
+                <a href="bank.html">문제은행</a>
                 <a href="store_vod.html">VOD 인강</a>
                 <a href="store_book.html">교재 스토어</a>
                 <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
@@ -216,7 +219,7 @@
                 <div class="q-icon" style="background:#e3f2fd; color:#1e88e5;"><i class="fas fa-file-alt"></i></div>
                 <div class="q-text">레벨테스트</div>
             </a>
-            <a href="problem_bank.html" class="q-item">
+            <a href="bank.html" class="q-item">
                 <div class="q-icon" style="background:#fce4ec; color:#e91e63;"><i class="fas fa-fire"></i></div>
                 <div class="q-text">문제은행</div>
             </a>
@@ -264,12 +267,12 @@
                     </div>
                     <div style="padding: 30px; flex: 1;">
                         <p style="font-size: 16px; color: #333; line-height: 1.6; font-weight: 500; margin-bottom: 20px;">
-                            "Not until the mid-nineteenth century ___ the concept of public health systematically..."
+                            "Not until the mid-nineteenth century (A)_____ the concept of public health (B)_____ systematically..."
                         </p>
                         <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                            <span style="background: #f8f9fa; padding: 5px 15px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">① did emerged</span>
-                            <span style="background: #f8f9fa; padding: 5px 15px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">② emerged</span>
-                            <span style="background: #f8f9fa; padding: 5px 15px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">③ did emerge</span>
+                            <span style="background: #f8f9fa; padding: 5px 15px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">① (A) did - (B) emerged</span>
+                            <span style="background: #f8f9fa; padding: 5px 15px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">② (A) did - (B) emerge</span>
+                            <span style="background: #f8f9fa; padding: 5px 15px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; cursor: pointer;">③ (A) do - (B) emerge</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 14px; color: #E91E63; font-weight: bold;">대치 본원 오답률 78.4%</span>

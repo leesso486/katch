@@ -1,211 +1,10 @@
-<!DOCTYPE html>
-<html lang="ko">
+import os
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - ?듯빀 ??쒕낫??/title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="sub.css">
-    <!-- Fonts & Icons -->
-    <link rel="stylesheet" as="style" crossorigin
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { background-color: #f4f6f9; }
-        
-        /* Master Toggle Switch */
-        .view-toggle-area { background: white; padding: 15px 0; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); }
-        .toggle-switch { display: inline-flex; background: #eef2f6; border-radius: 30px; padding: 5px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05); }
-        .toggle-btn { padding: 10px 25px; border-radius: 25px; font-weight: 800; font-size: 15px; color: #666; cursor: pointer; transition: 0.3s; border: none; background: transparent; display: flex; align-items: center; gap: 8px; }
-        .toggle-btn.active { background: var(--navy); color: white; box-shadow: 0 4px 10px rgba(17, 17, 17, 0.3); }
+target_file = r"c:\Users\SsoHot\Desktop\수능사이트시안\katch-web\public\dashboard.html"
+with open(target_file, "r", encoding="utf-8") as f:
+    lines = f.readlines()
 
-        .dash-container { max-width: 1200px; margin: 30px auto; }
-
-        #studentView { display: block; }
-        #teacherView { display: none; }
-
-        /* Student Dashboard Gamification Styling */
-        .stu-hero { background: linear-gradient(135deg, #4f46e5, #ec4899); border-radius: 20px; padding: 35px 40px; color: white; margin-bottom: 30px; display: flex; align-items: center; gap: 30px; box-shadow: 0 15px 35px rgba(79, 70, 229, 0.25); position: relative; overflow: hidden; }
-        .stu-hero::before { content: ''; position: absolute; right: -50px; top: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%); border-radius: 50%; }
-        .stu-avatar-wrap { position: relative; width: 100px; height: 100px; border-radius: 50%; background: white; padding: 4px; z-index: 2; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-        .stu-avatar { width: 100%; height: 100%; border-radius: 50%; background: #e0e7ff; display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; }
-        .stu-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .stu-level-badge { position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); background: #f59e0b; color: white; font-size: 11px; font-weight: 900; padding: 4px 12px; border-radius: 20px; border: 2px solid white; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .stu-info { flex: 1; z-index: 2; }
-        .stu-greeting { font-size: 28px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; }
-        .stu-xp-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; margin: 15px 0 8px; overflow: hidden; }
-        .stu-xp-fill { height: 100%; background: #fbbf24; border-radius: 4px; box-shadow: 0 0 10px rgba(251,191,36,0.5); }
-        .stu-stats { display: flex; gap: 25px; margin-top: 20px; }
-        .stu-stat-item { background: rgba(0,0,0,0.2); padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); }
-        .stu-stat-label { font-size: 13px; opacity: 0.9; font-weight: 600; }
-        .stu-stat-val { font-size: 18px; font-weight: 900; color: #fbbf24; }
-
-        .stu-grid { display: grid; grid-template-columns: 2fr 1.2fr; gap: 25px; }
-        .panel { background: white; border-radius: 16px; padding: 25px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .panel-title { font-size: 18px; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 8px; }
-        
-        .quest-list { display: flex; flex-direction: column; gap: 12px; }
-        .quest-item { background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 12px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .quest-item:hover { transform: translateX(5px); border-color: #cbd5e1; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .quest-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-right: 15px; }
-        .q-blue { background: #e0e7ff; color: #4f46e5; }
-        .q-pink { background: #fce7f3; color: #db2777; }
-        .q-green { background: #dcfce7; color: #16a34a; }
-        .quest-info { flex: 1; }
-        .quest-title { font-size: 15px; font-weight: 800; color: #334155; margin-bottom: 4px; }
-        .quest-meta { font-size: 12px; color: #64748b; }
-        .quest-reward { background: #fffbeb; color: #d97706; font-size: 12px; font-weight: 900; padding: 5px 10px; border-radius: 20px; border: 1px solid #fde68a; }
-        .btn-quest { padding: 8px 16px; background: #1e293b; color: white; border-radius: 8px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; transition: 0.2s; margin-left:15px; }
-        .btn-quest:hover { background: #0f172a; }
-
-        .ai-weakness { background: linear-gradient(to right, #f8fafc, #f1f5f9); border-radius: 12px; padding: 18px; border-left: 4px solid #3b82f6; margin-top: 15px; }
-        .ai-title { font-size: 14px; font-weight: 800; color: #1e293b; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .ai-desc { font-size: 13px; color: #475569; line-height: 1.5; }
-        
-        .rank-card { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px; }
-        .rank-card h3 { color: #b45309; font-size: 15px; font-weight: 800; margin-bottom: 5px; }
-        .rank-card .huge { font-size: 36px; font-weight: 900; color: #d97706; margin: 10px 0; }
-        .rank-card p { font-size: 12px; color: #92400e; }
-
-        .eh-item { border: 1px solid #eee; border-radius: 10px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; background: #fff; margin-bottom: 10px; }
-        .eh-item:hover { border-color: #cbd5e1; background: #f8fafc; }
-        .eh-title { font-size: 14px; font-weight: 800; color: #333; margin-bottom: 5px; }
-        .eh-meta { font-size: 12px; color: #888; }
-        .eh-score { font-size: 20px; font-weight: 900; color: #4f46e5; }
-        .btn-outline-indigo { border: 1px solid #4f46e5; color: #4f46e5; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; background: white; cursor: pointer; }
-        .btn-outline-indigo:hover { background: #e0e7ff; }
-
-        /* Teacher CRM Dashboard Styling */
-        .crm-hero { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .crm-hero h2 { font-size: 26px; font-weight: 900; color: #1e293b; margin: 0; }
-        .crm-hero p { font-size: 14px; color: #64748b; margin: 5px 0 0 0; }
-        .crm-actions { display: flex; gap: 10px; }
-        .btn-crm { padding: 10px 18px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; border: none; }
-        .btn-crm-primary { background: #2563eb; color: white; box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
-        .btn-crm-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
-        .btn-crm-outline { background: white; color: #475569; border: 1px solid #cbd5e1; }
-        .btn-crm-outline:hover { background: #f8fafc; color: #1e293b; border-color: #94a3b8; }
-
-        .crm-widgets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
-        .crm-widget { background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 15px; transition: 0.2s; }
-        .crm-widget:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .cw-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-        .cw-blue { background: #eff6ff; color: #3b82f6; }
-        .cw-red { background: #fef2f2; color: #ef4444; }
-        .cw-yellow { background: #fef9c3; color: #eab308; }
-        .cw-green { background: #f0fdf4; color: #22c55e; }
-        .cw-info h4 { font-size: 13px; color: #64748b; font-weight: 600; margin-bottom: 4px; }
-        .cw-val { font-size: 24px; font-weight: 900; color: #1e293b; }
-
-        .risk-banner { background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 16px 20px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
-        .risk-info { display: flex; align-items: center; gap: 12px; }
-        .risk-info i { font-size: 24px; color: #ef4444; }
-        .risk-info h4 { font-size: 15px; font-weight: 800; color: #b91c1c; margin: 0 0 2px; }
-        .risk-info p { font-size: 13px; color: #991b1b; margin: 0; }
-        .btn-risk { background: #ef4444; color: white; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; }
-        .btn-risk:hover { background: #dc2626; }
-
-        .crm-table-container { background: white; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: auto; margin-bottom: 40px; }
-        .crm-table-header { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
-        .crm-table-header h3 { font-size: 16px; font-weight: 800; color: #1e293b; margin: 0; display: flex; align-items: center; gap: 8px; }
-        .crm-filters { display: flex; gap: 10px; align-items: center; }
-        .crm-search { position: relative; width: 220px; }
-        .crm-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 13px; }
-        .crm-search input { width: 100%; padding: 10px 10px 10px 32px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; outline: none; }
-        .crm-search input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-        .crm-select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; outline: none; color: #334155; }
-        
-        .crm-table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        .crm-table th { padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 700; color: #64748b; border-bottom: 1px solid #e2e8f0; text-transform: uppercase; background: #fff; }
-        .crm-table td { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #334155; vertical-align: middle; transition: 0.2s; }
-        .crm-table tbody tr:hover { background: #f8fafc; }
-        
-        .stu-name-cell { display: flex; align-items: center; gap: 12px; }
-        .stu-mini-avatar { width: 36px; height: 36px; border-radius: 8px; background: #e0e7ff; color: #4f46e5; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
-        .stu-name-col { font-weight: 800; color: #1e293b; font-size: 15px;}
-        .stu-class-col { font-size: 12px; color: #64748b; margin-top: 2px; }
-        
-        .score-trend { display: flex; align-items: center; gap: 6px; font-weight: 700; color: #1e293b; font-size: 16px;}
-        .trend-up { color: #10b981; background: #d1fae5; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
-        .trend-down { color: #ef4444; background: #fee2e2; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
-        
-        .hw-badge { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; display: inline-block; white-space: nowrap; }
-        .hw-done { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
-        .hw-miss { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
-        .hw-wait { background: #fef9c3; color: #ca8a04; border: 1px solid #fef08a; }
-
-        .action-btns { display: flex; gap: 8px; opacity: 0; transition: 0.2s; }
-        .crm-table tbody tr:hover .action-btns { opacity: 1; }
-        .btn-act { width: 32px; height: 32px; border-radius: 6px; border: 1px solid #cbd5e1; background: white; display: flex; align-items: center; justify-content: center; color: #64748b; cursor: pointer; transition: 0.2s; }
-        .btn-act:hover { background: #f1f5f9; color: #1e293b; border-color: #94a3b8; }
-        .btn-act.primary-act { background: #eff6ff; color: #3b82f6; border-color: #bfdbfe; }
-        .btn-act.primary-act:hover { background: #3b82f6; color: white; }
-
-    </style>
-</head>
-
-<body>
-
-        <!-- 1. Top Header -->
-    <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
-        <div class="container flex-between align-center">
-            <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
-                <a href="dashboard.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
-                <a href="teacher_dashboard.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
-            </div>
-            <div style="display:flex; gap:20px; align-items:center;">
-                <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
-                <a href="http://pf.kakao.com/_sxlwcG" target="_blank" style="color:inherit; text-decoration:none;"><i class="fas fa-headset"></i> 고객센터 (카톡상담)</a>
-                <a href="signup_select.html" style="color:inherit; text-decoration:none;">로그인 / 회원가입</a>
-            </div>
-        </div>
-    </div>
-    <header style="background:white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900;">
-        <div class="container main-gnb" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 0;">
-            <div class="logo">
-                <a href="index.html" style="text-decoration:none;">
-                    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 26px; color: #111; margin: 0; letter-spacing: -1px;">
-                        KATCH<span style="color:#E91E63;">.</span>
-                    </h1>
-                </a>
-            </div>
-            <nav class="gnb-links">
-                <a href="student_diagnostics.html">진단테스트</a>
-                <a href="level_test.html">레벨테스트</a>
-                <a href="bank.html">문제은행</a>
-                <a href="store_vod.html">VOD 인강</a>
-                <a href="store_book.html">교재 스토어</a>
-                <a href="lounge.html" class="text-orange" style="display:flex; align-items:center; gap:6px;"><i class="fas fa-crown"></i> VIP 라운지</a>
-            </nav>
-            <div class="header-utils" style="display: flex; gap: 20px; align-items: center; font-size: 22px; color: #333;">
-                <a href="my_learning.html" title="MY 학습 진단" style="color:inherit;"><i class="fas fa-chalkboard-teacher"></i></a>
-                <a href="#" style="color:inherit;"><i class="fas fa-bars"></i></a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Role Toggle Bar -->
-        <div class="view-toggle-area">
-            <div class="container text-center">
-                <div class="toggle-switch">
-                    <!-- Note: In reality, users wouldn't see both, but this is a mock interface for demo purposes -->
-                    <button class="toggle-btn active" id="btnStudent" onclick="switchView('student')"><i class="fas fa-user-graduate"></i> ?듯빀 ??쒕낫??(?숈깮??</button>
-                    <button class="toggle-btn" id="btnTeacher" onclick="switchView('teacher')"><i class="fas fa-chalkboard-teacher"></i> ?곷떞 / ?깆쟻 愿由?(媛뺤궗??</button>
-                </div>
-                <div class="mt-10 mb-5" style="font-size: 14px; color: #888;">
-                    <a href="signup_select.html" style="color:var(--navy); font-weight:bold; text-decoration:none;"><i class="fas fa-user-plus"></i> [Demo] ?뚯썝媛???좏삎 ?좏깮 ?곕え 蹂닿린</a>
-                </div>
-            </div>
-        </div>
-
-    <div class="dash-container">
-
-        <!-- =========================
+new_ui = """        <!-- =========================
              STUDENT / PARENT VIEW (GAMIFIED)
         ========================= -->
         <div id="studentView">
@@ -479,11 +278,11 @@
             const s = selectedStudent;
             if (!s) return;
             if (tab === 'report') {
-                body.innerHTML = `<div style="display:flex; gap:20px; align-items:center; margin-bottom:25px; background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;">
-                        <div style="font-size:36px; font-weight:900; color:#1e293b;">${s.score}<span style="font-size:14px; color:#64748b;">점</span></div>
+                body.innerHTML = \`<div style="display:flex; gap:20px; align-items:center; margin-bottom:25px; background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;">
+                        <div style="font-size:36px; font-weight:900; color:#1e293b;">\${s.score}<span style="font-size:14px; color:#64748b;">점</span></div>
                         <div style="width:1px; height:40px; background:#cbd5e1;"></div>
-                        <div style="color:#64748b; font-weight:600;">반평균 81.5점 (대비 <span style="color:${s.delta>=0?'#10b981':'#ef4444'}">${s.delta>=0?'+':''}${s.delta}</span>)</div>
-                        <div style="width:1px; height:40px; background:#cbd5e1;"></div><div style="color:#64748b; font-weight:600;">오답: <strong style="color:#ef4444;">${s.wrong}개</strong></div>
+                        <div style="color:#64748b; font-weight:600;">반평균 81.5점 (대비 <span style="color:\${s.delta>=0?'#10b981':'#ef4444'}">\${s.delta>=0?'+':''}\${s.delta}</span>)</div>
+                        <div style="width:1px; height:40px; background:#cbd5e1;"></div><div style="color:#64748b; font-weight:600;">오답: <strong style="color:#ef4444;">\${s.wrong}개</strong></div>
                     </div>
                     <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:12px; padding:20px; margin-bottom:20px;">
                         <div style="font-weight:900; color:#ef4444; margin-bottom:10px; font-size:15px;"><i class="fas fa-skull"></i> 킬러 문항 취약 분석</div>
@@ -492,16 +291,16 @@
                     <table style="width:100%; border-collapse:collapse; border:1px solid #e2e8f0;">
                         <thead><tr style="background:#f8fafc;"><th style="padding:12px; text-align:left; color:#64748b; font-size:13px;">문항</th><th style="padding:12px; text-align:left; color:#64748b; font-size:13px;">영역/유형</th><th style="padding:12px; text-align:center; color:#64748b; font-size:13px;">제출</th><th style="padding:12px; text-align:center; color:#64748b; font-size:13px;">정답</th></tr></thead>
                         <tbody><tr><td style="padding:12px; border-top:1px solid #e2e8f0;">21</td><td style="padding:12px; border-top:1px solid #e2e8f0;"><strong>빈칸 추론</strong></td><td style="padding:12px; text-align:center; color:#ef4444; font-weight:900; border-top:1px solid #e2e8f0;">③</td><td style="padding:12px; text-align:center; color:#10b981; font-weight:900; border-top:1px solid #e2e8f0;">②</td></tr><tr><td style="padding:12px; border-top:1px solid #e2e8f0;">34</td><td style="padding:12px; border-top:1px solid #e2e8f0;"><strong>어법 (위치)</strong></td><td style="padding:12px; text-align:center; color:#ef4444; font-weight:900; border-top:1px solid #e2e8f0;">①</td><td style="padding:12px; text-align:center; color:#10b981; font-weight:900; border-top:1px solid #e2e8f0;">④</td></tr></tbody>
-                    </table>`;
+                    </table>\`;
             } else if (tab === 'trend') {
-                body.innerHTML = `<div style="height:260px; margin-bottom:20px;"><canvas id="modal-trend-chart"></canvas></div>`;
+                body.innerHTML = \`<div style="height:260px; margin-bottom:20px;"><canvas id="modal-trend-chart"></canvas></div>\`;
                 setTimeout(() => {
                     const ctx = document.getElementById('modal-trend-chart')?.getContext('2d');
                     if (ctx) new Chart(ctx, { type: 'bar', data: { labels: ['1회차','2회차','3회차(최신)'], datasets: [{ label: '학생 점수', data: [70, Math.max(50, s.score - s.delta), s.score], backgroundColor: '#3b82f6', borderRadius: 4 }, { label: '반 평균', type: 'line', data: [75, 78, 81.5], borderColor: '#f59e0b', fill: false, tension: 0.1 }]}, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { min:50, max:100 } } } });
                 }, 50);
             } else if (tab === 'note') {
-                body.innerHTML = `<div style="margin-bottom:20px; background:#f8fafc; border-radius:10px; padding:16px; border:1px solid #e2e8f0;"><div style="font-size:13px; font-weight:700; color:#64748b; margin-bottom:10px;">저장된 상담 노트</div><div style="background:white; border-radius:8px; padding:15px; border-left:4px solid #3b82f6; margin-bottom:10px; border:1px solid #e2e8f0; border-left-width:4px;"><div style="font-size:12px; color:#94a3b8; font-weight:600; margin-bottom:5px;">2026.03.10 강인호 작성</div><div style="font-size:14px; color:#334155; line-height:1.6; font-weight:600;">단어 암기량이 부족하여 독해가 밀리는 현상. VOD 보강 지시.</div></div></div><textarea placeholder="새 상담 노트를 입력하세요..." style="width:100%; min-height:100px; padding:14px; border:1px solid #cbd5e1; border-radius:10px; font-family:inherit; font-size:14px; resize:vertical; margin-bottom:12px; outline:none; focus:border-color:#3b82f6;"></textarea><button style="padding:12px 24px; background:#2563eb; color:white; border:none; border-radius:8px; font-weight:900; cursor:pointer; width:100%;"><i class="fas fa-save"></i> 노트 저장</button>`;
-            } else { body.innerHTML = `<div style="padding:30px; text-align:center; color:#64748b; font-weight:600;">과제 내역이 표시됩니다.</div>`; }
+                body.innerHTML = \`<div style="margin-bottom:20px; background:#f8fafc; border-radius:10px; padding:16px; border:1px solid #e2e8f0;"><div style="font-size:13px; font-weight:700; color:#64748b; margin-bottom:10px;">저장된 상담 노트</div><div style="background:white; border-radius:8px; padding:15px; border-left:4px solid #3b82f6; margin-bottom:10px; border:1px solid #e2e8f0; border-left-width:4px;"><div style="font-size:12px; color:#94a3b8; font-weight:600; margin-bottom:5px;">2026.03.10 강인호 작성</div><div style="font-size:14px; color:#334155; line-height:1.6; font-weight:600;">단어 암기량이 부족하여 독해가 밀리는 현상. VOD 보강 지시.</div></div></div><textarea placeholder="새 상담 노트를 입력하세요..." style="width:100%; min-height:100px; padding:14px; border:1px solid #cbd5e1; border-radius:10px; font-family:inherit; font-size:14px; resize:vertical; margin-bottom:12px; outline:none; focus:border-color:#3b82f6;"></textarea><button style="padding:12px 24px; background:#2563eb; color:white; border:none; border-radius:8px; font-weight:900; cursor:pointer; width:100%;"><i class="fas fa-save"></i> 노트 저장</button>\`;
+            } else { body.innerHTML = \`<div style="padding:30px; text-align:center; color:#64748b; font-weight:600;">과제 내역이 표시됩니다.</div>\`; }
         }
         function switchView(view) {
             document.getElementById('btnStudent').classList.remove('active');
@@ -530,15 +329,13 @@
             });
         }
         document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('view') === 'teacher') {
-                switchView('teacher');
-            } else {
-                switchView('student');
-            }
+            renderRadarChart(); renderTable();
             window.onclick = function(e) { if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); };
         });
-    </script>
-</body>
-</html>
+    </script>"""
 
+new_lines = new_ui.split(chr(10))
+
+lines = lines[:207] + [line + chr(10) for line in new_lines] + lines[791:]
+with open(target_file, "w", encoding="utf-8") as f:
+    f.writelines(lines)

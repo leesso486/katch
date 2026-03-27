@@ -89,8 +89,8 @@
     <div class="header-top-bar" style="background:#f0f2f5; padding:5px 0; font-size:12px; color:#666; border-bottom:1px solid #e0e0e0;">
         <div class="container flex-between align-center">
             <div class="target-switch" style="display:inline-flex; background:#e0e4e8; border-radius:30px; overflow:hidden; padding:4px;">
-                <a href="dashboard_online.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
-                <a href="dashboard_gvr.html" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
+                <a href="dashboard.html" style="padding:6px 18px; border-radius:20px; color:white; background:#111; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">학생·학부모</a>
+                <a href="dashboard.html?view=teacher" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;">가맹 원장·강사</a>
             </div>
             <div style="display:flex; gap:20px; align-items:center;">
                 <a href="admin_input.html" style="color:#d32f2f; font-weight:800; text-decoration:none; font-size:13px;"><i class="fas fa-cog"></i> 문제입력기/관리자</a>
@@ -369,12 +369,11 @@
             
             // Auto switch page based on question
             if(qNum >= 14 && qNum <= 15) {
- else if(qNum >= 19 && qNum <= 20) {
-                goToSet(3);
-            }
                 goToSet(1);
             } else if(qNum >= 16 && qNum <= 18) {
                 goToSet(2);
+            } else if(qNum >= 19 && qNum <= 20) {
+                goToSet(3);
             }
 
             let targetEl = document.getElementById(`q${qNum}`);
