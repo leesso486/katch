@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KATCH - 강사 워크스페이스</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background-color: #f4f6f9; font-family: 'Pretendard', sans-serif; margin:0; padding:0; color:#1e293b; overflow-x:hidden;}
+        
+        .ml-topbar {
+            height: 60px; background: #111; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; position: sticky; top: 0; z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .ml-topbar-left { display: flex; align-items: center; gap: 15px; }
+        .ml-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -1px; }
+        .ml-logo a { color: white; text-decoration: none; }
+        .ml-logo span { color: #E91E63; }
+        .ml-page-title { font-size: 15px; font-weight: 700; opacity: 0.7; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
+        .ml-topbar-right { display: flex; align-items: center; gap: 15px; }
+        .role-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3px; }
+        .role-btn { padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.6); transition: 0.2s; }
+        .role-btn.active { background: white; color: #111; }
+        .user-pts { background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3); color: #FFD700; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration:none; display:flex; gap:6px; align-items:center; }
+        .user-info { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+        .user-avatar { width: 34px; height: 34px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color:white; }
+
+        .dash-container { max-width: 1600px; margin: 30px auto; padding: 0 30px;}
+        .admin-sidebar {
+            width:260px; min-width:260px; background:#0f172a; height:calc(100vh - 60px); 
+            position:fixed; left:0; top:60px; border-right:1px solid #1e293b; overflow-y:auto; z-index:100;
+        }
+        .as-nav-item { transition:0.2s; }
+        .as-nav-item:hover, .as-nav-item.active { background:rgba(255,255,255,0.05); color:#fff !important; }
+        .as-nav-item.active { border: 1px solid rgba(59,130,246,0.3); background:rgba(59,130,246,0.15); border-radius: 10px; }
+        
+        .main-wrapper { flex:1; margin-left:260px; }
+
+        .tw-card { background: white; border-radius: 16px; padding: 22px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px;}
+        .tw-btn { padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: none; }
+        .tw-btn.solid-blue { background: #2563eb; color: white; }
+        .tw-btn.solid-blue:hover { background: #1d4ed8; }
+        .tw-btn.solid-pink { background: #e91e63; color: white; box-shadow: 0 4px 10px rgba(233,30,99,0.2); }
+        .tw-btn.solid-pink:hover { background: #d81b60; transform: translateY(-2px); }
+        .tw-btn.outline { background: white; color: #1e293b; border: 1px solid #e2e8f0; }
+        .tw-btn.outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .tw-select, .tw-input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; color: #334155; font-weight: 600; outline: none; transition:0.2s; }
+        .tw-select:focus, .tw-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        
+    </style>
+</head>
+<body>
+<div class="ml-topbar">
+    <div class="ml-topbar-left">
+        <div class="ml-logo"><a href="index.html">KATCH<span>.</span></a></div>
+        <div class="ml-page-title">강사 워크스페이스</div>
+    </div>
+    <div class="ml-topbar-right">
+        <div class="role-toggle">
+            <button class="role-btn" onclick="location.href='my_learning.html'"><i class="fas fa-user-graduate"></i> 학생</button>
+            <button class="role-btn active"><i class="fas fa-chalkboard-teacher"></i> 강사/관리자</button>
+        </div>
+        <a href="#" class="user-pts"><i class="fas fa-bell"></i> 알림 3</a>
+        <div class="user-info">
+            <div class="user-avatar">이</div>
+            <span style="font-size:14px; font-weight:600;">이은혜 강사</span>
+        </div>
+    </div>
+</div>
+<div style="display:flex; width:100%;">
+    <div class="admin-sidebar">
+    <div style="padding:25px 20px; background:linear-gradient(135deg, rgba(59,130,246,0.1), rgba(15,23,42,0)); border-bottom:1px solid rgba(255,255,255,0.05);">
+        <h2 style="font-size:16px; font-weight:800; color:#fff; margin:0 0 5px 0;">이은혜 강사님</h2>
+        <p style="font-size:12px; color:#94a3b8; margin:0;">고등관 전임 / KATCH 관리자</p>
+    </div>
+    
+    <nav class="as-nav" style="padding: 20px 15px;">
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:0 0 10px 10px; letter-spacing:1px;">HOME</div>
+        <a href="teacher_dashboard.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:12px 15px; color:#cbd5e1; border-radius:10px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:20px;"><i class="fas fa-home" style="width:20px; text-align:center;"></i> 대시보드 홈</a>
+
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:10px 0 10px 10px; letter-spacing:1px;">학습 관리</div>
+        <a href="teacher_grading.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-check-double" style="width:20px; text-align:center;"></i> 서술형 채점 / 피드백</a>
+        <a href="admin_gvr_analytics.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-chart-line" style="width:20px; text-align:center;"></i> 주간 GVR 분석</a>
+        <a href="teacher_dashboard.html" class="as-nav-item" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-users-cog" style="width:20px; text-align:center;"></i> 수강생 관리(조회)</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">콘텐츠 관리</div>
+        <a href="admin_input.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-cloud-upload-alt" style="width:20px; text-align:center;"></i> 문항 업로드 (DB)</a>
+        <a href="problem_bank.html" class="as-nav-item active" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; margin-bottom:5px;"><i class="fas fa-layer-group" style="width:20px; text-align:center;"></i> 문제은행 출제</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">커뮤니티</div>
+        <a href="teacher_community.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;"><i class="fas fa-store" style="width:20px; text-align:center;"></i> 지식 마켓 & 라운지</a>
+    </nav>
+</div>
+    <div class="main-wrapper">
+        <div class="dash-container">
+            <h1 style="font-size:24px; font-weight:900; margin:0 0 25px 0;"><i class="fas fa-layer-group text-indigo-500"></i> 문제은행 출제 및 학습지 생성</h1>
+            <div style="display:grid; grid-template-columns:250px 1fr 340px; gap:20px;">
+                
+                <!-- 필터 사이드바 -->
+                <div class="tw-card" style="padding:20px;">
+                    <h3 style="font-size:16px; font-weight:800; margin:0 0 15px 0;"><i class="fas fa-filter"></i> 문항 검색 필터</h3>
+                    <div style="margin-bottom:15px;"><label style="font-size:12px; font-weight:700; color:#64748b;">과목</label><select class="tw-select mt-1"><option>영어</option></select></div>
+                    <div style="margin-bottom:15px;"><label style="font-size:12px; font-weight:700; color:#64748b;">출처</label><select class="tw-select mt-1"><option>2026 수능완성</option><option>자체 교재</option></select></div>
+                    <div style="margin-bottom:15px;"><label style="font-size:12px; font-weight:700; color:#64748b;">유형</label><select class="tw-select mt-1"><option>빈칸추론</option><option>어법결정</option></select></div>
+                    <button class="tw-btn solid-blue" style="width:100%;"><i class="fas fa-search"></i> 검색</button>
+                    
+                    <div style="margin-top:20px; padding-top:20px; border-top:1px solid #e2e8f0;">
+                       <button class="tw-btn outline" style="width:100%; font-size:13px; color:#475569;"><i class="fas fa-magic"></i> 조건부 자동출제 (AI 추천)</button>
+                    </div>
+                </div>
+
+                <!-- 문항 리스트 (Draggable 느낌) -->
+                <div class="tw-card" style="padding:0; overflow:hidden;">
+                    <div style="padding:15px 20px; background:#f8fafc; border-bottom:1px solid #e2e8f0; font-weight:800; display:flex; justify-content:space-between;">검색 결과 (120건) <span style="color:#3b82f6; cursor:pointer;"><i class="fas fa-check-double"></i> 전체 담기</span></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:15px; height:calc(100vh - 250px); overflow-y:auto;">
+                        <!-- Item -->
+                        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:15px; position:relative; cursor:grab; transition:0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+                            <div style="position:absolute; top:15px; right:15px;"><button class="tw-btn outline" style="padding:4px 10px; font-size:11px; transition:0.2s;" onclick="toggleCart(this)">+ 담기</button></div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;"><span style="background:#e0e7ff; color:#4f46e5; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">빈칸추론</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">난이도: 상</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">2026 수능완성 p.14</span></div>
+                            <div style="font-size:14px; color:#1e293b; line-height:1.5;">According to the theory of reciprocal altruism, memory is required to... (중략)</div>
+                        </div>
+                        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:15px; position:relative; cursor:grab; transition:0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+                            <div style="position:absolute; top:15px; right:15px;"><button class="tw-btn outline" style="padding:4px 10px; font-size:11px; transition:0.2s;" onclick="toggleCart(this)">+ 담기</button></div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;"><span style="background:#e0e7ff; color:#4f46e5; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">순서배열</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">난이도: 중</span></div>
+                            <div style="font-size:14px; color:#1e293b; line-height:1.5;">The most important role of the government is to provide...</div>
+                        </div>
+                        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:15px; position:relative; cursor:grab; transition:0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+                            <div style="position:absolute; top:15px; right:15px;"><button class="tw-btn outline" style="padding:4px 10px; font-size:11px; transition:0.2s;" onclick="toggleCart(this)">+ 담기</button></div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;"><span style="background:#e0e7ff; color:#e91e63; background:#fce4ec; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">문법 (수일치)</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">난이도: 하</span></div>
+                            <div style="font-size:14px; color:#1e293b; line-height:1.5;">The number of students who [is/are] studying English ...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 출제 바구니 (Cart) -->
+                <div class="tw-card" style="background:#eff6ff; border-color:#bfdbfe; height:fit-content; position:sticky; top:20px;">
+                    <h3 style="font-size:16px; font-weight:800; margin:0 0 15px 0;"><i class="fas fa-shopping-basket text-blue-500"></i> 미니테스트 (담은 문항)</h3>
+                    <div id="cart-box" style="background:white; border-radius:8px; padding:15px; border:2px solid #bfdbfe; margin-bottom:15px; transition:0.2s;">
+                        총 <strong style="font-size:18px; color:#1d4ed8;" id="cart-total">0</strong> <strong>문제</strong> 담김<br>
+                        <a href="#" style="font-size:12px; color:#3b82f6; font-weight:700;">자세히 보기 / 순서 드래그 편집</a>
+                    </div>
+                    <label style="font-weight:700; font-size:12px; color:#475569;">출제 타이틀</label>
+                    <input type="text" class="tw-input mt-1 mb-4" value="고1 외고반 중간대비 미니모의고사">
+                    <label style="font-weight:700; font-size:12px; color:#475569;">배포 유형</label>
+                    <select class="tw-select mt-1 mb-4"><option>온라인 CBT (App 전송)</option><option>종이 학습지 (PDF 다운)</option></select>
+                    
+                    <button class="tw-btn solid-blue" style="width:100%; font-size:15px;" onclick="deployTest()"><i class="fas fa-paper-plane"></i> 수강생에게 지금 배포</button>
+                    <button class="tw-btn outline" style="width:100%; font-size:15px; margin-top:10px;"><i class="fas fa-file-pdf text-red-500"></i> PDF 디자인 생성 및 다운로드</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let cartCount = 0;
+    
+    function toggleCart(btn) {
+        const itemBox = btn.closest('div[style*="border-radius:10px"]');
+        if(btn.innerText.includes('담기')) {
+            btn.innerHTML = '<i class="fas fa-minus"></i> 빼기';
+            btn.style.background = '#e2e8f0';
+            btn.style.color = '#334155';
+            itemBox.style.borderColor = '#3b82f6';
+            itemBox.style.background = '#f0f9ff';
+            cartCount++;
+        } else {
+            btn.innerHTML = '<i class="fas fa-plus"></i> 담기';
+            btn.style.background = 'white';
+            btn.style.color = '#1e293b';
+            itemBox.style.borderColor = '#cbd5e1';
+            itemBox.style.background = 'white';
+            cartCount--;
+        }
+        document.getElementById('cart-total').innerText = cartCount;
+        
+        const cartBox = document.getElementById('cart-box');
+        cartBox.style.transform = 'scale(1.05)';
+        cartBox.style.borderColor = '#3b82f6';
+        setTimeout(() => {
+            cartBox.style.transform = 'scale(1)';
+            cartBox.style.borderColor = '#bfdbfe';
+        }, 200);
+    }
+    
+    function deployTest() {
+        if(cartCount === 0) {
+            alert('바구니에 담긴 문항이 없습니다. 먼저 문항을 담아주세요.');
+        } else {
+            alert(cartCount + '개의 문항으로 구성된 미니테스트가 학생들에게 온라인 배포되었습니다!\n(푸시 알림 전송 완료)');
+            cartCount = 0;
+            document.getElementById('cart-total').innerText = cartCount;
+            document.querySelectorAll('.q-item button').forEach(b => {
+                if(b.innerText.includes('빼기')) b.click();
+            });
+        }
+    }
+</script>
+</body></html>

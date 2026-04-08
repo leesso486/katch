@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KATCH - 강사 워크스페이스</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background-color: #f4f6f9; font-family: 'Pretendard', sans-serif; margin:0; padding:0; color:#1e293b; overflow-x:hidden;}
+        
+        .ml-topbar {
+            height: 60px; background: #111; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; position: sticky; top: 0; z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .ml-topbar-left { display: flex; align-items: center; gap: 15px; }
+        .ml-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -1px; }
+        .ml-logo a { color: white; text-decoration: none; }
+        .ml-logo span { color: #E91E63; }
+        .ml-page-title { font-size: 15px; font-weight: 700; opacity: 0.7; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
+        .ml-topbar-right { display: flex; align-items: center; gap: 15px; }
+        .role-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3px; }
+        .role-btn { padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.6); transition: 0.2s; }
+        .role-btn.active { background: white; color: #111; }
+        .user-pts { background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3); color: #FFD700; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration:none; display:flex; gap:6px; align-items:center; }
+        .user-info { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+        .user-avatar { width: 34px; height: 34px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color:white; }
+
+        .dash-container { max-width: 1600px; margin: 30px auto; padding: 0 30px;}
+        .admin-sidebar {
+            width:260px; min-width:260px; background:#0f172a; height:calc(100vh - 60px); 
+            position:fixed; left:0; top:60px; border-right:1px solid #1e293b; overflow-y:auto; z-index:100;
+        }
+        .as-nav-item { transition:0.2s; }
+        .as-nav-item:hover, .as-nav-item.active { background:rgba(255,255,255,0.05); color:#fff !important; }
+        .as-nav-item.active { border: 1px solid rgba(59,130,246,0.3); background:rgba(59,130,246,0.15); border-radius: 10px; }
+        
+        .main-wrapper { flex:1; margin-left:260px; }
+
+        .tw-card { background: white; border-radius: 16px; padding: 22px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px;}
+        .tw-btn { padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: none; }
+        .tw-btn.solid-blue { background: #2563eb; color: white; }
+        .tw-btn.solid-blue:hover { background: #1d4ed8; }
+        .tw-btn.solid-pink { background: #e91e63; color: white; box-shadow: 0 4px 10px rgba(233,30,99,0.2); }
+        .tw-btn.solid-pink:hover { background: #d81b60; transform: translateY(-2px); }
+        .tw-btn.outline { background: white; color: #1e293b; border: 1px solid #e2e8f0; }
+        .tw-btn.outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .tw-select, .tw-input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; color: #334155; font-weight: 600; outline: none; transition:0.2s; }
+        .tw-select:focus, .tw-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        
+    </style>
+</head>
+<body>
+<div class="ml-topbar">
+    <div class="ml-topbar-left">
+        <div class="ml-logo"><a href="index.html">KATCH<span>.</span></a></div>
+        <div class="ml-page-title">강사 워크스페이스</div>
+    </div>
+    <div class="ml-topbar-right">
+        <div class="role-toggle">
+            <button class="role-btn" onclick="location.href='my_learning.html'"><i class="fas fa-user-graduate"></i> 학생</button>
+            <button class="role-btn active"><i class="fas fa-chalkboard-teacher"></i> 강사/관리자</button>
+        </div>
+        <a href="#" class="user-pts"><i class="fas fa-bell"></i> 알림 3</a>
+        <div class="user-info">
+            <div class="user-avatar">이</div>
+            <span style="font-size:14px; font-weight:600;">이은혜 강사</span>
+        </div>
+    </div>
+</div>
+<div style="display:flex; width:100%;">
+    <div class="admin-sidebar">
+    <div style="padding:25px 20px; background:linear-gradient(135deg, rgba(59,130,246,0.1), rgba(15,23,42,0)); border-bottom:1px solid rgba(255,255,255,0.05);">
+        <h2 style="font-size:16px; font-weight:800; color:#fff; margin:0 0 5px 0;">이은혜 강사님</h2>
+        <p style="font-size:12px; color:#94a3b8; margin:0;">고등관 전임 / KATCH 관리자</p>
+    </div>
+    
+    <nav class="as-nav" style="padding: 20px 15px;">
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:0 0 10px 10px; letter-spacing:1px;">HOME</div>
+        <a href="teacher_dashboard.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:12px 15px; color:#cbd5e1; border-radius:10px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:20px;"><i class="fas fa-home" style="width:20px; text-align:center;"></i> 대시보드 홈</a>
+
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:10px 0 10px 10px; letter-spacing:1px;">학습 관리</div>
+        <a href="teacher_grading.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-check-double" style="width:20px; text-align:center;"></i> 서술형 채점 / 피드백</a>
+        <a href="admin_gvr_analytics.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-chart-line" style="width:20px; text-align:center;"></i> 주간 GVR 분석</a>
+        <a href="teacher_dashboard.html" class="as-nav-item" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-users-cog" style="width:20px; text-align:center;"></i> 수강생 관리(조회)</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">콘텐츠 관리</div>
+        <a href="admin_input.html" class="as-nav-item active" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; margin-bottom:5px;"><i class="fas fa-cloud-upload-alt" style="width:20px; text-align:center;"></i> 문항 업로드 (DB)</a>
+        <a href="problem_bank.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-layer-group" style="width:20px; text-align:center;"></i> 문제은행 출제</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">커뮤니티</div>
+        <a href="teacher_community.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;"><i class="fas fa-store" style="width:20px; text-align:center;"></i> 지식 마켓 & 라운지</a>
+    </nav>
+</div>
+    <div class="main-wrapper">
+        <div class="dash-container">
+            <h1 style="font-size:24px; font-weight:900; margin:0 0 25px 0;"><i class="fas fa-cloud-upload-alt text-indigo-500"></i> 문항 DB 통합 업로더</h1>
+            
+            <div style="display:grid; grid-template-columns:1fr 400px; gap:20px;">
+                <div class="tw-card">
+                    <h3 style="font-size:16px; font-weight:800; margin:0 0 20px 0;">문항 데이터 입력 (HWP/PDF 자동 추출)</h3>
+                    <div id="drop-zone" style="border:2px dashed #cbd5e1; border-radius:12px; padding:40px; text-align:center; background:#f8fafc; margin-bottom:20px; cursor:pointer;" onmouseover="this.style.borderColor='#3b82f6'; this.style.background='#eff6ff'" onmouseout="this.style.borderColor='#cbd5e1'; this.style.background='#f8fafc'" onclick="simulateUpload()">
+                        <i class="fas fa-file-upload text-blue-500" style="font-size:48px; margin-bottom:15px;"></i>
+                        <div style="font-size:16px; font-weight:800; color:#1e293b;">한글(HWP), PDF 파일을 이 곳으로 끌어다 놓으세요</div>
+                        <div style="font-size:13px; color:#64748b; margin-top:5px;">AI가 지문, 문항, 보기를 자동으로 분류하여 입력창에 채워줍니다. (클릭하여 시뮬레이션)</div>
+                    </div>
+                    
+                    <div style="display:flex; flex-direction:column; gap:15px;">
+                        <div><label style="font-weight:700; font-size:13px; color:#475569;">지문 텍스트</label><textarea id="ta-passage" class="tw-input" style="height:150px; margin-top:8px;"></textarea></div>
+                        <div><label style="font-weight:700; font-size:13px; color:#475569;">문항 (질문)</label><input type="text" id="in-question" class="tw-input" style="margin-top:8px;"></div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div><label style="font-weight:700; font-size:13px; color:#475569;">선지 1</label><input type="text" id="in-c1" class="tw-input" style="margin-top:8px;"></div>
+                            <div><label style="font-weight:700; font-size:13px; color:#475569;">선지 2</label><input type="text" id="in-c2" class="tw-input" style="margin-top:8px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tw-card" id="ai-tag-card" style="background:#f8fafc; transition:0.3s;">
+                    <h3 style="font-size:16px; font-weight:800; margin:0 0 20px 0;"><i class="fas fa-magic text-pink-500"></i> AI 자동 태깅 시스템</h3>
+                    <div style="font-size:13px; line-height:1.6; color:#475569; margin-bottom:20px;">
+                        업로드된 지문과 문항을 분석하여 KATCH 데이터베이스 구조에 맞게 카테고리를 자동 분류합니다. (수정 가능)
+                    </div>
+                    <div style="margin-bottom:15px;">
+                        <label style="font-weight:700; font-size:12px; color:#64748b;">주요 스킬 (과목)</label>
+                        <select id="sel-skill" class="tw-select" style="margin-top:5px; background:#eff6ff;"><option>Reading (독해)</option><option>Vocabulary (어휘)</option><option>Grammar</option></select>
+                    </div>
+                    <div style="margin-bottom:15px;">
+                        <label style="font-weight:700; font-size:12px; color:#64748b;">세부 유형</label>
+                        <select id="sel-type" class="tw-select" style="margin-top:5px; background:#eff6ff;"><option>빈칸 추론</option><option>문맥 어휘 결정</option><option>주제 파악</option></select>
+                    </div>
+                    <div style="margin-bottom:25px;">
+                        <label style="font-weight:700; font-size:12px; color:#64748b;">출처 난이도 (Lexile 기반 계산)</label>
+                        <select id="sel-level" class="tw-select" style="margin-top:5px;"><option>Level 4 (고1 모의고사 수준)</option><option>Level 5 (고2 모의고사 수준)</option></select>
+                    </div>
+                    <button class="tw-btn solid-blue" style="width:100%; font-size:16px; padding:15px;" onclick="alert('문제가 저장되었습니다.')"><i class="fas fa-database"></i> 문제은행 DB에 저장하기 (10 P 획득)</button>
+                    <div style="text-align:center; margin-top:15px;"><a href="#" style="font-size:13px; font-weight:700; color:#64748b;">대량 엑셀 업로드로 전환</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function simulateUpload() {
+        const dropZone = document.getElementById('drop-zone');
+        dropZone.innerHTML = `
+            <div style="padding:20px 0;">
+                <i class="fas fa-spinner fa-spin text-blue-500" style="font-size:36px; margin-bottom:15px;"></i>
+                <div style="font-size:15px; font-weight:800; color:#1e293b; margin-bottom:10px;">AI 비전 분석 중... (지문 및 보기를 분리하고 난이도를 측정합니다)</div>
+                <div style="width:80%; margin:0 auto; height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden;">
+                    <div id="pb" style="width:0%; height:100%; background:#3b82f6; transition:width 1.5s linear;"></div>
+                </div>
+            </div>
+        `;
+        
+        setTimeout(() => { document.getElementById('pb').style.width = '100%'; }, 50);
+        
+        setTimeout(() => {
+            dropZone.innerHTML = '<i class="fas fa-check-circle text-green-500" style="font-size:48px; margin-bottom:15px;"></i><div style="font-size:16px; font-weight:800; color:#1e293b;">분석 완료! 문항 데이터와 선지가 자동 매핑되었습니다.</div>';
+            
+            document.getElementById('ta-passage').value = "Over the past several decades, there has been an increasing realization that...";
+            document.getElementById('in-question').value = "(A), (B), (C)의 각 네모 안에서 문맥에 맞는 낱말로 가장 적절한 것은?";
+            document.getElementById('in-c1').value = "① (A) decreasing (B) ignored (C) strict";
+            document.getElementById('in-c2').value = "② (A) increasing (B) valued (C) loose";
+            
+            const rightCard = document.getElementById('ai-tag-card');
+            rightCard.style.boxShadow = '0 0 0 4px #f43f5e';
+            setTimeout(() => { rightCard.style.boxShadow = '0 4px 20px rgba(0,0,0,0.03)'; }, 800);
+            
+            document.getElementById('sel-skill').value = "Vocabulary (어휘)";
+            document.getElementById('sel-type').value = "문맥 어휘 결정";
+            document.getElementById('sel-level').value = "Level 5 (고2 모의고사 수준)";
+            
+        }, 1500);
+    }
+</script>
+</body></html>
