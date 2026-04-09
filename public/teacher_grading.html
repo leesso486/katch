@@ -2,115 +2,69 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>KATCH - 강사 채점 대시보드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KATCH - 강사 워크스페이스</title>
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .grade-layout { display: flex; height: calc(100vh - 60px); }
+        body { background-color: #f4f6f9; font-family: 'Pretendard', sans-serif; margin:0; padding:0; color:#1e293b; overflow-x:hidden;}
         
-        /* Left: Student List */
-        .grade-sidebar { width: 320px; background: #fff; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; }
-        .g-sidebar-head { padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; }
-        .g-sidebar-head h3 { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
-        .g-filter { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; margin-bottom: 10px; }
+        .ml-topbar {
+            height: 60px; background: #111; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; position: sticky; top: 0; z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .ml-topbar-left { display: flex; align-items: center; gap: 15px; }
+        .ml-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -1px; }
+        .ml-logo a { color: white; text-decoration: none; }
+        .ml-logo span { color: #E91E63; }
+        .ml-page-title { font-size: 15px; font-weight: 700; opacity: 0.7; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
+        .ml-topbar-right { display: flex; align-items: center; gap: 15px; }
+        .role-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3px; }
+        .role-btn { padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.6); transition: 0.2s; }
+        .role-btn.active { background: white; color: #111; }
+        .user-pts { background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3); color: #FFD700; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration:none; display:flex; gap:6px; align-items:center; }
+        .user-info { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+        .user-avatar { width: 34px; height: 34px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color:white; }
+
+        .dash-container { max-width: 1600px; margin: 30px auto; padding: 0 30px;}
+        .admin-sidebar {
+            width:260px; min-width:260px; background:#0f172a; height:calc(100vh - 60px); 
+            position:fixed; left:0; top:60px; border-right:1px solid #1e293b; overflow-y:auto; z-index:100;
+        }
+        .as-nav-item { transition:0.2s; }
+        .as-nav-item:hover, .as-nav-item.active { background:rgba(255,255,255,0.05); color:#fff !important; }
+        .as-nav-item.active { border: 1px solid rgba(59,130,246,0.3); background:rgba(59,130,246,0.15); border-radius: 10px; }
         
-        .student-list { flex: 1; overflow-y: auto; }
-        .s-item { padding: 15px 20px; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
-        .s-item:hover { background: #f4f6f9; }
-        .s-item.active { background: #e8eaf6; border-left: 4px solid var(--navy); }
-        .s-info strong { display: block; font-size: 15px; color: #333; margin-bottom: 4px; }
-        .s-info span { font-size: 12px; color: #888; }
-        .s-status { font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 10px; }
-        .status-wait { background: #ffe0b2; color: #e65100; }
-        .status-done { background: #c8e6c9; color: #2e7d32; }
+        .main-wrapper { flex:1; margin-left:260px; }
 
-        /* Right: Grading Area */
-        .grade-main { flex: 1; display: flex; flex-direction: column; background: #f9fbfd; overflow-y: auto; padding: 30px; }
-        .g-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e0e0e0; }
-        .g-title { font-size: 24px; font-weight: 900; color: #111; }
-        .g-meta { font-size: 14px; color: #666; margin-top: 5px; }
-
-        .eval-grid { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+        .tw-card { background: white; border-radius: 16px; padding: 22px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px;}
+        .tw-btn { padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: none; }
+        .tw-btn.solid-blue { background: #2563eb; color: white; }
+        .tw-btn.solid-blue:hover { background: #1d4ed8; }
+        .tw-btn.solid-pink { background: #e91e63; color: white; box-shadow: 0 4px 10px rgba(233,30,99,0.2); }
+        .tw-btn.solid-pink:hover { background: #d81b60; transform: translateY(-2px); }
+        .tw-btn.outline { background: white; color: #1e293b; border: 1px solid #e2e8f0; }
+        .tw-btn.outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .tw-select, .tw-input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; color: #334155; font-weight: 600; outline: none; transition:0.2s; }
+        .tw-select:focus, .tw-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
         
-        /* Answer Box */
-        .ans-box { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
-        .ans-box h4 { font-size: 15px; color: #555; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .student-ans { font-size: 17px; line-height: 1.6; color: #222; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--navy); min-height: 120px; }
-        .student-ans mark { background: #fff9c4; padding: 0 4px; border-radius: 3px; font-weight: bold; }
-
-        /* Rubric / Key */
-        .rubric-box { background: #fff3e0; border-radius: 12px; padding: 20px; border: 1px solid #ffe0b2; margin-top: 20px; }
-        .rubric-box h5 { font-size: 14px; color: #e65100; margin-bottom: 10px; font-weight: 800; }
-        .model-ans { font-size: 15px; line-height: 1.5; color: #333; margin-bottom: 15px; }
-        .keyword-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-        .k-tag { background: white; border: 1px solid #ffcc80; color: #f57c00; font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
-
-        /* Scoring Panel */
-        .scoring-panel { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; position: sticky; top: 0; }
-        .scoring-panel h4 { font-size: 16px; margin-bottom: 20px; color: #333; font-weight: 800; border-bottom: 1px solid #eee; padding-bottom: 10px;}
-        
-        .score-input-group { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .score-label { font-size: 15px; font-weight: bold; color: #555; }
-        .score-field { display: flex; align-items: baseline; gap: 5px; }
-        .score-field input { width: 70px; height: 45px; text-align: center; font-size: 24px; font-weight: 900; color: var(--navy); border: 2px solid #ddd; border-radius: 8px; }
-        .score-field input:focus { border-color: var(--navy); outline: none; }
-        .score-max { font-size: 16px; color: #888; font-weight: bold; }
-
-        .comment-box { width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 12px; font-size: 14px; line-height: 1.5; resize: vertical; min-height: 100px; margin-bottom: 20px; }
-        
-        .macro-btns { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-        .macro-btn { background: #f0f0f0; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; color: #555; }
-        .macro-btn:hover { background: #e0e0e0; }
-
-        .btn-submit-grade { width: 100%; padding: 15px; background: var(--navy); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(17,17,17,0.3); }
-        .btn-submit-grade:hover { background: #000; transform: translateY(-2px); }
-
     </style>
 </head>
 <body>
-
-<style>
-/* =================== TOP HEADER (TEACHER) =================== */
-.ml-topbar {
-    height: 60px; background: #111; color: white;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px; position: sticky; top: 0; z-index: 999;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-.ml-topbar-left { display: flex; align-items: center; gap: 15px; }
-.hamburger-btn {
-    width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.1);
-    border-radius: 8px; color: white; font-size: 18px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: 0.2s;
-}
-.hamburger-btn:hover { background: rgba(255,255,255,0.2); }
-.ml-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -1px; }
-.ml-logo a { color: white; text-decoration: none; }
-.ml-logo span { color: #E91E63; }
-.ml-page-title { font-size: 15px; font-weight: 700; opacity: 0.7; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
-.ml-topbar-right { display: flex; align-items: center; gap: 15px; }
-.user-info { display: flex; align-items: center; gap: 10px; font-size: 14px; }
-.user-avatar { width: 34px; height: 34px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color:white; }
-.user-pts { background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3); color: #FFD700; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; text-decoration:none; display:flex; gap:6px; align-items:center; }
-.user-pts:hover { background: rgba(255,193,7,0.25); }
-.role-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3px; }
-.role-btn { padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.6); transition: 0.2s; }
-.role-btn.active { background: white; color: #111; }
-</style>
 <div class="ml-topbar">
     <div class="ml-topbar-left">
-        <button class="hamburger-btn" onclick="location.href='teacher_dashboard.html'">
-            <i class="fas fa-home"></i>
-        </button>
         <div class="ml-logo"><a href="index.html">KATCH<span>.</span></a></div>
         <div class="ml-page-title">강사 워크스페이스</div>
     </div>
     <div class="ml-topbar-right">
         <div class="role-toggle">
-            <button class="role-btn" onclick="location.href='dashboard.html'"><i class="fas fa-user-graduate"></i> 학생</button>
+            <button class="role-btn" onclick="location.href='my_learning.html'"><i class="fas fa-user-graduate"></i> 학생</button>
             <button class="role-btn active"><i class="fas fa-chalkboard-teacher"></i> 강사/관리자</button>
         </div>
         <a href="#" class="user-pts"><i class="fas fa-bell"></i> 알림 3</a>
@@ -120,189 +74,173 @@
         </div>
     </div>
 </div>
-
-    <!-- Teacher Header Bar -->
+<div style="display:flex; width:100%;">
+    <div class="admin-sidebar">
+    <div style="padding:25px 20px; background:linear-gradient(135deg, rgba(59,130,246,0.1), rgba(15,23,42,0)); border-bottom:1px solid rgba(255,255,255,0.05);">
+        <h2 style="font-size:16px; font-weight:800; color:#fff; margin:0 0 5px 0;">이은혜 강사님</h2>
+        <p style="font-size:12px; color:#94a3b8; margin:0;">고등관 전임 / KATCH 관리자</p>
+    </div>
     
+    <nav class="as-nav" style="padding: 20px 15px;">
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:0 0 10px 10px; letter-spacing:1px;">HOME</div>
+        <a href="teacher_dashboard.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:12px 15px; color:#cbd5e1; border-radius:10px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:20px;"><i class="fas fa-home" style="width:20px; text-align:center;"></i> 대시보드 홈</a>
 
-    <div class="grade-layout">
-        <aside class="admin-sidebar" style="background: white; border-right: 1px solid #e8eaf0; display: flex; flex-direction: column; overflow-y: auto;">
-            <div class="sidebar-user-card" style="padding: 20px; background: linear-gradient(135deg, #111, #1e2d5a); color: white; position: relative; overflow: hidden; flex-shrink: 0;">
-                <div style="content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(233,30,99,0.2); border-radius: 50%;"></div>
-                <div class="suc-avatar" style="width: 48px; height: 48px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.3);">강</div>
-                <div class="suc-name" style="font-size: 16px; font-weight: 800; margin-bottom: 3px;">이은혜 강사</div>
-                <div class="suc-role" style="font-size: 12px; opacity: 0.7;"><i class="fas fa-chalkboard-teacher"></i> KNS 대치본원 · 담당강사</div>
-                <div class="suc-pts" style="margin-top: 12px; font-size: 12px; color:#aaf;">관리자 권한 부여됨</div>
-            </div>
-
-            <nav class="sidebar-nav" style="flex: 1; padding: 10px 0;">
-                <div class="nav-section-label" style="padding: 15px 20px 5px; font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: 1px; text-transform: uppercase;">강사 관리</div>
-                <a class="nav-item " href="teacher_dashboard.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: 0.2s; color: #555; font-size: 14px; font-weight: 600; text-decoration: none; border-left: 3px solid transparent;">
-                    <div class="nav-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: #f0f2f5; color: #666;"><i class="fas fa-tachometer-alt"></i></div>
-                    강사 대시보드
-                </a>
-                <a class="nav-item " href="my_learning.html?view=teacher" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: 0.2s; color: #555; font-size: 14px; font-weight: 600; text-decoration: none; border-left: 3px solid transparent;">
-                    <div class="nav-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: #f0f2f5; color: #666;"><i class="fas fa-users"></i></div>
-                    학생 관리
-                    <span class="nav-badge" style="margin-left: auto; background: #E91E63; color: white; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px;">24</span>
-                </a>
-                
-                <div class="nav-section-label" style="padding: 15px 20px 5px; font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: 1px; text-transform: uppercase;">콘텐츠 통합관리</div>
-                <a class="nav-item " href="admin_input.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: 0.2s; color: #555; font-size: 14px; font-weight: 600; text-decoration: none; border-left: 3px solid transparent;">
-                    <div class="nav-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: #f0f2f5; color: #666;"><i class="fas fa-database"></i></div>
-                    통합 문제입력기
-                </a>
-                
-                <div class="nav-section-label" style="padding: 15px 20px 5px; font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: 1px; text-transform: uppercase;">성적 관리</div>
-                <a class="nav-item " href="admin_report_template.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: 0.2s; color: #555; font-size: 14px; font-weight: 600; text-decoration: none; border-left: 3px solid transparent;">
-                    <div class="nav-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: #f0f2f5; color: #666;"><i class="fas fa-file-invoice"></i></div>
-                    성적표 관리
-                </a>
-                <a class="nav-item active" href="teacher_grading.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: 0.2s; color: #555; font-size: 14px; font-weight: 600; text-decoration: none; border-left: 3px solid transparent;">
-                    <div class="nav-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: #111; color: white;"><i class="fas fa-pen-nib"></i></div>
-                    채점 관리
-                </a>
-                
-                <div class="nav-section-label" style="padding: 15px 20px 5px; font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: 1px; text-transform: uppercase;">운영</div>
-                <a class="nav-item " href="points.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: 0.2s; color: #555; font-size: 14px; font-weight: 600; text-decoration: none; border-left: 3px solid transparent;">
-                    <div class="nav-icon" style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: #f0f2f5; color: #666;"><i class="fas fa-coins"></i></div>
-                    포인트/결제 관리
-                </a>
-            </nav>
-            <style>
-                aside.admin-sidebar .nav-item:hover { background: #f5f7ff; color: #111 !important; }
-                aside.admin-sidebar .nav-item.active { background: #eef2ff !important; color: #111 !important; border-left-color: #111 !important; font-weight: 800 !important; }
-                aside.admin-sidebar .nav-item.active .nav-icon { background: #111 !important; color: white !important; }
-            </style>
-        </aside>
-
-        <!-- Sidebar -->
-        <aside class="grade-sidebar">
-            <div class="g-sidebar-head">
-                <h3><i class="fas fa-tasks"></i> 서술형 채점 대기열</h3>
-                <select class="g-filter">
-                    <option>예비고1 특목고 배치고사 (15번 서술형)</option>
-                    <option>중등 주간 모의고사 (7번 서술형)</option>
-                </select>
-                <div class="text-xs text-gray mt-5">총 42명 중 <strong>12명</strong> 미채점</div>
-            </div>
-            
-            <div class="student-list">
-                <div class="s-item active">
-                    <div class="s-info">
-                        <strong>김민지 학생</strong>
-                        <span>제출: 2026.03.10 14:32</span>
-                    </div>
-                    <span class="s-status status-wait">채점 대기</span>
-                </div>
-                <div class="s-item">
-                    <div class="s-info">
-                        <strong>이서준 학생</strong>
-                        <span>제출: 2026.03.10 14:45</span>
-                    </div>
-                    <span class="s-status status-wait">채점 대기</span>
-                </div>
-                <div class="s-item">
-                    <div class="s-info">
-                        <strong>박지우 학생</strong>
-                        <span>제출: 2026.03.10 13:10</span>
-                    </div>
-                    <span class="s-status status-done">채점 완료 (6/6)</span>
-                </div>
-                 <div class="s-item">
-                    <div class="s-info">
-                        <strong>최유나 학생</strong>
-                        <span>제출: 2026.03.10 12:20</span>
-                    </div>
-                    <span class="s-status status-done">채점 완료 (4/6)</span>
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:10px 0 10px 10px; letter-spacing:1px;">학습 관리</div>
+        <a href="teacher_grading.html" class="as-nav-item active" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; margin-bottom:5px;"><i class="fas fa-check-double" style="width:20px; text-align:center;"></i> 서술형 채점 / 피드백</a>
+        <a href="admin_gvr_analytics.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-chart-line" style="width:20px; text-align:center;"></i> 주간 GVR 분석</a>
+        <a href="teacher_dashboard.html" class="as-nav-item" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-users-cog" style="width:20px; text-align:center;"></i> 수강생 관리(조회)</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">콘텐츠 관리</div>
+        <a href="admin_input.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-cloud-upload-alt" style="width:20px; text-align:center;"></i> 문항 업로드 (DB)</a>
+        <a href="problem_bank.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-layer-group" style="width:20px; text-align:center;"></i> 문제은행 출제</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">커뮤니티</div>
+        <a href="teacher_community.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;"><i class="fas fa-store" style="width:20px; text-align:center;"></i> 지식 마켓 & 라운지</a>
+    </nav>
+</div>
+    <div class="main-wrapper">
+        <div class="dash-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                <h1 style="font-size:24px; font-weight:900; margin:0;"><i class="fas fa-check-double text-indigo-500"></i> 서술형 채점 및 피드백</h1>
+                <div style="display:flex; gap:10px;">
+                    <select class="tw-select" style="width:auto;"><option>예비고1 특목고 배치고사 (15번 서술형)</option></select>
+                    <button class="tw-btn outline"><i class="fas fa-print"></i> OMR 통합조회</button>
                 </div>
             </div>
-        </aside>
 
-        <!-- Main Workspace -->
-        <main class="grade-main">
-            <div class="g-header">
-                <div>
-                    <h2 class="g-title">김민지 학생의 답안</h2>
-                    <p class="g-meta">[문항 15] reciprocal altruism(상호 이타주의)를 유지하기 위한 필수 인지 능력 2가지 (박쥐 사례)</p>
-                </div>
-                <button class="btn-sm btn-outline-gray"><i class="fas fa-file-pdf"></i> 학생 전체 OMR 답안 보기</button>
-            </div>
-
-            <div class="eval-grid">
-                <!-- Left: Student Answer & Rubric -->
-                <div class="eval-left">
-                    <div class="ans-box">
-                        <h4><i class="fas fa-pen-nib" style="color:var(--navy);"></i> 학생 작성 답안</h4>
-                        <!-- AI auto-highlighting simulation -->
-                        <div class="student-ans">
-                            상호 이타주의가 유지되려면 자신을 도와준 <mark>개체를 기억</mark>하고, 은혜를 갚지 않는 <mark>얌체족을 구별</mark>해내는 능력이 박쥐에게 필요하다.
+            <div style="display:grid; grid-template-columns:300px 1fr; gap:20px;">
+                <!-- 대기열 -->
+                <div class="tw-card" style="padding:0; overflow:hidden; display:flex; flex-direction:column; height:calc(100vh - 180px);">
+                    <div style="padding:20px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+                        <div style="font-size:14px; font-weight:800;">서술형 대기열 (총 42명)</div>
+                        <div style="font-size:12px; color:#64748b; margin-top:5px;">미채점 <strong style="color:#ef4444;">12명</strong> / 완료 30명</div>
+                    </div>
+                    <div id="queue-list" style="flex:1; overflow-y:auto; padding:10px;">
+                        <!-- 학생 아이템 -->
+                        <div class="q-item" style="padding:15px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; margin-bottom:10px; cursor:pointer;" onclick="selectQueue('김민지', '14:32', '상호 이타주의가 유지되려면 자신을 도와준 <mark style=\'background:#fef08a; padding:2px 4px; border-radius:4px; font-weight:800;\'>개체를 기억</mark>하고, 은혜를 갚지 않는 <mark style=\'background:#fef08a; padding:2px 4px; border-radius:4px; font-weight:800;\'>얌체족을 구별</mark>해내는 능력이 박쥐에게 필요하다.', 6, '유사도 85% 이상 (합격권)', '#10b981', this)">
+                            <div style="display:flex; justify-content:space-between; align-items:start;">
+                                <div><div style="font-size:14px; font-weight:800; color:#1d4ed8;">김민지 학생 <i class="fas fa-exclamation-circle text-red-500"></i></div><div style="font-size:11px; color:#64748b; margin-top:4px;">제출: 14:32</div></div>
+                                <span class="q-badge" style="font-size:10px; font-weight:800; background:#fef2f2; color:#ef4444; padding:2px 6px; border-radius:4px;">채점 대기</span>
+                            </div>
                         </div>
-                        <div class="text-right text-xs text-gray mt-10">작성 글자수: 62자(띄어쓰기 포함) / 시스템 1차 판독: <strong class="text-green">유사도 85% 이상</strong></div>
-                    </div>
-
-                    <div class="rubric-box">
-                        <h5><i class="fas fa-key"></i> 채점 기준표 (Rubric)</h5>
-                        <div class="model-ans">
-                            <strong>모범 답안:</strong> 다른 개체를 개별적으로 인식(구별)하는 능력과 과거의 도움(사건)을 기억하는 능력이 필요하다.
+                        <div class="q-item" style="padding:15px; border:1px solid transparent; border-radius:10px; margin-bottom:10px; cursor:pointer;" onclick="selectQueue('이서준', '14:45', '과거의 사건이나 <mark style=\'background:#fef08a; padding:2px 4px; border-radius:4px; font-weight:800;\'>도와준 개체를 구별</mark>할 수 있어야 이타주의가 생겨날 수 있으며, 박쥐는 그러한 능력을 갖췄다.', 3, '주의: 핵심 키워드 1개 누락 (얌체족)', '#f59e0b', this)">
+                            <div style="display:flex; justify-content:space-between; align-items:start;">
+                                <div><div style="font-size:14px; font-weight:800; color:#334155;">이서준 학생</div><div style="font-size:11px; color:#64748b; margin-top:4px;">제출: 14:45</div></div>
+                                <span class="q-badge" style="font-size:10px; font-weight:800; background:#fef2f2; color:#ef4444; padding:2px 6px; border-radius:4px;">채점 대기</span>
+                            </div>
                         </div>
-                        <div class="keyword-tags">
-                            <span class="k-tag"><i class="fas fa-check"></i> 개체 인식 (구별) (3점)</span>
-                            <span class="k-tag"><i class="fas fa-check"></i> 과거 기억 (3점)</span>
+                        <div class="q-item" style="padding:15px; border:1px solid transparent; border-radius:10px; margin-bottom:10px; cursor:pointer;" onclick="selectQueue('박지우', '13:10', '동물들도 사람처럼 서로 돕고 사는 사회적 성격을 가지고 있기 때문에 이타주의가 유지된다.', 0, '오답: 본문 내용과 무관한 일반론', '#ef4444', this)">
+                            <div style="display:flex; justify-content:space-between; align-items:start;">
+                                <div><div style="font-size:14px; font-weight:800; color:#334155;">박지우 학생</div><div style="font-size:11px; color:#64748b; margin-top:4px;">제출: 13:10</div></div>
+                                <span class="q-badge" style="font-size:10px; font-weight:800; background:#dcfce7; color:#16a34a; padding:2px 6px; border-radius:4px;">6/6점 완료</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Scoring Panel -->
-                <div class="eval-right">
-                    <div class="scoring-panel">
-                        <h4>최종 점수 및 코멘트 입력</h4>
-                        
-                        <div class="score-input-group">
-                            <span class="score-label">서술형 15번 획득 점수</span>
-                            <div class="score-field">
-                                <input type="number" id="final-score" value="6" min="0" max="6" step="0.5">
-                                <span class="score-max">/ 6.0 점</span>
+                <!-- 채점 및 피드백 -->
+                <div style="display:flex; flex-direction:column; gap:20px;">
+                    <div class="tw-card" style="margin-bottom:0;">
+                        <h3 id="grading-title" style="font-size:18px; margin:0 0 15px 0; font-weight:900;">김민지 학생의 답안 <span style="font-size:14px; font-weight:600; color:#64748b;">- 문항 15번 (배점 6점)</span></h3>
+                        <div id="grading-text" style="background:#f8fafc; border-left:4px solid #3b82f6; padding:20px; border-radius:8px; font-size:16px; line-height:1.6; color:#1e293b;">
+                            상호 이타주의가 유지되려면 자신을 도와준 <mark style="background:#fef08a; padding:2px 4px; border-radius:4px; font-weight:800;">개체를 기억</mark>하고, 은혜를 갚지 않는 <mark style="background:#fef08a; padding:2px 4px; border-radius:4px; font-weight:800;">얌체족을 구별</mark>해내는 능력이 박쥐에게 필요하다.
+                        </div>
+                        <div style="font-size:12px; color:#64748b; margin-top:10px; text-align:right;">시스템 1차 판독: <strong id="grading-ai-text" style="color:#10b981;">유사도 85% 이상 (합격권)</strong></div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 340px; gap:20px;">
+                        <div class="tw-card" style="background:#fffbeb; border-color:#fef3c7;">
+                            <h4 style="font-size:15px; margin:0 0 15px 0; color:#d97706;"><i class="fas fa-key"></i> 핵심 채점 기준표 (Rubric)</h4>
+                            <div style="font-size:14px; line-height:1.6; color:#92400e; margin-bottom:15px;"><strong>모범 답안:</strong> 다른 개체를 개별적으로 인식(구별)하는 능력과 과거의 도움(사건)을 기억하는 능력이 필요하다.</div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <span style="background:white; border:1px solid #fcd34d; color:#b45309; padding:4px 10px; font-size:12px; font-weight:800; border-radius:20px;">✓ 개체 인식 (3점)</span>
+                                <span style="background:white; border:1px solid #fcd34d; color:#b45309; padding:4px 10px; font-size:12px; font-weight:800; border-radius:20px;">✓ 과거 기억 (3점)</span>
                             </div>
                         </div>
 
-                        <label class="font-bold text-gray mb-10 d-block" style="font-size:13px;">강사 코멘트 (학생 성적표에 반영)</label>
-                        <div class="macro-btns">
-                            <button class="macro-btn" onclick="addComment('➕ 핵심 키워드가 모두 잘 포함되었습니다.')">➕ 완벽한 답안</button>
-                            <button class="macro-btn" onclick="addComment('➖ 한 가지 조건이 누락되어 부분 감점합니다.')">➖ 부분 감점</button>
-                            <button class="macro-btn" onclick="addComment('📝 지문의 맥락을 다시 한번 복습해 보세요.')">📝 복습 요망</button>
-                        </div>
-                        <textarea id="comment-box" class="comment-box" placeholder="여기에 강사 피드백을 직접 입력하세요..."></textarea>
+                        <div class="tw-card" style="background:#f8fafc;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                                <span style="font-size:14px; font-weight:800; color:#475569;">최종 점수 확정</span>
+                                <div style="display:flex; align-items:baseline; gap:5px;">
+                                    <input type="number" id="grading-score" value="6" style="width:60px; font-size:24px; font-weight:900; text-align:center; border:2px solid #cbd5e1; border-radius:8px; color:#1e293b;" onchange="updateScoreBox()">
+                                    <span style="font-size:14px; font-weight:800; color:#94a3b8;">/ 6 점</span>
+                                </div>
+                            </div>
+                            <!-- 오답노트 발송 자동화 (Twin Clinic) -->
+                            <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:15px; margin-bottom:20px;">
+                                <div style="font-size:13px; font-weight:800; color:#ef4444; margin-bottom:8px;"><i class="fas fa-magic"></i> AI 추천: 유사 오답 팩 발송</div>
+                                <div style="font-size:12px; color:#991b1b; margin-bottom:12px;">이 문항의 점수가 3점 이하라면, 어법(구문독해) 보충을 위한 쌍둥이 클리닉 배포를 권장합니다.</div>
+                                <button class="tw-btn solid-pink" id="btn-clinic" style="width:100%; font-size:12px; padding:8px;" onclick="alert('쌍둥이 유사문항 세트가 모바일 앱으로 자동 전송되었습니다.')"><i class="fas fa-copy"></i> 어법 쌍둥이 클리닉 즉시 전송</button>
+                            </div>
 
-                        <button class="btn-submit-grade" onclick="nextStudent()"><i class="fas fa-save"></i> 채점 완료 및 다음 학생(이서준)</button>
+                            <button class="tw-btn solid-blue" style="width:100%; font-size:15px;" onclick="saveAndNext()"><i class="fas fa-save"></i> 저장 및 다음 학생 채점</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
+</div>
 
-    <script>
-        function addComment(text) {
-            const box = document.getElementById('comment-box');
-            if(box.value.length > 0) box.value += '\n';
-            box.value += text;
-        }
+<script>
+    let currentActiveRow = null;
 
-        function nextStudent() {
-            alert("김민지 학생의 서술형 채점이 저장되었습니다. 다음 학생(이서준) 답안으로 넘어갑니다.");
-            // UI visual update dummy
-            document.querySelector('.s-item.active .s-status').className = 's-status status-done';
-            document.querySelector('.s-item.active .s-status').innerText = '채점 완료 ('+document.getElementById('final-score').value+'/6)';
-            
-            let items = document.querySelectorAll('.s-item');
-            items[0].classList.remove('active');
-            items[1].classList.add('active');
-            
-            document.querySelector('.g-title').innerText = "이서준 학생의 답안";
-            document.querySelector('.student-ans').innerHTML = "상호 이타주의를 하려면 동료를 잘 도와주는 마음이 필요하고 먹이를 나눠먹어야 합니다.";
-            document.querySelector('.text-right.text-xs').innerHTML = "작성 글자수: 45자 / 시스템 1차 판독: <strong class='text-red'>핵심 키워드 누락</strong>";
-            document.getElementById('final-score').value = "0";
-            document.getElementById('comment-box').value = "";
+    function selectQueue(name, time, text, recScore, aiText, aiColor, el) {
+        // Queue style updates
+        document.querySelectorAll('.q-item').forEach(it => {
+            it.style.background = 'transparent';
+            it.style.border = '1px solid transparent';
+            it.querySelector('div>div>div').style.color = '#334155';
+        });
+        el.style.background = '#eff6ff';
+        el.style.border = '1px solid #bfdbfe';
+        el.querySelector('div>div>div').style.color = '#1d4ed8';
+        currentActiveRow = el;
+
+        // Content updates
+        document.getElementById('grading-title').innerHTML = name + ' 학생의 답안 <span style="font-size:14px; font-weight:600; color:#64748b;">- 문항 15번 (배점 6점)</span>';
+        document.getElementById('grading-text').innerHTML = text;
+        document.getElementById('grading-score').value = recScore;
+        document.getElementById('grading-ai-text').innerText = aiText;
+        document.getElementById('grading-ai-text').style.color = aiColor;
+        
+        updateScoreBox();
+    }
+    
+    function updateScoreBox() {
+        const score = parseInt(document.getElementById('grading-score').value);
+        if(score <= 3) {
+            document.getElementById('btn-clinic').style.opacity = '1';
+            document.getElementById('btn-clinic').innerText = "어법 쌍둥이 클리닉 긴급 배포 요망";
+        } else {
+            document.getElementById('btn-clinic').style.opacity = '0.5';
+            document.getElementById('btn-clinic').innerText = "(고득점) 클리닉 전송 생략 권장";
         }
-    </script>
-</body>
-</html>
+    }
+
+    function saveAndNext() {
+        if(currentActiveRow) {
+            // Update badge to done
+            const badge = currentActiveRow.querySelector('.q-badge');
+            const score = document.getElementById('grading-score').value;
+            badge.style.background = '#dcfce7';
+            badge.style.color = '#16a34a';
+            badge.innerText = score + '/6점 완료';
+            
+            // Move to next
+            const nextEl = currentActiveRow.nextElementSibling;
+            if(nextEl && nextEl.classList.contains('q-item')) {
+                nextEl.click();
+            } else {
+                alert("대기열의 모든 채점이 완료되었습니다.");
+            }
+        }
+    }
+    
+    // Init first item
+    document.addEventListener("DOMContentLoaded", () => {
+        const first = document.querySelector('.q-item');
+        if(first) currentActiveRow = first;
+    });
+</script>
+</body></html>

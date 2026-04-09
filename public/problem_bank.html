@@ -1,578 +1,206 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KATCH - 강사용 문제은행</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="sub.css">
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root { --navy:#111; --pink:#E91E63; --indigo:#3F51B5; --teal:#009688; }
-body{font-family:'Pretendard',sans-serif;background:#f4f6f9;color:#222;margin:0;}
-.pb-wrap{display:grid;grid-template-columns:260px 1fr 290px;gap:20px;max-width:1400px;margin:30px auto;padding:0 20px;align-items:start;}
-/* ── Filters ── */
-.pb-filter{background:#fff;border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);position:sticky;top:90px;}
-.pb-filter h2{font-size:15px;font-weight:800;color:#111;margin:0 0 16px;display:flex;align-items:center;gap:8px;}
-.filter-section{margin-bottom:18px;border-bottom:1px solid #f0f0f0;padding-bottom:16px;}
-.filter-section:last-of-type{border:none;margin-bottom:0;padding-bottom:0;}
-.filter-section h4{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px;display:flex;align-items:center;gap:6px;}
-.cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
-.cb-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#444;cursor:pointer;padding:3px 0;}
-.cb-item input{accent-color:var(--indigo);width:14px;height:14px;cursor:pointer;}
-.select-filter{width:100%;padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;color:#333;outline:none;background:#fafafa;}
-.btn-apply{width:100%;padding:11px;background:var(--indigo);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;margin-top:6px;transition:.2s;}
-.btn-apply:hover{background:#303f9f;}
-.btn-reset{width:100%;padding:9px;background:#f0f0f0;color:#555;border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;margin-top:6px;}
-/* ── Result list ── */
-.pb-results{}
-.pb-top{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
-.search-wrap{display:flex;flex:1;min-width:220px;gap:0;}
-.search-wrap input{flex:1;padding:9px 14px;border:1.5px solid #e0e0e0;border-radius:8px 0 0 8px;font-size:14px;outline:none;}
-.search-wrap input:focus{border-color:var(--indigo);}
-.search-wrap button{padding:9px 16px;background:var(--indigo);color:#fff;border:none;border-radius:0 8px 8px 0;cursor:pointer;}
-.sort-sel{padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;}
-.result-count{font-size:13px;color:#666;}  .result-count strong{color:var(--indigo);}
-.active-tags{display:flex;flex-wrap:wrap;gap:6px;padding:0 22px 12px;}
-.atag{display:inline-flex;align-items:center;gap:5px;background:#e8eaf6;color:var(--indigo);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;}
-.atag button{background:none;border:none;color:var(--indigo);cursor:pointer;padding:0;font-size:11px;}
-/* ── Problem card ── */
-.prob-card{background:#fff;border-radius:12px;border:1.5px solid #e8e8e8;padding:20px;margin-bottom:14px;transition:.2s;position:relative;}
-.prob-card:hover{border-color:var(--indigo);box-shadow:0 4px 16px rgba(63,81,181,.1);}
-.prob-card.locked{border-color:#ffcc80;background:#fffdf8;}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
-.tag-row{display:flex;flex-wrap:wrap;gap:6px;}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;}
-.tag-grade{background:#e3f2fd;color:#1565c0;}
-.tag-type{background:#ede7f6;color:#6a1b9a;}
-.tag-src{background:#e0f2f1;color:#00695c;}
-.tag-err{background:#ffebee;color:#c62828;}
-.tag-lock{background:#fff3e0;color:#e65100;}
-.diff-badge{font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;}
-.diff-1{background:#e8f5e9;color:#2e7d32;}
-.diff-2{background:#e3f2fd;color:#1565c0;}
-.diff-3{background:#fff3e0;color:#e65100;}
-.diff-4{background:#ffebee;color:#c62828;}
-.diff-5{background:#880e4f22;color:#880e4f;}
-.prob-id{font-size:11px;color:#aaa;font-weight:600;margin-bottom:6px;}
-.prob-q{font-size:14px;font-weight:700;color:#222;margin-bottom:0;}
-.prob-body{font-size:13.5px;color:#444;line-height:1.75;margin-top:10px;display:none;}
-.prob-body.open{display:block;}
-.prob-body .passage{background:#f8f9fa;border-left:3px solid var(--indigo);padding:12px 14px;border-radius:0 8px 8px 0;margin:8px 0;font-style:italic;}
-.choices{margin-top:8px;list-style:none;padding:0;}
-.choices li{padding:5px 0;font-size:13px;color:#333;display:flex;gap:8px;}
-.choices li span.num{font-weight:700;color:var(--indigo);}
-.card-actions{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px dashed #eee;}
-.card-stats{font-size:12px;color:#999;display:flex;gap:14px;}
-.card-btns{display:flex;gap:8px;}
-.btn-toggle{padding:7px 13px;font-size:12px;background:#f0f0f0;color:#555;border:none;border-radius:6px;cursor:pointer;font-weight:600;transition:.2s;}
-.btn-toggle:hover{background:#e0e0e0;}
-.btn-explain{padding:7px 13px;font-size:12px;background:#fff;border:1.5px solid #888;color:#444;border-radius:6px;cursor:pointer;font-weight:600;transition:.2s;}
-.btn-explain:hover{background:#f5f5f5;}
-.btn-add{padding:7px 14px;font-size:12px;background:var(--pink);color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:.2s;}
-.btn-add:hover{background:#c2185b;}
-.btn-add.added{background:#4caf50;}
-.btn-lock-add{padding:7px 14px;font-size:12px;background:#e0e0e0;color:#999;border:none;border-radius:6px;cursor:not-allowed;font-weight:600;}
-.more-btn{width:100%;padding:13px;background:#fff;border:1.5px dashed #ccc;border-radius:10px;font-size:14px;font-weight:700;color:#666;cursor:pointer;margin-top:4px;transition:.2s;}
-.more-btn:hover{background:#f0f0f0;}
-/* ── Cart ── */
-.pb-cart{background:#fff;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);position:sticky;top:90px;overflow:hidden;}
-.cart-header{background:var(--navy);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;}
-.cart-header h3{font-size:15px;font-weight:800;margin:0;}
-.cart-badge{background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
-.cart-body{padding:16px 18px;max-height:340px;overflow-y:auto;}
-.cart-empty{text-align:center;padding:30px 0;color:#bbb;font-size:13px;}
-.cart-empty i{font-size:28px;margin-bottom:8px;display:block;}
-.cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed #eee;font-size:13px;color:#444;}
-.cart-item:last-child{border:none;}
-.ci-rm{background:none;border:none;color:#ccc;cursor:pointer;font-size:13px;transition:.2s;}
-.ci-rm:hover{color:#e53935;}
-.cart-options{padding:14px 18px;border-top:1px solid #f0f0f0;}
-.cart-options label{font-size:12px;font-weight:700;color:#555;display:block;margin-bottom:6px;}
-.cart-options input[type=text]{width:100%;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;margin-bottom:10px;}
-.cart-options input[type=text]:focus{border-color:var(--indigo);}
-.cart-check{font-size:13px;color:#555;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.cart-check input{accent-color:var(--indigo);}
-.cart-foot{padding:14px 18px;border-top:1px solid #f0f0f0;display:flex;flex-direction:column;gap:8px;}
-.btn-save{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;}
-.btn-save:hover{background:#333;}
-.btn-pdf{width:100%;padding:11px;background:#fff;border:1.5px solid #555;color:#333;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;}
-.btn-pdf:hover{background:#f5f5f5;}
-/* ── Modal ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;display:none;align-items:center;justify-content:center;}
-.modal-overlay.open{display:flex;}
-.modal-box{background:#fff;border-radius:16px;width:640px;max-width:92vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);}
-.modal-head{padding:20px 24px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
-.modal-head h3{font-size:17px;font-weight:800;color:#111;margin:0;}
-.modal-close{background:none;border:none;font-size:22px;color:#999;cursor:pointer;line-height:1;}
-.modal-close:hover{color:#111;}
-.modal-body{padding:24px;overflow-y:auto;}
-.explain-section{margin-bottom:18px;}
-.explain-section h4{font-size:13px;font-weight:700;color:var(--indigo);margin:0 0 8px;text-transform:uppercase;letter-spacing:.5px;}
-.explain-section p{font-size:14px;color:#444;line-height:1.75;}
-.answer-box{background:#e8f5e9;border-radius:8px;padding:12px 16px;display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;}
-.answer-box strong{font-size:15px;color:#2e7d32;}
-/* ── Responsive ── */
-@media(max-width:1100px){.pb-wrap{grid-template-columns:220px 1fr 260px;}}
-@media(max-width:860px){.pb-wrap{grid-template-columns:1fr;} .pb-filter,.pb-cart{position:static;}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KATCH - 강사 워크스페이스</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sub.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background-color: #f4f6f9; font-family: 'Pretendard', sans-serif; margin:0; padding:0; color:#1e293b; overflow-x:hidden;}
+        
+        .ml-topbar {
+            height: 60px; background: #111; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; position: sticky; top: 0; z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .ml-topbar-left { display: flex; align-items: center; gap: 15px; }
+        .ml-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -1px; }
+        .ml-logo a { color: white; text-decoration: none; }
+        .ml-logo span { color: #E91E63; }
+        .ml-page-title { font-size: 15px; font-weight: 700; opacity: 0.7; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
+        .ml-topbar-right { display: flex; align-items: center; gap: 15px; }
+        .role-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3px; }
+        .role-btn { padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.6); transition: 0.2s; }
+        .role-btn.active { background: white; color: #111; }
+        .user-pts { background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3); color: #FFD700; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration:none; display:flex; gap:6px; align-items:center; }
+        .user-info { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+        .user-avatar { width: 34px; height: 34px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color:white; }
+
+        .dash-container { max-width: 1600px; margin: 30px auto; padding: 0 30px;}
+        .admin-sidebar {
+            width:260px; min-width:260px; background:#0f172a; height:calc(100vh - 60px); 
+            position:fixed; left:0; top:60px; border-right:1px solid #1e293b; overflow-y:auto; z-index:100;
+        }
+        .as-nav-item { transition:0.2s; }
+        .as-nav-item:hover, .as-nav-item.active { background:rgba(255,255,255,0.05); color:#fff !important; }
+        .as-nav-item.active { border: 1px solid rgba(59,130,246,0.3); background:rgba(59,130,246,0.15); border-radius: 10px; }
+        
+        .main-wrapper { flex:1; margin-left:260px; }
+
+        .tw-card { background: white; border-radius: 16px; padding: 22px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px;}
+        .tw-btn { padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: none; }
+        .tw-btn.solid-blue { background: #2563eb; color: white; }
+        .tw-btn.solid-blue:hover { background: #1d4ed8; }
+        .tw-btn.solid-pink { background: #e91e63; color: white; box-shadow: 0 4px 10px rgba(233,30,99,0.2); }
+        .tw-btn.solid-pink:hover { background: #d81b60; transform: translateY(-2px); }
+        .tw-btn.outline { background: white; color: #1e293b; border: 1px solid #e2e8f0; }
+        .tw-btn.outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .tw-select, .tw-input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; color: #334155; font-weight: 600; outline: none; transition:0.2s; }
+        .tw-select:focus, .tw-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        
+    </style>
 </head>
-<body class="bg-gray">
-
-<!-- Header -->
-
-
-
-<div style="background:var(--navy);color:#fff;text-align:center;padding:32px 0 28px;">
-  <h2 style="font-size:26px;font-weight:900;margin:0 0 8px;">KATCH 강사용 문제은행 <span style="color:#E91E63;">·</span> 시험지 제작</h2>
-  <p style="font-size:14px;opacity:.75;">학년·시험종류·영역·유형·난이도·출처 필터로 원하는 문항을 즉시 검색하고 시험지를 구성하세요.</p>
+<body>
+<div class="ml-topbar">
+    <div class="ml-topbar-left">
+        <div class="ml-logo"><a href="index.html">KATCH<span>.</span></a></div>
+        <div class="ml-page-title">강사 워크스페이스</div>
+    </div>
+    <div class="ml-topbar-right">
+        <div class="role-toggle">
+            <button class="role-btn" onclick="location.href='my_learning.html'"><i class="fas fa-user-graduate"></i> 학생</button>
+            <button class="role-btn active"><i class="fas fa-chalkboard-teacher"></i> 강사/관리자</button>
+        </div>
+        <a href="#" class="user-pts"><i class="fas fa-bell"></i> 알림 3</a>
+        <div class="user-info">
+            <div class="user-avatar">이</div>
+            <span style="font-size:14px; font-weight:600;">이은혜 강사</span>
+        </div>
+    </div>
 </div>
-
-<div class="pb-wrap">
-
-  <!-- ═══ FILTER PANEL ═══ -->
-  <aside class="pb-filter">
-    <h2><i class="fas fa-sliders-h" style="color:var(--indigo);"></i> 상세 필터</h2>
-
-    <div class="filter-section">
-      <h4><i class="fas fa-graduation-cap"></i> 학년 / 대상</h4>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" data-filter="grade" value="고3"> 고3·N수</label>
-        <label class="cb-item"><input type="checkbox" data-filter="grade" value="고2"> 고2</label>
-        <label class="cb-item"><input type="checkbox" data-filter="grade" value="고1"> 고1</label>
-        <label class="cb-item"><input type="checkbox" data-filter="grade" value="중3"> 중3</label>
-        <label class="cb-item"><input type="checkbox" data-filter="grade" value="중2"> 중2</label>
-        <label class="cb-item"><input type="checkbox" data-filter="grade" value="중1"> 중1</label>
-      </div>
+<div style="display:flex; width:100%;">
+    <div class="admin-sidebar">
+    <div style="padding:25px 20px; background:linear-gradient(135deg, rgba(59,130,246,0.1), rgba(15,23,42,0)); border-bottom:1px solid rgba(255,255,255,0.05);">
+        <h2 style="font-size:16px; font-weight:800; color:#fff; margin:0 0 5px 0;">이은혜 강사님</h2>
+        <p style="font-size:12px; color:#94a3b8; margin:0;">고등관 전임 / KATCH 관리자</p>
     </div>
+    
+    <nav class="as-nav" style="padding: 20px 15px;">
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:0 0 10px 10px; letter-spacing:1px;">HOME</div>
+        <a href="teacher_dashboard.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:12px 15px; color:#cbd5e1; border-radius:10px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:20px;"><i class="fas fa-home" style="width:20px; text-align:center;"></i> 대시보드 홈</a>
 
-    <div class="filter-section">
-      <h4><i class="fas fa-file-alt"></i> 시험 종류</h4>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="수능"> 수능(CSAT)</label>
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="3월"> 3월 학평</label>
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="6월"> 6월 모의</label>
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="9월"> 9월 모의</label>
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="EBS"> EBS 연계</label>
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="내신"> 내신</label>
-        <label class="cb-item"><input type="checkbox" data-filter="exam" value="사설"> 사설(KATCH)</label>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4><i class="fas fa-book-open"></i> 영역</h4>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" data-filter="area" value="독해"> 독해</label>
-        <label class="cb-item"><input type="checkbox" data-filter="area" value="어법"> 어법</label>
-        <label class="cb-item"><input type="checkbox" data-filter="area" value="어휘"> 어휘</label>
-        <label class="cb-item"><input type="checkbox" data-filter="area" value="듣기"> 듣기</label>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4><i class="fas fa-tags"></i> 세부 유형</h4>
-      <select id="type-select" class="select-filter">
-        <option value="">전체 유형</option>
-        <optgroup label="독해">
-          <option value="주제·제목">주제·제목</option>
-          <option value="요지">요지</option>
-          <option value="빈칸(단어)">빈칸 추론 - 단어</option>
-          <option value="빈칸(구/절)">빈칸 추론 - 구/절</option>
-          <option value="순서배열">순서 배열</option>
-          <option value="문장삽입">문장 삽입</option>
-          <option value="글의흐름">글의 흐름</option>
-          <option value="함축의미">함축 의미</option>
-          <option value="지칭">지칭</option>
-          <option value="내용일치">내용 일치</option>
-        </optgroup>
-        <optgroup label="어법">
-          <option value="어법성판단">어법성 판단</option>
-          <option value="단어배열">단어 배열</option>
-          <option value="빈칸어법">빈칸 (어법)</option>
-        </optgroup>
-        <optgroup label="어휘">
-          <option value="어휘선택">어휘 선택</option>
-          <option value="동의어">동의어·반의어</option>
-        </optgroup>
-      </select>
-    </div>
-
-    <div class="filter-section">
-      <h4><i class="fas fa-signal"></i> 난이도</h4>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" data-filter="diff" value="하"> 하 (60%↑)</label>
-        <label class="cb-item"><input type="checkbox" data-filter="diff" value="중"> 중 (40~60%)</label>
-        <label class="cb-item"><input type="checkbox" data-filter="diff" value="상"> 상 (20~40%)</label>
-        <label class="cb-item"><input type="checkbox" data-filter="diff" value="최상"> 최상 (20%↓)</label>
-        <label class="cb-item"><input type="checkbox" data-filter="diff" value="킬러"> 킬러 (10%↓)</label>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4><i class="fas fa-database"></i> 출처</h4>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" data-filter="src" value="수능기출"> 수능기출</label>
-        <label class="cb-item"><input type="checkbox" data-filter="src" value="모의기출"> 모의기출</label>
-        <label class="cb-item"><input type="checkbox" data-filter="src" value="EBS연계"> EBS연계</label>
-        <label class="cb-item"><input type="checkbox" data-filter="src" value="KATCH자체"> KATCH자체</label>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4><i class="fas fa-calendar-alt"></i> 연도</h4>
-      <select id="year-select" class="select-filter">
-        <option value="">전체 연도</option>
-        <option>2025</option><option>2024</option><option>2023</option>
-        <option>2022</option><option>2021</option><option>2020</option>
-      </select>
-    </div>
-
-    <button class="btn-apply" onclick="applyFilters()"><i class="fas fa-filter"></i> 필터 적용</button>
-    <button class="btn-reset" onclick="resetFilters()"><i class="fas fa-undo"></i> 초기화</button>
-  </aside>
-
-  <!-- ═══ RESULTS ═══ -->
-  <div class="pb-results">
-    <div class="pb-top">
-      <div class="search-wrap">
-        <input type="text" id="search-input" placeholder="문항 ID 또는 키워드 검색...">
-        <button onclick="applyFilters()"><i class="fas fa-search"></i></button>
-      </div>
-      <select class="sort-sel" id="sort-sel" onchange="sortProblems()">
-        <option value="latest">최신순</option>
-        <option value="err_high">오답률 높은 순</option>
-        <option value="err_low">오답률 낮은 순</option>
-        <option value="freq">출제빈도 순</option>
-      </select>
-      <span class="result-count">검색 결과 <strong id="count-display">8</strong>건</span>
-    </div>
-    <div id="active-tags" class="active-tags"></div>
-    <div id="prob-list"></div>
-    <button class="more-btn" id="more-btn" onclick="loadMore()"><i class="fas fa-chevron-down"></i> 더 보기</button>
-  </div>
-
-  <!-- ═══ CART ═══ -->
-  <aside class="pb-cart">
-    <div class="cart-header">
-      <h3><i class="fas fa-clipboard-list"></i> 내 시험지</h3>
-      <span class="cart-badge" id="cart-count">0 문항</span>
-    </div>
-    <div class="cart-body" id="cart-body">
-      <div class="cart-empty" id="cart-empty"><i class="fas fa-inbox"></i>담긴 문제가 없습니다.<br><small>좌측에서 문제를 담아주세요</small></div>
-    </div>
-    <div class="cart-options">
-      <label>시험지 이름</label>
-      <input type="text" id="exam-name" placeholder="예: GVR-25년 3월 빈칸 10제">
-      <label class="cart-check"><input type="checkbox" checked id="opt-ans"> 정답·해설 포함 인쇄</label>
-      <label class="cart-check"><input type="checkbox" id="opt-omr"> 학생별 OMR 생성</label>
-    </div>
-    <div class="cart-foot">
-      <button class="btn-save" onclick="saveExam()"><i class="fas fa-save"></i> 세트로 저장하기</button>
-      <button class="btn-pdf" onclick="printExam()"><i class="fas fa-print"></i> PDF 즉시 출력</button>
-    </div>
-  </aside>
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:10px 0 10px 10px; letter-spacing:1px;">학습 관리</div>
+        <a href="teacher_grading.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-check-double" style="width:20px; text-align:center;"></i> 서술형 채점 / 피드백</a>
+        <a href="admin_gvr_analytics.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-chart-line" style="width:20px; text-align:center;"></i> 주간 GVR 분석</a>
+        <a href="teacher_dashboard.html" class="as-nav-item" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-users-cog" style="width:20px; text-align:center;"></i> 수강생 관리(조회)</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">콘텐츠 관리</div>
+        <a href="admin_input.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:5px;"><i class="fas fa-cloud-upload-alt" style="width:20px; text-align:center;"></i> 문항 업로드 (DB)</a>
+        <a href="problem_bank.html" class="as-nav-item active" style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none; margin-bottom:5px;"><i class="fas fa-layer-group" style="width:20px; text-align:center;"></i> 문제은행 출제</a>
+        
+        <div style="font-size:11px; font-weight:800; color:#64748b; margin:25px 0 10px 10px; letter-spacing:1px;">커뮤니티</div>
+        <a href="teacher_community.html" class="as-nav-item " style="display:flex; align-items:center; gap:12px; padding:10px 15px; color:#cbd5e1; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;"><i class="fas fa-store" style="width:20px; text-align:center;"></i> 지식 마켓 & 라운지</a>
+    </nav>
 </div>
+    <div class="main-wrapper">
+        <div class="dash-container">
+            <h1 style="font-size:24px; font-weight:900; margin:0 0 25px 0;"><i class="fas fa-layer-group text-indigo-500"></i> 문제은행 출제 및 학습지 생성</h1>
+            <div style="display:grid; grid-template-columns:250px 1fr 340px; gap:20px;">
+                
+                <!-- 필터 사이드바 -->
+                <div class="tw-card" style="padding:20px;">
+                    <h3 style="font-size:16px; font-weight:800; margin:0 0 15px 0;"><i class="fas fa-filter"></i> 문항 검색 필터</h3>
+                    <div style="margin-bottom:15px;"><label style="font-size:12px; font-weight:700; color:#64748b;">과목</label><select class="tw-select mt-1"><option>영어</option></select></div>
+                    <div style="margin-bottom:15px;"><label style="font-size:12px; font-weight:700; color:#64748b;">출처</label><select class="tw-select mt-1"><option>2026 수능완성</option><option>자체 교재</option></select></div>
+                    <div style="margin-bottom:15px;"><label style="font-size:12px; font-weight:700; color:#64748b;">유형</label><select class="tw-select mt-1"><option>빈칸추론</option><option>어법결정</option></select></div>
+                    <button class="tw-btn solid-blue" style="width:100%;"><i class="fas fa-search"></i> 검색</button>
+                    
+                    <div style="margin-top:20px; padding-top:20px; border-top:1px solid #e2e8f0;">
+                       <button class="tw-btn outline" style="width:100%; font-size:13px; color:#475569;"><i class="fas fa-magic"></i> 조건부 자동출제 (AI 추천)</button>
+                    </div>
+                </div>
 
-<!-- ═══ EXPLAIN MODAL ═══ -->
-<div class="modal-overlay" id="explain-modal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h3 id="modal-title">해설 보기</h3>
-      <button class="modal-close" onclick="closeModal()">&times;</button>
+                <!-- 문항 리스트 (Draggable 느낌) -->
+                <div class="tw-card" style="padding:0; overflow:hidden;">
+                    <div style="padding:15px 20px; background:#f8fafc; border-bottom:1px solid #e2e8f0; font-weight:800; display:flex; justify-content:space-between;">검색 결과 (120건) <span style="color:#3b82f6; cursor:pointer;"><i class="fas fa-check-double"></i> 전체 담기</span></div>
+                    <div style="padding:20px; display:flex; flex-direction:column; gap:15px; height:calc(100vh - 250px); overflow-y:auto;">
+                        <!-- Item -->
+                        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:15px; position:relative; cursor:grab; transition:0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+                            <div style="position:absolute; top:15px; right:15px;"><button class="tw-btn outline" style="padding:4px 10px; font-size:11px; transition:0.2s;" onclick="toggleCart(this)">+ 담기</button></div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;"><span style="background:#e0e7ff; color:#4f46e5; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">빈칸추론</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">난이도: 상</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">2026 수능완성 p.14</span></div>
+                            <div style="font-size:14px; color:#1e293b; line-height:1.5;">According to the theory of reciprocal altruism, memory is required to... (중략)</div>
+                        </div>
+                        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:15px; position:relative; cursor:grab; transition:0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+                            <div style="position:absolute; top:15px; right:15px;"><button class="tw-btn outline" style="padding:4px 10px; font-size:11px; transition:0.2s;" onclick="toggleCart(this)">+ 담기</button></div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;"><span style="background:#e0e7ff; color:#4f46e5; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">순서배열</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">난이도: 중</span></div>
+                            <div style="font-size:14px; color:#1e293b; line-height:1.5;">The most important role of the government is to provide...</div>
+                        </div>
+                        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:15px; position:relative; cursor:grab; transition:0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+                            <div style="position:absolute; top:15px; right:15px;"><button class="tw-btn outline" style="padding:4px 10px; font-size:11px; transition:0.2s;" onclick="toggleCart(this)">+ 담기</button></div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;"><span style="background:#e0e7ff; color:#e91e63; background:#fce4ec; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">문법 (수일치)</span><span style="background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">난이도: 하</span></div>
+                            <div style="font-size:14px; color:#1e293b; line-height:1.5;">The number of students who [is/are] studying English ...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 출제 바구니 (Cart) -->
+                <div class="tw-card" style="background:#eff6ff; border-color:#bfdbfe; height:fit-content; position:sticky; top:20px;">
+                    <h3 style="font-size:16px; font-weight:800; margin:0 0 15px 0;"><i class="fas fa-shopping-basket text-blue-500"></i> 미니테스트 (담은 문항)</h3>
+                    <div id="cart-box" style="background:white; border-radius:8px; padding:15px; border:2px solid #bfdbfe; margin-bottom:15px; transition:0.2s;">
+                        총 <strong style="font-size:18px; color:#1d4ed8;" id="cart-total">0</strong> <strong>문제</strong> 담김<br>
+                        <a href="#" style="font-size:12px; color:#3b82f6; font-weight:700;">자세히 보기 / 순서 드래그 편집</a>
+                    </div>
+                    <label style="font-weight:700; font-size:12px; color:#475569;">출제 타이틀</label>
+                    <input type="text" class="tw-input mt-1 mb-4" value="고1 외고반 중간대비 미니모의고사">
+                    <label style="font-weight:700; font-size:12px; color:#475569;">배포 유형</label>
+                    <select class="tw-select mt-1 mb-4"><option>온라인 CBT (App 전송)</option><option>종이 학습지 (PDF 다운)</option></select>
+                    
+                    <button class="tw-btn solid-blue" style="width:100%; font-size:15px;" onclick="deployTest()"><i class="fas fa-paper-plane"></i> 수강생에게 지금 배포</button>
+                    <button class="tw-btn outline" style="width:100%; font-size:15px; margin-top:10px;"><i class="fas fa-file-pdf text-red-500"></i> PDF 디자인 생성 및 다운로드</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-      <div class="explain-section">
-        <h4>문항 정보</h4>
-        <p id="modal-meta" style="color:#888;font-size:13px;"></p>
-      </div>
-      <div class="answer-box">
-        <i class="fas fa-check-circle" style="color:#2e7d32;font-size:18px;"></i>
-        <strong id="modal-answer">정답: ③</strong>
-      </div>
-      <div class="explain-section">
-        <h4>풀이 해설</h4>
-        <p id="modal-explain"></p>
-      </div>
-      <div class="explain-section">
-        <h4>핵심 어구</h4>
-        <p id="modal-vocab" style="font-size:13px;color:#555;"></p>
-      </div>
-      <div class="explain-section">
-        <h4>오답 분석</h4>
-        <p id="modal-wrong" style="font-size:13px;color:#555;"></p>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>
-// ═══ PROBLEM DATA ═══
-const PROBLEMS = [
-  {
-    id:"KNS-2501", grade:"고3", exam:"수능", area:"독해", type:"빈칸(구/절)", diff:"킬러", src:"수능기출", year:"2024",
-    q:"다음 빈칸에 들어갈 말로 가장 적절한 것은? (2024 수능 34번)",
-    passage:"One of the most paradoxical aspects of modern neuroscience is that the more we learn about the brain, the more we realize that individual neurons are surprisingly simple devices. The paradox is resolved by noting that the brain's complexity arises not from the complexity of individual neurons, but from the extraordinary web of connections among them. In fact, the complexity of thought and consciousness may emerge from ____________.",
-    choices:["① the speed at which signals are transmitted","② the quantity of neurotransmitters released","③ the intricate patterns of neuronal connectivity","④ the size of individual neurons","⑤ the temperature of the neural environment"],
-    errRate:88, freq:312, pro:false,
-    answer:"③",
-    explain:"빈칸 앞 문장에서 '복잡성은 개별 뉴런의 복잡성이 아닌 연결망에서 온다'고 했으므로, 빈칸에는 '뉴런 연결의 복잡한 패턴'이 적절합니다.",
-    vocab:"paradoxical(역설적인), neuron(뉴런), intricate(복잡한/정교한), connectivity(연결성)",
-    wrongAnalysis:"① 신호 전달 속도 → 언급 없음 ② 신경전달물질 양 → 근거 없음 ④ 뉴런의 크기 → 본문과 반대 ⑤ 신경계 온도 → 무관한 선택지"
-  },
-  {
-    id:"KNS-2502", grade:"고3", exam:"6월", area:"독해", type:"순서배열", diff:"최상", src:"모의기출", year:"2024",
-    q:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은? (2024 6월 모의)",
-    passage:"Economic theory has long assumed that individuals act as rational agents who make decisions that maximize their utility.",
-    choices:["① (A)-(C)-(B)","② (B)-(A)-(C)","③ (B)-(C)-(A)","④ (C)-(A)-(B)","⑤ (C)-(B)-(A)"],
-    errRate:74, freq:198, pro:false,
-    answer:"③",
-    explain:"주어진 문장은 전통적 경제학의 합리적 행위자 가정을 소개합니다. (B)에서 이 가정에 의문을 제기하고, (C)에서 행동경제학이 그 대안을 제시하며, (A)에서 구체적 예시를 보충합니다.",
-    vocab:"rational agent(합리적 행위자), utility(효용), behavioral economics(행동경제학), cognitive bias(인지 편향)",
-    wrongAnalysis:"① (A)부터 시작하면 아직 의문 제기 전이므로 논리 흐름에 맞지 않음. ② (B)-(A)-(C)는 예시 뒤 이론이 와서 부자연스러움."
-  },
-  {
-    id:"KNS-2503", grade:"고2", exam:"내신", area:"어법", type:"어법성판단", diff:"상", src:"KATCH자체", year:"2025",
-    q:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?",
-    passage:"She insisted that he ① attend the meeting, despite ② him feeling under the weather. The committee, along with several advisors, ③ were present to discuss the matter. Having ④ finished the report, she ⑤ submitted it to her supervisor.",
-    choices:["① attend","② him feeling","③ were","④ finished","⑤ submitted"],
-    errRate:61, freq:145, pro:false,
-    answer:"③",
-    explain:"③ 'The committee'가 주어이며, 'along with several advisors'는 삽입구이므로 동사는 단수 'was'가 맞습니다. insist that + 동사원형(가정법 현재)은 ①이 정답이고, ②의 의미상 주어(him)·④ 완료분사구문·⑤의 시제 모두 적절.",
-    vocab:"insist (that) + 원형(가정법), along with(~와 함께 → 단수취급), 분사구문",
-    wrongAnalysis:"① 'insist that'은 당위의 가정법 → 동사원형 attend가 맞음 ② 동명사의 의미상 주어는 소유격/목적격 모두 가능"
-  },
-  {
-    id:"KNS-2504", grade:"고3", exam:"9월", area:"독해", type:"주제·제목", diff:"중", src:"모의기출", year:"2023",
-    q:"다음 글의 제목으로 가장 적절한 것은? (2023 9월 모의)",
-    passage:"When we consider the environmental impact of digital technology, it is tempting to overlook the physical infrastructure required to support it. Data centers alone consume approximately 1-2% of the world's electricity, a figure that continues to grow as cloud computing expands. The rare earth minerals needed for electronic devices are often mined under environmentally destructive conditions. Thus, the digital revolution carries a far heavier ecological footprint than most users realize.",
-    choices:["① The Hidden Environmental Cost of Digital Technology","② How Data Centers Improve Energy Efficiency","③ Rare Earth Minerals: An Unlimited Resource","④ Cloud Computing's Role in Economic Growth","⑤ Digital Innovation and Environmental Solutions"],
-    errRate:38, freq:267, pro:false,
-    answer:"①",
-    explain:"글 전체가 '디지털 기술의 숨겨진 환경 비용'(데이터센터 전력, 희토류 채굴 등)을 다루므로 ①이 가장 적절한 제목입니다.",
-    vocab:"ecological footprint(생태발자국), infrastructure(인프라), rare earth minerals(희토류)",
-    wrongAnalysis:"② 에너지 효율 개선을 말하지 않음 ③ '무한한 자원'은 본문과 반대 ④ 경제성장 언급 없음 ⑤ 해결책이 아닌 문제를 다룸"
-  },
-  {
-    id:"KNS-2505", grade:"고3", exam:"수능", area:"독해", type:"문장삽입", diff:"최상", src:"수능기출", year:"2023",
-    q:"글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은? (2023 수능 38번)",
-    passage:"[주어진 문장] This is not, however, a universally accepted view.\n\n① The idea that language shapes thought has gained considerable traction in recent decades. ② Linguistic relativity — the hypothesis that language influences perception — has been supported by numerous cross-cultural studies. ③ Critics argue that cognition can exist independently of language, citing evidence from pre-linguistic infants and non-human primates. ④ Regardless of one's position, most researchers agree that language and thought are deeply intertwined. ⑤",
-    choices:["① ①","② ②","③ ③","④ ④","⑤ ⑤"],
-    errRate:79, freq:289, pro:false,
-    answer:"③",
-    explain:"'이 견해가 보편적으로 받아들여지진 않는다'는 주어진 문장은 ②의 지지 주장 다음, ③의 비판 주장 앞에 삽입하여 역접 관계를 만들어야 논리가 자연스럽습니다.",
-    vocab:"linguistic relativity(언어 상대성), hypothesis(가설), cognition(인지), intertwined(뒤얽힌)",
-    wrongAnalysis:"① 앞 내용 없이 역접은 불자연스러움 ② 지지 주장 사이에 끊기는 것은 부적절 ④ 이미 비판까지 나온 뒤라 역접의 의미가 없음"
-  },
-  {
-    id:"KNS-2506", grade:"고1", exam:"3월", area:"어휘", type:"어휘선택", diff:"하", src:"모의기출", year:"2025",
-    q:"다음 글의 밑줄 친 단어 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은? (2025 3월 학평)",
-    passage:"Many teenagers struggle with time management because they ① underestimate how long tasks take. Procrastination is ② encouraged by the brain's preference for immediate rewards over future goals. A useful strategy is to ③ break large projects into smaller, more ④ manageable steps. This approach ⑤ discourages the overwhelming feeling that often leads to avoidance.",
-    choices:["① underestimate","② encouraged","③ break","④ manageable","⑤ discourages"],
-    errRate:42, freq:183, pro:false,
-    answer:"⑤",
-    explain:"⑤ 'discourages(낙담시키다)'는 문맥상 맞지 않습니다. 작은 단계로 나누는 것이 압도감을 '줄인다/없앤다'는 의미가 되어야 하므로 'reduces' 또는 'prevents'가 적절합니다.",
-    vocab:"procrastination(미루기), immediate reward(즉각적 보상), manageable(감당할 수 있는), avoidance(회피)",
-    wrongAnalysis:"② 'encouraged'는 미루기가 뇌에 의해 '조장된다'는 뜻으로 적절. ④ manageable(다룰 수 있는)은 small steps를 수식하기에 적절."
-  },
-  {
-    id:"KNS-2507", grade:"고3", exam:"EBS", area:"독해", type:"빈칸(단어)", diff:"상", src:"EBS연계", year:"2025",
-    q:"다음 빈칸에 들어갈 말로 가장 적절한 것은? (EBS 수능완성 응용)",
-    passage:"The concept of ____________ in social psychology refers to the tendency of individuals to work less hard when part of a group than when working alone. This phenomenon, first identified by Ringelmann in the 1890s through rope-pulling experiments, suggests that responsibility becomes diffused when tasks are shared.",
-    choices:["① social loafing","② groupthink","③ peer pressure","④ conformity","⑤ bystander effect"],
-    errRate:55, freq:234, pro:false,
-    answer:"①",
-    explain:"'집단에서 혼자일 때보다 덜 노력한다'는 정의는 사회적 태만(social loafing)을 가리킵니다. Ringelmann 실험과 책임감 분산이 이를 뒷받침합니다.",
-    vocab:"social loafing(사회적 태만), diffuse(확산되다), conformity(동조), bystander effect(방관자 효과)",
-    wrongAnalysis:"② 집단사고(groupthink) → 잘못된 의사결정 ③ peer pressure → 또래 압력 ④ conformity → 동조·순응 ⑤ bystander effect → 방관자 효과"
-  },
-  {
-    id:"KNS-2508", grade:"고2", exam:"수능", area:"독해", type:"글의흐름", diff:"상", src:"KATCH자체", year:"2025",
-    q:"다음 글에서 전체 흐름과 관계 없는 문장은?",
-    passage:"① The ocean plays a critical role in regulating Earth's climate by absorbing excess heat and carbon dioxide. ② Marine ecosystems, from coral reefs to deep-sea environments, support an enormous diversity of life. ③ However, rising sea temperatures and ocean acidification are threatening these ecosystems at an unprecedented rate. ④ Advances in GPS technology have significantly improved maritime navigation. ⑤ Scientists warn that the collapse of marine biodiversity could have cascading effects on global food security.",
-    choices:["① ①","② ②","③ ③","④ ④","⑤ ⑤"],
-    errRate:29, freq:156, pro:false,
-    answer:"④",
-    explain:"본문 전체가 해양 기후 조절·생태계·산성화의 위협에 관한 내용인데, ④의 'GPS 기술 발전과 해상 항법'은 주제와 무관합니다.",
-    vocab:"acidification(산성화), unprecedented(전례 없는), cascading effects(연쇄 효과), maritime(해상의)",
-    wrongAnalysis:"① 기후 조절 역할 ② 해양 생태계 다양성 ③ 위협 요인 ⑤ 결과·경고 → 모두 주제와 연관"
-  }
-];
-
-let visibleCount = 5;
-let filteredProblems = [...PROBLEMS];
-let cart = [];
-
-// ═══ RENDER ═══
-function renderProblems(list, count) {
-  const container = document.getElementById('prob-list');
-  container.innerHTML = '';
-  const show = list.slice(0, count);
-  show.forEach(p => {
-    const inCart = cart.find(c=>c.id===p.id);
-    const diffClass = {하:'diff-1',중:'diff-2',상:'diff-3',최상:'diff-4',킬러:'diff-5'}[p.diff]||'diff-3';
-    container.innerHTML += `
-    <div class="prob-card ${p.pro?'locked':''}" id="card-${p.id}" data-grade="${p.grade}" data-exam="${p.exam}" data-area="${p.area}" data-type="${p.type}" data-diff="${p.diff}" data-src="${p.src}">
-      <div class="card-top">
-        <div class="tag-row">
-          <span class="tag tag-grade">[${p.grade}] ${p.exam}</span>
-          <span class="tag tag-type">${p.type}</span>
-          <span class="tag tag-src">${p.src}</span>
-          ${p.errRate>=70?`<span class="tag tag-err"><i class="fas fa-fire"></i> 오답률 ${p.errRate}%</span>`:''}
-          ${p.pro?`<span class="tag tag-lock"><i class="fas fa-crown"></i> PRO 전용</span>`:''}
-        </div>
-        <span class="diff-badge ${diffClass}">난이도 ${p.diff}</span>
-      </div>
-      <div class="prob-id">[ID: ${p.id}] · ${p.year}년</div>
-      <div class="prob-q">${p.q}</div>
-      <div class="prob-body" id="body-${p.id}">
-        <div class="passage">${p.passage}</div>
-        <ul class="choices">${p.choices.map((c,i)=>`<li><span class="num">${i+1}</span>${c}</li>`).join('')}</ul>
-      </div>
-      <div class="card-actions">
-        <div class="card-stats">
-          <span><i class="fas fa-user-check"></i> 정답률 ${100-p.errRate}%</span>
-          <span><i class="fas fa-chart-bar"></i> 출제 ${p.freq}회</span>
-        </div>
-        <div class="card-btns">
-          <button class="btn-toggle" onclick="toggleBody('${p.id}')"><i class="fas fa-eye"></i> 지문</button>
-          <button class="btn-explain" onclick="openModal('${p.id}')"><i class="fas fa-lightbulb"></i> 해설</button>
-          ${p.pro ? `<button class="btn-lock-add"><i class="fas fa-lock"></i> PRO 전용</button>`
-                  : `<button class="btn-add ${inCart?'added':''}" id="addbtn-${p.id}" onclick="toggleCart('${p.id}')">${inCart?'<i class="fas fa-check"></i> 담김':'<i class="fas fa-plus"></i> 시험지에 담기'}</button>`}
-        </div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('count-display').textContent = list.length;
-  document.getElementById('more-btn').style.display = list.length > count ? 'block':'none';
-}
-
-// ═══ TOGGLE BODY ═══
-function toggleBody(id) {
-  const el = document.getElementById('body-'+id);
-  const btn = el.closest('.prob-card').querySelector('.btn-toggle');
-  if(el.classList.toggle('open')) {btn.innerHTML='<i class="fas fa-eye-slash"></i> 접기';}
-  else {btn.innerHTML='<i class="fas fa-eye"></i> 지문';}
-}
-
-// ═══ MODAL ═══
-function openModal(id) {
-  const p = PROBLEMS.find(pr=>pr.id===id);
-  if(!p) return;
-  document.getElementById('modal-title').textContent = `[${p.id}] 해설`;
-  document.getElementById('modal-meta').textContent = `${p.grade} | ${p.exam} | ${p.type} | 난이도: ${p.diff} | 오답률: ${p.errRate}%`;
-  document.getElementById('modal-answer').textContent = `정답: ${p.answer}`;
-  document.getElementById('modal-explain').textContent = p.explain;
-  document.getElementById('modal-vocab').textContent = p.vocab;
-  document.getElementById('modal-wrong').textContent = p.wrongAnalysis;
-  document.getElementById('explain-modal').classList.add('open');
-}
-function closeModal(){document.getElementById('explain-modal').classList.remove('open');}
-document.getElementById('explain-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
-// ═══ CART ═══
-function toggleCart(id) {
-  const p = PROBLEMS.find(pr=>pr.id===id);
-  if(!p) return;
-  const idx = cart.findIndex(c=>c.id===id);
-  if(idx>=0){cart.splice(idx,1);}else{cart.push(p);}
-  renderCart();
-  const btn = document.getElementById('addbtn-'+id);
-  if(btn){
-    if(cart.find(c=>c.id===id)){btn.className='btn-add added';btn.innerHTML='<i class="fas fa-check"></i> 담김';}
-    else{btn.className='btn-add';btn.innerHTML='<i class="fas fa-plus"></i> 시험지에 담기';}
-  }
-}
-function removeCart(id){
-  cart = cart.filter(c=>c.id!==id);
-  renderCart();
-  const btn = document.getElementById('addbtn-'+id);
-  if(btn){btn.className='btn-add';btn.innerHTML='<i class="fas fa-plus"></i> 시험지에 담기';}
-}
-function renderCart(){
-  const body = document.getElementById('cart-body');
-  const empty = document.getElementById('cart-empty');
-  document.getElementById('cart-count').textContent = cart.length+' 문항';
-  if(cart.length===0){empty.style.display='block';body.innerHTML='';body.appendChild(empty);return;}
-  empty.style.display='none';
-  let html='';
-  cart.forEach((p,i)=>{
-    html+=`<div class="cart-item"><span>${i+1}. ${p.id} <small style="color:#aaa">(${p.type})</small></span><button class="ci-rm" onclick="removeCart('${p.id}')"><i class="fas fa-times"></i></button></div>`;
-  });
-  body.innerHTML=html;
-}
-
-// ═══ FILTERS ═══
-function getChecked(filter){
-  return [...document.querySelectorAll(`input[data-filter="${filter}"]:checked`)].map(el=>el.value);
-}
-function applyFilters(){
-  const grades=getChecked('grade'), exams=getChecked('exam'), areas=getChecked('area'), diffs=getChecked('diff'), srcs=getChecked('src');
-  const typeVal=document.getElementById('type-select').value;
-  const yearVal=document.getElementById('year-select').value;
-  const keyword=document.getElementById('search-input').value.trim().toLowerCase();
-  filteredProblems = PROBLEMS.filter(p=>{
-    if(grades.length && !grades.includes(p.grade)) return false;
-    if(exams.length && !exams.includes(p.exam)) return false;
-    if(areas.length && !areas.includes(p.area)) return false;
-    if(diffs.length && !diffs.includes(p.diff)) return false;
-    if(srcs.length && !srcs.includes(p.src)) return false;
-    if(typeVal && p.type!==typeVal) return false;
-    if(yearVal && p.year!==yearVal) return false;
-    if(keyword && !p.id.toLowerCase().includes(keyword) && !p.q.toLowerCase().includes(keyword) && !p.passage.toLowerCase().includes(keyword)) return false;
-    return true;
-  });
-  visibleCount=5;
-  renderProblems(filteredProblems, visibleCount);
-  renderActiveTags(grades,exams,areas,diffs,srcs,typeVal,yearVal,keyword);
-}
-function resetFilters(){
-  document.querySelectorAll('input[type=checkbox]').forEach(el=>el.checked=false);
-  document.getElementById('type-select').value='';
-  document.getElementById('year-select').value='';
-  document.getElementById('search-input').value='';
-  filteredProblems=[...PROBLEMS];visibleCount=5;
-  renderProblems(filteredProblems,visibleCount);
-  document.getElementById('active-tags').innerHTML='';
-}
-function renderActiveTags(grades,exams,areas,diffs,srcs,typeVal,yearVal,keyword){
-  const tags=document.getElementById('active-tags');
-  let html='';
-  [...grades,...exams,...areas,...diffs,...srcs].forEach(v=>{html+=`<span class="atag">${v} <button onclick="removeTag('${v}')">✕</button></span>`;});
-  if(typeVal) html+=`<span class="atag">${typeVal}</span>`;
-  if(yearVal) html+=`<span class="atag">${yearVal}년</span>`;
-  if(keyword) html+=`<span class="atag">"${keyword}"</span>`;
-  tags.innerHTML=html;
-}
-function removeTag(val){
-  const el=document.querySelector(`input[value="${val}"]`);
-  if(el)el.checked=false;
-  applyFilters();
-}
-function sortProblems(){
-  const s=document.getElementById('sort-sel').value;
-  if(s==='err_high') filteredProblems.sort((a,b)=>b.errRate-a.errRate);
-  else if(s==='err_low') filteredProblems.sort((a,b)=>a.errRate-b.errRate);
-  else if(s==='freq') filteredProblems.sort((a,b)=>b.freq-a.freq);
-  else filteredProblems.sort((a,b)=>b.id.localeCompare(a.id));
-  renderProblems(filteredProblems,visibleCount);
-}
-function loadMore(){visibleCount+=5;renderProblems(filteredProblems,visibleCount);}
-
-// ═══ SAVE / PRINT ═══
-function saveExam(){
-  const name=document.getElementById('exam-name').value||'제목없음';
-  if(cart.length===0){alert('시험지에 담긴 문제가 없습니다.');return;}
-  alert(`✅ "${name}" (${cart.length}문항) 세트가 저장되었습니다!\n내 시험지 목록에서 확인하실 수 있습니다.`);
-}
-function printExam(){
-  if(cart.length===0){alert('시험지에 담긴 문제가 없습니다.');return;}
-  alert(`🖨️ PDF 출력 모드로 이동합니다.\n시험지: ${cart.length}문항\n${document.getElementById('opt-ans').checked?'✓ 정답·해설 포함':''}\n${document.getElementById('opt-omr').checked?'✓ OMR 포함':''}`);
-}
-
-// Init
-renderProblems(filteredProblems, visibleCount);
-renderCart();
+    let cartCount = 0;
+    
+    function toggleCart(btn) {
+        const itemBox = btn.closest('div[style*="border-radius:10px"]');
+        if(btn.innerText.includes('담기')) {
+            btn.innerHTML = '<i class="fas fa-minus"></i> 빼기';
+            btn.style.background = '#e2e8f0';
+            btn.style.color = '#334155';
+            itemBox.style.borderColor = '#3b82f6';
+            itemBox.style.background = '#f0f9ff';
+            cartCount++;
+        } else {
+            btn.innerHTML = '<i class="fas fa-plus"></i> 담기';
+            btn.style.background = 'white';
+            btn.style.color = '#1e293b';
+            itemBox.style.borderColor = '#cbd5e1';
+            itemBox.style.background = 'white';
+            cartCount--;
+        }
+        document.getElementById('cart-total').innerText = cartCount;
+        
+        const cartBox = document.getElementById('cart-box');
+        cartBox.style.transform = 'scale(1.05)';
+        cartBox.style.borderColor = '#3b82f6';
+        setTimeout(() => {
+            cartBox.style.transform = 'scale(1)';
+            cartBox.style.borderColor = '#bfdbfe';
+        }, 200);
+    }
+    
+    function deployTest() {
+        if(cartCount === 0) {
+            alert('바구니에 담긴 문항이 없습니다. 먼저 문항을 담아주세요.');
+        } else {
+            alert(cartCount + '개의 문항으로 구성된 미니테스트가 학생들에게 온라인 배포되었습니다!\n(푸시 알림 전송 완료)');
+            cartCount = 0;
+            document.getElementById('cart-total').innerText = cartCount;
+            document.querySelectorAll('.q-item button').forEach(b => {
+                if(b.innerText.includes('빼기')) b.click();
+            });
+        }
+    }
 </script>
-</body>
-</html>
+</body></html>

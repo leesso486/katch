@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="ko"><head>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
     <title>KATCH - MY 학습진단</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sub.css">
-    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -202,8 +204,8 @@
         </div>
         <div class="ml-topbar-right">
             <div class="role-toggle">
-                <button class="role-btn active" id="roleStudent"><i class="fas fa-user-graduate"></i> 학생</button>
-                <button class="role-btn" id="roleTeacher" onclick="location.href='teacher_dashboard.html'"><i class="fas fa-chalkboard-teacher"></i> 강사/관리자</button>
+                <button class="role-btn active" id="roleStudent" onclick="switchRole('student')"><i class="fas fa-user-graduate"></i> 학생</button>
+                <button class="role-btn" id="roleTeacher" onclick="switchRole('teacher')"><i class="fas fa-chalkboard-teacher"></i> 강사/관리자</button>
             </div>
             <a href="points.html" class="user-pts"><i class="fas fa-coins"></i> 1,850 P</a>
             <div class="user-info">
@@ -278,7 +280,7 @@
             <!-- Teacher Nav (initially hidden) -->
             <nav class="sidebar-nav" id="teacherNav" style="display:none;">
                 <div class="nav-section-label">강사 관리</div>
-                <a class="nav-item" href="teacher_dashboard.html">
+                <a class="nav-item active" href="#" onclick="showPanel('teacherDash', '강사 대시보드', this)">
                     <div class="nav-icon"><i class="fas fa-tachometer-alt"></i></div>
                     강사 대시보드
                 </a>
@@ -315,309 +317,349 @@
             <!-- ============================
                  PANEL: 학생 대시보드
             ============================ -->
-                        <div class="content-panel active" id="panel-dashboard">
-                <style>
-                    /* Premium Light Theme - Student Dashboard */
-                    .bento-student-wrapper {
-                        background-color: #f4f7fa; 
-                        min-height: 800px; 
-                        border-radius: 12px; 
-                        margin: -30px; 
-                        padding: 40px;
-                        color: #1e293b;
-                        font-family: 'Pretendard', sans-serif;
-                    }
-                    
-                    .dashboard-container {
-                        max-width: 1200px;
-                        margin: 0 auto;
-                    }
+            <div class="content-panel active" id="panel-dashboard">
+<div class="bento-student-wrapper">
+<style>
+        :root {
+            --bg-color: #0b1120;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-glow: #3b82f6;
+            --accent-pink: #ec4899;
+            --accent-teal: #14b8a6;
+            --accent-orange: #f59e0b;
+            --gradient-1: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #10b981, #059669);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #ea580c);
+            --gradient-4: linear-gradient(135deg, #ec4899, #f43f5e);
+        }
 
-                    /* Utility Classes */
-                    .flex-center { display: flex; align-items: center; }
-                    .flex-between { display: flex; justify-content: space-between; align-items: center; }
-                    
-                    /* Top Status Area */
-                    .dashboard-top { margin-bottom: 24px; }
-                    .breadcrumb { font-size: 14px; color: #64748b; font-weight: 600; }
-                    .breadcrumb span { color: #2563eb; font-weight: 800; }
-                    .status-badges { gap: 12px; }
-                    .s-badge { padding: 8px 16px; background: white; border-radius: 20px; font-weight: 800; font-size: 14px; gap: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-                    
-                    /* Hero Banner */
-                    .s-hero { 
-                        background: linear-gradient(135deg, #1e40af, #3b82f6); 
-                        border-radius: 16px; padding: 32px 40px; color: white; margin-bottom: 30px; 
-                        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2); 
-                        position: relative; overflow: hidden;
-                    }
-                    .s-hero::after {
-                        content: ''; position: absolute; right: -50px; top: -50px;
-                        width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
-                        border-radius: 50%;
-                    }
-                    
-                    .s-hero h1 { font-size: 28px; font-weight: 900; margin: 0 0 10px 0; line-height: 1.3; }
-                    .s-hero p { margin: 0 0 20px 0; font-size: 15px; opacity: 0.9; line-height: 1.5; }
-                    
-                    .s-days { display: flex; gap: 12px; position: relative; z-index: 2; }
-                    .s-day { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
-                    .s-day.done { background: white; color: #2563eb; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-                    .s-day.now { background: #fbbf24; color: white; border: 2px solid white; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4); }
-                    
-                    .s-rank { 
-                        background: rgba(255,255,255,0.1); padding: 24px 36px; border-radius: 16px; 
-                        text-align: center; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
-                        position: relative; z-index: 2;
-                    }
-                    .s-rank i { font-size: 32px; color: #fbbf24; margin-bottom: 8px; }
-                    .s-rank-lbl { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-                    .s-rank-val { font-size: 28px; font-weight: 900; }
+        .bento-student-wrapper {
+            background-color: var(--bg-color); min-height: 800px; border-radius: 12px; margin: -30px; padding: 30px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1), transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1), transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05), transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            padding: 0;
+            letter-spacing: -0.02em;
+        }
 
-                    /* Main Grid */
-                    .s-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
-                    
-                    .s-section-title { font-size: 20px; font-weight: 900; margin: 0 0 16px 0; color: #1e293b; display: flex; justify-content: space-between; align-items: flex-end; }
-                    .s-section-title a { font-size: 14px; font-weight: 700; color: #3b82f6; text-decoration: none; margin-bottom: 2px; }
-                    
-                    .s-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 24px; }
-                    
-                    /* Tasks */
-                    .s-task { padding: 18px; border: 1px solid #e2e8f0; border-radius: 12px; display: flex; align-items: center; gap: 16px; margin-bottom: 12px; transition: 0.2s; background: white; }
-                    .s-task:hover { border-color: #cbd5e1; box-shadow: 0 6px 20px rgba(0,0,0,0.04); transform: translateY(-2px); }
-                    .s-ticon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-                    .s-tbadge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; margin-bottom: 6px; letter-spacing: 0.5px; }
-                    .s-title { font-size: 16px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
-                    .s-btn { padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; transition: 0.2s; white-space: nowrap; margin-left: auto; }
-                    
-                    .bg-blue-light { background: #eff6ff; color: #2563eb; } .bg-pink-light { background: #fdf2f8; color: #db2777; } .bg-green-light { background: #f0fdf4; color: #16a34a; }
-                    .text-blue { color: #2563eb; } .text-pink { color: #db2777; } .text-green { color: #16a34a; }
-                    .badge-blue { background: #e0e7ff; color: #4f46e5; } .badge-pink { background: #fce7f3; color: #db2777; } .badge-green { background: #dcfce7; color: #16a34a; }
-                    
-                    .btn-primary { background: #2563eb; color: white; } .btn-primary:hover { background: #1d4ed8; }
-                    .btn-outline { background: white; color: #64748b; border: 1px solid #cbd5e1; } .btn-outline:hover { border-color: #2563eb; color: #2563eb; }
-                    .btn-success { background: #10b981; color: white; } .btn-success:hover { background: #059669; }
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
 
-                    /* Table */
-                    .s-table-wrapper { border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
-                    .s-table { width: 100%; border-collapse: collapse; text-align: left; }
-                    .s-table th { background: #f8fafc; padding: 14px 20px; font-size: 13px; color: #64748b; font-weight: 700; border-bottom: 1px solid #e2e8f0; }
-                    .s-table td { padding: 16px 20px; font-size: 14px; color: #1e293b; font-weight: 700; border-bottom: 1px solid #f1f5f9; }
-                    .schip { padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 800; }
-                    .sc-g { background: #dcfce7; color: #16a34a; }
-                    .sc-r { background: #fee2e2; color: #dc2626; }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
 
-                    /* Radar Chart */
-                    .s-chart-box { background: #eff6ff; border-radius: 12px; padding: 20px; display: flex; align-items: center; justify-content: center; height: 280px; margin-bottom: 16px; border: 1px solid #dbeafe; }
-                    .s-chart-txt { background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 14px; color: #64748b; line-height: 1.5; font-weight: 600; text-align: center; }
+        /* Ambient Glow Behind Cards */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--gradient-1);
+            opacity: 0.8;
+        }
+        
+        .card-green::before { background: var(--gradient-2); }
+        .card-orange::before { background: var(--gradient-3); }
+        .card-pink::before { background: var(--gradient-4); }
 
-                    /* Timeline */
-                    .s-alist { display: flex; flex-direction: column; }
-                    .s-aitem { display: flex; align-items: center; padding: 16px 0; border-bottom: 1px solid #f1f5f9; gap: 16px; }
-                    .s-aitem:last-child { border-bottom: none; }
-                    .sa-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; border: 1px solid #e2e8f0; font-size: 16px; flex-shrink: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-                    .sa-title { font-size: 15px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
-                    .sa-time { font-size: 12px; color: #94a3b8; font-weight: 600; }
-                    .sa-pts { font-weight: 800; font-size: 15px; margin-left: auto; }
-                </style>
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-                <div class="bento-student-wrapper">
-                    <div class="dashboard-container">
-                        
-                        <div class="dashboard-top flex-between">
-                            <div class="breadcrumb">Main <i class="fas fa-chevron-right" style="font-size:10px; margin:0 5px; color:#cbd5e1;"></i> <span>Dashboard</span></div>
-                            <div class="status-badges flex-center">
-                                <div class="s-badge" style="color: #ea580c;"><i class="fas fa-fire"></i> 5일 연속</div>
-                                <div class="s-badge" style="color: #d97706;"><i class="fas fa-coins" style="color:#fbbf24;"></i> 12,450 P</div>
-                            </div>
-                        </div>
+        /* User Welcome Section */
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInDown 0.8s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
-                        <div class="s-hero flex-between">
-                            <div>
-                                <h1>반가워요, 박진규님!<br>오늘도 성장을 시작해볼까요?</h1>
-                                <p>현재 5일 연속 학습 중입니다. 2일 더 완료하면 추가 포인트를<br>받을 수 있어요!</p>
-                                <div class="s-days">
-                                    <div class="s-day done">월</div>
-                                    <div class="s-day done">화</div>
-                                    <div class="s-day done">수</div>
-                                    <div class="s-day done">목</div>
-                                    <div class="s-day now">금</div>
-                                    <div class="s-day">토</div>
-                                    <div class="s-day">일</div>
-                                </div>
-                            </div>
-                            <div class="s-rank">
-                                <i class="fas fa-medal"></i>
-                                <div class="s-rank-lbl">이번 주 랭킹</div>
-                                <div class="s-rank-val">상위 5%</div>
-                            </div>
-                        </div>
+        .welcome-banner::after {
+            content: ''; position: absolute; right: -50px; top: -50px;
+            width: 200px; height: 200px; background: rgba(59, 130, 246, 0.2);
+            filter: blur(50px); border-radius: 50%; z-index: 0;
+        }
 
-                        <div class="s-grid">
-                            <!-- Left Column -->
-                            <div>
-                                <h2 class="s-section-title">오늘의 과제 <a href="dashboard_gvr.html">전체 보기</a></h2>
-                                <div style="margin-bottom: 32px;">
-                                    <div class="s-task" style="border-left: 4px solid #f59e0b;">
-                                        <div class="s-ticon bg-blue-light"><i class="fas fa-book-reader"></i></div>
-                                        <div style="flex-grow:1;">
-                                            <div class="s-tbadge badge-blue">GVR HOMEWORK</div>
-                                            <div class="s-title">주간지 GVR 68 (AT 1~4) - 구문독해</div>
-                                            <div class="flex-center" style="gap:10px;">
-                                                <div style="flex-grow:1; height:6px; background:#f1f5f9; border-radius:3px; overflow:hidden;">
-                                                    <div style="height:100%; width:60%; background:#2563eb;"></div>
-                                                </div>
-                                                <div style="font-size:13px; font-weight:800; color:#2563eb;">60%</div>
-                                            </div>
-                                        </div>
-                                        <button class="s-btn btn-primary" onclick="location.href='dashboard_gvr.html'">계속하기</button>
-                                    </div>
-                                    <div class="s-task">
-                                        <div class="s-ticon bg-pink-light"><i class="fas fa-play-circle"></i></div>
-                                        <div style="flex-grow:1;">
-                                            <div class="s-tbadge badge-pink">VOD CLASS</div>
-                                            <div class="s-title">[시크릿] 빈칸추론 킬러 접근법 3강</div>
-                                            <div style="font-size:13px; color:#64748b; font-weight:600;">학습 시간: 15분 / 45분</div>
-                                        </div>
-                                        <button class="s-btn btn-outline" onclick="location.href='vod_class.html'">이어보기</button>
-                                    </div>
-                                    <div class="s-task">
-                                        <div class="s-ticon bg-green-light"><i class="fas fa-font"></i></div>
-                                        <div style="flex-grow:1;">
-                                            <div class="s-tbadge badge-green">ONLINE CBT</div>
-                                            <div class="s-title">제 3회 KATCH 수능 실전 모의고사</div>
-                                            <div style="font-size:13px; color:#64748b; font-weight:600;">상태: 미응시 / 마감: 오늘 23:59</div>
-                                        </div>
-                                        <button class="s-btn btn-success" onclick="location.href='student_take_test.html'">응시하기</button>
-                                    </div>
-                                </div>
+        .welcome-text { position: relative; z-index: 1; }
+        .welcome-text h2 {
+            font-size: 28px; font-weight: 900; margin: 0 0 10px 0;
+            background: linear-gradient(to right, #fff, #93c5fd);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .welcome-text p { margin: 0; color: #cbd5e1; font-size: 15px; }
 
-                                <h2 class="s-section-title">최근 테스트 결과</h2>
-                                <div class="s-table-wrapper" style="background:white;">
-                                    <table class="s-table">
-                                        <thead>
-                                            <tr><th>테스트 명</th><th>날짜</th><th>점수</th><th>상태</th></tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr style="cursor:pointer;" onclick="location.href='report_premium.html'">
-                                                <td style="color:#2563eb; font-weight:800;">제 3회 KATCH 모의고사 <i class="fas fa-external-link-alt" style="font-size:10px; opacity:0.5;"></i></td>
-                                                <td style="color:#64748b; font-weight:600;">2026.04.15</td>
-                                                <td style="color:#2563eb;">84/100</td>
-                                                <td><div class="schip sc-g">성적표</div></td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="location.href='report_gvr.html'">
-                                                <td style="color:#2563eb; font-weight:800;">GVR 주간지 67회차 <i class="fas fa-external-link-alt" style="font-size:10px; opacity:0.5;"></i></td>
-                                                <td style="color:#64748b; font-weight:600;">2026.04.05</td>
-                                                <td style="color:#2563eb;">82/100</td>
-                                                <td><div class="schip sc-g">분석지</div></td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="location.href='level_test_report.html'">
-                                                <td style="color:#2563eb; font-weight:800;">KNS 고등관 입학 레벨테스트 <i class="fas fa-external-link-alt" style="font-size:10px; opacity:0.5;"></i></td>
-                                                <td style="color:#64748b; font-weight:600;">2026.03.20</td>
-                                                <td style="color:#ef4444;">68/100</td>
-                                                <td><div class="schip sc-r">결과보기</div></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        .streak-badge {
+            position: relative; z-index: 1;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 24px; border-radius: 30px; font-size: 16px; font-weight: 800;
+            display: flex; align-items: center; gap: 10px; color: #fff;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
+            animation: pulse-border 2s infinite;
+        }
 
-                            <!-- Right Column -->
-                            <div>
-                                <div class="s-card">
-                                    <h2 class="s-section-title" style="font-size:18px;">학습 역량 분석</h2>
-                                    <div class="s-chart-box">
-                                        <canvas id="studentRadarChart"></canvas>
-                                    </div>
-                                    <div class="s-chart-txt">
-                                        <strong style="color:#1e293b;">문법</strong> 영역이 지난번 모의고사 대비 <strong style="color:#10b981;">12%</strong> 상승했습니다! 집중 보강이 성공적이었네요.
-                                    </div>
-                                </div>
+        /* Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
 
-                                <div class="s-card">
-                                    <h2 class="s-section-title" style="font-size:18px;">최근 활동 & 포인트</h2>
-                                    <div class="s-alist">
-                                        <div class="s-aitem">
-                                            <div class="sa-icon" style="color:#f59e0b; background:#fffbeb; border-color:#fde68a;"><i class="fas fa-calendar-check"></i></div>
-                                            <div><div class="sa-title">일일 출석 체크</div><div class="sa-time">오늘 09:12</div></div>
-                                            <div class="sa-pts" style="color:#10b981;">+100 P</div>
-                                        </div>
-                                        <div class="s-aitem">
-                                            <div class="sa-icon" style="color:#2563eb; background:#eff6ff; border-color:#bfdbfe;"><i class="fas fa-check-double"></i></div>
-                                            <div><div class="sa-title">초밀착 GVR 67 주간지 제출</div><div class="sa-time">어제 21:45</div></div>
-                                            <div class="sa-pts" style="color:#10b981;">+500 P</div>
-                                        </div>
-                                        <div class="s-aitem">
-                                            <div class="sa-icon" style="color:#d97706; background:#fffbeb; border-color:#fde68a;"><i class="fas fa-trophy"></i></div>
-                                            <div><div class="sa-title">주간 모의고사 상위 5% 보상</div><div class="sa-time">2026.04.16</div></div>
-                                            <div class="sa-pts" style="color:#10b981;">+1,000 P</div>
-                                        </div>
-                                        <div class="s-aitem">
-                                            <div class="sa-icon" style="color:#64748b; background:#f8fafc; border-color:#e2e8f0;"><i class="fas fa-shopping-bag"></i></div>
-                                            <div><div class="sa-title">포인트 스토어 (VOD 교재 구매)</div><div class="sa-time">2026.04.15</div></div>
-                                            <div class="sa-pts" style="color:#ef4444;">-5,000 P</div>
-                                        </div>
-                                    </div>
-                                    <button class="s-btn btn-outline" style="width:100%; margin-top:20px;" onclick="location.href='points.html'">포인트 내역 더보기</button>
-                                </div>
-                            </div>
-                        </div>
+        .bento-grid.top-widgets {
+            grid-template-columns: repeat(3, 1fr);
+            margin-bottom: 25px;
+        }
 
-                    </div>
+        .span-2 { grid-column: span 2; }
+
+        /* Widget specific */
+        .widget-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+        }
+        .widget-header h3 { font-size: 15px; font-weight: 800; color: #fff; margin:0; }
+        .widget-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 18px; }
+        
+        .w-time .widget-icon { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .w-vod .widget-icon { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .w-ai .widget-icon { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        .widget-value { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 5px; }
+        .widget-desc { font-size: 13px; color: var(--text-muted); }
+        .progress-bg { background: rgba(255,255,255,0.05); height: 6px; border-radius: 3px; margin-top: 15px; overflow: hidden; }
+        .progress-bar { height: 100%; border-radius: 3px; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+
+        .panel-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+
+        .panel-title {
+            font-size: 18px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px;
+        }
+
+        .panel-title i { font-size: 18px; }
+
+        .chart-wrapper {
+            flex-grow: 1; position: relative; width: 100%;
+        }
+
+        /* Modern Tabs */
+        .gvr-tabs {
+            display: flex; gap: 6px; background: rgba(15, 23, 42, 0.6);
+            padding: 5px; border-radius: 12px; border: 1px solid var(--card-border);
+        }
+
+        .gvr-tabs button {
+            background: transparent; border: none; color: var(--text-muted);
+            padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+        }
+        .gvr-tabs button:hover { color: #fff; }
+        .gvr-tabs button.active { background: var(--text-main); color: #0f172a; box-shadow: 0 2px 10px rgba(255,255,255,0.2); }
+
+        /* History List */
+        .history-list { display: flex; flex-direction: column; gap: 12px; margin-top: 5px; }
+        .history-item {
+            background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center;
+            transition: 0.2s;
+        }
+        .history-item:hover { background: rgba(30, 41, 59, 0.8); border-color: rgba(59, 130, 246, 0.3); transform: translateX(5px); }
+        .h-title { font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 4px; display:flex; align-items:center; gap:8px;}
+        .h-meta { font-size: 12px; color: #64748b; }
+        .badge-online { background: rgba(59, 130, 246, 0.2); color:#93c5fd; padding:3px 8px; border-radius:4px; font-size:11px; border:1px solid rgba(59, 130, 246, 0.3); }
+        .h-score { font-size: 22px; font-weight: 900; color: #fff; text-align:right;}
+        .h-score span { font-size: 12px; color: #64748b; font-weight: normal; }
+
+        /* Animations */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-border { 0% { border-color: rgba(255,255,255,0.1); } 50% { border-color: rgba(59, 130, 246, 0.5); } 100% { border-color: rgba(255,255,255,0.1); } }
+
+        .glass-card { animation: fadeUp 0.8s ease-out backwards; }
+        .glass-card:nth-child(1) { animation-delay: 0.1s; }
+        .glass-card:nth-child(2) { animation-delay: 0.2s; }
+        .glass-card:nth-child(3) { animation-delay: 0.3s; }
+        .bento-grid > .glass-card:nth-child(1) { animation-delay: 0.4s; }
+        .bento-grid > .glass-card:nth-child(2) { animation-delay: 0.5s; }
+        .bento-grid > .glass-card:nth-child(3) { animation-delay: 0.6s; }
+        .bento-grid > .glass-card:nth-child(4) { animation-delay: 0.7s; }
+
+        /* General UI components */
+        .btn-modern {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); transition: 0.3s; display: inline-block; text-align: center; text-decoration: none;
+        }
+        .btn-modern:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6); }
+    </style>
+<div class="dashboard-container">
+        
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>박진규 학생, 환영합니다!</h2>
+                <p>AI 기반 딥-아날리틱스를 통해 수능 1등급을 향한 최적의 경로를 분석합니다.</p>
+            </div>
+            <div class="streak-badge">
+                <span style="font-size:20px;">🔥</span> 이번 주 연속 접속 3일째!
+            </div>
+        </div>
+
+        <!-- Quick Access Widgets -->
+        <div class="bento-grid top-widgets">
+            <div class="glass-card w-time">
+                <div class="widget-header">
+                    <h3>주간 학습 몰입도</h3>
+                    <div class="widget-icon"><i class="fas fa-clock"></i></div>
                 </div>
-                
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        // Delay slightly to ensure canvas is ready
-                        setTimeout(() => {
-                            const ctx = document.getElementById('studentRadarChart')?.getContext('2d');
-                            if (ctx) {
-                                Chart.defaults.color = '#64748b'; 
-                                Chart.defaults.font.family = 'Pretendard';
-                                new Chart(ctx, {
-                                    type: 'radar',
-                                    data: { 
-                                        labels: ['어휘', '문법', '독해', '듣기', '수학', '논리'], 
-                                        datasets: [
-                                            { 
-                                                label: '나의 성취도', 
-                                                data: [82, 85, 68, 90, 75, 80], 
-                                                backgroundColor: 'rgba(37, 99, 235, 0.2)', 
-                                                borderColor: '#2563eb', 
-                                                borderWidth: 2, 
-                                                pointBackgroundColor: '#2563eb' 
-                                            }, 
-                                            { 
-                                                label: '반 평균', 
-                                                data: [75, 80, 75, 85, 68, 70], 
-                                                backgroundColor: 'transparent', 
-                                                borderColor: '#94a3b8', 
-                                                borderWidth: 2, 
-                                                borderDash: [5,5], 
-                                                pointBackgroundColor: '#94a3b8' 
-                                            }
-                                        ] 
-                                    },
-                                    options: { 
-                                        responsive: true, 
-                                        maintainAspectRatio: false, 
-                                        scales: { 
-                                            r: { 
-                                                angleLines: { color: '#bfdbfe' }, 
-                                                grid: { color: '#bfdbfe' }, 
-                                                pointLabels: { font: { size: 12, weight: 800 }, color: '#1e293b' }, 
-                                                ticks: { display: false, min: 0, max: 100, stepSize: 20 } 
-                                            } 
-                                        }, 
-                                        plugins: { legend: { display: false } } 
-                                    }
-                                });
-                            }
-                        }, 500);
-                    });
-                </script>
+                <div class="widget-value">12h 30m</div>
+                <div class="widget-desc">이번 주 목표 학습량 (85% 달성)</div>
+                <div class="progress-bg"><div class="progress-bar" style="width: 85%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div></div>
             </div>
 
+            <div class="glass-card w-vod card-pink">
+                <div class="widget-header">
+                    <h3>최근 수강 VOD 보강</h3>
+                    <div class="widget-icon"><i class="fas fa-play"></i></div>
+                </div>
+                <div style="font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">[시크릿] 빈칸추론 킬러 접근법</div>
+                <div class="widget-desc" style="margin-bottom: 12px;">3강. 고난도 빈칸 (15:24 / 45:00)</div>
+                <a href="store_vod.html" class="btn-modern" style="width:100%; padding:8px; font-size:13px; background:rgba(236, 72, 153, 0.2); color:#fbcfe8; border:1px solid rgba(236, 72, 153, 0.4); box-shadow:none;">이어서 학습하기 <i class="fas fa-arrow-right" style="margin-left:5px;"></i></a>
+            </div>
+
+            <div class="glass-card w-ai card-green">
+                <div class="widget-header">
+                    <h3>AI 취약점 솔루션</h3>
+                    <div class="widget-icon"><i class="fas fa-robot"></i></div>
+                </div>
+                <div style="font-size: 13px; color: #cbd5e1; margin-bottom: 10px;">가장 취약한 <strong>어법 조추론</strong> 집중 공략</div>
+                <button class="btn-modern" style="width:100%; padding:8px; font-size:13px; background:linear-gradient(135deg, #10b981, #059669); box-shadow:0 4px 15px rgba(16, 185, 129, 0.4);" onclick="location.href='directory.html'"><i class="fas fa-bolt"></i> AI 맞춤 10제 훈련 시작</button>
+            </div>
+        </div>
+
+        <h3 style="font-size:22px; color:#fff; font-weight:800; margin: 40px 0 20px 0;"><i class="fas fa-chart-pie" style="color:var(--accent-glow);"></i> GVR 다차원 성적 분석 보드</h3>
+
+        <div class="bento-grid">
+            
+            <!-- Chart 1: Area-based Error Rates -->
+            <div class="glass-card span-2">
+                <div class="panel-header">
+                    <div class="panel-title"><i class="fas fa-radar"></i> 영역별 나의 평균 오답률 (심층 분석)</div>
+                    <div class="gvr-tabs">
+                        <button class="active" data-area="ALL" onclick="filterStudentChart('ALL', this)">전체보기</button>
+                        <button data-area="GR" onclick="filterStudentChart('GR', this)">GR</button>
+                        <button data-area="VO" onclick="filterStudentChart('VO', this)">VO</button>
+                        <button data-area="RC" onclick="filterStudentChart('RC', this)">RC</button>
+                        <button data-area="LC" onclick="filterStudentChart('LC', this)">LC</button>
+                    </div>
+                </div>
+                <div class="chart-wrapper" style="height: 300px; overflow-x: auto; overflow-y: hidden;">
+                    <div style="min-width: 800px; height: 100%;" id="student-chart-container">
+                        <canvas id="studentErrorRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart 2: Grade Trend by Session -->
+            <div class="glass-card card-orange">
+                <div class="panel-header">
+                    <div class="panel-title"><i class="fas fa-route" style="color: var(--accent-orange);"></i> GVR 바인더별 성적 추이</div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: -15px; margin-bottom: 20px;">최근 5개 바인더(과제 회차) 기준 누적 성장 그래프</div>
+                <div class="chart-wrapper" style="height: 250px;">
+                    <canvas id="scoreTrendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 3: Area Average (Radar) -->
+            <div class="glass-card card-green">
+                <div class="panel-header">
+                    <div class="panel-title"><i class="fas fa-spider" style="color: var(--accent-teal);"></i> 육각형 학습 밸런스 점검</div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: -15px; margin-bottom: 10px;">영역별 수강분반 전체 평균 vs 나의 성취도 비교</div>
+                <div class="chart-wrapper" style="height: 260px;">
+                    <canvas id="avgCompareChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 4: My Error Rate vs Overall -->
+            <div class="glass-card card-pink span-2">
+                <div class="panel-header">
+                    <div class="panel-title"><i class="fas fa-exclamation-triangle" style="color: var(--accent-pink);"></i> 취약점 진단: 오답률 비교 분석</div>
+                </div>
+                <div class="chart-wrapper" style="height: 250px;">
+                    <canvas id="errTypeTop3Chart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Recent History -->
+        <h3 style="font-size:22px; color:#fff; font-weight:800; margin: 40px 0 20px 0; display:flex; justify-content:space-between; align-items:center;">
+            <span><i class="fas fa-history" style="color:#94a3b8;"></i> 최근 응시 이력</span>
+            <a href="report_premium.html" style="font-size:14px; color:var(--accent-glow); text-decoration:none; font-weight:bold;">상세 리포트 모아보기 <i class="fas fa-arrow-right"></i></a>
+        </h3>
+        <div class="history-list">
+            <div class="history-item">
+                <div>
+                    <div class="h-title"><span class="badge-online">온라인 CBT</span> 제 3회 KATCH 수능 실전 모의고사</div>
+                    <div class="h-meta">응시일: 2026.04.15 | 소요시간: 45분</div>
+                </div>
+                <div>
+                    <div class="h-score">84 <span>/ 100</span></div>
+                    <a href="report_premium.html" style="color:var(--accent-glow); font-size:12px; text-decoration:none; font-weight:bold; display:block; text-align:right; margin-top:5px;">성적표 분석 <i class="fas fa-search-plus"></i></a>
+                </div>
+            </div>
+            <div class="history-item">
+                <div>
+                    <div class="h-title"><span class="badge-online" style="background:rgba(16, 185, 129, 0.2); color:#6ee7b7; border-color:rgba(16, 185, 129, 0.3);">과제 GVR</span> 주간지 GVR 68 (AT 1~4)</div>
+                    <div class="h-meta">제출 기한: 2026.04.12 | 달성률 100%</div>
+                </div>
+                <div>
+                    <div class="h-score">78 <span>/ 100 (평균)</span></div>
+                    <a href="report_premium.html" style="color:#6ee7b7; font-size:12px; text-decoration:none; font-weight:bold; display:block; text-align:right; margin-top:5px;">성적표 분석 <i class="fas fa-search-plus"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+
+</div>
             <!-- ============================
                  PANEL: 진단테스트
             ============================ -->
@@ -908,12 +950,12 @@
                             <div style="font-size:12px; font-weight:bold; color:#1a237e; margin-bottom:5px;">2월 GVR 종합 분석</div>
                             <h4 style="font-size:16px; font-weight:900; margin-bottom:10px;">2월 4주차 GVR 성적표</h4>
                             <p style="font-size:12px; color:#666; margin-bottom:15px;">나의 강약점 분석 및 백재형 원장님 총평이 업데이트 되었습니다.</p>
-                            <span style="font-size:13px; font-weight:bold; color:#E91E63;">결과 확인하기 →</span>
+                            <span style="font-size:13px; font-weight:bold; color:#E91E63;">결과 확인하기 &rarr;</span>
                         </div>
                         <div style="flex:1; background:white; border:1px solid #ddd; border-radius:12px; padding:20px; transition:0.2s; cursor:pointer;" onmouseover="this.style.borderColor='#1a237e'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)';" onmouseout="this.style.borderColor='#ddd'; this.style.boxShadow='none';" onclick="location.href='report_gvr.html'">
                             <div style="font-size:12px; font-weight:bold; color:#888; margin-bottom:5px;">2월 3주차 분석</div>
                             <h4 style="font-size:16px; font-weight:900; margin-bottom:10px; color:#555;">2월 3주차 GVR 성적표</h4>
-                            <span style="font-size:13px; font-weight:bold; color:#1a237e;">지난 결과 보기 →</span>
+                            <span style="font-size:13px; font-weight:bold; color:#1a237e;">지난 결과 보기 &rarr;</span>
                         </div>
                     </div>
                 </div>
@@ -956,437 +998,165 @@
             <!-- ============================
                  PANEL: 강사 대시보드
             ============================ -->
-            <div class="content-panel" id="panel-teacherDash"><style>
-        :root {
-            --bg-color: #0b1120;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-glow: #3b82f6;
-            --accent-pink: #ec4899;
-            --accent-teal: #14b8a6;
-            --gradient-1: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            --gradient-2: linear-gradient(135deg, #ec4899, #f43f5e);
-            --gradient-3: linear-gradient(135deg, #14b8a6, #3b82f6);
-        }
-
-        .bento-teacher-wrapper {
-            background-color: var(--bg-color); min-height: 800px; border-radius: 12px; margin: -30px; padding: 30px;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            font-family: 'Pretendard', sans-serif;
-            margin: 0;
-            padding: 0;
-            letter-spacing: -0.02em;
-        }
-
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Ambient Glow Behind Cards */
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: var(--gradient-1);
-            opacity: 0.8;
-        }
-        
-        .card-pink::before { background: var(--gradient-2); }
-        .card-teal::before { background: var(--gradient-3); }
-
-        .dashboard-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 40px;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        .header-title h1 {
-            font-size: 36px;
-            font-weight: 900;
-            margin: 0 0 10px 0;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .header-title p {
-            font-size: 16px;
-            color: var(--text-muted);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-title p span {
-            background: rgba(236, 72, 153, 0.2);
-            color: #fbcfe8;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            border: 1px solid rgba(236, 72, 153, 0.3);
-        }
-
-        /* Modern Select Dropdown */
-        .modern-select {
-            appearance: none;
-            background: rgba(15, 23, 42, 0.8);
-            color: white;
-            border: 1px solid var(--card-border);
-            padding: 12px 40px 12px 20px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1em;
-        }
-
-        .modern-select:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            background-color: rgba(30, 41, 59, 1);
-        }
-
-        /* Grid Layout */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .span-2 { grid-column: span 2; }
-        .span-3 { grid-column: span 3; }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .panel-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .panel-title i {
-            color: var(--accent-glow);
-            font-size: 20px;
-        }
-
-        /* Modern Tabs */
-        .gvr-tabs {
-            display: flex;
-            gap: 10px;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 5px;
-            border-radius: 12px;
-            border: 1px solid var(--card-border);
-        }
-
-        .gvr-tabs button {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .gvr-tabs button:hover {
-            color: #fff;
-        }
-
-        .gvr-tabs button.active {
-            background: var(--text-main);
-            color: #0f172a;
-            box-shadow: 0 2px 10px rgba(255,255,255,0.2);
-        }
-
-        .gvr-tabs button.btn-sort {
-            background: rgba(59, 130, 246, 0.1);
-            color: #93c5fd;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        /* Modal Overhaul */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 17, 32, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; visibility: hidden; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-
-        .modal-content {
-            background: #1e293b;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            width: 900px;
-            max-height: 85vh;
-            display: flex; flex-direction: column;
-            transform: scale(0.95); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.1);
-            overflow: hidden;
-        }
-
-        .modal-overlay.active .modal-content { transform: scale(1); }
-
-        .modal-header {
-            padding: 25px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(15, 23, 42, 0.5);
-        }
-
-        .modal-header h2 {
-            margin: 0; color: #fff; font-size: 20px; display: flex; align-items: center; gap: 10px;
-        }
-
-        .btn-close {
-            background: rgba(255,255,255,0.1); border: none; color: #fff;
-            width: 36px; height: 36px; border-radius: 50%; display: flex;
-            justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;
-        }
-
-        .btn-close:hover { background: rgba(236, 72, 153, 0.8); transform: rotate(90deg); }
-
-        .modal-.bento-teacher-wrapper {
-            padding: 30px; overflow-y: auto;
-        }
-
-        /* Modern Table */
-        .cyber-table {
-            width: 100%; border-collapse: separate; border-spacing: 0 8px;
-        }
-
-        .cyber-table th {
-            color: var(--text-muted); font-size: 13px; text-transform: uppercase;
-            letter-spacing: 1px; padding: 0 15px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .cyber-table td {
-            background: rgba(15, 23, 42, 0.4);
-            padding: 16px 15px; color: #e2e8f0; font-size: 15px;
-        }
-
-        .cyber-table tr td:first-child { border-radius: 12px 0 0 12px; }
-        .cyber-table tr td:last-child { border-radius: 0 12px 12px 0; }
-
-        .cyber-table tr:hover td { background: rgba(30, 41, 59, 0.8); }
-
-        .cyber-table tr.highlight td { background: rgba(236, 72, 153, 0.1); border-top: 1px solid rgba(236, 72, 153, 0.2); border-bottom: 1px solid rgba(236, 72, 153, 0.2); }
-        .cyber-table tr.highlight td:first-child { border-left: 1px solid rgba(236, 72, 153, 0.2); }
-        .cyber-table tr.highlight td:last-child { border-right: 1px solid rgba(236, 72, 153, 0.2); }
-
-        .er-badge {
-            background: rgba(255,255,255,0.1); color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 14px; display: inline-block;
-        }
-        .er-high {
-            background: linear-gradient(135deg, #f43f5e, #e11d48);
-            box-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
-        }
-
-        .btn-student {
-            background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1);
-            padding: 4px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.2s;
-        }
-        .btn-student:hover { background: rgba(255,255,255,0.1); color: #fff; }
-
-        .student-list-box {
-            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
-            padding: 10px 15px; border-radius: 8px; margin-top: 10px; font-size: 13px; color: #cbd5e1; line-height: 1.6;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .glass-card { animation: fadeUp 0.8s ease-out backwards; }
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.2s; }
-        .glass-card:nth-child(3) { animation-delay: 0.3s; }
-        
-        /* Tooltip style overrides for ChartJS */
-        canvas { cursor: crosshair; }
-
-    
-
-/* =================== TOP HEADER (TEACHER) =================== */
-.ml-topbar {
-    height: 60px; background: #111; color: white;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px; position: sticky; top: 0; z-index: 999;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-.ml-topbar-left { display: flex; align-items: center; gap: 15px; }
-.hamburger-btn {
-    width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.1);
-    border-radius: 8px; color: white; font-size: 18px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: 0.2s;
-}
-.hamburger-btn:hover { background: rgba(255,255,255,0.2); }
-.ml-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -1px; }
-.ml-logo a { color: white; text-decoration: none; }
-.ml-logo span { color: #E91E63; }
-.ml-page-title { font-size: 15px; font-weight: 700; opacity: 0.7; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
-.ml-topbar-right { display: flex; align-items: center; gap: 15px; }
-.user-info { display: flex; align-items: center; gap: 10px; font-size: 14px; }
-.user-avatar { width: 34px; height: 34px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color:white; }
-.user-pts { background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3); color: #FFD700; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; text-decoration:none; display:flex; gap:6px; align-items:center; }
-.user-pts:hover { background: rgba(255,193,7,0.25); }
-.role-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3px; }
-.role-btn { padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.6); transition: 0.2s; }
-.role-btn.active { background: white; color: #111; }
-
-</style><div class="bento-teacher-wrapper"><div class="dashboard-container">
-        
-        <div class="header-section">
-            <div class="header-title">
-                <h1>GVR Session Analytics</h1>
-                <p>
-                    <span><i class="fas fa-archive"></i> BINDER 68</span>
-                    주간 GVR - 68회차 (포함된 시험: AT 1, AT 2, AT 3, AT 4)
-                </p>
-            </div>
-            <div>
-                <select class="modern-select">
-                    <option>중2외고전사고반-C</option>
-                    <option>중3외고전사고반-A</option>
-                    <option>고1연고대반-B</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="bento-grid">
-            
-            <!-- Chart 1: Main Error Rate by Type -->
-            <div class="glass-card span-2">
-                <div class="panel-header">
-                    <div class="panel-title"><i class="fas fa-chart-bar"></i> 문제 유형별 평균 오답률 분석</div>
-                    <div class="gvr-tabs">
-                        <button class="active" data-type="ALL" onclick="filterChart('ALL', this)">전체</button>
-                        <button data-type="GR" onclick="filterChart('GR', this)">문법</button>
-                        <button data-type="VO" onclick="filterChart('VO', this)">어휘</button>
-                        <button data-type="RC" onclick="filterChart('RC', this)">독해</button>
-                        <button class="btn-sort" onclick="sortChart(this)" data-sort="num"><i class="fas fa-sort-amount-down"></i> 오답률순 정렬</button>
+            <div class="content-panel" id="panel-teacherDash">
+                <div class="dash-welcome" style="background:linear-gradient(135deg,#1a237e,#283593); position:relative; overflow:hidden;">
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0.1; background-image:radial-gradient(circle at 50% 50%, #fff 2px, transparent 2px); background-size:30px 30px; z-index:0;"></div>
+                    <div class="dw-left" style="position:relative; z-index:1;">
+                        <h2>이은혜 강사님, 종합 GVR 현황 📊</h2>
+                        <p style="color:#bbdefb;">[고1 정규 내신 특강반] 의 최근 1주차 GVR 과제 심층 분석 데이터입니다.</p>
+                    </div>
+                    <div class="dw-streak" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); z-index:1; position:relative;">
+                        <i class="fas fa-users"></i> 분석 대상: 6명
                     </div>
                 </div>
-                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; margin-top: -10px;">
-                    <i class="fas fa-info-circle"></i> 차트의 막대를 클릭하시면 해당 그룹 내에 포함된 세부 문항 리스트 및 오답 학생 명단을 확인할 수 있습니다.
-                </div>
-                <div style="width: 100%; overflow-x: auto; padding-bottom: 10px;">
-                    <div style="min-width: 700px; height: 350px;" id="chart-width-container">
-                        <canvas id="typeErrorChart"></canvas>
+
+                <!-- 1. Domain Filter -->
+                <div style="background: white; border-radius: 12px; border: 1px solid #e0e4e8; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); display:flex; align-items:center; justify-content:space-between;">
+                    <div style="display:flex; align-items:center; gap: 15px;">
+                        <h3 style="font-size:16px; font-weight:800; color:#111; margin:0;"><i class="fas fa-filter text-blue"></i> 영역 </h3>
+                        <div class="target-switch" style="display:inline-flex; background:#f0f2f5; border-radius:30px; padding:4px;" id="gvr-domain-filters">
+                            <a href="#" style="padding:6px 18px; border-radius:20px; color:white; background:#283593; text-decoration:none; font-weight:800; font-size:13px; box-shadow:0 2px 5px rgba(0,0,0,0.1);" onclick="filterGvrChart('ALL', this); return false;">전체</a>
+                            <a href="#" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;" onclick="filterGvrChart('RC', this); return false;">독해</a>
+                            <a href="#" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;" onclick="filterGvrChart('GR', this); return false;">문법</a>
+                            <a href="#" style="padding:6px 18px; border-radius:20px; color:#555; background:transparent; text-decoration:none; font-weight:800; font-size:13px;" onclick="filterGvrChart('VO', this); return false;">어휘</a>
+                        </div>
+                    </div>
+                    <div style="font-size:13px; font-weight:bold; color:#777; background:#f9f9f9; padding:8px 15px; border-radius:20px; border:1px solid #eee;">
+                        <i class="fas fa-calendar-check"></i> 데이터 기준: 2024년 10월 3주차
                     </div>
                 </div>
-            </div>
 
-            <!-- Chart 2: Top 5 Worst Types -->
-            <div class="glass-card card-pink">
-                <div class="panel-header">
-                    <div class="panel-title"><i class="fas fa-radiation" style="color: var(--accent-pink);"></i> 반별 취약 유형 TOP 5</div>
-                </div>
-                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; margin-top: -10px;">
-                    반 전체 학생이 가장 많이 틀린 집중 오답 유형
-                </div>
-                <div style="height: 350px;">
-                    <canvas id="top5Chart"></canvas>
-                </div>
-            </div>
-
-            <!-- Chart 3: Area Trends over Sub-tests -->
-            <div class="glass-card card-teal span-3">
-                <div class="panel-header">
-                    <div class="panel-title"><i class="fas fa-project-diagram" style="color: var(--accent-teal);"></i> 세션 내 하위 시험별 성적 추이 (AT 1 ~ AT 4)</div>
-                </div>
-                <div style="height: 280px; width: 100%;">
-                    <canvas id="subtestTrendChart"></canvas>
-                </div>
-            </div>
-
-        </div>
-    </div>
-<div class="modal-overlay" id="typeDetailModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h2 id="modalTypeName"><i class="fas fa-layer-group" style="color:var(--accent-glow);"></i> 문항 유형 상세 분석</h2>
-                    <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
-                        GVR 68 바인더 내에 포함된 모든 테스트의 <strong><span id="modalTypeSpan" style="color:#fff;"></span></strong> 문항을 모아봅니다. (오답률 30% 이상은 <span style="color:var(--accent-pink); font-weight:bold;">Pink</span> 하이라이트)
+                <!-- 2. Error Rate Vertical Bar Chart (Scrollable) -->
+                <div style="background: white; border-radius: 12px; border: 1px solid #e0e4e8; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                    <div class="flex-between mb-15">
+                        <h3 style="font-size:18px; font-weight:800; color:#1a237e; margin:0;"><i class="fas fa-chart-bar"></i> 문항별 학급 오답률</h3>
+                        <button class="btn-sm btn-outline-gray" style="font-weight:bold;"><i class="fas fa-download"></i> 차트 다운로드</button>
+                    </div>
+                    <p style="font-size:13px; color:#666; margin-bottom:20px;">각 문항의 전체 학생 대비 오답률을 나타냅니다. 오답률이 60%를 초과하는 문항은 <span style="color:#e91e63; font-weight:bold;">빨간색</span> 으로 표시됩니다.</p>
+                    
+                    <div style="width:100%; overflow-x:auto; padding-bottom:15px; border-bottom:1px solid #eee;" class="custom-scrollbar">
+                        <div id="dynamic-error-chart" style="display:flex; align-items:flex-end; gap:20px; height:200px; padding-top:20px; min-width: 1200px;">
+                            <!-- Bars injected by script below -->
+                        </div>
                     </div>
                 </div>
-                <button class="btn-close" onclick="window.closeModal('typeDetailModal')"><i class="fas fa-times"></i></button>
+
+                <!-- 3. Student Answer Distribution Table -->
+                <div style="background: white; border-radius: 12px; border: 1px solid #e0e4e8; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                    <div class="flex-between mb-15">
+                        <h3 style="font-size:18px; font-weight:800; color:#1a237e; margin:0;"><i class="fas fa-sitemap"></i> 문항별 학생 답안 분포</h3>
+                        <div style="font-size:12px; color:#666; background:#fff3e0; padding:6px 12px; border-radius:6px; font-weight:bold; border:1px solid #ffe0b2;">
+                            <span style="display:inline-block; width:10px; height:10px; background:#e8f5e9; border:1px solid #4caf50; border-radius:50%; margin-right:5px; vertical-align:middle;"></span>정답 (초록 배경)
+                        </div>
+                    </div>
+                    
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%; text-align:center; border-collapse:collapse; font-size:14px;">
+                            <thead>
+                                <tr style="background:#f5f6f8; border-top:2px solid #ccc; border-bottom:1px solid #ccc;">
+                                    <th style="padding:15px 10px; color:#333;">문항</th>
+                                    <th style="padding:15px 10px; color:#333;">영역</th>
+                                    <th style="padding:15px 10px; color:#333;">난이도</th>
+                                    <th style="padding:15px 10px; color:#42a5f5; width:15%;">Option A</th>
+                                    <th style="padding:15px 10px; color:#42a5f5; width:15%;">Option B</th>
+                                    <th style="padding:15px 10px; color:#42a5f5; width:15%;">Option C</th>
+                                    <th style="padding:15px 10px; color:#42a5f5; width:15%;">Option D</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dynamic-distribution-table">
+                                <!-- Table rows injected by script below -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div style="height: 30px;"></div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const chartContainer = document.getElementById("dynamic-error-chart");
+                        const tableContainer = document.getElementById("dynamic-distribution-table");
+                        if(!chartContainer || !tableContainer) return;
+                        
+                        window.gvrDummyData = [];
+                        const domains = ["RC", "GR", "RC", "VO"];
+                        const diffs = ["하", "중", "상", "최상"];
+
+                        for(let i=1; i<=40; i++) {
+                            const rate = Math.floor(Math.random() * 85) + 5;
+                            const domain = domains[i % 4];
+                            const diff = diffs[i % 4];
+                            
+                            const a = Math.floor(Math.random() * 20);
+                            const c = Math.floor(Math.random() * 30);
+                            const d = Math.floor(Math.random() * 20);
+                            const b = 100 - a - c - d;
+                            
+                            window.gvrDummyData.push({
+                                id: i, rate, domain, diff, a, b, c, d
+                            });
+                        }
+                        
+                        window.renderGvrCharts = function(filterDomain) {
+                            let filtered = window.gvrDummyData;
+                            if(filterDomain !== 'ALL') {
+                                filtered = filtered.filter(d => d.domain === filterDomain);
+                            }
+                            
+                            let chartHtml = "";
+                            let tableHtml = "";
+                            filtered.forEach((q, idx) => {
+                                const isDanger = q.rate >= 60;
+                                const color = isDanger ? "linear-gradient(to top, #f48fb1, #e91e63)" : "linear-gradient(to top, #90caf9, #2196f3)";
+                                chartHtml += `
+                                    <div style="display:flex; flex-direction:column; align-items:center; flex:1; min-width:30px;">
+                                        <div style="font-size:11px; font-weight:900; color:${isDanger ? '#e91e63' : '#333'}; margin-bottom:5px;">${q.rate}%</div>
+                                        <div style="width:100%; max-width:18px; height:150px; background:#f4f6f9; border-radius:10px; position:relative; overflow:hidden;">
+                                            <div style="position:absolute; bottom:0; left:0; width:100%; height:${q.rate}%; background:${color}; border-radius:10px; transition: height 0.5s ease-out; min-height:5%;"></div>
+                                        </div>
+                                        <div style="font-size:12px; font-weight:bold; color:#555; margin-top:10px;">Q${q.id}</div>
+                                    </div>
+                                `;
+                                
+                                if(idx < 5) {
+                                    const diffColor = (q.diff === '중') ? '#3f51b5' : (q.diff === '상') ? '#e91e63' : (q.diff === '최상') ? '#ef6c00' : '#4caf50';
+                                    const diffBg = (q.diff === '중') ? '#e8eaf6' : (q.diff === '상') ? '#fce4ec' : (q.diff === '최상') ? '#fff3e0' : '#e8f5e9';
+                                    tableHtml += `
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td style="padding:12px 10px; font-weight:bold;">Q${q.id}</td><td style="color:#777;">${q.domain}</td><td><span style="background:${diffBg}; color:${diffColor}; padding:3px 8px; border-radius:4px; font-size:12px;">${q.diff}</span></td>
+                                        <td>${q.a}%</td>
+                                        <td style="background:#e8f5e9; font-weight:bold; color:#2e7d32; border:1px solid #81c784;"><strong>${q.b}% (정답)</strong></td>
+                                        <td ${q.c > 25 ? 'style="background:#ffebee; color:#d32f2f; font-weight:bold;"' : ''}>${q.c}%${q.c > 25 ? ' (오답多)' : ''}</td>
+                                        <td>${q.d}%</td>
+                                    </tr>
+                                    `;
+                                }
+                            });
+                            
+                            tableHtml += `<tr><td colspan="7" style="padding:15px; color:#888; font-size:13px; text-align:center;">... 이하 동일 (전체 데이터)</td></tr>`;
+                            chartContainer.innerHTML = chartHtml;
+                            tableContainer.innerHTML = tableHtml;
+                        };
+                        
+                        window.filterGvrChart = function(domain, btn) {
+                            if(btn) {
+                                const btns = document.getElementById('gvr-domain-filters').querySelectorAll('a');
+                                btns.forEach(b => {
+                                    b.style.background = 'transparent';
+                                    b.style.color = '#555';
+                                    b.style.boxShadow = 'none';
+                                });
+                                btn.style.background = '#283593';
+                                btn.style.color = 'white';
+                                btn.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+                            }
+                            window.renderGvrCharts(domain);
+                        };
+                        
+                        window.renderGvrCharts('ALL');
+                    });
+                </script>
             </div>
-            <div class="modal-body">
-                <table class="cyber-table">
-                    <thead>
-                        <tr>
-                            <th style="width:12%;">출처/시험</th>
-                            <th style="width:12%;">문항 번호</th>
-                            <th style="width:15%;">문항 오답률</th>
-                            <th style="width:12%;">오답자 수</th>
-                            <th style="width:49%;">오답 학생 리스트</th>
-                        </tr>
-                    </thead>
-                    <tbody id="modalQuestionList">
-                        <!-- Populated via JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div></div></div>
 
             <!-- ============================
                  PANEL: 학생 관리
@@ -1778,11 +1548,8 @@ if (mockChart4b) {
 
     </script>
 
-
-
 <!-- INJECTED PREMIUM SCRIPTS -->
 <script>
-
         // Chart defaults for dark theme
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.font.family = "'Pretendard', sans-serif";
@@ -2008,10 +1775,8 @@ if (mockChart4b) {
                 }
             });
         });
-    
-</script>
+    </script>
 <script>
-
         // Modal Logic
         window.closeModal = function(id) {
             document.getElementById(id).classList.remove('active');
@@ -2318,6 +2083,6 @@ if (mockChart4b) {
                 }
             });
         });
-    
-</script>
-</body></html>
+    </script>
+</body>
+</html>
