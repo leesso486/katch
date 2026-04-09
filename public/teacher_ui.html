@@ -1,377 +1,533 @@
-        <style>
-            /* 3-Panel Layout Styles */
-            .tw-layout {
-                display: grid;
-                grid-template-columns: 280px 1fr 340px;
-                gap: 20px;
-                height: calc(100vh - 120px);
-                max-width: 1600px;
-                margin: 0 auto;
-            }
-            .tw-left, .tw-center, .tw-right {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                overflow-y: auto;
-                padding-right: 5px;
-            }
-            /* Customize Scrollbar */
-            .tw-left::-webkit-scrollbar, .tw-center::-webkit-scrollbar, .tw-right::-webkit-scrollbar { width: 6px; }
-            .tw-left::-webkit-scrollbar-thumb, .tw-center::-webkit-scrollbar-thumb, .tw-right::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-            
-            .tw-card { background: white; border-radius: 16px; padding: 22px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); flex-shrink: 0; }
-            .tw-card.h-100 { flex-grow: 1; display: flex; flex-direction: column; }
-            .tw-card-title { font-size: 16px; font-weight: 900; color: #1e293b; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-            
-            .tw-select { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; color: #334155; font-weight: 600; outline: none; }
-            .tw-btn { padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: none; }
-            .tw-btn.solid-blue { background: #2563eb; color: white; }
-            .tw-btn.solid-blue:hover { background: #1d4ed8; }
-            .tw-btn.solid-pink { background: #e91e63; color: white; box-shadow: 0 4px 10px rgba(233,30,99,0.2); }
-            .tw-btn.solid-pink:hover { background: #d81b60; transform: translateY(-2px); }
-            .tw-btn.outline { background: white; color: #64748b; border: 1px solid #e2e8f0; }
-            .tw-btn.outline:hover { border-color: #94a3b8; color: #1e293b; }
-            
-            .tw-btn-icon { width: 36px; height: 36px; border-radius: 8px; background: #f1f5f9; color: #64748b; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
-            .tw-btn-icon:hover { background: #e2e8f0; color: #1e293b; }
-
-            .stu-list-item { padding: 12px; border-radius: 10px; border: 1px solid transparent; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-            .stu-list-item:hover { background: #f8fafc; border-color: #e2e8f0; }
-            .stu-list-item.active { background: #eff6ff; border-color: #bfdbfe; }
-            .stu-name { font-size: 14px; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 6px; }
-            .stu-meta { font-size: 11px; color: #64748b; margin-top: 4px; }
-            
-            .tw-table { width: 100%; border-collapse: collapse; }
-            .tw-table th { font-size: 12px; color: #64748b; text-align: left; padding: 10px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 700; background: #f8fafc; }
-            .tw-table td { font-size: 13px; color: #334155; padding: 12px; border-bottom: 1px solid #f1f5f9; }
-            
-            .tw-textarea { width: 100%; min-height: 80px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical; outline: none; }
-            .tw-textarea:focus { border-color: #3b82f6; }
-            
-            .tw-timeline { border-left: 2px solid #e2e8f0; margin-left: 10px; padding-left: 15px; margin-top: 15px; }
-            .tw-tl-item { position: relative; margin-bottom: 20px; }
-            .tw-tl-dot { width: 10px; height: 10px; border-radius: 50%; position: absolute; left: -21px; top: 4px; border: 2px solid white; box-shadow: 0 0 0 1px #e2e8f0; }
-            .bg-blue { background: #3b82f6; } .bg-green { background: #10b981; } .bg-pink { background: #ec4899; }
-            .tw-tl-time { font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px; }
-            .tw-tl-content { font-size: 13px; color: #334155; line-height: 1.5; font-weight: 600;}
-            
-            /* Modal Fix */
-            .modal-overlay.active { display: flex !important; justify-content: center; align-items: center; }
-        </style>
-
-        <div id="teacherView" class="tw-layout" style="display:grid;">
-            <!-- LEFT PANEL -->
-            <div class="tw-left">
-                <div class="tw-card" style="padding: 18px;">
-                    <div style="font-weight:900; font-size:18px;">이은혜 강사님 <i class="fas fa-check-circle text-green-500" style="font-size:14px;"></i></div>
-                    <div style="font-size:12px; color:#64748b; margin-top:3px;">고등부 전임 | VIP 멤버</div>
-                    <div style="margin-top:15px; display:flex; gap:10px;">
-                        <div style="flex:1; background:#fef2f2; padding:10px; border-radius:8px; text-align:center;">
-                            <div style="font-size:11px; color:#ef4444; font-weight:700;">위험 학생</div><div style="font-size:18px; font-weight:900; color:#b91c1c;">1명</div>
-                        </div>
-                        <div style="flex:1; background:#eff6ff; padding:10px; border-radius:8px; text-align:center;">
-                            <div style="font-size:11px; color:#3b82f6; font-weight:700;">질문 목록</div><div style="font-size:18px; font-weight:900; color:#1d4ed8;">5건</div>
-                        </div>
-                    </div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KATCH Teacher Workspace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; background-color: #f4f6f9; font-family: 'Pretendard', sans-serif; color: #1e293b; overflow-x: hidden; }
+        
+        .dash-container { max-width: 1600px; margin: 30px auto; padding: 0 30px; }
+        
+        /* Common Components */
+        .tw-card { background: white; border-radius: 16px; padding: 22px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px;}
+        .tw-card-title { font-size: 16px; font-weight: 900; color: #1e293b; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .tw-btn { padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .tw-btn.solid-blue { background: #2563eb; color: white; }
+        .tw-btn.solid-blue:hover { background: #1d4ed8; }
+        .tw-btn.solid-pink { background: #e91e63; color: white; box-shadow: 0 4px 10px rgba(233,30,99,0.2); }
+        .tw-btn.solid-pink:hover { background: #d81b60; transform: translateY(-2px); }
+        .tw-btn.outline { background: white; color: #1e293b; border: 1px solid #e2e8f0; }
+        .tw-btn.outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .tw-select, .tw-input, .tw-textarea { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: inherit; color: #334155; font-weight: 600; outline: none; transition: 0.2s; box-sizing: border-box; }
+        .tw-select:focus, .tw-input:focus, .tw-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .tw-textarea { min-height: 80px; resize: vertical; margin-bottom: 15px; }
+        
+        .tw-btn-icon { width: 36px; height: 36px; border-radius: 8px; background: #f1f5f9; color: #64748b; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .tw-btn-icon:hover { background: #e2e8f0; color: #1e293b; }
+        
+        /* Red Flag */
+        .red-flag-container { display: flex; gap: 15px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 10px; }
+        .red-flag-card { min-width: 240px; background: #fff1f2; border: 1px solid #fda4af; border-left: 4px solid #e11d48; border-radius: 10px; padding: 15px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .red-flag-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 800; color: #be123c; }
+        .red-flag-value { font-size: 22px; font-weight: 900; color: #9f1239; display: flex; align-items: baseline; gap: 5px; }
+        .chkbx { accent-color: #be123c; width:14px; height:14px; vertical-align:middle; cursor:pointer; }
+        
+        /* Data Table */
+        .table-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .table-actions { display: flex; gap: 10px; }
+        .table-container { width: 100%; overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 10px; background: white; max-height: 500px; }
+        .rt-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 800px; }
+        .rt-table th { position: sticky; top: 0; background: #f8fafc; padding: 14px 16px; font-size: 13px; font-weight: 800; color: #475569; border-bottom: 2px solid #cbd5e1; z-index: 1; cursor: pointer; }
+        .rt-table td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #334155; font-weight: 600; vertical-align: middle; cursor: pointer; transition: 0.1s; }
+        .rt-table tr:hover td { background-color: #f8fafc; }
+        .rt-table tr.selected td { background-color: #eff6ff; }
+        
+        /* Badges & Timeline */
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 800; display: inline-block; }
+        .status-danger { background: #fff1f2; color: #e11d48; }
+        .status-warning { background: #fffbeb; color: #d97706; }
+        .status-stable { background: #f0fdf4; color: #16a34a; }
+        .sparkline-wrapper { width: 80px; height: 24px; display: inline-block; vertical-align: middle; margin-left: 10px; }
+        
+        .tag-badge { background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #e2e8f0; }
+        .tag-badge.weak { background: #fff1f2; color: #e11d48; border-color: #fda4af; }
+        
+        .tw-timeline { border-left: 2px solid #e2e8f0; margin-left: 10px; padding-left: 15px; margin-top: 15px; }
+        .tw-tl-item { position: relative; margin-bottom: 20px; }
+        .tw-tl-dot { width: 10px; height: 10px; border-radius: 50%; position: absolute; left: -21px; top: 4px; border: 2px solid white; box-shadow: 0 0 0 1px #e2e8f0; }
+        .bg-blue { background: #3b82f6; } .bg-green { background: #10b981; } .bg-pink { background: #ec4899; }
+        .tw-tl-time { font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px; }
+        .tw-tl-content { font-size: 13px; color: #334155; line-height: 1.5; font-weight: 600;}
+        
+        /* Modal Overlay */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: 16px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; padding: 30px; position: relative; text-align: center; transition: 0.3s; }
+        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 20px; color: #94a3b8; cursor: pointer; border: none; background: none; transition: 0.2s; }
+        .modal-close:hover { color: #1e293b; }
+        
+        /* Analytics Prog Bars & Heatmap */
+        .prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; cursor: pointer; transition: 0.2s; padding: 4px; border: 2px solid transparent; }
+        .prog-row:hover { background: #f8fafc; border-radius: 6px; }
+        .prog-row.active-row { border-color: #3b82f6; border-radius: 6px; background: #eff6ff; }
+        .prog-label { font-weight: 800; color: #475569; width: 25px; }
+        .prog-bg { flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 8px; overflow: hidden; }
+        .prog-fill { height: 100%; border-radius: 8px; transition: 0.5s; }
+        .prog-val { font-weight: 800; color: #1e293b; width: 35px; text-align: right; }
+        .err-tbl { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
+        .err-tbl th { padding: 10px; background: #f8fafc; border-top: 2px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; font-weight: 800; color: #475569; }
+        .err-tbl td { padding: 8px; border-bottom: 1px solid #f1f5f9; }
+        
+        .hm-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 15px; }
+        .hm-cell { height: 35px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: white; cursor: pointer; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .hm-cell:hover { transform: scale(1.15); z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .hm-low { background: #fee2e2; color: #ef4444; }
+        .hm-mid { background: #fca5a5; }
+        .hm-high { background: #ef4444; }
+        .hm-crit { background: #9f1239; border: 2px solid #ffe4e6; }
+    </style>
+</head>
+<body>
+    <div id="teacherView" class="dash-container">
+        
+        <!-- RED FLAG WIDGETS -->
+        <div class="red-flag-container">
+            <div class="red-flag-card">
+                <div class="red-flag-header">GVR 과제 마감 3시간 전 미제출 <i class="fas fa-exclamation-triangle"></i></div>
+                <div style="font-size:13px; color:#9f1239; font-weight:700; margin-top:5px;">
+                    <label style="margin-right:8px;"><input type="checkbox" class="chkbx" checked> 김지훈</label> 
+                    <label style="margin-right:8px;"><input type="checkbox" class="chkbx" checked> 박민수</label> 
+                    <label><input type="checkbox" class="chkbx"> 이서연</label> 외 4명
                 </div>
-
-                <div class="tw-card h-100">
-                    <div class="tw-card-title" style="margin-bottom:12px;"><i class="fas fa-users text-indigo-500"></i> 수강생 관리 리스트</div>
-                    <select class="tw-select" style="margin-bottom: 12px;">
-                        <option>외고 최상위반 (12명)</option>
-                        <option>일반고 내신대비반 (10명)</option>
-                    </select>
-                    <input type="text" placeholder="이름 검색..." class="tw-select" style="margin-bottom:15px; padding:8px 14px;">
-                    
-                    <div style="flex-grow:1; overflow-y:auto; margin-right:-5px;">
-                        <div class="stu-list-item active" onclick="selectStudent('최유나', 'danger', event)">
-                            <div>
-                                <div class="stu-name">최유나 <i class="fas fa-exclamation-triangle text-red-500"></i></div>
-                                <div class="stu-meta">평균 68점 (▼13) | 오답 15개</div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300"></i>
-                        </div>
-                        <div class="stu-list-item" onclick="selectStudent('박지민', 'good', event)">
-                            <div>
-                                <div class="stu-name">박지민</div>
-                                <div class="stu-meta">평균 96점 (▲14) | 오답 2개</div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300"></i>
-                        </div>
-                        <div class="stu-list-item" onclick="selectStudent('조동기', 'warning', event)">
-                            <div>
-                                <div class="stu-name">조동기 <i class="fas fa-exclamation-circle text-yellow-500"></i></div>
-                                <div class="stu-meta">평균 76점 (▼5) | 오답 11개</div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300"></i>
-                        </div>
-                        <div class="stu-list-item" onclick="selectStudent('이수진', 'good', event)">
-                            <div>
-                                <div class="stu-name">이수진</div>
-                                <div class="stu-meta">평균 84점 (▲2) | 오답 7개</div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300"></i>
-                        </div>
-                    </div>
-                </div>
+                <button class="tw-btn outline" style="font-size:12px; padding:6px; color:#be123c; border-color:#fda4af; margin-top:8px; font-weight:800;" onclick="alert('카카오톡으로 독려 알림톡이 일괄 발송되었습니다.')"><i class="fas fa-paper-plane"></i> 원클릭 알림톡 일괄 독려</button>
             </div>
+            <div class="red-flag-card" style="background:#fffbeb; border-color:#fcd34d; border-left-color:#f59e0b;">
+                <div class="red-flag-header" style="color:#b45309;">연속 성적 하락 (개인 상담 요망) <i class="fas fa-chart-line"></i></div>
+                <div class="red-flag-value" style="color:#92400e; margin-top:5px;">4명 <span style="font-size:12px; color:#d97706; font-weight:600;">-2명 (최근 개선됨)</span></div>
+                <button class="tw-btn outline" style="font-size:12px; padding:6px; color:#b45309; border-color:#fcd34d; margin-top:8px; font-weight:800;" onclick="selectStudent('최유나', 'danger', document.querySelector('.student-danger-row'))"><i class="fas fa-user-clock"></i> 상세 내역 확인</button>
+            </div>
+            <div class="tw-card" style="flex: 1; padding:15px; margin-bottom:0; background:#eff6ff; border-color:#bfdbfe;">
+                <div style="font-size:13px; font-weight:800; color:#1d4ed8; margin-bottom:10px;">이은혜 강사님, 오늘의 할 일</div>
+                <div style="font-size:14px; font-weight:700; color:#1e293b;"><i class="fas fa-check-circle text-blue-500"></i> 서술형 오답 주관식 채점 (12명 대기)</div>
+            </div>
+        </div>
 
-            <!-- CENTER PANEL (Custom Analytics) -->
-            <div class="tw-center">
-                <div style="background:white; border-radius:16px; padding:25px; border:1px solid #e2e8f0; box-shadow:0 4px 20px rgba(0,0,0,0.03);">
-                    <div style="display:flex; justify-content:space-between; align-items:start;">
-                        <div>
-                            <div style="font-size:12px; font-weight:800; color:#3b82f6; background:#eff6ff; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:8px;">Custom Analytics Module</div>
-                            <h2 style="margin:0; font-size:24px; font-weight:900; color:#1e293b;">학원별 맞춤 평가 (데이터 뷰)</h2>
-                            <p style="margin:6px 0 0; font-size:14px; color:#64748b; font-weight:600;">현재 데이터 세트: <span style="color:#1e293b;">[KNS어학원] GVR 68회차 통합 평가</span></p>
-                        </div>
-                        <div>
-                            <select class="tw-select" style="width:auto; padding-right:30px; font-weight:800; border-color:#cbd5e1;">
-                                <option>GVR 68회차 (현재)</option>
-                                <option>GVR 67회차 (지난주)</option>
-                                <option>월간 진단평가</option>
-                            </select>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start;">
+            
+            <!-- LEFT: TABLE & CHART -->
+            <div style="flex: 1 1 61%; min-width: 600px; display: flex; flex-direction: column; gap: 20px;">
+                
+                <!-- DATA TABLE -->
+                <div class="tw-card" style="padding:20px; margin-bottom: 0;">
+                    <div class="table-toolbar" style="margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
+                        <div style="font-size:20px; font-weight:900; color:#1e293b; display:flex; align-items:center; gap:8px;"><i class="fas fa-users text-blue-500"></i> 전체 수강생 통합 관제</div>
+                        <div class="table-actions" style="align-items:center;">
+                             <!-- 취약 유형 TOP 3 -->
+                             <div style="display:flex; gap:8px; align-items:center; margin-right: 15px; border-right: 1px solid #e2e8f0; padding-right: 15px;">
+                                 <span style="font-size:12px; font-weight:800; color:#64748b; margin-right:4px;">우리 반 취약 TOP3</span>
+                                 <span class="tag-badge weak"><i class="fas fa-fire"></i> 어법-도치</span>
+                                 <span class="tag-badge weak"><i class="fas fa-fire"></i> 어휘-다의어</span>
+                                 <span class="tag-badge weak"><i class="fas fa-fire"></i> 빈칸추론</span>
+                             </div>
+                            <button class="tw-btn outline"><i class="fas fa-file-excel text-green-600"></i> Excel</button>
+                            <button class="tw-btn outline" onclick="alert('전체 수강생의 성적 및 코멘트가 한 페이지씩 병합된 학부모 상담용 PDF가 생성됩니다.')"><i class="fas fa-file-pdf text-red-500"></i> 상담용 일괄 PDF</button>
                         </div>
                     </div>
-                </div>
-
-                <div class="tw-card" style="padding-top:15px;">
-                    <div class="tw-card-title"><i class="fas fa-chart-bar text-pink-500"></i> 문항 유형별 오답률 분석 (다이내믹 인터랙티브 차트)</div>
-                    <div style="font-size:13px; color:#64748b; margin-top:-10px; margin-bottom:10px;">※ 하단 그래프 막대를 클릭하면 해당 속성을 틀린 학생 리스트를 확인할 수 있습니다.</div>
-                    <div style="height:250px;">
-                        <canvas id="typeErrorChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="tw-card" id="drilldown-section" style="display:flex; flex-direction:column; min-height: 250px;">
-                    <div class="tw-card-title" style="margin-bottom:10px;"><i class="fas fa-search-plus text-indigo-500"></i> 상세 문항 분석: <span id="selected-type-name" style="color:#e91e63;">어법 (도치)</span></div>
-                    <div style="flex-grow:1; overflow-x:auto;">
-                        <table class="tw-table">
-                            <thead><tr><th>테스트</th><th>문항</th><th>오답률</th><th>주요 오답 (선택비율)</th><th>오답 학생 <i class="fas fa-angle-down"></i></th></tr></thead>
-                            <tbody id="drilldown-tbody">
-                                <tr><td>AT 1</td><td><strong>Q14</strong></td><td><span style="color:#ef4444; font-weight:900;">85%</span></td><td>④번 (65%) 🔥</td><td><button class="tw-btn outline" style="padding:4px 10px; font-size:12px;" onclick="document.getElementById('wrongStudents').style.display='block'">14명 리스트</button></td></tr>
-                                <tr><td>AT 2</td><td><strong>Q08</strong></td><td><span>45%</span></td><td>③번 (25%)</td><td><button class="tw-btn outline" style="padding:4px 10px; font-size:12px;">7명 리스트</button></td></tr>
-                                <tr><td>AT 3</td><td><strong>Q22</strong></td><td><span>30%</span></td><td>①번 (15%)</td><td><button class="tw-btn outline" style="padding:4px 10px; font-size:12px;">5명 리스트</button></td></tr>
+                    
+                    <div class="table-container">
+                        <table class="rt-table" id="studentTable">
+                            <thead>
+                                <tr>
+                                    <th>이름 <i class="fas fa-sort"></i></th>
+                                    <th>상태 <i class="fas fa-filter"></i></th>
+                                    <th>최근 성취도 <i class="fas fa-sort"></i></th>
+                                    <th>성적 추이 <i class="fas fa-info-circle"></i></th>
+                                    <th>미제출 누적 <i class="fas fa-sort"></i></th>
+                                    <th>1:1 밀착 관리</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="selectStudent('최유나', 'danger', this)" class="student-danger-row">
+                                    <td><div style="display:flex; alignItems:center; gap:8px; font-weight:800;"><div style="width:28px; height:28px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#475569;">최</div>최유나</div></td>
+                                    <td><span class="status-badge status-danger">위험</span></td>
+                                    <td style="font-weight:900; color:#ef4444; font-size:16px;">65점</td>
+                                    <td><svg width="80" height="24" viewBox="0 0 80 24" class="sparkline-wrapper"><path d="M 0 6 L 26.6 12 L 53.3 24 L 80 18" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="80" cy="18" r="3" fill="#ef4444" /></svg></td>
+                                    <td><span style="color:#ef4444; font-weight:800;">3건 연속</span></td>
+                                    <td><button class="tw-btn outline" style="padding:6px 12px; font-size:12px;"><i class="fas fa-user-edit"></i> 상세 보기</button></td>
+                                </tr>
+                                <tr onclick="selectStudent('박민준', 'warning', this)">
+                                    <td><div style="display:flex; alignItems:center; gap:8px; font-weight:800;"><div style="width:28px; height:28px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#475569;">박</div>박민준</div></td>
+                                    <td><span class="status-badge status-warning">주의</span></td>
+                                    <td style="font-weight:900; color:#1e293b; font-size:16px;">78점</td>
+                                    <td><svg width="80" height="24" viewBox="0 0 80 24" class="sparkline-wrapper"><path d="M 0 24 L 26.6 12 L 53.3 0 L 80 4" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="80" cy="4" r="3" fill="#f59e0b" /></svg></td>
+                                    <td><span style="color:#ef4444; font-weight:800;">1건</span></td>
+                                    <td><button class="tw-btn outline" style="padding:6px 12px; font-size:12px;"><i class="fas fa-user-edit"></i> 상세 보기</button></td>
+                                </tr>
+                                <tr onclick="selectStudent('이서아', 'stable', this)">
+                                    <td><div style="display:flex; alignItems:center; gap:8px; font-weight:800;"><div style="width:28px; height:28px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#475569;">이</div>이서아</div></td>
+                                    <td><span class="status-badge status-stable">우수</span></td>
+                                    <td style="font-weight:900; color:#10b981; font-size:16px;">95점</td>
+                                    <td><svg width="80" height="24" viewBox="0 0 80 24" class="sparkline-wrapper"><path d="M 0 24 L 26.6 14.4 L 53.3 4.8 L 80 0" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="80" cy="0" r="3" fill="#10b981" /></svg></td>
+                                    <td><span style="color:#94a3b8;">0건</span></td>
+                                    <td><button class="tw-btn outline" style="padding:6px 12px; font-size:12px;"><i class="fas fa-user-edit"></i> 상세 보기</button></td>
+                                </tr>
                             </tbody>
                         </table>
-                        <div id="wrongStudents" style="display:none; background:#f8fafc; padding:15px; border-radius:8px; margin-top:15px; border-left:4px solid #f43f5e; font-size:13px; color:#334155; font-weight:600;">
-                            <div style="margin-bottom:8px;"><strong style="color:#e91e63;">[Q14 오답자 (14명)]</strong></div>
-                            최유나, 조동기, 오서율, 김민지, 박수현, 이민호, 강지현, 윤도현, 장원영, 한소희, 유재석, 박명수, 하동훈, 노홍철
-                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- RIGHT PANEL -->
-            <div class="tw-right">
-                <div class="tw-card h-100" style="background:#f8fafc; border:none; box-shadow:none; padding:0;">
+                <!-- ADVANCED ANALYTICS MODULE -->
+                <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
                     
-                    <div id="crm-profile" style="background:white; border-radius:16px; padding:22px; border:1px solid #e2e8f0; box-shadow:0 4px 15px rgba(0,0,0,0.03); height:100%; display:flex; flex-direction:column;">
-                        <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <!-- LIVE Q&A 및 HEATMAP -->
+                    <div style="display:flex; gap:20px; width:100%; flex-wrap:wrap;">
+                        <!-- 스마트 히트맵 -->
+                        <div class="tw-card" style="flex: 1 1 55%; padding:20px; margin:0; position:relative; overflow:hidden;">
+                            <div style="position:absolute; top:0; right:0; background:#fef2f2; color:#ef4444; font-size:11px; padding:4px 10px; border-bottom-left-radius:8px; font-weight:800;"><i class="fas fa-bolt"></i> 채점 즉시 실시간 갱신됨</div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                                <h3 style="font-size:17px; font-weight:900; margin:0;"><i class="fas fa-th text-pink-500"></i> GVR 문항별 오답률 히트맵</h3>
+                                <div style="font-size:11px; display:flex; gap:10px; color:#475569; font-weight:700;">
+                                    <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; background:#9f1239; border-radius:2px;"></span>80%+</span>
+                                    <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; background:#ef4444; border-radius:2px;"></span>60%+</span>
+                                    <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; background:#fca5a5; border-radius:2px;"></span>40%+</span>
+                                </div>
+                            </div>
+                            <div style="font-size:13px; color:#64748b; margin-bottom:5px; font-weight:600;">강사님이 오늘 바로 칠판에 적고 집중 해설해야 할 붉은색 문항을 확인하세요.</div>
+                            <div class="hm-grid">
+                                <div class="hm-cell hm-low">1</div><div class="hm-cell hm-low">2</div><div class="hm-cell hm-high" title="오답률 65%">3</div><div class="hm-cell hm-low">4</div><div class="hm-cell hm-mid" title="오답률 45%">5</div>
+                                <div class="hm-cell hm-low">6</div><div class="hm-cell hm-crit" title="오답률 85%">7</div><div class="hm-cell hm-low">8</div><div class="hm-cell hm-mid">9</div><div class="hm-cell hm-low">10</div>
+                                <div class="hm-cell hm-high" title="오답률 66%">11</div><div class="hm-cell hm-crit" title="오답률 90%">12</div><div class="hm-cell hm-low">13</div><div class="hm-cell hm-mid">14</div><div class="hm-cell hm-low">15</div>
+                                <div class="hm-cell hm-low">16</div><div class="hm-cell hm-low">17</div><div class="hm-cell hm-low">18</div><div class="hm-cell hm-high" title="오답률 60%">19</div><div class="hm-cell hm-low">20</div>
+                                <div class="hm-cell hm-low">21</div><div class="hm-cell hm-mid" title="오답률 42%">22</div><div class="hm-cell hm-low">23</div><div class="hm-cell hm-crit" title="오답률 88%">24</div><div class="hm-cell hm-low">25</div>
+                                <div class="hm-cell hm-low">26</div><div class="hm-cell hm-low">27</div><div class="hm-cell hm-low">28</div><div class="hm-cell hm-high" title="오답률 72%">29</div><div class="hm-cell hm-high" title="오답률 75%">30</div>
+                            </div>
+                        </div>
+                        <!-- 실시간 Q&A 취합 -->
+                        <div class="tw-card" style="flex: 1 1 35%; padding:20px; margin:0; background:#f8fafc; border:1px solid #cbd5e1; box-shadow:inset 0 0 10px rgba(0,0,0,0.02);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <h3 style="font-size:16px; font-weight:900; margin:0; color:#1e293b;"><i class="fas fa-hand-paper text-yellow-500"></i> 학생 질문(Q&A) 실시간 취합</h3>
+                                <span style="background:#3b82f6; color:white; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:800;">LIVE</span>
+                            </div>
+                            <div style="font-size:12px; color:#475569; margin-bottom:15px; font-weight:600;"><i class="fas fa-info-circle"></i> OMR 제출 시 학생들이 마킹한 해설 요청 문항</div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <div style="background:white; padding:10px 15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border:1px solid #e2e8f0; box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+                                    <div style="font-weight:900; color:#9f1239; font-size:15px;">12번 문항</div>
+                                    <div style="font-size:13px; font-weight:700; color:#475569;"><span style="color:#e11d48; font-weight:900;"><i class="fas fa-fire"></i> 18명</span> 요청</div>
+                                </div>
+                                <div style="background:white; padding:10px 15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border:1px solid #e2e8f0;">
+                                    <div style="font-weight:900; color:#ef4444; font-size:14px;">7번 문항</div>
+                                    <div style="font-size:13px; font-weight:700; color:#475569;"><span style="color:#ef4444; font-weight:900;">12명</span> 요청</div>
+                                </div>
+                                <div style="background:white; padding:10px 15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border:1px solid #e2e8f0;">
+                                    <div style="font-weight:900; color:#f59e0b; font-size:14px;">24번 문항</div>
+                                    <div style="font-size:13px; font-weight:700; color:#475569;"><span style="color:#f59e0b; font-weight:900;">8명</span> 요청</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1. 문항별 오답률 -->
+                    <div class="tw-card" style="padding:20px; margin-bottom:0;">
+                        <h3 style="font-size:16px; font-weight:900; margin:0 0 15px 0;"><i class="fas fa-search text-indigo-500"></i> 문항별 상세 분석 및 오답률 <span style="font-size:12px; font-weight:600; color:#94a3b8; font-weight:normal;">하단 막대그래프 클릭 시 테이블 연동</span></h3>
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                            <!-- GR -->
                             <div>
-                                <h2 style="margin:0; font-size:20px; font-weight:900;" id="prof-name">최유나 <i class="fas fa-exclamation-triangle text-red-500" style="font-size:14px;"></i></h2>
-                                <div style="font-size:12px; color:#64748b; margin-top:4px; font-weight:600;">외고 심화반 | 010-1234-5678 (모)</div>
+                                <div style="font-size:13px; font-weight:800; color:#1e293b; text-align:center; padding-bottom:10px; border-bottom:2px solid #e2e8f0; margin-bottom:15px;">GR (어법) 문항별 오답률</div>
+                                <div class="prog-row"><span class="prog-label">Q1</span><div class="prog-bg"><div class="prog-fill" style="width:30%; background:#86efac;"></div></div><span class="prog-val">30%</span></div>
+                                <div class="prog-row"><span class="prog-label">Q2</span><div class="prog-bg"><div class="prog-fill" style="width:15%; background:#86efac;"></div></div><span class="prog-val">15%</span></div>
+                                <div class="prog-row active-row"><span class="prog-label">Q3</span><div class="prog-bg"><div class="prog-fill" style="width:70%; background:#4ade80;"></div></div><span class="prog-val">70%</span></div>
                             </div>
-                            <div style="display:flex; gap:5px;">
-                                <button class="tw-btn-icon" title="메시지 전송"><i class="fas fa-comment-dots"></i></button>
-                                <button class="tw-btn-icon" title="전화걸기"><i class="fas fa-phone-alt"></i></button>
+                            <!-- VO -->
+                            <div>
+                                <div style="font-size:13px; font-weight:800; color:#1e293b; text-align:center; padding-bottom:10px; border-bottom:2px solid #e2e8f0; margin-bottom:15px;">VO (어휘) 문항별 오답률</div>
+                                <div class="prog-row"><span class="prog-label">Q4</span><div class="prog-bg"><div class="prog-fill" style="width:35%; background:#93c5fd;"></div></div><span class="prog-val">35%</span></div>
+                                <div class="prog-row"><span class="prog-label">Q5</span><div class="prog-bg"><div class="prog-fill" style="width:18%; background:#93c5fd;"></div></div><span class="prog-val">18%</span></div>
+                                <div class="prog-row"><span class="prog-label">Q6</span><div class="prog-bg"><div class="prog-fill" style="width:40%; background:#3b82f6;"></div></div><span class="prog-val">40%</span></div>
+                            </div>
+                            <!-- RC -->
+                            <div>
+                                <div style="font-size:13px; font-weight:800; color:#1e293b; text-align:center; padding-bottom:10px; border-bottom:2px solid #e2e8f0; margin-bottom:15px;">RC (독해) 문항별 오답률</div>
+                                <div class="prog-row"><span class="prog-label">Q7</span><div class="prog-bg"><div class="prog-fill" style="width:85%; background:#5eead4;"></div></div><span class="prog-val">85%</span></div>
+                                <div class="prog-row"><span class="prog-label">Q8</span><div class="prog-bg"><div class="prog-fill" style="width:12%; background:#5eead4;"></div></div><span class="prog-val">12%</span></div>
                             </div>
                         </div>
-                        
-                        <div id="prof-ai" style="background:#fef2f2; padding:12px; border-radius:8px; margin-top:15px; border-left:3px solid #ef4444;">
-                            <div style="font-size:12px; color:#ef4444; font-weight:800;"><i class="fas fa-robot"></i> AI 처방 어드바이저</div>
-                            <div style="font-size:13px; color:#7f1d1d; margin-top:4px; font-weight:600;">최근 2회차 연속 어법 오답률이 기준치를 초과했습니다. 맞춤 오답노트(쌍둥이 세트) 배포를 강력 권장합니다.</div>
+                    </div>
+
+                    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+                        <!-- 2. Q3 상세오답 -->
+                        <div class="tw-card" style="padding:20px; margin-bottom:0; flex:1 1 45%; min-width:350px;">
+                            <h3 style="font-size:15px; font-weight:900; margin:0 0 15px 0;">3번 문항 오답 분석 <span style="float:right; font-size:12px; color:#64748b; font-weight:600; cursor:pointer;"><i class="fas fa-external-link-alt"></i> 실제 문제 보기</span></h3>
+                            <table class="err-tbl">
+                                <thead>
+                                    <tr>
+                                        <th>선택지</th>
+                                        <th>학생 답안 선호도</th>
+                                        <th>선택 분포 현황</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="5" style="border-bottom:1px solid #e2e8f0; font-weight:900;">Q3<br><span style="font-size:11px; color:#ef4444; font-weight:normal;">오답률 70%</span></td>
+                                        <td style="text-align:left;">① 번</td>
+                                        <td>8% (2명)</td>
+                                    </tr>
+                                    <tr style="background:#fff1f2;">
+                                        <td style="text-align:left; color:#e11d48; font-weight:800;"><i class="fas fa-exclamation-circle"></i> ② 번 45% (Confused)</td>
+                                        <td style="color:#e11d48; font-weight:800;">45% (15명) <span style="background:#e11d48; color:white; padding:2px 6px; border-radius:4px; font-size:10px; cursor:pointer;"><i class="fas fa-search"></i> 오답자</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">③ 번</td>
+                                        <td>7% (3명)</td>
+                                    </tr>
+                                    <tr style="background:#f0fdf4;">
+                                        <td style="text-align:left; color:#16a34a; font-weight:800;"><i class="fas fa-check-circle"></i> ④ 번 30% (정답)</td>
+                                        <td style="color:#16a34a; font-weight:800;">30% (7명)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:1px solid #e2e8f0; text-align:left;">⑤ 번</td>
+                                        <td style="border-bottom:1px solid #e2e8f0;">10% (3명)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
-                        <div style="margin-top:20px; flex-grow:1; display:flex; flex-direction:column;">
-                            <div style="font-size:14px; font-weight:800; color:#1e293b; margin-bottom:10px;">CRM 학생 관리 히스토리</div>
-                            <div class="tw-timeline" style="flex-grow:1; max-height:200px; overflow-y:auto;">
-                                <div class="tw-tl-item">
-                                    <div class="tw-tl-dot bg-pink"></div>
-                                    <div class="tw-tl-time">방금 전</div>
-                                    <div class="tw-tl-content">학생이 어법 Q&A 질문을 새로 등록함</div>
-                                </div>
-                                <div class="tw-tl-item">
-                                    <div class="tw-tl-dot bg-blue"></div>
-                                    <div class="tw-tl-time">어제 19:30 | 이은혜 강사</div>
-                                    <div class="tw-tl-content">단어 미통과 건 학부모 전화상담 완료 (이번 주말 재시험 합의 / 기록 완료)</div>
-                                </div>
-                                <div class="tw-tl-item" style="margin-bottom:0;">
-                                    <div class="tw-tl-dot bg-green"></div>
-                                    <div class="tw-tl-time">4월 5일 | 시스템 자동화</div>
-                                    <div class="tw-tl-content">주간 리뷰 리포트 카카오톡 알림톡 발송 성공</div>
-                                </div>
+                        <!-- 3. 성적 추이 (Bar chart) -->
+                        <div class="tw-card" style="padding:20px; margin-bottom:0; flex:1 1 50%; min-width:350px;">
+                            <h3 style="font-size:15px; font-weight:900; margin:0 0 15px 0;"><i class="fas fa-chart-line text-blue-500"></i> 영역별 / 회차별 성적 추이 (AT1~AT6)</h3>
+                            <div style="height:220px; width:100%;">
+                                <canvas id="trendAreaChart"></canvas>
                             </div>
-                        </div>
-                        <div style="margin-top:15px;">
-                            <textarea class="tw-textarea" placeholder="상담 메모 / 특이사항 빠른 기록 남기기..."></textarea>
-                            <!-- TWIN CLINIC BUTTON -->
-                            <button class="tw-btn solid-pink" style="width:100%; margin-top:10px;" onclick="openTwinModal()"><i class="fas fa-copy"></i> 오답 기반 쌍둥이 문제지 즉시 전송</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 쌍둥이 클리닉 배포 모달 (Twin Clinic) -->
-        <div class="modal-overlay" id="twinModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(3px);">
-            <div class="modal-content" style="width:550px; background:white; padding:0; border-radius:20px; box-shadow:0 25px 50px rgba(0,0,0,0.2); overflow:hidden;">
-                <div style="background:linear-gradient(135deg, #111, #1e2d5a); padding:25px; color:white; position:relative;">
-                    <h2 style="margin:0; font-size:20px; font-weight:900;"><i class="fas fa-copy text-pink-500"></i> 쌍둥이 클리닉 (유사 오답노트) 전송 모달</h2>
-                    <p style="margin:5px 0 0; font-size:13px; opacity:0.9;">선택한 학생의 취약 데이터를 기반으로 KATCH AI가 검증된 쌍둥이 문항을 추출합니다.</p>
-                    <button class="btn-close" style="position:absolute; right:20px; top:20px; background:rgba(255,255,255,0.2); color:white; border:none; width:30px; height:30px; border-radius:50%; cursor:pointer;" onclick="closeTwinModal()">&times;</button>
+            <!-- RIGHT: CRM PROFILE -->
+            <div class="tw-card" style="flex: 1 1 38%; min-width: 400px; padding: 0; overflow: hidden; position: sticky; top: 20px;">
+                <!-- 처음 화면: Placeholder -->
+                <div id="crm-placeholder" style="padding: 40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; height: 400px;">
+                    <i class="fas fa-mouse-pointer" style="font-size:50px; margin-bottom:20px; color:#cbd5e1;"></i>
+                    <div style="font-weight:800; font-size:16px; margin-bottom:5px;">학생 데이터 기반 관리 (CRM)</div>
+                    <div style="font-weight:600; font-size:13px; text-align:center; line-height:1.5;">좌측 표에서 학생을 선택하면 오답 쌍둥이 생성, AI 코멘트 작성,<br>그리고 1:1 상담용 One-page 리포트 도구가 활성화됩니다.</div>
                 </div>
-                <div style="padding:30px;">
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; font-size:13px; font-weight:800; color:#475569; margin-bottom:8px;">배포 대상</label>
-                        <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0; font-weight:700; color:#3b82f6;"><i class="fas fa-user-check"></i> <span id="modal-target-student">최유나 학생</span> (외고 심화반)</div>
+
+                <!-- 학생 선택 후 활성화 화면 -->
+                <div id="crm-profile" style="display: none; flex-direction: column; height: 100%;">
+                    
+                    <!-- 학생 요약 헤더 영역 -->
+                    <div style="padding: 24px; border-bottom: 1px solid #e2e8f0; background:#f8fafc; display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <div style="font-size: 20px; font-weight: 900; color: #1e293b;" id="prof-name">학생 이름</div>
+                            <div style="font-size: 12px; color: #64748b; margin-top: 6px;" id="prof-phone">연락처 등</div>
+                            
+                            <!-- AI 자동 약점 태그 노출 영역 -->
+                            <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;" id="prof-tags">
+                                <!-- Tags injected via JS -->
+                            </div>
+                        </div>
+                        <button class="tw-btn outline" style="padding: 8px 12px; font-size: 12px;" onclick="alert('PDF가 백그라운드에서 자동 생성 중이며 곧 브라우저 다운로드로 시작됩니다.')"><i class="fas fa-file-pdf text-red-500 fa-lg"></i> <div style="text-align:left;">상담용 1P<br/><span style="font-weight:900;">리포트 출력</span></div></button>
                     </div>
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; font-size:13px; font-weight:800; color:#475569; margin-bottom:8px;">문제 추출 풀(Pool) 기준 설정</label>
-                        <select class="tw-select" id="twin-range">
-                            <option>선택한 현재 평가 오답 기준 (15문항 집중 공략)</option>
-                            <option>최근 1달 간 누적 오답 집중 유형 모음</option>
-                            <option>수동으로 문항 번호 직접 선택하여 출제</option>
-                        </select>
+
+                    <!-- AI 소견 & 기능 버튼 영역 -->
+                    <div id="prof-ai" style="padding: 24px; border-bottom: 1px solid #e2e8f0; background: #fef2f2; border-left: 4px solid #ef4444;">
+                        <!-- AI Comment injected via JS -->
                     </div>
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; font-size:13px; font-weight:800; color:#475569; margin-bottom:8px;">유사 문제 난이도 및 문항 수</label>
-                        <select class="tw-select" id="twin-multi">
-                            <option>유사 변형문제 2배수 (오답 1문제당 2문제 추가, 총 30문항)</option>
-                            <option>유사 변형문제 1배수 (가벼운 오답 체크, 총 15문항)</option>
-                            <option>초고난도 심화 문제 1배수 (킬러 문항 대비용)</option>
-                        </select>
+
+                    <!-- 강사 상담 코멘트 작성 툴 (AI Assistant 연동) -->
+                    <div style="padding: 24px; border-bottom: 1px solid #e2e8f0; background:white;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <div style="font-size: 15px; font-weight: 900; color:#1e293b;"><i class="fas fa-edit text-blue-500"></i> 학부모 상담용 코멘트 작성</div>
+                            <button class="tw-btn outline" style="padding:6px 10px; font-size:12px; color:#4f46e5; border-color:#c7d2fe; background:#eef2ff;" onclick="document.getElementById('comment-box').value='[KATCH AI 자동 추천 초안]\\n어머니 안녕하세요! 이번 주 GVR 검사 결과, 우리 유나가 빈칸 추론 문제에서 약간의 오답을 보였습니다. 독해력은 우수하지만, 관련 약점 극복을 위해 KATCH 문제은행에서 추출한 맞춤형 쌍둥이 보충 과제를 PDF로 배포해 두었습니다. 주말 전까지 꼬옥 풀어보도록 지도 부탁드릴게요!'">
+                                ✨ AI 피드백 초안 제안
+                            </button>
+                        </div>
+                        <textarea id="comment-box" class="tw-textarea" style="background:#f8fafc; font-size:13px;" placeholder="여기에 작성한 코멘트는 학생 앱과 학부모 알림톡, 그리고 상담용 PDF 리포트에 함께 인쇄됩니다.&#10;상단의 'AI 초안 제안' 버튼을 누르면 성적 데이터를 기반으로 자동 작성됩니다."></textarea>
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:11px; color:#94a3b8; font-weight:600;"><i class="fas fa-check-circle"></i> 자동 임시저장 됨</span>
+                            <button class="tw-btn solid-blue" style="padding:10px 18px; font-size:13px;" onclick="alert('코멘트가 정상적으로 저장되었으며, 학부모님께 발송되었습니다.')"><i class="fas fa-paper-plane"></i> 코멘트 저장 및 발송</button>
+                        </div>
                     </div>
-                    <div style="margin-bottom:25px;">
-                        <label style="display:block; font-size:13px; font-weight:800; color:#475569; margin-bottom:8px;">추가 학습 옵션</label>
-                        <label style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; cursor:pointer;">
-                            <input type="checkbox" checked style="width:16px; height:16px; accent-color:#e91e63;">
-                            쌍둥이 문제지 진입 시 추천 해설 VOD 배너 및 링크 자동 연동
-                        </label>
+
+                    <!-- 타임라인 -->
+                    <div style="padding: 24px; background:#f8fafc;">
+                        <div style="font-size: 15px; font-weight: 900; margin-bottom: 15px; color:#475569;"><i class="fas fa-history"></i> CRM 관리 히스토리</div>
+                        <div class="tw-timeline" id="crm-timeline">
+                            <div class="tw-tl-item" style="margin-bottom:15px;">
+                                <div class="tw-tl-dot bg-blue"></div>
+                                <div class="tw-tl-time">어제 14:30 | 통합 시스템</div>
+                                <div class="tw-tl-content">[주간 리포트] 학부모용 카카오톡 자동 발송 완료</div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="tw-btn solid-pink" style="width:100%; padding:15px; font-size:16px;" onclick="sendTwinClinic()"><i class="fas fa-paper-plane"></i> 생성 완료 후 소속 학생 계정(App)으로 즉시 전송</button>
-                    <div style="font-size:12px; color:#94a3b8; text-align:center; margin-top:12px; font-weight:600;">※ 발송된 이력은 우측 CRM 타임라인 리스트에 모바일 알림톡 전송 내역과 함께 기록됩니다.</div>
                 </div>
             </div>
+            
+        </div>
+    </div>
+
+    <!-- KAKAO / TWIN CLINIC MODAL -->
+    <div class="modal-overlay" id="twinModal">
+        <div class="modal-content" id="modal-body">
+            <button class="modal-close" onclick="closeTwinModal()"><i class="fas fa-times"></i></button>
+            <div style="background:#fef2f2; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px auto;">
+                <i class="fas fa-file-pdf text-red-500" style="font-size:24px;"></i>
+            </div>
+            <h2 style="font-size: 20px; font-weight: 900; margin-bottom: 10px;">쌍둥이 보충 과제 자동 생성</h2>
+            <p style="font-size:14px; color:#475569; margin-bottom:20px; font-weight:600; line-height:1.5;">해당 학생이 최근 <span style="font-weight:900; color:#e11d48;">[어법-도치], [빈칸추론]</span> 파트에서 틀린 문제의 핵심 개념을 분석하여, KATCH 문제은행에서 이와 유사한 난이도와 유형의 쌍둥이 문제를 10문항 자동 추출해 PDF로 생성합니다.</p>
+            
+            <div style="background:#fffbeb; padding:15px; border-radius:8px; margin-bottom:20px; text-align:left; border:1px solid #fde68a;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="background:#FEE500; width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i class="fas fa-comment text-yellow-900"></i></div>
+                    <div style="font-weight:800; font-size:13px; color:#1e293b;">학부모 알림톡 생성 및 앱 동기화 안내</div>
+                </div>
+                <div style="font-size:12px; color:#64748b; line-height:1.5;">
+                    생성된 취약점 관리 맞춤형 과제(PDF)는 즉시 학생의 KATCH 앱 과제함으로 배정되며, 부모님께 안내 메시지가 발송됩니다. 개인 PC 로컬 다운로드도 병행됩니다.
+                </div>
+            </div>
+            
+            <button class="tw-btn solid-pink" style="width: 100%; font-size: 15px; padding: 14px;" onclick="sendTwinClinic()">
+                <i class="fas fa-magic"></i> 쌍둥이 추출 및 자동 배정 승인
+            </button>
         </div>
 
-        <script>
-            // Ensure teacherView is active
-            function initTeacherDash() {
-                const tv = document.getElementById('teacherView');
-                const sv = document.getElementById('studentView');
-                if(tv) tv.style.display = 'grid'; // because layout is grid
-                if(sv) sv.style.display = 'none';
+        <!-- Success View -->
+        <div class="modal-content" id="modal-success" style="display:none;">
+            <i class="fas fa-check-circle text-green-500" style="font-size:60px; margin-bottom:20px;"></i>
+            <h2 style="font-size: 20px; font-weight: 900; color:#10b981; margin-bottom:10px;">쌍둥이 과제 생성 마법사 완료</h2>
+            <p style="font-size:14px; color:#64748b; line-height:1.5;">PDF 파일 다운로드가 준비되었습니다.<br/>학생의 과제함에 문항이 배정되었으며 학부모님께 앱 푸시/알림톡이 전송되었습니다!</p>
+        </div>
+    </div>
 
-                // Ensure role buttons map correctly
-                const roleBtns = document.querySelectorAll('.role-btn');
-                if(roleBtns.length>1) {
-                    roleBtns[0].classList.remove('active');
-                    roleBtns[1].classList.add('active');
-                }
+    <!-- SCRIPT -->
+    <script>
+        function selectStudent(name, status, element) {
+            document.querySelectorAll('#studentTable tr').forEach(row => row.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            document.getElementById('crm-placeholder').style.display = 'none';
+            document.getElementById('crm-profile').style.display = 'flex';
+            
+            let iconHtml = '';
+            let aiHtml = '';
+            let tagsHtml = '';
+            
+            if(status === 'danger') {
+                iconHtml = ' <i class="fas fa-exclamation-triangle text-red-500" style="font-size:18px;"></i>';
+                tagsHtml = `
+                    <span class="tag-badge weak"><i class="fas fa-search"></i> 빈칸 추론 취약</span>
+                    <span class="tag-badge weak"><i class="fas fa-book-dead"></i> 어법 하위 20%</span>
+                    <span class="tag-badge"><i class="fas fa-headphones"></i> 듣기 매우 우수</span>
+                `;
+                aiHtml = `
+                    <div style="font-size:14px; font-weight:900; color:#ef4444; margin-bottom:8px;"><i class="fas fa-robot text-lg"></i> KATCH 밀착 관리 AI 소견</div>
+                    <div style="font-size:13px; line-height:1.6; color:#7f1d1d; font-weight:600;">최근 2회차 평가 성취도 급락. 과제 미제출 연속 3회. 빈칸 추론에서 치명적인 약점을 보입니다. 쌍둥이 보충 과제를 통해 오답을 집중 훈련시켜야 합니다.</div>
+                    <div style="display:flex; gap:10px; margin-top:16px;">
+                        <button class="tw-btn solid-pink" style="flex:1; padding:12px; font-size:13px;" onclick="openTwinModal()">
+                            <i class="fas fa-file-pdf"></i> 오답 쌍둥이 자동생성
+                        </button>
+                        <button class="tw-btn outline" style="flex:1; padding:12px; font-size:13px; color:#be123c; border-color:#fda4af;">
+                            <i class="fas fa-video"></i> VOD 강의 배정
+                        </button>
+                    </div>
+                `;
+                document.getElementById('prof-ai').style.background = '#fef2f2';
+                document.getElementById('prof-ai').style.borderLeft = '4px solid #ef4444';
+                document.getElementById('comment-box').value = ""; // 초기화
+            } else if(status === 'warning') {
+                iconHtml = ' <i class="fas fa-exclamation-circle text-orange-500" style="font-size:18px;"></i>';
+                tagsHtml = `
+                    <span class="tag-badge weak"><i class="fas fa-search"></i> 어휘 다의어 부족</span>
+                    <span class="tag-badge"><i class="fas fa-check"></i> 독해력 상승 추세</span>
+                `;
+                aiHtml = `
+                    <div style="font-size:14px; font-weight:900; color:#d97706; margin-bottom:8px;"><i class="fas fa-robot text-lg"></i> KATCH 밀착 관리 AI 소견</div>
+                    <div style="font-size:13px; line-height:1.6; color:#92400e; font-weight:600;">어휘 파트의 다의어 유추 능력 약점이 점진적으로 누적되고 있습니다. 어휘 집중 미니테스트 처방을 권장합니다.</div>
+                    <div style="display:flex; gap:10px; margin-top:16px;">
+                        <button class="tw-btn solid-pink" style="flex:1; padding:12px; font-size:13px;" onclick="openTwinModal()">
+                            <i class="fas fa-file-pdf"></i> 오답 쌍둥이 자동생성
+                        </button>
+                    </div>
+                `;
+                document.getElementById('prof-ai').style.background = '#fffbeb';
+                document.getElementById('prof-ai').style.borderLeft = '4px solid #f59e0b';
+                document.getElementById('comment-box').value = ""; // 초기화
+            } else {
+                iconHtml = ' <i class="fas fa-check-circle text-green-500" style="font-size:18px;"></i>';
+                tagsHtml = `
+                    <span class="tag-badge"><i class="fas fa-star text-yellow-500"></i> 반 1등 유지</span>
+                    <span class="tag-badge"><i class="fas fa-book"></i> 과제 제출률 100%</span>
+                `;
+                aiHtml = `
+                    <div style="font-size:14px; font-weight:900; color:#10b981; margin-bottom:8px;"><i class="fas fa-robot text-lg"></i> KATCH 밀착 관리 AI 소견</div>
+                    <div style="font-size:13px; line-height:1.6; color:#065f46; font-weight:600;">전 영역에서 학습 성취도가 우수합니다. 다음 단계의 킬러 문항 대비 심화 커리큘럼 배정이 권장됩니다.</div>
+                `;
+                document.getElementById('prof-ai').style.background = '#f0fdf4';
+                document.getElementById('prof-ai').style.borderLeft = '4px solid #10b981';
+                document.getElementById('comment-box').value = ""; // 초기화
+            }
+            
+            document.getElementById('prof-name').innerHTML = name + ' 학생 통합 관리' + iconHtml;
+            document.getElementById('prof-phone').innerHTML = 'Tel: 010-1234-5678 | 학부모 Tel: 010-8765-4321';
+            document.getElementById('prof-tags').innerHTML = tagsHtml;
+            document.getElementById('prof-ai').innerHTML = aiHtml;
+        }
 
-                // Chart initialization safely
-                setTimeout(() => {
-                    const canvas = document.getElementById('typeErrorChart');
-                    if(canvas) {
-                        const ctx = canvas.getContext('2d');
-                        if(window.teChart) window.teChart.destroy();
-                        
-                        Chart.defaults.font.family = 'Pretendard';
-                        window.teChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['어법 (도치)', '어휘 (동의어)', '문장 삽입', '빈칸 추론', '순서 배열', '동사 수일치'],
-                                datasets: [{
-                                    label: '평균 오답률 (%)',
-                                    data: [85, 45, 60, 80, 50, 20],
-                                    backgroundColor: function(c) {
-                                        return c.raw >= 60 ? '#f43f5e' : '#3b82f6';
-                                    },
-                                    borderRadius: 6,
-                                    hoverBackgroundColor: '#1e293b'
-                                }]
-                            },
-                            options: {
-                                responsive: true, maintainAspectRatio: false,
-                                plugins: { legend: { display: false } },
-                                scales: { 
-                                    y: { beginAtZero: true, max: 100 },
-                                    x: { grid: { display: false }, ticks: { font: { weight:'bold' } } }
-                                },
-                                onClick: (e, els) => {
-                                    if(els.length > 0) {
-                                        const idx = els[0].index;
-                                        const types = ['어법 (도치)', '어휘 (동의어)', '문장 삽입', '빈칸 추론', '순서 배열', '동사 수일치'];
-                                        document.getElementById('selected-type-name').innerText = types[idx];
-                                        
-                                        const sec = document.getElementById('drilldown-section');
-                                        sec.style.transform = 'scale(0.98)';
-                                        sec.style.transition = '0.2s';
-                                        setTimeout(() => sec.style.transform = 'scale(1)', 150);
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }, 100);
-            }
+        function openTwinModal() {
+            document.getElementById('twinModal').classList.add('active');
+            document.getElementById('modal-body').style.display = 'block';
+            document.getElementById('modal-success').style.display = 'none';
+        }
 
-            function selectStudent(name, status, event) {
-                document.querySelectorAll('.stu-list-item').forEach(el => el.classList.remove('active'));
-                if(event) event.currentTarget.classList.add('active');
-                
-                document.getElementById('prof-name').innerHTML = name + (status==='danger'?' <i class="fas fa-exclamation-triangle text-red-500" style="font-size:14px;"></i>':'');
-                document.getElementById('modal-target-student').innerText = name + ' 학생';
-                
-                const aiBox = document.getElementById('prof-ai');
-                if(status === 'danger') {
-                    aiBox.style.display = 'block';
-                    aiBox.innerHTML = '<div style="font-size:12px; color:#ef4444; font-weight:800;"><i class="fas fa-robot"></i> AI 처방 어드바이저</div><div style="font-size:13px; color:#7f1d1d; margin-top:4px; font-weight:600;">학생의 최근 2회차 연속 어법 오답률이 기준치를 초과했습니다! 즉각적인 맞춤 오답노트(쌍둥이 세트) 배포를 강력 권장합니다.</div>';
-                    aiBox.style.background = '#fef2f2'; aiBox.style.borderLeftColor = '#ef4444';
-                } else if(status === 'warning') {
-                    aiBox.style.display = 'block';
-                    aiBox.innerHTML = '<div style="font-size:12px; color:#d97706; font-weight:800;"><i class="fas fa-robot"></i> AI 어드바이저</div><div style="font-size:13px; color:#92400e; margin-top:4px; font-weight:600;">어휘 점수가 소폭 하락세입니다. 주의를 요하며 관련 동의어 암기 테스트 점검이 필요합니다.</div>';
-                    aiBox.style.background = '#fffbeb'; aiBox.style.borderLeftColor = '#f59e0b';
-                } else {
-                    aiBox.style.display = 'none';
-                }
-            }
+        function closeTwinModal() {
+            document.getElementById('twinModal').classList.remove('active');
+        }
 
-            function openTwinModal() {
-                document.getElementById('twinModal').style.display = 'flex';
-                setTimeout(()=> document.getElementById('twinModal').style.opacity = '1', 50);
-            }
-            function closeTwinModal() {
-                document.getElementById('twinModal').style.display = 'none';
-            }
-            function sendTwinClinic() {
-                // Change UI of the history to show it was sent
-                const tlList = document.querySelector('.tw-timeline');
+        function sendTwinClinic() {
+            document.getElementById('modal-body').style.display = 'none';
+            document.getElementById('modal-success').style.display = 'block';
+            
+            setTimeout(() => {
+                closeTwinModal();
                 const newTl = document.createElement('div');
                 newTl.className = 'tw-tl-item';
-                
-                const rangeopt = document.getElementById('twin-range').value;
-                const textrange = rangeopt.substring(0, 15)+'...';
-
+                newTl.style.marginBottom = '15px';
                 newTl.innerHTML = `
                     <div class="tw-tl-dot bg-pink"></div>
-                    <div class="tw-tl-time">방금 전 | 알림톡 자동발송 완료</div>
-                    <div class="tw-tl-content">[쌍둥이 클리닉 배포] ${textrange} 및 VOD 자동 연계 과제 전송됨</div>
+                    <div class="tw-tl-time">방금 전 | 시스템 처리 기록</div>
+                    <div class="tw-tl-content">[자동 생성] 약점 보완용 쌍둥이 과제(PDF) 생성 및 배정</div>
                 `;
-                tlList.insertBefore(newTl, tlList.firstChild);
-                
-                closeTwinModal();
-            }
+                document.getElementById('crm-timeline').prepend(newTl);
+            }, 2300);
+        }
 
-            // Bind role toggle if it exists to also initTeacherDash
-            setTimeout(() => {
-                const urlParams = new URLSearchParams(window.location.search);
-                if(urlParams.get('view') !== 'student') {
-                    initTeacherDash();
+        // Initialize area chart
+        const ctxArea = document.getElementById('trendAreaChart').getContext('2d');
+        Chart.defaults.font.family = 'Pretendard';
+        new Chart(ctxArea, {
+            type: 'bar',
+            data: {
+                labels: ['LC (듣기)', 'GR (어법)', 'VO (어휘)', 'RC (독해)', 'SC (구문)', 'MT'],
+                datasets: [
+                    { label: 'AT 1', data: [28, 45, 20, 18, 30, 40], backgroundColor: '#93c5fd' },
+                    { label: 'AT 2', data: [26, 45, 25, 18, 35, 45], backgroundColor: '#bbf7d0' },
+                    { label: 'AT 3', data: [29, 45, 24, 19, 40, 50], backgroundColor: '#7dd3fc' },
+                    { label: 'AT 4', data: [29, 43, 23, 19, 45, 55], backgroundColor: '#475569' },
+                    { label: 'AT 6', data: [27, 46, 22, 20, 50, 60], backgroundColor: '#0f766e' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { 
+                    y: { beginAtZero: true, max: 100 },
+                    x: { ticks: { font: { size: 10, weight: 'bold' } } }
                 }
-            }, 100);
-        </script>
-    </div>
+            }
+        });
+    </script>
 </body>
 </html>
